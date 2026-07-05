@@ -52,7 +52,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "", ""));
+                new KeyTarConfig("", "", "", ""));
 
         TeamConfig teamConfig;
         try {
@@ -76,7 +76,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "", ""));
+                new KeyTarConfig("", "", "", ""));
 
         TeamConfig teamConfig;
         try {
@@ -100,7 +100,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "", ""));
+                new KeyTarConfig("", "", "", ""));
 
         TeamConfig teamConfig;
         try {
@@ -127,7 +127,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
@@ -143,7 +143,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
@@ -158,7 +158,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
@@ -172,7 +172,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(null, null, profiles, defaults, null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
@@ -187,7 +187,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(List.of(partition), null, List.of(), Map.of(), null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         String errMsg = "";
@@ -206,7 +206,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(List.of(partition), null, List.of(), Map.of(), null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         String errMsg = "";
@@ -225,7 +225,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(List.of(partition), null, List.of(), Map.of(), null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfileFromPartition("lpar1zosmf", "lpar1");
@@ -242,7 +242,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(List.of(partition), null, List.of(), Map.of(), null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "lpar1user", "lpar1pwd"));
+                new KeyTarConfig("", "lpar1user", "lpar1pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfileFromPartition("lpar1zosmf", "lpar1");
@@ -258,7 +258,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(List.of(partition), null, baseProfiles, Map.of(), null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfileFromPartition("lpar1zosmf", "lpar1");
@@ -274,7 +274,7 @@ public class TeamConfigTest {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(
                 new ConfigContainer(List.of(partition), null, baseProfiles, Map.of(), null));
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "username", "pwd"));
+                new KeyTarConfig("", "username", "pwd", ""));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfileFromPartition("lpar1zosmf", "lpar1");
@@ -310,7 +310,7 @@ public class TeamConfigTest {
     public void tstZoweJsonGetDefaultZosmfProfileSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
@@ -326,7 +326,7 @@ public class TeamConfigTest {
     public void tstZoweJsonGetDefaultZosmfProfileUserAndPasswordSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("zosmf");
@@ -338,7 +338,7 @@ public class TeamConfigTest {
     public void tstZoweJsonGetDefaultSshProfileSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("ssh");
@@ -352,7 +352,7 @@ public class TeamConfigTest {
     public void tstZoweJsonGetDefaultRseProfileSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("rse");
@@ -368,7 +368,7 @@ public class TeamConfigTest {
     public void tstZoweJsonGetDefaultTsoProfileSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("tso");
@@ -383,7 +383,7 @@ public class TeamConfigTest {
     public void tstZoweJsonGetDefaultBaseProfileHostSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("base");
@@ -397,7 +397,7 @@ public class TeamConfigTest {
     public void tstZoweJsonBaseProfileSecureFieldsSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         final ProfileDao profileDao = teamConfig.getDefaultProfile("base");
@@ -408,7 +408,7 @@ public class TeamConfigTest {
     public void tstZoweJsonUnknownProfileTypeFailure() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         String errMsg = "";
@@ -428,7 +428,7 @@ public class TeamConfigTest {
     public void tstUpdateProfileSuccess() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
         Mockito.doNothing().when(teamConfigServiceMock).updateTeamConfig(any(), any(), any());
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
@@ -442,7 +442,7 @@ public class TeamConfigTest {
     public void tstUpdateProfileNullPropertiesFailure() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         String errMsg = "";
@@ -458,7 +458,7 @@ public class TeamConfigTest {
     public void tstUpdateProfileBlankNameFailure() throws TeamConfigException {
         Mockito.when(teamConfigServiceMock.getTeamConfig(any())).thenReturn(buildZoweConfig());
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
         String errMsg = "";
@@ -484,7 +484,7 @@ public class TeamConfigTest {
                 .thenReturn(initialConfig)
                 .thenReturn(refreshedConfig);
         Mockito.when(keyTarServiceMock.getKeyTarConfig()).thenReturn(
-                new KeyTarConfig("", "myuser", "mypassword"));
+                new KeyTarConfig("", "myuser", "mypassword", "store1"));
         Mockito.doNothing().when(teamConfigServiceMock).updateTeamConfig(any(), any(), any());
 
         final TeamConfig teamConfig = new TeamConfig(keyTarServiceMock, teamConfigServiceMock);
