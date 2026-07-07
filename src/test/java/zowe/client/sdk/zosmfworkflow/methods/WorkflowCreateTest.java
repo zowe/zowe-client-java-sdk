@@ -10,9 +10,9 @@
 package zowe.client.sdk.zosmfworkflow.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -48,6 +48,8 @@ import static org.mockito.Mockito.*;
  */
 public class WorkflowCreateTest {
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
@@ -57,7 +59,7 @@ public class WorkflowCreateTest {
 
     @BeforeEach
     public void init() throws ZosmfRequestException {
-        JSONObject workflowJson = getJsonObject();
+        ObjectNode workflowJson = getJsonObject();
 
         mockPostJsonZosmfRequest = Mockito.mock(PostJsonZosmfRequest.class);
         Mockito.when(mockPostJsonZosmfRequest.executeRequest()).thenReturn(
@@ -78,14 +80,15 @@ public class WorkflowCreateTest {
         doCallRealMethod().when(mockPostJsonZosmfRequestToken).setBody(any());
     }
 
-    private static JSONObject getJsonObject() {
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("workflowKey", "workflow-key");
-        jsonMap.put("workflowDescription", "workflow-description");
-        jsonMap.put("workflowID", "workflow-id");
-        jsonMap.put("workflowVersion", "1.0");
-        jsonMap.put("vendor", "IBM");
-        return new JSONObject(jsonMap);
+    private static ObjectNode getJsonObject() {
+        final ObjectMapper m = new ObjectMapper();
+        final ObjectNode node = m.createObjectNode();
+        node.put("workflowKey", "workflow-key");
+        node.put("workflowDescription", "workflow-description");
+        node.put("workflowID", "workflow-id");
+        node.put("workflowVersion", "1.0");
+        node.put("vendor", "IBM");
+        return node;
     }
 
     private static WorkflowCreateInputData createInputData() {
@@ -123,40 +126,40 @@ public class WorkflowCreateTest {
         final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
         verify(mockPostJsonZosmfRequest).setBody(bodyCaptor.capture());
         final String body = bodyCaptor.getValue().toString();
-        final JSONObject requestBody = (JSONObject) new JSONParser().parse(body);
+        final JsonNode requestBody = mapper.readTree(body);
 
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows", mockPostJsonZosmfRequest.getUrl());
-        assertEquals("AutomationExample", requestBody.get("workflowName"));
+        assertEquals("AutomationExample", requestBody.get("workflowName").asText());
         assertEquals("/usr/lpp/zosmf/samples/workflow_sample_automation.xml",
-                requestBody.get("workflowDefinitionFile"));
-        assertEquals("SY1", requestBody.get("workflowDefinitionFileSystem"));
-        assertEquals("/tmp/workflow.properties", requestBody.get("variableInputFile"));
-        assertEquals("input", requestBody.get("resolveGlobalConflictByUsing"));
-        assertEquals("SY1", requestBody.get("system"));
-        assertEquals("zosmfad", requestBody.get("owner"));
-        assertEquals("ZOSMFAD", requestBody.get("workflowArchiveSAFID"));
+                requestBody.get("workflowDefinitionFile").asText());
+        assertEquals("SY1", requestBody.get("workflowDefinitionFileSystem").asText());
+        assertEquals("/tmp/workflow.properties", requestBody.get("variableInputFile").asText());
+        assertEquals("input", requestBody.get("resolveGlobalConflictByUsing").asText());
+        assertEquals("SY1", requestBody.get("system").asText());
+        assertEquals("zosmfad", requestBody.get("owner").asText());
+        assertEquals("ZOSMFAD", requestBody.get("workflowArchiveSAFID").asText());
         assertEquals("This workflow was created through the z/OSMF workflow services REST interface.",
-                requestBody.get("comments"));
-        assertEquals(Boolean.FALSE, requestBody.get("assignToOwner"));
-        assertEquals("Restricted", requestBody.get("accessType"));
-        assertEquals("ACCT123", requestBody.get("accountInfo"));
-        assertEquals(Boolean.TRUE, requestBody.get("deleteCompletedJobs"));
-        assertEquals("/u/IBMUSER/jobFiles", requestBody.get("jobsOutputDirectory"));
-        assertEquals(Boolean.TRUE, requestBody.get("autoDeleteOnCompletion"));
-        assertEquals("remoteuser", requestBody.get("targetSystemuid"));
-        assertEquals("remotepwd", requestBody.get("targetSystempwd"));
+                requestBody.get("comments").asText());
+        assertEquals(false, requestBody.get("assignToOwner").asBoolean());
+        assertEquals("Restricted", requestBody.get("accessType").asText());
+        assertEquals("ACCT123", requestBody.get("accountInfo").asText());
+        assertEquals(true, requestBody.get("deleteCompletedJobs").asBoolean());
+        assertEquals("/u/IBMUSER/jobFiles", requestBody.get("jobsOutputDirectory").asText());
+        assertEquals(true, requestBody.get("autoDeleteOnCompletion").asBoolean());
+        assertEquals("remoteuser", requestBody.get("targetSystemuid").asText());
+        assertEquals("remotepwd", requestBody.get("targetSystempwd").asText());
 
-        final JSONArray variables = (JSONArray) requestBody.get("variables");
+        final JsonNode variables = requestBody.get("variables");
         assertEquals(2, variables.size());
-        assertEquals("user_name", ((JSONObject) variables.get(0)).get("name"));
-        assertEquals("IBMUSER", ((JSONObject) variables.get(0)).get("value"));
-        assertEquals("file_name", ((JSONObject) variables.get(1)).get("name"));
-        assertEquals("textfile.txt", ((JSONObject) variables.get(1)).get("value"));
+        assertEquals("user_name", variables.get(0).get("name").asText());
+        assertEquals("IBMUSER", variables.get(0).get("value").asText());
+        assertEquals("file_name", variables.get(1).get("name").asText());
+        assertEquals("textfile.txt", variables.get(1).get("value").asText());
 
-        final JSONArray jobStatement = (JSONArray) requestBody.get("jobStatement");
+        final JsonNode jobStatement = requestBody.get("jobStatement");
         assertEquals(2, jobStatement.size());
-        assertEquals("//TESTJOB JOB (ACCT123)", jobStatement.get(0));
-        assertEquals("//*", jobStatement.get(1));
+        assertEquals("//TESTJOB JOB (ACCT123)", jobStatement.get(0).asText());
+        assertEquals("//*", jobStatement.get(1).asText());
 
         assertEquals("workflow-key", response.getWorkflowKey());
         assertEquals("workflow-description", response.getWorkflowDescription());
@@ -179,7 +182,7 @@ public class WorkflowCreateTest {
 
     @Test
     public void tstWorkflowCreateJsonStringResponseSuccess() throws Exception {
-        final JSONObject workflowJson = getJsonObject();
+        final ObjectNode workflowJson = getJsonObject();
         final PostJsonZosmfRequest mockPostJsonZosmfRequestString = Mockito.mock(PostJsonZosmfRequest.class);
         Mockito.when(mockPostJsonZosmfRequestString.executeRequest()).thenReturn(
                 new Response(workflowJson.toString(), 201, "Created"));
@@ -291,13 +294,13 @@ public class WorkflowCreateTest {
         // create request body points at the uploaded USS temp paths, not the local paths
         final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
         verify(mockPostJsonZosmfRequest).setBody(bodyCaptor.capture());
-        final JSONObject requestBody = (JSONObject) new JSONParser().parse(bodyCaptor.getValue().toString());
-        assertTrue(requestBody.get("workflowDefinitionFile").toString().startsWith("/tmp/"));
-        assertTrue(requestBody.get("variableInputFile").toString().startsWith("/tmp/"));
+        final JsonNode requestBody = mapper.readTree(bodyCaptor.getValue().toString());
+        assertTrue(requestBody.get("workflowDefinitionFile").asText().startsWith("/tmp/"));
+        assertTrue(requestBody.get("variableInputFile").asText().startsWith("/tmp/"));
         // non-file fields are preserved through toBuilder
-        assertEquals("AutomationExample", requestBody.get("workflowName"));
-        assertEquals("SY1", requestBody.get("system"));
-        assertEquals("zosmfad", requestBody.get("owner"));
+        assertEquals("AutomationExample", requestBody.get("workflowName").asText());
+        assertEquals("SY1", requestBody.get("system").asText());
+        assertEquals("zosmfad", requestBody.get("owner").asText());
 
         assertEquals("workflow-key", response.getWorkflow().getWorkflowKey());
         assertTrue(response.getFilesKept().isEmpty());

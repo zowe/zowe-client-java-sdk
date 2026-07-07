@@ -12,7 +12,7 @@ package zowe.client.sdk.zosconsole.methods;
 import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -56,27 +56,25 @@ public class ConsoleCmdTest {
     }
 
     @Test
-    public void tstIssueConsoleIssueCommandCmdResponseSuccess() throws ZosmfRequestException {
-        final Map<String, Object> jsonMap = new HashMap<>();
+    public void tstIssueConsoleIssueCommandCmdResponseSuccess() throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
-        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "success"));
         final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("student", response.getCmdResponse());
     }
 
     @Test
-    public void tstIssueConsoleIssueCommandCmdResponseToggleTokenSuccess() throws ZosmfRequestException {
-        final Map<String, Object> jsonMap = new HashMap<>();
+    public void tstIssueConsoleIssueCommandCmdResponseToggleTokenSuccess() throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "student");
-        final JSONObject json = new JSONObject(jsonMap);
 
         PutJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestAuth).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestAuth).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestAuth).setUrl(any());
@@ -91,24 +89,22 @@ public class ConsoleCmdTest {
     }
 
     @Test
-    public void tstIssueConsoleIssueCommandCmdResponseWithEmptyStringSuccess() throws ZosmfRequestException {
-        final Map<String, Object> jsonMap = new HashMap<>();
+    public void tstIssueConsoleIssueCommandCmdResponseWithEmptyStringSuccess() throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
-        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "success"));
         final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         final ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("", response.getCmdResponse());
     }
 
     @Test
-    public void tstIssueConsoleIssueCommandCmdResponseWithEmptyStringAndIsProcessRequestSuccess() throws ZosmfRequestException {
-        final Map<String, Object> jsonMap = new HashMap<>();
+    public void tstIssueConsoleIssueCommandCmdResponseWithEmptyStringAndIsProcessRequestSuccess() throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
-        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "success"));
         final ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         final ConsoleCmdInputData consoleInputData = new ConsoleCmdInputData("command");
         consoleInputData.setProcessResponse();
@@ -118,12 +114,11 @@ public class ConsoleCmdTest {
     }
 
     @Test
-    public void tstIssueConsoleIssueCommandCmdResponseUrlSuccess() throws ZosmfRequestException {
-        final Map<String, Object> jsonMap = new HashMap<>();
+    public void tstIssueConsoleIssueCommandCmdResponseUrlSuccess() throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response-url", "student");
-        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "success"));
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "success"));
         ConsoleCmd consoleCmd = new ConsoleCmd(connection, mockJsonPutRequest);
         ConsoleCmdResponse response = consoleCmd.issueCommand("command");
         assertEquals("student", response.getCmdResponseUrl());
@@ -131,7 +126,7 @@ public class ConsoleCmdTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void tstIssueConsoleIssueCommandHttpErrorFailure() throws ZosmfRequestException {
+    public void tstIssueConsoleIssueCommandHttpErrorFailure() throws Exception {
         final HttpResponse<JsonNode> mockReply = Mockito.mock(HttpResponse.class);
         Mockito.when(mockReply.getStatusText()).thenReturn("Unauthorized");
         Mockito.when(mockReply.getStatus()).thenReturn(401);

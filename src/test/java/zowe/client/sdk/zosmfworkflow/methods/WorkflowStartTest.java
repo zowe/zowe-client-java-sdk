@@ -10,8 +10,8 @@
 package zowe.client.sdk.zosmfworkflow.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -34,6 +34,8 @@ import static org.mockito.Mockito.*;
  */
 public class WorkflowStartTest {
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", 443, "1", "1");
     private final ZosConnection tokenConnection = ZosConnectionFactory
@@ -55,7 +57,7 @@ public class WorkflowStartTest {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 202, "Accepted"));
+        Mockito.when(mockPutRequest.executeRequest()).thenReturn(new Response("{}", 202, "Accepted"));
 
         doCallRealMethod().when(mockPutRequest).setUrl(any());
         doCallRealMethod().when(mockPutRequest).getUrl();
@@ -68,16 +70,16 @@ public class WorkflowStartTest {
         final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
         verify(mockPutRequest).setBody(bodyCaptor.capture());
         final String body = bodyCaptor.getValue().toString();
-        final JSONObject requestBody = (JSONObject) new JSONParser().parse(body);
+        final JsonNode requestBody = mapper.readTree(body);
 
         assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows/workflow-key-123/operations/start",
                 mockPutRequest.getUrl());
-        assertEquals("outputFileValue", requestBody.get("resolveConflictByUsing"));
-        assertEquals("Step1", requestBody.get("stepName"));
-        assertEquals(Boolean.TRUE, requestBody.get("performSubsequent"));
-        assertEquals("https://example.com/notification", requestBody.get("notificationUrl"));
-        assertEquals("remoteuser", requestBody.get("targetSystemuid"));
-        assertEquals("remotepwd", requestBody.get("targetSystempwd"));
+        assertEquals("outputFileValue", requestBody.get("resolveConflictByUsing").asText());
+        assertEquals("Step1", requestBody.get("stepName").asText());
+        assertEquals(true, requestBody.get("performSubsequent").asBoolean());
+        assertEquals("https://example.com/notification", requestBody.get("notificationUrl").asText());
+        assertEquals("remoteuser", requestBody.get("targetSystemuid").asText());
+        assertEquals("remotepwd", requestBody.get("targetSystempwd").asText());
 
         assertEquals(202, response.getStatusCode().orElse(-1));
         assertEquals("Accepted", response.getStatusText().orElse("n\\a"));
@@ -88,7 +90,7 @@ public class WorkflowStartTest {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 202, "Accepted"));
+        Mockito.when(mockPutRequest.executeRequest()).thenReturn(new Response("{}", 202, "Accepted"));
 
         doCallRealMethod().when(mockPutRequest).setUrl(any());
         doCallRealMethod().when(mockPutRequest).getUrl();
@@ -113,7 +115,7 @@ public class WorkflowStartTest {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
         PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutRequest.executeRequest()).thenReturn(new Response(new JSONObject(), 202, "Accepted"));
+        Mockito.when(mockPutRequest.executeRequest()).thenReturn(new Response("{}", 202, "Accepted"));
 
         doCallRealMethod().when(mockPutRequest).setUrl(any());
         doCallRealMethod().when(mockPutRequest).getUrl();
@@ -130,7 +132,7 @@ public class WorkflowStartTest {
     public void tstWorkflowStartTokenSuccess() throws Exception {
         PutJsonZosmfRequest mockPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
-        Mockito.when(mockPutRequestToken.executeRequest()).thenReturn(new Response(new JSONObject(), 202, "Accepted"));
+        Mockito.when(mockPutRequestToken.executeRequest()).thenReturn(new Response("{}", 202, "Accepted"));
 
         doCallRealMethod().when(mockPutRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPutRequestToken).setStandardHeaders();

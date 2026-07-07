@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -47,14 +46,14 @@ public class DsnListTest {
     public void init() throws ZosmfRequestException {
         mockGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         Mockito.when(mockGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockGetRequest).setUrl(any());
         doCallRealMethod().when(mockGetRequest).getUrl();
 
         mockGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockGetRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockGetRequestToken).setUrl(any());

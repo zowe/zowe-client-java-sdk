@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosconsole.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -106,9 +106,8 @@ public class ConsoleGetTest {
 
     @Test
     public void tstConsoleGetToggleTokenSuccess() throws Exception {
-        final Map<String, Object> jsonMap = new HashMap<>();
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "LINE1\rLINE2");
-        final JSONObject json = new JSONObject(jsonMap);
 
         // Create mock with token constructor
         GetJsonZosmfRequest mockJsonGetRequestAuth = Mockito.mock(
@@ -117,7 +116,7 @@ public class ConsoleGetTest {
         );
 
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
-                new Response(json, 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
         );
 
         // Enable real header and URL handling
@@ -140,12 +139,11 @@ public class ConsoleGetTest {
 
 
     @Test
-    public void tstConsoleGetResponseSuccess() throws ZosmfRequestException {
-        final Map<String, Object> jsonMap = new HashMap<>();
+    public void tstConsoleGetResponseSuccess() throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "LINE1\rLINE2");
-        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
         );
         ConsoleGet consoleGet = new ConsoleGet(connection, mockJsonGetRequest);
         ConsoleGetResponse response = consoleGet.getResponse("respKey");
@@ -153,12 +151,11 @@ public class ConsoleGetTest {
     }
 
     @Test
-    public void tstConsoleGetResponseBlankContentSuccess() throws ZosmfRequestException {
-        final Map<String, Object> jsonMap = new HashMap<>();
+    public void tstConsoleGetResponseBlankContentSuccess() throws Exception {
+        final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
-        final JSONObject json = new JSONObject(jsonMap);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(json, 200, "{ \"cmd-response\": \"\" }")
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"\" }")
         );
         ConsoleGet consoleGet = new ConsoleGet(connection, mockJsonGetRequest);
         ConsoleGetResponse response = consoleGet.getResponse("respKey");

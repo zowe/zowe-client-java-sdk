@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zostso.methods;
 
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -222,10 +222,10 @@ public class TsoStartTest {
         doCallRealMethod().when(mockRequest).getUrl();
 
         // Mock response to return servletKey
-        final Map<String, Object> map = new HashMap<>();
+        final Map<String, String> map = new HashMap<>();
         map.put("servletKey", "SERVKEY123");
         Mockito.when(mockRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(map), 200, "success"));
+                new Response(TestJsonUtils.toJsonString(map), 200, "success"));
 
         final TsoStartResponse result = tsoStart.start(inputData);
         assertEquals("SERVKEY123", result.getSessionId());
