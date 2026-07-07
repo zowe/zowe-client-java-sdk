@@ -76,7 +76,6 @@ public class ZosmfSystems {
                 ZosmfConstants.TOPOLOGY +
                 ZosmfConstants.SYSTEMS;
 
-
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()

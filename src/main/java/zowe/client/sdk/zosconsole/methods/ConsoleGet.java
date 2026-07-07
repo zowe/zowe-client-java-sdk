@@ -109,7 +109,6 @@ public class ConsoleGet {
                 EncodeUtils.encodeURIComponent(consoleName.isBlank() ? ConsoleConstants.RES_DEF_CN : consoleName) +
                 "/solmsgs/" + responseKey;
 
-
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()

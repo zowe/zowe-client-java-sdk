@@ -148,7 +148,6 @@ public class JobCancel {
         cancelMap.put("request", JobsConstants.REQUEST_CANCEL);
         cancelMap.put("version", version);
 
-
         request.setBody(JsonUtils.asRequestBodyJson(cancelMap));
         request.setUrl(url);
 

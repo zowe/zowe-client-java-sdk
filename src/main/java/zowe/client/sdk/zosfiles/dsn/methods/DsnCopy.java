@@ -117,7 +117,6 @@ public class DsnCopy {
         copyMap.put("from-dataset", fromDataSetMap);
         copyMap.put("replace", copyInputData.isReplace());
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(copyMap));
 

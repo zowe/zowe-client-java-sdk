@@ -156,7 +156,6 @@ public class UssChangeTag {
         }
         changeTagInputData.getLinks().ifPresent(links -> changeTagMap.put("links", links.getValue()));
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeTagMap));
 

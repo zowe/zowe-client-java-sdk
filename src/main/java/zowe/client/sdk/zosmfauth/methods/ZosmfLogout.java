@@ -79,7 +79,6 @@ public class ZosmfLogout {
         ValidateUtils.checkNullParameter(token, "token");
         final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;
 
-
         request.setUrl(url);
 
         return request.executeRequest();

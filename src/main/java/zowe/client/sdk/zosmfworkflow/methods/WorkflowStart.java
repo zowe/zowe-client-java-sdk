@@ -94,7 +94,6 @@ public class WorkflowStart {
                 EncodeUtils.encodeURIComponent(startInputData.getWorkflowKey()) +
                 WorkflowConstants.OPERATIONS_START;
 
-
         request.setUrl(url);
 
         request.setBody(JsonUtils.asRequestBodyJson(startInputData));

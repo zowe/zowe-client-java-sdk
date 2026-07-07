@@ -134,7 +134,6 @@ public class WorkflowList {
         listInputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
         listInputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
 
-
         request.setUrl(url.toString());
 
         final String responsePhrase = request.executeRequest()

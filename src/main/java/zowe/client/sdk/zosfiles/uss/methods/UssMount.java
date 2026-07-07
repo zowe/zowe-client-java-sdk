@@ -134,7 +134,6 @@ public class UssMount {
         mountInputData.getFsType().ifPresent(str -> mountMap.put("fs-type", str));
         mountInputData.getMode().ifPresent(str -> mountMap.put("mode", str.getValue()));
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(mountMap));
 

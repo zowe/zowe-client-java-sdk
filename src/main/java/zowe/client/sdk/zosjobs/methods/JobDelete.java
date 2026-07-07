@@ -138,7 +138,6 @@ public class JobDelete {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-
         request.setHeaders(headers);
         request.setUrl(url);
 

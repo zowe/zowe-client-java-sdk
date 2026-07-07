@@ -93,7 +93,6 @@ public class TsoStart {
                 "&" + "cols" + "=" + inputData.getColumns().orElse(TsoConstants.DEFAULT_COLS) +
                 "&" + "rsize" + "=" + inputData.getRegionSize().orElse(TsoConstants.DEFAULT_RSIZE);
 
-
         request.setUrl(url);
         request.setBody("");
 

@@ -118,8 +118,6 @@ public class UssList {
             url.append("&symlinks=report");
         }
 
-
-
         final int maxLength = listInputData.getMaxLength().orElse(0);
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
@@ -160,8 +158,6 @@ public class UssList {
 
         listZfsInputData.getFsname().ifPresent(fsname ->
                 url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
-
-
 
         final int maxLength = listZfsInputData.getMaxLength().orElse(0);
         if (maxLength > 0) {

@@ -84,7 +84,6 @@ public class TsoReply {
                 UrlConstants.URL_PATH_DELIM +
                 sessionId;
 
-
         request.setUrl(url);
         request.setBody("");
 

@@ -123,7 +123,6 @@ public class UssMove {
         moveMap.put("from", FileUtils.validatePath(fromPath));
         moveMap.put("overwrite", overwrite);
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(moveMap));
 

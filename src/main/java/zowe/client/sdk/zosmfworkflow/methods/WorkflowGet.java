@@ -137,8 +137,6 @@ public class WorkflowGet {
             url.append("&returnData=").append(returnData);
         }
 
-
-
         request.setUrl(url.toString());
 
         final String responsePhrase = request.executeRequest()
@@ -203,8 +201,6 @@ public class WorkflowGet {
         if (!returnData.isEmpty()) {
             url.append("?returnData=").append(returnData);
         }
-
-
 
         request.setUrl(url.toString());
 

@@ -98,7 +98,6 @@ public class UssChangeMode {
         changeModeMap.put("mode", changeModeInputData.getMode()
                 .orElseThrow(() -> new IllegalArgumentException("mode not specified")));
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeModeMap));
 

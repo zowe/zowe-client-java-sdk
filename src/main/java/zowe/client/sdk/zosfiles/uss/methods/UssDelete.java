@@ -93,8 +93,6 @@ public class UssDelete {
                 ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-
-
         if (recursive) {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
@@ -119,7 +117,6 @@ public class UssDelete {
                 ZosFilesConstants.RES_ZFS_FILES +
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName);
-
 
         request.setUrl(url);
 

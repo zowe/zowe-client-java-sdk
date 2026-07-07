@@ -142,7 +142,6 @@ public class DsnRename {
 
         renameMap.put("from-dataset", fromDataSetReq);
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(renameMap));
 

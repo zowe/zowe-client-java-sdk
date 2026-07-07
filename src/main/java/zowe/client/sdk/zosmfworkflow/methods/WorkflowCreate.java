@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -100,7 +99,6 @@ public class WorkflowCreate {
         ValidateUtils.checkIllegalParameter(createInputData.getOwner(), "owner");
 
         final String url = connection.getZosmfUrl() + WorkflowConstants.WORKFLOWS_RESOURCE;
-
 
         request.setUrl(url);
 

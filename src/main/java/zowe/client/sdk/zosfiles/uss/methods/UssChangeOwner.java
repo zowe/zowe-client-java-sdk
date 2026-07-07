@@ -110,7 +110,6 @@ public class UssChangeOwner {
         final String errMsg = "owner not specified";
         changeOnerMap.put("owner", changeOwnerInputData.getOwner().orElseThrow(() -> new IllegalStateException(errMsg)));
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeOnerMap));
 

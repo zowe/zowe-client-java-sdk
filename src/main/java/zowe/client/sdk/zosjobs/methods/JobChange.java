@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -138,7 +137,6 @@ public class JobChange {
         changeMap.put("class", modifyInputData.getJobClass().get());
         changeMap.put("version", version);
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeMap));
 
@@ -208,7 +206,6 @@ public class JobChange {
         holdMap.put("request", "hold");
         holdMap.put("version", version);
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(holdMap));
 
@@ -277,7 +274,6 @@ public class JobChange {
         final Map<String, String> releaseMap = new HashMap<>();
         releaseMap.put("request", "release");
         releaseMap.put("version", version);
-
 
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(releaseMap));

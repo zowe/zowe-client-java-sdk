@@ -99,7 +99,6 @@ public class DsnWrite {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
-
         request.setUrl(url);
         request.setBody(content);
 

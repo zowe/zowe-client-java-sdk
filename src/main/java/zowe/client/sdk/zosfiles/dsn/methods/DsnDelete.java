@@ -94,7 +94,6 @@ public class DsnDelete {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
-
         request.setUrl(url);
 
         return request.executeRequest();

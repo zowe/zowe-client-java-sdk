@@ -168,7 +168,6 @@ public class DsnGet {
         }
         headers.put(key, value);
 
-
         request.setHeaders(headers);
         request.setUrl(url);
 

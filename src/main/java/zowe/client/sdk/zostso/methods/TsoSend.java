@@ -84,7 +84,6 @@ public class TsoSend {
                 TsoConstants.RES_DONT_READ_REPLY;
         final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
 
-
         request.setUrl(url);
         request.setBody(body);
 

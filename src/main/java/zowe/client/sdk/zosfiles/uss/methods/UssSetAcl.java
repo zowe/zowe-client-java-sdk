@@ -170,7 +170,6 @@ public class UssSetAcl {
         setAclInputData.getModify().ifPresent(modify -> setAclMap.put("modify", modify));
         setAclInputData.getDelete().ifPresent(delete -> setAclMap.put("delete", delete));
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(setAclMap));
 

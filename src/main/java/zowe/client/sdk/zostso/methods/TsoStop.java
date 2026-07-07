@@ -85,7 +85,6 @@ public class TsoStop {
                 UrlConstants.URL_PATH_DELIM +
                 sessionId;
 
-
         request.setUrl(url);
 
         final String responseStr = TsoUtils.getResponseStr(request);

@@ -150,7 +150,6 @@ public class UssExtAttr {
                 ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(jsonMap));
 

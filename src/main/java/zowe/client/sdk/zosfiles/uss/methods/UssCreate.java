@@ -94,7 +94,6 @@ public class UssCreate {
         createMap.put("type", createInputData.getType().getValue());
         createMap.put("mode", createInputData.getMode());
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(createMap));
 
@@ -153,8 +152,6 @@ public class UssCreate {
             createZfsMap.put("volumes", "[" + volumesStr.substring(0, volumesStr.length() - 1) + "]");
         }
         createZfsMap.put("JSONversion", 1);
-
-
 
         request.setUrl(url.toString());
         request.setBody(JsonUtils.asRequestBodyJson(createZfsMap));

@@ -103,7 +103,6 @@ public class DsnCreate {
         createInputData.getDataclass().ifPresent(v -> createMap.put("dataclass", v));
         createInputData.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(createMap));
 

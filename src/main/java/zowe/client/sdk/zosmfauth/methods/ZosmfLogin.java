@@ -77,7 +77,6 @@ public class ZosmfLogin {
     public ZosmfLoginResponse login() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;
 
-
         request.setUrl(url);
         request.setBody("");
 

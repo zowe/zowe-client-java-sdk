@@ -89,8 +89,6 @@ public class ZosmfPassword {
         passwordMap.put("oldPwd", pwdInputData.getOldPwd());
         passwordMap.put("newPwd", pwdInputData.getNewPwd());
 
-
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(passwordMap));
 

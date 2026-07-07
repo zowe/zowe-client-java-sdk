@@ -130,7 +130,6 @@ public class UssGetAcl {
             getAclMap.put("suppress-baseacl", getAclInputData.getSuppressBaseAcl());
         }
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(getAclMap));
 

@@ -113,7 +113,6 @@ public class UssCopy {
             copyMap.put("recursive", "true");
         }
 
-
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(copyMap));
 

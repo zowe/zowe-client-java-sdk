@@ -109,8 +109,6 @@ public class WorkflowDelete {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey);
 
-
-
         request.setUrl(url);
         return request.executeRequest();
     }

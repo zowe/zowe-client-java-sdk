@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosconsole.methods;
 
-
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.UrlConstants;
@@ -140,7 +139,6 @@ public class ConsoleCmd {
                 EncodeUtils.encodeURIComponent(consoleName);
 
         final Map<String, String> issueMap = getIssueMap(consoleInputData);
-
 
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(issueMap));

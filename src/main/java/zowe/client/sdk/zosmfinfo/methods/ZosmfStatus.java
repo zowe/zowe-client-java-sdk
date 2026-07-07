@@ -81,7 +81,6 @@ public class ZosmfStatus {
     public ZosmfInfoResponse get() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + ZosmfConstants.INFO;
 
-
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()
