@@ -38,7 +38,7 @@ public class DsnList {
     private static final Logger LOG = LoggerFactory.getLogger(DsnList.class);
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnList constructor
@@ -49,6 +49,7 @@ public class DsnList {
     public DsnList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -222,9 +223,7 @@ public class DsnList {
     private Response getResponse(final DsnListInputData listInputData, final Map<String, String> headers, final String url)
             throws ZosmfRequestException {
         setHeaders(listInputData, headers);
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
+
         request.setHeaders(headers);
         request.setUrl(url);
 

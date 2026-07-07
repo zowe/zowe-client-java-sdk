@@ -35,7 +35,7 @@ import java.util.Map;
 public class UssChangeOwner {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssChangeOwner constructor
@@ -46,6 +46,7 @@ public class UssChangeOwner {
     public UssChangeOwner(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -109,9 +110,6 @@ public class UssChangeOwner {
         final String errMsg = "owner not specified";
         changeOnerMap.put("owner", changeOwnerInputData.getOwner().orElseThrow(() -> new IllegalStateException(errMsg)));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeOnerMap));
 

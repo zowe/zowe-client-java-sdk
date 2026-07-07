@@ -32,7 +32,7 @@ import zowe.client.sdk.zostso.response.TsoCommonResponse;
 public class TsoStop {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -44,6 +44,7 @@ public class TsoStop {
     public TsoStop(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -84,9 +85,6 @@ public class TsoStop {
                 UrlConstants.URL_PATH_DELIM +
                 sessionId;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
         request.setUrl(url);
 
         final String responseStr = TsoUtils.getResponseStr(request);

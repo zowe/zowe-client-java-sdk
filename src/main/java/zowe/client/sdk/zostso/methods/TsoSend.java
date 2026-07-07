@@ -29,7 +29,7 @@ import zowe.client.sdk.zostso.TsoConstants;
 public class TsoSend {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * TsoSend constructor
@@ -40,6 +40,7 @@ public class TsoSend {
     public TsoSend(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -83,9 +84,6 @@ public class TsoSend {
                 TsoConstants.RES_DONT_READ_REPLY;
         final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
 
-        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(body);
 

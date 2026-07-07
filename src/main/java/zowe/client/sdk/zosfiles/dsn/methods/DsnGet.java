@@ -40,7 +40,7 @@ import java.util.stream.IntStream;
 public class DsnGet {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnGet Constructor
@@ -51,6 +51,7 @@ public class DsnGet {
     public DsnGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
     }
 
     /**
@@ -167,9 +168,6 @@ public class DsnGet {
         }
         headers.put(key, value);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
-        }
         request.setHeaders(headers);
         request.setUrl(url);
 

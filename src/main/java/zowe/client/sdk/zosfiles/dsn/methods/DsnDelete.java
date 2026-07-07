@@ -27,7 +27,7 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 public class DsnDelete {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnDelete Constructor
@@ -38,6 +38,7 @@ public class DsnDelete {
     public DsnDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -93,9 +94,6 @@ public class DsnDelete {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
         request.setUrl(url);
 
         return request.executeRequest();

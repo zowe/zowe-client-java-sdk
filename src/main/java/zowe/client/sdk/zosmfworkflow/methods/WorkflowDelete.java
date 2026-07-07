@@ -30,7 +30,7 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 public class WorkflowDelete {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * WorkflowDelete constructor.
@@ -41,6 +41,7 @@ public class WorkflowDelete {
     public WorkflowDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -107,10 +108,6 @@ public class WorkflowDelete {
                 (!isArchived ? WorkflowConstants.WORKFLOWS_RESOURCE : WorkflowConstants.ARCHIVED_WORKFLOWS_RESOURCE) +
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey);
-
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
 
         request.setUrl(url);
         return request.executeRequest();

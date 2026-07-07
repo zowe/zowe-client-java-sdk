@@ -37,7 +37,7 @@ import java.util.Map;
 public class UssCopy {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssCopy Constructor
@@ -48,6 +48,7 @@ public class UssCopy {
     public UssCopy(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -112,9 +113,6 @@ public class UssCopy {
             copyMap.put("recursive", "true");
         }
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(copyMap));
 

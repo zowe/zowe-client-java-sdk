@@ -31,7 +31,7 @@ import java.util.Map;
 public class DsnRename {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     private String url;
 
     /**
@@ -43,6 +43,7 @@ public class DsnRename {
     public DsnRename(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -141,9 +142,6 @@ public class DsnRename {
 
         renameMap.put("from-dataset", fromDataSetReq);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(renameMap));
 

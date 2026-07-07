@@ -33,7 +33,7 @@ public class JobDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobDelete.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DeleteJobs constructor.
@@ -44,6 +44,7 @@ public class JobDelete {
     public JobDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -137,9 +138,6 @@ public class JobDelete {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
         request.setHeaders(headers);
         request.setUrl(url);
 

@@ -37,7 +37,7 @@ public class ZosmfStatus {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * CheckStatus Constructor.
@@ -48,6 +48,7 @@ public class ZosmfStatus {
     public ZosmfStatus(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -80,9 +81,6 @@ public class ZosmfStatus {
     public ZosmfInfoResponse get() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + ZosmfConstants.INFO;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()

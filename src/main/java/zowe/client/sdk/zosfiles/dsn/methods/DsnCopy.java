@@ -32,7 +32,7 @@ import java.util.Map;
 public class DsnCopy {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnCopy constructor
@@ -43,6 +43,7 @@ public class DsnCopy {
     public DsnCopy(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -116,9 +117,6 @@ public class DsnCopy {
         copyMap.put("from-dataset", fromDataSetMap);
         copyMap.put("replace", copyInputData.isReplace());
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(copyMap));
 

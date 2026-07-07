@@ -42,7 +42,7 @@ public class WorkflowList {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final String ARCHIVED_CONTEXT = "getArchivedCommon";
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * WorkflowList constructor.
@@ -53,6 +53,7 @@ public class WorkflowList {
     public WorkflowList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -133,9 +134,6 @@ public class WorkflowList {
         listInputData.getOrderBy().ifPresent(orderBy -> url.append("?orderBy=").append(orderBy.getValue()));
         listInputData.getView().ifPresent(view -> url.append("&view=").append(view.getValue()));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
         request.setUrl(url.toString());
 
         final String responsePhrase = request.executeRequest()

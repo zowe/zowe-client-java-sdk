@@ -32,7 +32,7 @@ import java.util.Map;
 public class DsnCreate {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnCreate Constructor
@@ -43,6 +43,7 @@ public class DsnCreate {
     public DsnCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -102,9 +103,6 @@ public class DsnCreate {
         createInputData.getDataclass().ifPresent(v -> createMap.put("dataclass", v));
         createInputData.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(createMap));
 

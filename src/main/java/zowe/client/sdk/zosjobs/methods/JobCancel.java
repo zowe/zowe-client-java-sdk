@@ -35,7 +35,7 @@ public class JobCancel {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobCancel.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * CancelJobs constructor.
@@ -46,6 +46,7 @@ public class JobCancel {
     public JobCancel(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -147,9 +148,6 @@ public class JobCancel {
         cancelMap.put("request", JobsConstants.REQUEST_CANCEL);
         cancelMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setBody(JsonUtils.asRequestBodyJson(cancelMap));
         request.setUrl(url);
 

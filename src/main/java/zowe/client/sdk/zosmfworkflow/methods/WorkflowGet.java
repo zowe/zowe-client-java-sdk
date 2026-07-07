@@ -41,7 +41,7 @@ public class WorkflowGet {
     private static final String DEFINITION_CONTEXT = "getDefinitionCommon";
     private static final String PROPERTIES_CONTEXT = "getPropertiesCommon";
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * WorkflowGet constructor.
@@ -52,6 +52,7 @@ public class WorkflowGet {
     public WorkflowGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -136,10 +137,6 @@ public class WorkflowGet {
             url.append("&returnData=").append(returnData);
         }
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
-
         request.setUrl(url.toString());
 
         final String responsePhrase = request.executeRequest()
@@ -203,10 +200,6 @@ public class WorkflowGet {
         );
         if (!returnData.isEmpty()) {
             url.append("?returnData=").append(returnData);
-        }
-
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
         }
 
         request.setUrl(url.toString());

@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -42,7 +41,7 @@ public class JobChange {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobChange.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * JobChange constructor.
@@ -53,6 +52,7 @@ public class JobChange {
     public JobChange(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -137,9 +137,6 @@ public class JobChange {
         changeMap.put("class", modifyInputData.getJobClass().get());
         changeMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(changeMap));
 
@@ -209,9 +206,6 @@ public class JobChange {
         holdMap.put("request", "hold");
         holdMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(holdMap));
 
@@ -281,9 +275,6 @@ public class JobChange {
         releaseMap.put("request", "release");
         releaseMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(releaseMap));
 

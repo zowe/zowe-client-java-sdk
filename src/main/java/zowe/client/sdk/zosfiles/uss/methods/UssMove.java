@@ -36,7 +36,7 @@ import java.util.Map;
 public class UssMove {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssMove Constructor
@@ -47,6 +47,7 @@ public class UssMove {
     public UssMove(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -122,9 +123,6 @@ public class UssMove {
         moveMap.put("from", FileUtils.validatePath(fromPath));
         moveMap.put("overwrite", overwrite);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(moveMap));
 

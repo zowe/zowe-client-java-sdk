@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 public class UssExtAttr {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssCopy Constructor
@@ -50,6 +50,7 @@ public class UssExtAttr {
     public UssExtAttr(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -149,9 +150,6 @@ public class UssExtAttr {
                 ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(jsonMap));
 

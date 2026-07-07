@@ -31,7 +31,7 @@ import java.util.Map;
 public class UssDelete {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssDelete Constructor
@@ -42,6 +42,7 @@ public class UssDelete {
     public UssDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -92,10 +93,6 @@ public class UssDelete {
                 ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
-
         if (recursive) {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
@@ -121,9 +118,6 @@ public class UssDelete {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
         request.setUrl(url);
 
         return request.executeRequest();
