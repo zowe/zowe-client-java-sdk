@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosconsole.methods;
 
 import kong.unirest.core.Cookie;
-import zowe.client.sdk.utility.JsonUtils;
+import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -116,7 +116,7 @@ public class ConsoleGetTest {
         );
 
         Mockito.when(mockJsonGetRequestAuth.executeRequest()).thenReturn(
-                new Response(JsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
         );
 
         // Enable real header and URL handling
@@ -139,11 +139,11 @@ public class ConsoleGetTest {
 
 
     @Test
-    public void tstConsoleGetResponseSuccess() throws ZosmfRequestException {
+    public void tstConsoleGetResponseSuccess() throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "LINE1\rLINE2");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(JsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"LINE1\\rLINE2\" }")
         );
         ConsoleGet consoleGet = new ConsoleGet(connection, mockJsonGetRequest);
         ConsoleGetResponse response = consoleGet.getResponse("respKey");
@@ -151,11 +151,11 @@ public class ConsoleGetTest {
     }
 
     @Test
-    public void tstConsoleGetResponseBlankContentSuccess() throws ZosmfRequestException {
+    public void tstConsoleGetResponseBlankContentSuccess() throws Exception {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("cmd-response", "");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(JsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"\" }")
+                new Response(TestJsonUtils.toJsonString(jsonMap), 200, "{ \"cmd-response\": \"\" }")
         );
         ConsoleGet consoleGet = new ConsoleGet(connection, mockJsonGetRequest);
         ConsoleGetResponse response = consoleGet.getResponse("respKey");

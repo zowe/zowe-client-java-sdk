@@ -120,24 +120,4 @@ public final class JsonUtils {
         }
     }
 
-    /**
-     * Serialize a {@code Map<String, String>} to a JSON string using Jackson.
-     * <p>
-     * Keys are sorted alphabetically to ensure deterministic output, making
-     * this a safe replacement for {@code new JSONObject(map).toString()}.
-     * </p>
-     *
-     * @param map the map to serialize
-     * @return JSON string representation
-     * @throws ZosmfRequestException if serialization fails
-     */
-    public static String toJsonString(final Map<String, String> map) throws ZosmfRequestException {
-        try {
-            return objectMapper.writeValueAsString(new TreeMap<>(map));
-        } catch (JsonProcessingException e) {
-            LOG.debug("json serialization error", e);
-            throw new ZosmfRequestException("json serialization error: " + e.getMessage(), e);
-        }
-    }
-
 }
