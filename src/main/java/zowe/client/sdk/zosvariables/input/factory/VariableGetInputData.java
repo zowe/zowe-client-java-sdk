@@ -12,6 +12,7 @@ package zowe.client.sdk.zosvariables.input.factory;
 
 import java.util.List;
 import java.util.Optional;
+import zowe.client.sdk.zosvariables.type.VariableType;
 
 /**
  * Parameter container class for z/OS system variables GET operation.

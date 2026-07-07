@@ -10,6 +10,7 @@
 
 package zowe.client.sdk.zosvariables.input.factory;
 
+import zowe.client.sdk.zosvariables.type.VariableType;
 import java.util.List;
 
 /**
