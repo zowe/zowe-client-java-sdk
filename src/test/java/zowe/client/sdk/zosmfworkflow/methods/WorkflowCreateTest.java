@@ -9,10 +9,10 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-import kong.unirest.core.Cookie;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -34,8 +34,6 @@ import zowe.client.sdk.zosmfworkflow.response.WorkflowCreateResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -140,12 +138,12 @@ public class WorkflowCreateTest {
         assertEquals("ZOSMFAD", requestBody.get("workflowArchiveSAFID").asText());
         assertEquals("This workflow was created through the z/OSMF workflow services REST interface.",
                 requestBody.get("comments").asText());
-        assertEquals(false, requestBody.get("assignToOwner").asBoolean());
+        assertFalse(requestBody.get("assignToOwner").asBoolean());
         assertEquals("Restricted", requestBody.get("accessType").asText());
         assertEquals("ACCT123", requestBody.get("accountInfo").asText());
-        assertEquals(true, requestBody.get("deleteCompletedJobs").asBoolean());
+        assertTrue(requestBody.get("deleteCompletedJobs").asBoolean());
         assertEquals("/u/IBMUSER/jobFiles", requestBody.get("jobsOutputDirectory").asText());
-        assertEquals(true, requestBody.get("autoDeleteOnCompletion").asBoolean());
+        assertTrue(requestBody.get("autoDeleteOnCompletion").asBoolean());
         assertEquals("remoteuser", requestBody.get("targetSystemuid").asText());
         assertEquals("remotepwd", requestBody.get("targetSystempwd").asText());
 

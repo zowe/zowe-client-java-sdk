@@ -12,7 +12,6 @@ package zowe.client.sdk.zosconsole.methods;
 import kong.unirest.core.Cookie;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
-import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -24,6 +23,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.TestJsonUtils;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
 import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 

@@ -182,7 +182,7 @@ class UssSetAclTest {
         final JsonNode body = getRequestBody();
 
         assertEquals("setfacl", body.get("request").asText());
-        assertEquals(true, body.get("abort").asBoolean());
+        assertTrue(body.get("abort").asBoolean());
         assertEquals(LinkType.SUPPRESS.getValue(), body.get("links").asText());
         assertEquals("user:test:rwx", body.get("set").asText());
         assertFalse(body.has("modify"));

@@ -9,9 +9,9 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-import kong.unirest.core.Cookie;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -76,7 +76,7 @@ public class WorkflowStartTest {
                 mockPutRequest.getUrl());
         assertEquals("outputFileValue", requestBody.get("resolveConflictByUsing").asText());
         assertEquals("Step1", requestBody.get("stepName").asText());
-        assertEquals(true, requestBody.get("performSubsequent").asBoolean());
+        assertTrue(requestBody.get("performSubsequent").asBoolean());
         assertEquals("https://example.com/notification", requestBody.get("notificationUrl").asText());
         assertEquals("remoteuser", requestBody.get("targetSystemuid").asText());
         assertEquals("remotepwd", requestBody.get("targetSystempwd").asText());

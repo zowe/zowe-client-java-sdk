@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
-import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +17,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.TestJsonUtils;
 import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 import zowe.client.sdk.zosjobs.model.Job;
 import zowe.client.sdk.zosjobs.response.JobFeedback;

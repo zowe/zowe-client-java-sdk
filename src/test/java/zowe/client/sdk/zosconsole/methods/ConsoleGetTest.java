@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosconsole.methods;
 
 import kong.unirest.core.Cookie;
-import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,7 +18,7 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.TestJsonUtils;
 import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
 
 import java.util.HashMap;

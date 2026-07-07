@@ -9,9 +9,9 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-import kong.unirest.core.Cookie;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

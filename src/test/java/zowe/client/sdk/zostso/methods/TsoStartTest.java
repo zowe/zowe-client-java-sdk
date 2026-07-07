@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zostso.methods;
 
-import zowe.client.sdk.utility.TestJsonUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.TestJsonUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
