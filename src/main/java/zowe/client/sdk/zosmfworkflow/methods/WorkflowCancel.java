@@ -14,8 +14,10 @@ import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowCancelResponse;
 
 /**
  * Provides cancel workflow functionality through the z/OSMF workflow REST API.
@@ -26,6 +28,8 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
  * @version 7.0
  */
 public class WorkflowCancel {
+
+    private static final String CANCEL_CONTEXT = "cancel";
 
     private final ZosConnection connection;
     private ZosmfRequest request;
@@ -67,10 +71,10 @@ public class WorkflowCancel {
      * A canceled workflow cannot be resumed.
      *
      * @param workflowKey workflow key identifying the workflow to cancel
-     * @return http response object
+     * @return WorkflowCancelResponse object containing the canceled workflow name
      * @throws ZosmfRequestException request error state
      */
-    public Response cancel(final String workflowKey) throws ZosmfRequestException {
+    public WorkflowCancelResponse cancel(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");
 
         final String url = connection.getZosmfUrl() +
@@ -83,9 +87,13 @@ public class WorkflowCancel {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
-        request.setBody("{}");
 
-        return request.executeRequest();
+        final String responsePhrase = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no workflow cancel response phrase"))
+                .toString();
+
+        return JsonUtils.parseResponse(responsePhrase, WorkflowCancelResponse.class, CANCEL_CONTEXT);
     }
 
 }
