@@ -17,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Utility class contains helper methods for JSON parse processing.
