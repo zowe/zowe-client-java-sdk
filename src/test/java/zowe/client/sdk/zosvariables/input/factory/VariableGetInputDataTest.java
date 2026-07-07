@@ -23,12 +23,12 @@ public class VariableGetInputDataTest {
 
     @Test
     public void tstVariableGetInputDataBuilderSystemSuccess() {
-        VariableGetInputData input = new VariableGetInputData.Builder().setSysplexName("PLEX1").setSystemName("SYS1").setVariableNames(Arrays.asList("VAR1", "VAR2")).setVariableType("system").setLocal(false).build();
+        VariableGetInputData input = new VariableGetInputData.Builder().setSysplexName("PLEX1").setSystemName("SYS1").setVariableNames(Arrays.asList("VAR1", "VAR2")).setVariableType(VariableType.VARIABLE).setLocal(false).build();
 
         assertEquals("PLEX1", input.getSysplexName().orElse(null));
         assertEquals("SYS1", input.getSystemName().orElse(null));
         assertEquals(Arrays.asList("VAR1", "VAR2"), input.getVariableNames().orElse(null));
-        assertEquals("system", input.getVariableType().orElse(null));
+        assertEquals(VariableType.VARIABLE, input.getVariableType().orElse(null));
         assertFalse(input.isLocal());
     }
 

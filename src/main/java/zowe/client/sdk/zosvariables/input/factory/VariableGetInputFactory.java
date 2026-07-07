@@ -30,47 +30,87 @@ public final class VariableGetInputFactory {
     }
 
     /**
-     * Create input data for retrieving variables from a specified system.
+     * Create input for z/OS variables.
      *
      * @param sysplexName sysplex name
      * @param systemName system name
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createSystemInput(final String sysplexName, final String systemName) {
-        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setLocal(false).build();
+    public static VariableGetInputData createGetInputForZosVariable(final String sysplexName, final String systemName) {
+        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableType(VariableType.VARIABLE).setLocal(false).build();
     }
 
     /**
-     * Create input data for retrieving variables from a specified system with optional filters.
+     * Create input for z/OS variables with filters.
      *
      * @param sysplexName sysplex name
      * @param systemName system name
-     * @param variableNames variable names to retrieve
-     * @param variableType variable type filter
+     * @param variableNames variable names
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createSystemInput(final String sysplexName, final String systemName, final List<String> variableNames, final String variableType) {
-        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableNames(variableNames).setVariableType(variableType).setLocal(false).build();
+    public static VariableGetInputData createGetInputForZosVariable(final String sysplexName, final String systemName, final List<String> variableNames) {
+        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableNames(variableNames).setVariableType(VariableType.VARIABLE).setLocal(false).build();
     }
 
     /**
-     * Create input data for retrieving variables from the local system.
+     * Create input for z/OSMF symbols.
      *
+     * @param sysplexName sysplex name
+     * @param systemName system name
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createLocalInput() {
-        return new VariableGetInputData.Builder().setLocal(true).build();
+    public static VariableGetInputData createGetInputForZosmfSymbol(final String sysplexName, final String systemName) {
+        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableType(VariableType.SYMBOL).setLocal(false).build();
     }
 
     /**
-     * Create input data for retrieving variables from the local system with optional filters.
+     * Create input for z/OSMF symbols with filters.
      *
-     * @param variableNames variable names to retrieve
-     * @param variableType variable type filter
+     * @param sysplexName sysplex name
+     * @param systemName system name
+     * @param variableNames variable names
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createLocalInput(final List<String> variableNames, final String variableType) {
-        return new VariableGetInputData.Builder().setLocal(true).setVariableNames(variableNames).setVariableType(variableType).build();
+    public static VariableGetInputData createGetInputForZosmfSymbol(final String sysplexName, final String systemName, final List<String> variableNames) {
+        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableNames(variableNames).setVariableType(VariableType.SYMBOL).setLocal(false).build();
+    }
+
+    /**
+     * Create local z/OS variable input.
+     *
+     * @return VariableGetInputData
+     */
+    public static VariableGetInputData createGetInputForZosVariableLocal() {
+        return new VariableGetInputData.Builder().setVariableType(VariableType.VARIABLE).setLocal(true).build();
+    }
+
+    /**
+     * Create local z/OS variable input with filters.
+     *
+     * @param variableNames variable names
+     * @return VariableGetInputData
+     */
+    public static VariableGetInputData createGetInputForZosVariableLocal(final List<String> variableNames) {
+        return new VariableGetInputData.Builder().setVariableNames(variableNames).setVariableType(VariableType.VARIABLE).setLocal(true).build();
+    }
+
+    /**
+     * Create local z/OSMF symbol input.
+     *
+     * @return VariableGetInputData
+     */
+    public static VariableGetInputData createGetInputForZosmfSymbolLocal() {
+        return new VariableGetInputData.Builder().setVariableType(VariableType.SYMBOL).setLocal(true).build();
+    }
+
+    /**
+     * Create local z/OSMF symbol input with filters.
+     *
+     * @param variableNames variable names
+     * @return VariableGetInputData
+     */
+    public static VariableGetInputData createGetInputForZosmfSymbolLocal(final List<String> variableNames) {
+        return new VariableGetInputData.Builder().setVariableNames(variableNames).setVariableType(VariableType.SYMBOL).setLocal(true).build();
     }
 
 }

@@ -46,7 +46,7 @@ public class VariableGetInputData {
     /**
      * Optional variable type filter.
      */
-    private final String variableType;
+    private final VariableType variableType;
 
     /**
      * VariableGetInputData constructor.
@@ -102,7 +102,7 @@ public class VariableGetInputData {
      *
      * @return optional variable type
      */
-    public Optional<String> getVariableType() {
+    public Optional<VariableType> getVariableType() {
         return Optional.ofNullable(variableType);
     }
 
@@ -134,7 +134,7 @@ public class VariableGetInputData {
         /**
          * Variable type.
          */
-        private String variableType;
+        private VariableType variableType;
 
         /**
          * Create a new Builder instance.
@@ -192,7 +192,7 @@ public class VariableGetInputData {
          * @param variableType variable type
          * @return VariableGetInputData.Builder
          */
-        Builder setVariableType(final String variableType) {
+        Builder setVariableType(final VariableType variableType) {
             this.variableType = variableType;
             return this;
         }

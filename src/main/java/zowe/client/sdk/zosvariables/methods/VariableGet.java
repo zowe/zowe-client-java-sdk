@@ -104,43 +104,40 @@ public class VariableGet {
             url.append(connection.getZosmfUrl()).append(VariableConstants.RESOURCE).append(UrlConstants.URL_PATH_DELIM).append("local");
 
         } else {
+            url.append(connection.getZosmfUrl()).append(VariableConstants.RESOURCE).append(UrlConstants.URL_PATH_DELIM);
 
-            final String sysplexName = inputData.getSysplexName().orElse(null);
-            final String systemName = inputData.getSystemName().orElse(null);
+            inputData.getSysplexName().ifPresentOrElse(sysplexName -> {ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
+                        url.append(EncodeUtils.encodeURIComponent(sysplexName));
+                        }, () -> ValidateUtils.checkIllegalParameter(null, "sysplexName"));
+                        url.append(".");
 
-            ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
-            ValidateUtils.checkIllegalParameter(systemName, "systemName");
-
-            url.append(connection.getZosmfUrl())
-                    .append(VariableConstants.RESOURCE)
-                    .append(UrlConstants.URL_PATH_DELIM)
-                    .append(EncodeUtils.encodeURIComponent(sysplexName))
-                    .append(".").append(EncodeUtils.encodeURIComponent(systemName));
+            inputData.getSystemName().ifPresentOrElse(systemName -> {
+                        ValidateUtils.checkIllegalParameter(systemName, "systemName");
+                        url.append(EncodeUtils.encodeURIComponent(systemName));
+                        },() -> ValidateUtils.checkIllegalParameter(null, "systemName"));
         }
 
         boolean first = true;
         final List<String> variableNames = inputData.getVariableNames().orElse(null);
-        if (variableNames != null && !variableNames.isEmpty()) {
 
+        if (variableNames != null && !variableNames.isEmpty()) {
             for (final String variableName : variableNames) {
-                ValidateUtils.checkIllegalParameter(variableName, "variableName");
                 url.append(first ? "?" : "&");
                 first = false;
                 url.append("var-name=").append(EncodeUtils.encodeURIComponent(variableName));
             }
         }
 
-        final String variableType = inputData.getVariableType().orElse(null);
-
-        if (variableType != null && !variableType.trim().isEmpty()) {
+        if (inputData.getVariableType().isPresent()) {
             url.append(first ? "?" : "&");
-            url.append("variable-type=").append(EncodeUtils.encodeURIComponent(variableType));
+            url.append("source=").append(inputData.getVariableType().get().getValue());
         }
 
         request.setUrl(url.toString());
-        final String response = request.executeRequest().getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase")).toString();
 
+        final String response = request.executeRequest().getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase")).toString();
         return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
+
     }
 
 }
