@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosvariables.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -46,7 +45,7 @@ public class VariableExportTest {
     public void init() throws ZosmfRequestException {
         mockPostRequest = Mockito.mock(PostJsonZosmfRequest.class);
         Mockito.when(mockPostRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 204, "No Content"));
+                new Response("{}", 204, "No Content"));
         doCallRealMethod().when(mockPostRequest).setUrl(any());
         doCallRealMethod().when(mockPostRequest).getUrl();
         doCallRealMethod().when(mockPostRequest).setBody(any());
@@ -54,7 +53,7 @@ public class VariableExportTest {
         mockPostRequestToken = Mockito.mock(PostJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPostRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 204, "No Content"));
+                new Response("{}", 204, "No Content"));
         doCallRealMethod().when(mockPostRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPostRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockPostRequestToken).setUrl(any());

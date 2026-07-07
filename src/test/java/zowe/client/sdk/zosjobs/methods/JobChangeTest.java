@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
+import zowe.client.sdk.utility.JsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -66,7 +66,7 @@ public class JobChangeTest {
         mockPutJsonZosmfRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPutJsonZosmfRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setUrl(any());
@@ -109,7 +109,7 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -144,7 +144,7 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequestToken).setUrl(anyString());
-        verify(mockPutJsonZosmfRequestToken).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequestToken).setBody(JsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequestToken).executeRequest();
     }
 
@@ -174,7 +174,7 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -201,7 +201,7 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -230,7 +230,7 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -257,7 +257,7 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequestToken).setUrl(anyString());
-        verify(mockPutJsonZosmfRequestToken).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequestToken).setBody(JsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequestToken).executeRequest();
     }
 
@@ -275,7 +275,7 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -295,7 +295,7 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -313,7 +313,7 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -333,7 +333,7 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -362,7 +362,7 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(JsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
@@ -389,7 +389,7 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequestToken).setUrl(anyString());
-        verify(mockPutJsonZosmfRequestToken).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequestToken).setBody(JsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequestToken).executeRequest();
     }
 

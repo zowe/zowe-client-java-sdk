@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -51,14 +50,14 @@ public class UssCreateTest {
     public void init() throws ZosmfRequestException {
         mockJsonPostRequest = Mockito.mock(PostJsonZosmfRequest.class);
         Mockito.when(mockJsonPostRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonPostRequest).setUrl(any());
         doCallRealMethod().when(mockJsonPostRequest).getUrl();
 
         mockJsonPostRequestToken = Mockito.mock(PostJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonPostRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonPostRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPostRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonPostRequestToken).setUrl(any());

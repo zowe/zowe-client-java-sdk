@@ -12,7 +12,7 @@ package zowe.client.sdk.zosjobs.methods;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.json.simple.JSONObject;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -150,13 +150,12 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonStatusWithOutStepDataAndSomeEmptyValuesSuccess() throws ZosmfRequestException {
-        final JSONObject jsonResponse = new JSONObject();
+        final ObjectNode jsonResponse = mapper.createObjectNode();
         jsonResponse.put("retcode", "null");
         jsonResponse.put("jobname", "BLSJPRMI");
         jsonResponse.put("status", "ACTIVE");
-        jsonResponse.put("step-data", null);
+        jsonResponse.set("step-data", null);
         jsonResponse.put("owner", "IBMUSER");
         jsonResponse.put("subsystem", "JES2");
         jsonResponse.put("phase", 20);
@@ -196,9 +195,8 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonStatusWithStepDataSuccess() throws ZosmfRequestException {
-        final JSONObject jsonResponse = new JSONObject();
+        final ObjectNode jsonResponse = mapper.createObjectNode();
         jsonResponse.put("retcode", "null");
         jsonResponse.put("jobname", "BLSJPRMI");
         jsonResponse.put("status", "ACTIVE");
@@ -208,7 +206,7 @@ public class JobGetJsonTest {
         jsonResponse.put("jobid", "STC00052");
         jsonResponse.put("url", "https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A");
         jsonResponse.put("phase-name", "Job is on the hard copy queue");
-        jsonResponse.put("step-data", stepDataArray);
+        jsonResponse.set("step-data", stepDataArray);
         jsonResponse.put("owner", "IBMUSER");
         jsonResponse.put("subsystem", "JES2");
         jsonResponse.put("files-url", "https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files");
@@ -260,13 +258,12 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonStatusWithStepDataFlagTrue() throws ZosmfRequestException {
-        final JSONObject jsonResponse = new JSONObject();
+        final ObjectNode jsonResponse = mapper.createObjectNode();
         jsonResponse.put("jobname", "BLSJPRMI");
         jsonResponse.put("jobid", "STC00052");
         jsonResponse.put("status", "ACTIVE");
-        jsonResponse.put("step-data", stepDataArray);
+        jsonResponse.set("step-data", stepDataArray);
 
         final Response response = new Response(jsonResponse, 200, "success");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(response);

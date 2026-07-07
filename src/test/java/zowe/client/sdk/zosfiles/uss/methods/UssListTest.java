@@ -11,7 +11,6 @@ package zowe.client.sdk.zosfiles.uss.methods;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -126,14 +125,14 @@ public class UssListTest {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         mockJsonGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
         mockJsonGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
@@ -248,7 +247,7 @@ public class UssListTest {
     @Test
     public void tstUssListEmptyFileListWithJsonObjectSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
@@ -486,7 +485,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithAllOptionalParamsSuccess() throws Exception {
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
@@ -518,7 +517,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithSizeAndTypeBothSetSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -537,7 +536,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlyTypeNoSizeSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -555,7 +554,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithFilesysTrueSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -573,7 +572,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithSymlinksTrueSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -591,7 +590,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithMaxLengthSuccess() throws Exception {
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
@@ -659,7 +658,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlyGroupSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -677,7 +676,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlyUserSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -695,7 +694,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlyMtimeSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -713,7 +712,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlySizeSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -731,7 +730,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlyNameSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -749,7 +748,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlyPermSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -767,7 +766,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListWithOnlyDepthSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -803,7 +802,7 @@ public class UssListTest {
     @Test
     public void tstUssListZfsListEmptyResponseSuccess() throws Exception {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
@@ -827,7 +826,7 @@ public class UssListTest {
     @Test
     public void tstUssListFileListMissingPathThrowsFailure() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 

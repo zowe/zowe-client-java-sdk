@@ -10,8 +10,8 @@
 package zowe.client.sdk.zosmfworkflow.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -47,13 +47,14 @@ public class WorkflowListTest {
     private final ZosConnection tokenConnection = ZosConnectionFactory
             .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private GetJsonZosmfRequest mockJsonGetRequest;
+    private final ObjectMapper mapper = new ObjectMapper();
     private GetJsonZosmfRequest mockJsonGetRequestToken;
 
     @SuppressWarnings("unchecked")
     @BeforeEach
     public void init() throws ZosmfRequestException {
-        final JSONObject archivedObj = new JSONObject();
-        archivedObj.put("archivedWorkflows", new JSONArray());
+        final ObjectNode archivedObj = mapper.createObjectNode();
+        archivedObj.set("archivedWorkflows", mapper.createArrayNode());
 
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
