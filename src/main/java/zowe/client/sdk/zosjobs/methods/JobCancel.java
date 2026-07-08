@@ -9,13 +9,13 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobModifyInputData;
@@ -29,13 +29,13 @@ import java.util.Map;
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobCancel {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobCancel.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * CancelJobs constructor.
@@ -46,6 +46,7 @@ public class JobCancel {
     public JobCancel(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -122,9 +123,9 @@ public class JobCancel {
         // generate full url request
         final String url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobName().get() +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobId().get();
 
         // set version to default value if none given
@@ -147,10 +148,7 @@ public class JobCancel {
         cancelMap.put("request", JobsConstants.REQUEST_CANCEL);
         cancelMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
-        request.setBody(new JSONObject(cancelMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(cancelMap));
         request.setUrl(url);
 
         // if synchronously response should contain a job document that was canceled and http return code

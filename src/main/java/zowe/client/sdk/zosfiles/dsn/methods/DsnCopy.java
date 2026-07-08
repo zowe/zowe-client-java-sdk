@@ -9,15 +9,12 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnCopyInputData;
@@ -30,12 +27,12 @@ import java.util.Map;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnCopy {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnCopy constructor
@@ -46,6 +43,7 @@ public class DsnCopy {
     public DsnCopy(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -116,14 +114,11 @@ public class DsnCopy {
         final Map<String, Object> fromDataSetMap = setFromDataSetMapValues(copyInputData);
         final Map<String, Object> copyMap = new HashMap<>();
         copyMap.put("request", "copy");
-        copyMap.put("from-dataset", new JSONObject(fromDataSetMap));
+        copyMap.put("from-dataset", fromDataSetMap);
         copyMap.put("replace", copyInputData.isReplace());
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(copyMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(copyMap));
 
         return request.executeRequest();
     }
@@ -140,7 +135,11 @@ public class DsnCopy {
         final String toDataSet = copyInputData.getToDataSet()
                 .orElseThrow(() -> new IllegalArgumentException(toDataSetNameErrMsg));
 
-        String url = connection.getZosmfUrl() + ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
+        String url = connection.getZosmfUrl() +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM;
+
         if (copyInputData.getToVolser().isPresent()) {
             url += "-(" + copyInputData.getToVolser().get() + ")/";
         }

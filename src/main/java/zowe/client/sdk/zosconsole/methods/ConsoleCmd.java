@@ -9,9 +9,9 @@
  */
 package zowe.client.sdk.zosconsole.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -46,7 +46,7 @@ import java.util.Map;
  * are retrieved. This is prebuilt for you via the ConsoleGet class in this package.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ConsoleCmd {
 
@@ -54,7 +54,7 @@ public class ConsoleCmd {
     private static final String SOL_KEY = "sol-key";
     private static final String SYSTEM = "system";
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ConsoleCmd constructor
@@ -65,6 +65,7 @@ public class ConsoleCmd {
     public ConsoleCmd(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -133,16 +134,14 @@ public class ConsoleCmd {
         ValidateUtils.checkNullParameter(consoleInputData, "consoleInputData");
 
         final String url = connection.getZosmfUrl() +
-                ConsoleConstants.RESOURCE + "/" +
+                ConsoleConstants.RESOURCE +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(consoleName);
 
         final Map<String, String> issueMap = getIssueMap(consoleInputData);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(issueMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(issueMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()

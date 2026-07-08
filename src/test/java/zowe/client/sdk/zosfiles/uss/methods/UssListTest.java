@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -26,6 +26,7 @@ import zowe.client.sdk.zosfiles.uss.input.UssListInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssListZfsInputData;
 import zowe.client.sdk.zosfiles.uss.model.UnixFile;
 import zowe.client.sdk.zosfiles.uss.model.UnixZfs;
+import zowe.client.sdk.zosfiles.uss.types.ListFilterType;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for UssList.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssListTest {
 
@@ -60,7 +61,7 @@ public class UssListTest {
             "         \"user\": \"user\",\n" +
             "         \"gid\": 8,\n" +
             "         \"group\": \"FRAMEWKG\",\n" +
-            "         \"mtime\": \"2022-11-03T10:48:32\"\n" +
+            "         \"mtime\": \"2022-11-03T10:48:32\",\n" +
             "         \"target\": \"target\"\n" +
             "      },\n" +
             "      {\n" +
@@ -71,7 +72,7 @@ public class UssListTest {
             "         \"user\": \"user2\",\n" +
             "         \"gid\": 8,\n" +
             "         \"group\": \"FRAMEWKG\",\n" +
-            "         \"mtime\": \"2022-11-12T15:20:11\"\n" +
+            "         \"mtime\": \"2022-11-12T15:20:11\",\n" +
             "         \"target\": \"target\"\n" +
             "      }\n" +
             "   ],\n" +
@@ -82,10 +83,10 @@ public class UssListTest {
     private final static String partialDataForFileList = "{\n" +
             "   \"items\": [\n" +
             "      {\n" +
-            "         \"size\": 0,\n" +
+            "         \"size\": 0\n" +
             "      },\n" +
             "      {\n" +
-            "         \"name\": \"test2\",\n" +
+            "         \"name\": \"test2\"\n" +
             "      }\n" +
             "   ],\n" +
             "   \"returnedRows\": 7,\n" +
@@ -124,14 +125,14 @@ public class UssListTest {
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         mockJsonGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
         doCallRealMethod().when(mockJsonGetRequest).getUrl();
 
         mockJsonGetRequestToken = Mockito.mock(GetJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonGetRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
@@ -139,15 +140,6 @@ public class UssListTest {
         doCallRealMethod().when(mockJsonGetRequestToken).getUrl();
 
         ussList = new UssList(connection);
-    }
-
-    @Test
-    public void tstUssListFileListEmptyResponseSuccess() throws Exception {
-        final UssList ussList = new UssList(connection, mockJsonGetRequest);
-        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
-        // should only contain two items
-        assertEquals(0, items.size());
-        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fxxx%2Fxx%2Fx", mockJsonGetRequest.getUrl());
     }
 
     @Test
@@ -178,7 +170,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse(dataForFileList);
+        final JsonNode json = JsonUtils.parse(dataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -210,7 +202,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListFileListPartialSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse(partialDataForFileList);
+        final JsonNode json = JsonUtils.parse(partialDataForFileList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -243,7 +235,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListEmptyFileListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse("{}");
+        final JsonNode json = JsonUtils.parse("{}");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -255,7 +247,7 @@ public class UssListTest {
     @Test
     public void tstUssListEmptyFileListWithJsonObjectSuccess() throws ZosmfRequestException {
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
         final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder().path("/xxx/xx/x").build());
         assertEquals(0, items.size());
@@ -264,7 +256,7 @@ public class UssListTest {
 
     @Test
     public void tstUssListZfsListSuccess() throws ZosmfRequestException {
-        final JSONObject json = JsonUtils.parse(dataForZfsList);
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(json, 200, "success"));
         final UssList ussList = new UssList(connection, mockJsonGetRequest);
@@ -452,7 +444,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithValidRequestType() {
+    public void tstUssListSecondaryConstructorWithValidRequestTypeSuccess() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         UssList ussList = new UssList(connection, request);
@@ -460,7 +452,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithNullConnection() {
+    public void tstUssListSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(GetJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -470,7 +462,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithNullRequest() {
+    public void tstUssListSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -480,7 +472,7 @@ public class UssListTest {
     }
 
     @Test
-    public void tstUssListSecondaryConstructorWithInvalidRequestType() {
+    public void tstUssListSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a GetJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -488,6 +480,403 @@ public class UssListTest {
                 () -> new UssList(connection, request)
         );
         assertEquals("GET_JSON request type required", exception.getMessage());
+    }
+
+    @Test
+    public void tstUssListFileListWithAllOptionalParamsSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestToken).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequestToken);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .group("FRAMEWKG")
+                .user("mvsuser")
+                .mtime("+7")
+                .size(1024)
+                .name("*.txt")
+                .perm("755")
+                .type(ListFilterType.DIRECTORY)
+                .depth(2)
+                .filesys(true)
+                .symlinks(true)
+                .maxLength(10)
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequestToken.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&group=FRAMEWKG&user=mvsuser&mtime=%2B7&size=1024&name=*.txt&perm=755&type=f&depth=2&filesys=all&symlinks=report", url);
+        String headers = mockJsonGetRequestToken.getHeaders().toString();
+        assertTrue(headers.contains("X-IBM-Max-Items=10"), "Headers should contain X-IBM-Max-Items=10: " + headers);
+    }
+
+    @Test
+    public void tstUssListFileListWithSizeAndTypeBothSetSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .size(500)
+                .type(ListFilterType.FILE)
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&size=500&type=f", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlyTypeNoSizeSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .type(ListFilterType.SYMBOLIC_LINK)
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&type=l", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithFilesysTrueSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .filesys(true)
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&filesys=all", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithSymlinksTrueSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .symlinks(true)
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&symlinks=report", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithMaxLengthSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestToken).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequestToken);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .maxLength(5)
+                .build());
+
+        assertEquals(0, items.size());
+        String headers = mockJsonGetRequestToken.getHeaders().toString();
+        assertTrue(headers.contains("X-IBM-Max-Items=5"), "Headers should contain X-IBM-Max-Items=5: " + headers);
+    }
+
+    @Test
+    public void tstUssListZfsListWithFsnameSuccess() throws Exception {
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixZfs> items = ussList.getZfsSystems(new UssListZfsInputData.Builder()
+                .fsname("OMVSGRP.USER.TNGFW.CA31")
+                .build());
+
+        assertEquals(1, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/mfs?fsname=OMVSGRP.USER.TNGFW.CA31", url);
+    }
+
+    @Test
+    public void tstUssListZfsListWithMaxLengthSuccess() throws Exception {
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
+        Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestToken).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequestToken);
+        final List<UnixZfs> items = ussList.getZfsSystems(new UssListZfsInputData.Builder()
+                .path("/usr/lpp")
+                .maxLength(20)
+                .build());
+
+        assertEquals(1, items.size());
+        String headers = mockJsonGetRequestToken.getHeaders().toString();
+        assertTrue(headers.contains("X-IBM-Max-Items=20"), "Headers should contain X-IBM-Max-Items=20: " + headers);
+    }
+
+    @Test
+    public void tstUssListZfsListNullInputDataFailure() {
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> ussList.getZfsSystems(null)
+        );
+        assertEquals("listZfsInputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlyGroupSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .group("FRAMEWKG")
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&group=FRAMEWKG", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlyUserSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .user("mvsuser")
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&user=mvsuser", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlyMtimeSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .mtime("-30")
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&mtime=-30", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlySizeSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .size(2048)
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&size=2048", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlyNameSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .name("test.txt")
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&name=test.txt", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlyPermSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .perm("777")
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&perm=777", url);
+    }
+
+    @Test
+    public void tstUssListFileListWithOnlyDepthSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixFile> items = ussList.getFiles(new UssListInputData.Builder()
+                .path("/usr/lpp")
+                .depth(3)
+                .build());
+
+        assertEquals(0, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/fs?path=%2Fusr%2Flpp&depth=3", url);
+    }
+
+    @Test
+    public void tstUssListZfsListWithPathSuccess() throws Exception {
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixZfs> items = ussList.getZfsSystems(new UssListZfsInputData.Builder()
+                .path("/usr/lpp")
+                .build());
+
+        assertEquals(1, items.size());
+        String url = mockJsonGetRequest.getUrl();
+        assertEquals("https://1:443/zosmf/restfiles/mfs?path=%2Fusr%2Flpp", url);
+    }
+
+    @Test
+    public void tstUssListZfsListEmptyResponseSuccess() throws Exception {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final List<UnixZfs> items = ussList.getZfsSystems(new UssListZfsInputData.Builder()
+                .path("/usr/lpp")
+                .build());
+
+        assertEquals(0, items.size());
+    }
+
+    @Test
+    public void tstUssListFileListNullInputDataAssertThrowsFailure() {
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> ussList.getFiles(null)
+        );
+        assertEquals("listInputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstUssListFileListMissingPathThrowsFailure() throws ZosmfRequestException {
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response("{}", 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequest).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequest).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequest);
+        final UssListInputData input = new UssListInputData.Builder().build();
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> ussList.getFiles(input));
+        assertEquals("path not specified", ex.getMessage());
+    }
+
+    @Test
+    public void tstUssListZfsListZeroMaxLengthNoHeaderSuccess() throws Exception {
+        final JsonNode json = JsonUtils.parse(dataForZfsList);
+        Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestToken).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequestToken);
+        final List<UnixZfs> items = ussList.getZfsSystems(new UssListZfsInputData.Builder()
+                .path("/usr/lpp")
+                .maxLength(0)
+                .build());
+
+        assertEquals(1, items.size());
+        String headers = mockJsonGetRequestToken.getHeaders().toString();
+        assertFalse(headers.contains("X-IBM-Max-Items"),
+                "Headers must NOT contain X-IBM-Max-Items when maxLength is 0: " + headers);
+    }
+
+    @Test
+    public void tstUssListZfsListNullResponsePhraseThrowsFailure() throws ZosmfRequestException {
+        Mockito.when(mockJsonGetRequestToken.executeRequest()).thenReturn(
+                new Response(null, 200, "success"));
+        doCallRealMethod().when(mockJsonGetRequestToken).setUrl(any());
+        doCallRealMethod().when(mockJsonGetRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockJsonGetRequestToken).getHeaders();
+        doCallRealMethod().when(mockJsonGetRequestToken).getUrl();
+
+        final UssList ussList = new UssList(connection, mockJsonGetRequestToken);
+        final UssListZfsInputData input = new UssListZfsInputData.Builder()
+                .path("/usr/lpp")
+                .build();
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class,
+                () -> ussList.getZfsSystems(input));
+        assertEquals(ZosFilesConstants.RESPONSE_PHRASE_ERROR, ex.getMessage());
     }
 
 }

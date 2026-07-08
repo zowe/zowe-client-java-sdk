@@ -2,6 +2,7 @@ package zowe.client.sdk.zosconsole.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -23,12 +24,12 @@ import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
  * Response messages are stored in the response key of the console issue command request.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ConsoleGet {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ConsoleGet constructor
@@ -39,6 +40,7 @@ public class ConsoleGet {
     public ConsoleGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -103,13 +105,10 @@ public class ConsoleGet {
                                                 boolean processResponse) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(responseKey, "responseKey");
 
-        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + "/" +
+        final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(consoleName.isBlank() ? ConsoleConstants.RES_DEF_CN : consoleName) +
                 "/solmsgs/" + responseKey;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()

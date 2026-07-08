@@ -25,7 +25,7 @@ import zowe.client.sdk.zosjobs.model.Job;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobCancelExp extends TstZosConnection {
 
@@ -161,7 +161,7 @@ import zowe.client.sdk.zosjobs.model.Job;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobDeleteExp extends TstZosConnection {
 
@@ -300,7 +300,7 @@ import java.util.List;
  * Class example to showcase JobGet class functionality.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobGetExp extends TstZosConnection {
 
@@ -720,7 +720,7 @@ import zowe.client.sdk.zosjobs.types.JobStatus;
  * Class example to showcase JobMonitor class functionality.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobMonitorExp extends TstZosConnection {
 
@@ -913,7 +913,7 @@ import java.util.function.Predicate;
  * Class example to showcase JobSubmit class functionality.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobSubmitExp extends TstZosConnection {
 
@@ -1018,7 +1018,7 @@ import zowe.client.sdk.zosjobs.response.JobFeedback;
  * Class example to showcase JobChange class functionality.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobChangeExp extends TstZosConnection {
 
@@ -1071,7 +1071,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TstZosConnection {
 

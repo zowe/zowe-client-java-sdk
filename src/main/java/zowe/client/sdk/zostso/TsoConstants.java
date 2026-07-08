@@ -9,11 +9,13 @@
  */
 package zowe.client.sdk.zostso;
 
+import static zowe.client.sdk.rest.UrlConstants.URL_PATH_DELIM;
+
 /**
  * Constants for various tso related info
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class TsoConstants {
 
@@ -72,7 +74,7 @@ public final class TsoConstants {
     /**
      * URI for TSO Ping API
      */
-    public static final String RES_PING = TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO + "/ping";
+    public static final String RES_PING = TsoConstants.RESOURCE + URL_PATH_DELIM + TsoConstants.RES_START_TSO + "/ping";
 
     /**
      * Tso response message type - message

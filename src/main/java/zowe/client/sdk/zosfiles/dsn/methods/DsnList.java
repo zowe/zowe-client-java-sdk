@@ -9,8 +9,7 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -32,14 +31,14 @@ import java.util.*;
  * Provides list dataset and member functionality
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnList {
 
     private static final Logger LOG = LoggerFactory.getLogger(DsnList.class);
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnList constructor
@@ -50,6 +49,7 @@ public class DsnList {
     public DsnList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -89,15 +89,15 @@ public class DsnList {
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
         String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + QueryConstants.QUERY_ID +
+                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + UrlConstants.QUERY_ID +
                 ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
 
         if (listInputData.getVolume().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
+            url += UrlConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
                     EncodeUtils.encodeURIComponent(listInputData.getVolume().get());
         }
         if (listInputData.getStart().isPresent()) {
-            url += QueryConstants.COMBO_ID + ZosFilesConstants.QUERY_START + listInputData.getStart().get();
+            url += UrlConstants.COMBO_ID + ZosFilesConstants.QUERY_START + listInputData.getStart().get();
         }
 
         return getResult(getResponse(listInputData, headers, url), datasets, null);
@@ -120,11 +120,14 @@ public class DsnList {
         final Map<String, String> headers = new HashMap<>();
         final List<Member> members = new ArrayList<>();
         String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
-                EncodeUtils.encodeURIComponent(dataSetName) + ZosFilesConstants.RES_DS_MEMBERS;
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(dataSetName) +
+                ZosFilesConstants.RES_DS_MEMBERS;
 
         if (listInputData.getPattern().isPresent()) {
-            url += QueryConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
+            url += UrlConstants.QUERY_ID + ZosFilesConstants.QUERY_PATTERN +
                     EncodeUtils.encodeURIComponent(listInputData.getPattern().get());
         }
 
@@ -181,7 +184,7 @@ public class DsnList {
         }
 
         final String jsonStr = response.getResponsePhrase().get().toString();
-        final JSONObject jsonObject = JsonUtils.parse(jsonStr);
+        final JsonNode jsonObject = JsonUtils.parse(jsonStr);
         if (jsonObject.isEmpty()) {
             if (datasetLst == null) {
                 return memberLst;
@@ -190,13 +193,13 @@ public class DsnList {
             }
         }
 
-        final JSONArray items = (JSONArray) jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
+        final JsonNode items = jsonObject.get(ZosFilesConstants.RESPONSE_ITEMS);
         final String context = "getResult";
-        for (final Object obj : items) {
+        for (final JsonNode obj : items) {
             if (datasetLst == null) {
-                memberLst.add((T) JsonUtils.parseResponse(String.valueOf(obj), Member.class, context));
+                memberLst.add((T) JsonUtils.parseResponse(obj.toString(), Member.class, context));
             } else {
-                datasetLst.add((T) JsonUtils.parseResponse(String.valueOf(obj), Dataset.class, context));
+                datasetLst.add((T) JsonUtils.parseResponse(obj.toString(), Dataset.class, context));
             }
         }
 
@@ -220,9 +223,7 @@ public class DsnList {
     private Response getResponse(final DsnListInputData listInputData, final Map<String, String> headers, final String url)
             throws ZosmfRequestException {
         setHeaders(listInputData, headers);
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
+
         request.setHeaders(headers);
         request.setUrl(url);
 

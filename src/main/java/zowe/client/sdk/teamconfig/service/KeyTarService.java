@@ -15,7 +15,6 @@ import zowe.client.sdk.teamconfig.exception.TeamConfigException;
 import zowe.client.sdk.teamconfig.keytar.IKeyTar;
 import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +22,7 @@ import java.util.List;
  * Zowe Global Team Configuration location information.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class KeyTarService {
 
@@ -32,10 +31,22 @@ public class KeyTarService {
     /**
      * List of service names used for KeyTar querying of OS credential store
      */
-    private final List<String> serviceNames = List.of("Zowe", "Zowe-Plugin");
+    private static final List<String> SERVICE_NAMES = List.of("Zowe", "Zowe-Plugin");
 
     /**
-     * IKeyTar implementation holder
+     * Account name used for KeyTar querying of OS credential store
+     */
+    private static final String ACCOUNT_NAME = "secure_config_props";
+
+    /**
+     * Duplicate Zowe credential store types found.
+     */
+    private static final String MULTIPLE_WARNING_MSG =
+            "Multiple OS credential stores found related to Zowe. Returning the first one on list.";
+
+    /**
+     * This service is not thread-safe. The injected IKeyTar instance
+     * is stateful and mutated during processing.
      */
     private final IKeyTar keyTar;
 
@@ -57,29 +68,25 @@ public class KeyTarService {
      * @author Frank Giordano
      */
     public KeyTarConfig getKeyTarConfig() throws TeamConfigException {
-        List<KeyTarConfig> keyTarConfigs = new ArrayList<>();
-        // Account name used for KeyTar querying of OS credential store
-        final String accountName = "secure_config_props";
-        keyTar.setAccountName(accountName);
-        for (final String serviceName : serviceNames) {
+        keyTar.setAccountName(ACCOUNT_NAME);
+        for (final String serviceName : SERVICE_NAMES) {
             keyTar.setServiceName(serviceName);
             try {
                 keyTar.processKey();
             } catch (TeamConfigException e) {
-                LOG.debug(e.getMessage());
+                LOG.debug("KeyTar lookup failed for service {}", serviceName, e);
                 continue;
             }
-            LOG.debug("KeyTar Value {}", keyTar.getKeyTarValue());
-            keyTarConfigs = keyTar.getKeyConfigs();
-            break;
+            List<KeyTarConfig> keyTarConfigs = keyTar.getKeyConfigs();
+            if (!keyTarConfigs.isEmpty()) {
+                if (keyTarConfigs.size() > 1) {
+                    LOG.debug("{} Service={}", MULTIPLE_WARNING_MSG, serviceName);
+                }
+                return keyTarConfigs.get(0);
+            }
         }
-        if (keyTarConfigs.isEmpty()) {
-            throw new IllegalStateException("No OS credential store related to Zowe found.");
-        }
-        if (keyTarConfigs.size() > 1) {
-            LOG.debug("Multiple OS credential stores found related to Zowe. Returning the first one on list.");
-        }
-        return keyTarConfigs.get(0);
+
+        throw new TeamConfigException("No OS credential store related to Zowe found.");
     }
 
 }

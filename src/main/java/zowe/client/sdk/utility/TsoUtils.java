@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Utility class contains helper methods for TSO response processing.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class TsoUtils {
 

@@ -28,7 +28,7 @@ import static org.mockito.Mockito.doCallRealMethod;
  * Class containing unit tests for ZosmfLogout.
  *
  * @author Ashish Kumar Dash
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfLogoutTest {
 

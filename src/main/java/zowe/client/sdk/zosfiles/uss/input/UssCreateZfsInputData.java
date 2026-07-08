@@ -22,7 +22,7 @@ import java.util.OptionalInt;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-create-zos-unix-zfs-filesystem">z/OSMF REST API</a>
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssCreateZfsInputData {
 

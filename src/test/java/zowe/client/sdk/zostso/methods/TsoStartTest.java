@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zostso.methods;
 
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import zowe.client.sdk.rest.PostJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.TestJsonUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for the TsoStart class.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TsoStartTest {
 
@@ -222,10 +222,10 @@ public class TsoStartTest {
         doCallRealMethod().when(mockRequest).getUrl();
 
         // Mock response to return servletKey
-        final Map<String, Object> map = new HashMap<>();
+        final Map<String, String> map = new HashMap<>();
         map.put("servletKey", "SERVKEY123");
         Mockito.when(mockRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(map), 200, "success"));
+                new Response(TestJsonUtils.toJsonString(map), 200, "success"));
 
         final TsoStartResponse result = tsoStart.start(inputData);
         assertEquals("SERVKEY123", result.getSessionId());

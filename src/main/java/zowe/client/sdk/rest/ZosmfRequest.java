@@ -26,7 +26,6 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.util.HashMap;
@@ -38,7 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Base abstract class that conforms to http CRUD operations
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public abstract class ZosmfRequest {
 
@@ -85,6 +84,9 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void initialize() {
+        if (connection == null || connection.getAuthType() == null) {
+            return;
+        }
         Unirest.config().reset();
         Unirest.config().enableCookieManagement(false);
         this.setStandardHeaders();
@@ -112,7 +114,7 @@ public abstract class ZosmfRequest {
     private void setupBasic() {
         LOG.debug("basic authentication type");
         Unirest.config().verifySsl(false);
-        headers.put("Authorization", "Basic " + EncodeUtils.encodeAuthComponent(connection));
+        headers.put("Authorization", "Basic " + EncodeUtils.encodeBasicAuthCredentials(connection));
     }
 
     /**
@@ -329,6 +331,7 @@ public abstract class ZosmfRequest {
      * @throws IllegalArgumentException error setting valid url string
      * @author Frank Giordano
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void setUrl(final String url) {
         ValidateUtils.checkIllegalParameter(url, "url");
 

@@ -37,12 +37,12 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-zos-unix-filesystems">z/OSMF REST API zFS List</a>
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssList {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssList Constructor
@@ -53,6 +53,7 @@ public class UssList {
     public UssList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -117,10 +118,6 @@ public class UssList {
             url.append("&symlinks=report");
         }
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
-
         final int maxLength = listInputData.getMaxLength().orElse(0);
         if (maxLength > 0) {
             request.setHeaders(Map.of("X-IBM-Max-Items", String.valueOf(maxLength)));
@@ -161,10 +158,6 @@ public class UssList {
 
         listZfsInputData.getFsname().ifPresent(fsname ->
                 url.append("?fsname=").append(EncodeUtils.encodeURIComponent(fsname)));
-
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
 
         final int maxLength = listZfsInputData.getMaxLength().orElse(0);
         if (maxLength > 0) {

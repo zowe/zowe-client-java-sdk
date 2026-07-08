@@ -1,6 +1,7 @@
 # TeamConfig Package
 
-The TeamConfig package provides API method(s) to retrieve a profile section from Zowe Global Team Configuration with
+The TeamConfig package provides API method(s) to retrieve and update a profile section from Zowe Global Team
+Configuration with
 keytar information to help perform connection processing without hard coding username and password. Keytar represents
 credentials stored securely on your computer when performing the Zowe global initialize command which prompts you for
 username and password.
@@ -52,12 +53,12 @@ import java.util.List;
  * Class example to showcase team config functionality via TeamConfig class.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TeamConfigExp {
 
     /**
-     * Main method defines TeamConfig object and operation to retrieve the default
+     * The main method defines TeamConfig object and operation to retrieve and update the default
      * z/OSMF profile from Zowe Team Configuration.
      * <p>
      * Zowe Team Configuration contains the connection information for z/OSMF REST API.
@@ -67,11 +68,11 @@ public class TeamConfigExp {
      * <p>
      * Calls TeamConfigExp.listMembers example method.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public static void main(String[] args) throws ZosmfRequestException {
+    public static void main(String[] args) throws ZosmfRequestException, TeamConfigException {
         TeamConfig teamConfig;
         try {
             teamConfig = new TeamConfig();
@@ -79,10 +80,19 @@ public class TeamConfigExp {
             throw new RuntimeException(e.getMessage());
         }
         ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
-        return (ZosConnectionFactory.createBasicConnection(
-                profile.getHost(), profile.getPort(), profile.getUser(), profile.getPassword()));
+        ZosConnection connection = ZosConnectionFactory.createBasicConnection(
+                profile.getHost(),
+                Integer.parseInt(profile.getPort()),
+                profile.getUser(),
+                profile.getPassword()
+        );
 
         TeamConfigExp.listMembers(connection, "CCSQA.ASM.JCL");
+
+        // example of updating the profile
+        System.out.println(teamConfig.getDefaultProfile("zosmf"));
+        System.out.println(teamConfig.updateProfile("frank", Map.of("port", 133)));
+        System.out.println(teamConfig.getDefaultProfile("zosmf"));
     }
 
     /**
@@ -101,5 +111,4 @@ public class TeamConfigExp {
     }
 
 }
-`````  
-
+`````

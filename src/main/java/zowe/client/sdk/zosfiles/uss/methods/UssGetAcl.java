@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -25,7 +25,9 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssGetAclInputData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,12 +36,12 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssGetAcl {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssGetAcl Constructor
@@ -50,6 +52,7 @@ public class UssGetAcl {
     public UssGetAcl(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -75,24 +78,23 @@ public class UssGetAcl {
      *
      * @param targetPath UNIX path to the target file or directory
      * @param useCommas  true if commas are to be used in the output
-     * @return string representation of response phrase
+     * @return list of attribute strings
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    @SuppressWarnings("unchecked")
-    public String get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
+    @SuppressWarnings("DuplicatedCode")
+    public List<String> get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
         final Response response = useCommas ?
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().usecommas(true).build()) :
                 getAclCommon(targetPath, new UssGetAclInputData.Builder().build());
-        final JSONObject json = JsonUtils.parse(response.getResponsePhrase()
+        final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
-        final StringBuilder str = new StringBuilder();
-        if (useCommas) {
-            ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()));
-        } else {
-            ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
+        final List<String> attributes = new ArrayList<>();
+        final JsonNode stdout = json.get("stdout");
+        if (stdout != null && stdout.isArray()) {
+            stdout.forEach(item -> attributes.add(item.asText()));
         }
-        return str.toString();
+        return attributes;
     }
 
     /**
@@ -128,11 +130,8 @@ public class UssGetAcl {
             getAclMap.put("suppress-baseacl", getAclInputData.getSuppressBaseAcl());
         }
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(getAclMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(getAclMap));
 
         return request.executeRequest();
     }

@@ -10,10 +10,7 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -25,12 +22,12 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnDelete {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnDelete Constructor
@@ -41,6 +38,7 @@ public class DsnDelete {
     public DsnDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -92,12 +90,10 @@ public class DsnDelete {
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + "/" +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
         request.setUrl(url);
 
         return request.executeRequest();

@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosmfauth.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -17,6 +16,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 import zowe.client.sdk.zosmfauth.input.PasswordInputData;
@@ -31,12 +31,12 @@ import java.util.Map;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfPassword {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ZosmfPassword constructor
@@ -47,6 +47,7 @@ public class ZosmfPassword {
     public ZosmfPassword(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -88,12 +89,8 @@ public class ZosmfPassword {
         passwordMap.put("oldPwd", pwdInputData.getOldPwd());
         passwordMap.put("newPwd", pwdInputData.getNewPwd());
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
-
         request.setUrl(url);
-        request.setBody(new JSONObject(passwordMap).toJSONString());
+        request.setBody(JsonUtils.asRequestBodyJson(passwordMap));
 
         return request.executeRequest();
     }

@@ -9,16 +9,13 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PostJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssCreateInputData;
@@ -35,12 +32,12 @@ import java.util.Map;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssCreate {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssCreate Constructor
@@ -51,6 +48,7 @@ public class UssCreate {
     public UssCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -96,11 +94,8 @@ public class UssCreate {
         createMap.put("type", createInputData.getType().getValue());
         createMap.put("mode", createInputData.getMode());
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(createMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(createMap));
 
         return request.executeRequest();
     }
@@ -133,7 +128,9 @@ public class UssCreate {
         ValidateUtils.checkNullParameter(createZfsInputData, "createZfsInputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_ZFS_FILES + "/" +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_ZFS_FILES +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName));
         createZfsInputData.getTimeout().ifPresent(timeout -> url.append("?timeout=").append(timeout));
 
@@ -156,12 +153,8 @@ public class UssCreate {
         }
         createZfsMap.put("JSONversion", 1);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
-
         request.setUrl(url.toString());
-        request.setBody(new JSONObject(createZfsMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(createZfsMap));
 
         return request.executeRequest();
     }

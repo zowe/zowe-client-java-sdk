@@ -13,7 +13,7 @@ package zowe.client.sdk.zosuss.exception;
  * Custom exception to represent SSH Unix System Services error request
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssCmdException extends Exception {
 

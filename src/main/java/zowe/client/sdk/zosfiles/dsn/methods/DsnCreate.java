@@ -9,15 +9,12 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PostJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnCreateInputData;
@@ -30,12 +27,12 @@ import java.util.Map;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnCreate {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnCreate Constructor
@@ -46,6 +43,7 @@ public class DsnCreate {
     public DsnCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -84,7 +82,8 @@ public class DsnCreate {
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES + "/" +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(dataSetName);
 
         final Map<String, Object> createMap = new HashMap<>();
@@ -104,11 +103,8 @@ public class DsnCreate {
         createInputData.getDataclass().ifPresent(v -> createMap.put("dataclass", v));
         createInputData.getDsntype().ifPresent(v -> createMap.put("dsntype", v));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(createMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(createMap));
 
         return request.executeRequest();
     }

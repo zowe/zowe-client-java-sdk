@@ -12,22 +12,17 @@ package zowe.client.sdk.utility;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Utility class contains helper methods for JSON parse processing.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class JsonUtils {
 
@@ -43,37 +38,42 @@ public final class JsonUtils {
     }
 
     /**
-     * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
-     * which may return ZosmfRequestException.
+     * Centralized JSON parsing for z/OSMF responses using Jackson.
+     * <p>
+     * The returned JsonNode may represent either a JSON object or a JSON array.
+     * Callers can inspect the node type as needed.
+     * </p>
      *
      * @param item JSON string representation
-     * @return JSONObject object
-     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
+     * @return JsonNode (ObjectNode, ArrayNode, etc.)
+     * @throws ZosmfRequestException if parsing fails
      */
-    public static JSONObject parse(final String item) throws ZosmfRequestException {
+    public static JsonNode parse(final String item) throws ZosmfRequestException {
         try {
-            return (JSONObject) new JSONParser().parse(item);
-        } catch (ParseException e) {
+            return objectMapper.readTree(item);
+        } catch (JsonProcessingException e) {
             LOG.debug(PARSE_ERROR_MSG, e);
             throw new ZosmfRequestException(e.getMessage(), e);
         }
     }
 
     /**
-     * This method is a wrapper for JSONParser().parse() call to parse z/OSMF response
-     * which may return ZosmfRequestException.
+     * Convenience method for array responses.
+     * <p>
+     * This method validates that the parsed JSON content is an array and throws
+     * a {@link ZosmfRequestException} if the content is not a JSON array.
+     * </p>
      *
-     * @param item JSON array representation
-     * @return JSONArray object
-     * @throws ZosmfRequestException indicates the JSON item from z/OSMF request is invalid for parsing
+     * @param item JSON array string representation returned from a z/OSMF request
+     * @return ArrayNode representing the parsed JSON array
+     * @throws ZosmfRequestException if parsing fails or root is not an array
      */
-    public static JSONArray parseArray(final String item) throws ZosmfRequestException {
-        try {
-            return (JSONArray) new JSONParser().parse(item);
-        } catch (ParseException e) {
-            LOG.debug(PARSE_ERROR_MSG, e);
-            throw new ZosmfRequestException(e.getMessage(), e);
+    public static ArrayNode parseArray(final String item) throws ZosmfRequestException {
+        JsonNode node = parse(item);
+        if (!node.isArray()) {
+            throw new ZosmfRequestException("Expected JSON array but got: " + node.getNodeType());
         }
+        return (ArrayNode) node;
     }
 
     /**
@@ -99,27 +99,23 @@ public final class JsonUtils {
     }
 
     /**
-     * Convert a JSONObject to a {@code Map<String, String>}, converting all values to String.
-     * <p>
-     * This method supports JSON values of any type (string, number, boolean, null, etc.)
-     * and ensures that all map values are safely represented as strings.
+     * Serialize the given object as a JSON request body.
      *
-     * @param jsonObject the JSONObject to convert (must not be null)
-     * @return a {@code Map<String, String>} with all keys its values as all String values
-     * @throws JsonProcessingException if JSON parsing fails
+     * @param body object to serialize (Map or POJO)
+     * @return JSON string
+     * @throws ZosmfRequestException if serialization fails
      */
-    public static Map<String, String> parseMap(JSONObject jsonObject) throws JsonProcessingException {
-        // Convert the org.json.JSONObject to Jackson JsonNode for traversal
-        final JsonNode root = objectMapper.readTree(jsonObject.toString());
-
-        final Map<String, String> map = new HashMap<>();
-
-        for (Map.Entry<String, JsonNode> entry : root.properties()) {
-            // Convert any type to string
-            map.put(entry.getKey(), entry.getValue().asText());
+    public static String asRequestBodyJson(final Object body) throws ZosmfRequestException {
+        if (body == null) {
+            return null;
         }
 
-        return map;
+        try {
+            return objectMapper.writeValueAsString(body);
+        } catch (JsonProcessingException e) {
+            throw new ZosmfRequestException(
+                    "Failed to serialize request body to JSON", e);
+        }
     }
 
 }

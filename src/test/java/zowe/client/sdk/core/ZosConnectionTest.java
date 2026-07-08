@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * BASIC, TOKEN, and SSL.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 67.0
  */
 @SuppressWarnings("AssertBetweenInconvertibleTypes")
 class ZosConnectionTest {
@@ -329,7 +329,7 @@ class ZosConnectionTest {
 
         assertEquals("https://zos.example.com:1443/zosmf", conn.getZosmfUrl());
     }
-    
+
     @Test
     void tstInvalidPortNumbersFailure() {
         // capture and verify port out of range

@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.teamconfig;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
@@ -36,11 +35,19 @@ import java.util.stream.Stream;
  * supports Zowe Global Team Configuration provided by Zowe V2.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TeamConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(TeamConfig.class);
+    /**
+     * Base profile constant
+     */
+    private static final String BASE_PROFILE_NAME = "base";
+    /**
+     * Is Base profile predicate?
+     */
+    private static final Predicate<Profile> isBaseProfile = i -> i.getName().equals(BASE_PROFILE_NAME);
     /**
      * TeamConfigService dependency
      */
@@ -49,14 +56,6 @@ public class TeamConfig {
      * KeyTarService dependency
      */
     private final KeyTarService keyTarService;
-    /**
-     * Base profile constant
-     */
-    private final String BASE_PROFILE_NAME = "base";
-    /**
-     * Is Base profile predicate?
-     */
-    private final Predicate<Profile> isBaseProfile = i -> i.getName().equals(BASE_PROFILE_NAME);
     /**
      * KeyTarConfig dependency
      */
@@ -112,10 +111,9 @@ public class TeamConfig {
      *
      * @param profileType profile type
      * @return ProfileDao object
-     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfile(final String profileType) throws TeamConfigException {
+    public ProfileDao getDefaultProfile(final String profileType) {
         ValidateUtils.checkIllegalParameter(profileType, "profileType");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileType));
         final Predicate<Profile> isProfileName = i -> i.getName().equals(defaultName.orElse(profileType));
@@ -125,9 +123,14 @@ public class TeamConfig {
         if (target.isEmpty() || !target.get().getType().equalsIgnoreCase(profileType)) {
             throw new IllegalStateException("Found no profile of type " + profileType + " in Zowe client configuration.");
         } else {
-            target = Optional.of(merge(target.orElse(null), base.orElse(null)));
-            return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
-                    target.get().getProperties().get("host"), target.get().getProperties().get("port"));
+            final Profile merged = merge(target.get(), base.orElse(null));
+            return new ProfileDao(
+                    merged,
+                    keyTarConfig.getUserName(),
+                    keyTarConfig.getPassword(),
+                    merged.getProperties().get("host"),
+                    merged.getProperties().get("port")
+            );
         }
     }
 
@@ -139,10 +142,9 @@ public class TeamConfig {
      * @param profileName   profile name
      * @param partitionName partition name
      * @return ProfileDao object
-     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    public ProfileDao getDefaultProfileFromPartition(final String profileName, final String partitionName) throws TeamConfigException {
+    public ProfileDao getDefaultProfileFromPartition(final String profileName, final String partitionName) {
         ValidateUtils.checkIllegalParameter(profileName, "profileName");
         ValidateUtils.checkIllegalParameter(partitionName, "partitionName");
         final Optional<String> defaultName = Optional.ofNullable(teamConfig.getDefaults().get(profileName));
@@ -160,9 +162,32 @@ public class TeamConfig {
             throw new IllegalStateException("Found no " + profileName + " within Zowe client configuration partition");
         }
 
-        target = Optional.of(merge(target.orElse(null), base.orElse(null)));
-        return new ProfileDao(target.get(), keyTarConfig.getUserName(), keyTarConfig.getPassword(),
-                target.get().getProperties().get("host"), target.get().getProperties().get("port"));
+        final Profile merged = merge(target.get(), base.orElse(null));
+        return new ProfileDao(
+                merged,
+                keyTarConfig.getUserName(),
+                keyTarConfig.getPassword(),
+                merged.getProperties().get("host"),
+                merged.getProperties().get("port")
+        );
+    }
+
+    /**
+     * Update a profile's properties in the Zowe Global Team Configuration file on disk.
+     * Only the properties present in {@code updatedProperties} are written; existing properties
+     * not included in the map are left unchanged. The in-memory configuration is refreshed after the update.
+     *
+     * @param profileName       name of the profile to update
+     * @param updatedProperties map of property key/value pairs to set on the profile
+     * @throws TeamConfigException error reading or writing the team configuration file
+     * @author Frank Giordano
+     */
+    public void updateProfile(final String profileName, final Map<String, String> updatedProperties)
+            throws TeamConfigException {
+        ValidateUtils.checkIllegalParameter(profileName, "profileName");
+        ValidateUtils.checkNullParameter(updatedProperties, "updatedProperties");
+        teamConfigService.updateTeamConfig(keyTarConfig, profileName, updatedProperties);
+        config();
     }
 
     /**
@@ -171,10 +196,9 @@ public class TeamConfig {
      * @param target Profile object
      * @param base   Profile object
      * @return target profile object
-     * @throws TeamConfigException error processing team configuration
      * @author Frank Giordano
      */
-    private Profile merge(Profile target, final Profile base) throws TeamConfigException {
+    private Profile merge(final Profile target, final Profile base) {
         Optional<Map<String, String>> targetProps = Optional.empty();
         Optional<Map<String, String>> baseProps = Optional.empty();
         if (target != null) {
@@ -193,7 +217,7 @@ public class TeamConfig {
                                     Map.Entry::getKey,
                                     Map.Entry::getValue,
                                     (oldValue, newValue) -> oldValue));
-            return new Profile(target.getName(), target.getType(), new JSONObject(mergedMap), target.getSecure());
+            return new Profile(target.getName(), target.getType(), mergedMap, target.getSecure());
         }
 
         return target;

@@ -22,7 +22,7 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssChangeTagInputData {
 
@@ -102,7 +102,7 @@ public class UssChangeTagInputData {
     }
 
     /**
-     * Retrieve is recursive specified
+     * Retrieve is recursively specified
      *
      * @return boolean true or false
      */
@@ -120,7 +120,7 @@ public class UssChangeTagInputData {
     }
 
     /**
-     * Return string value representing UssChangeTagInputData object
+     * Return a string value representing UssChangeTagInputData object
      *
      * @return string representation of UssChangeTagInputData
      */
@@ -181,7 +181,7 @@ public class UssChangeTagInputData {
         }
 
         /**
-         * Set ChangeTagAction type value
+         * Set the ChangeTagAction type value
          *
          * @param action ChangeTagAction type value
          * @return Builder this object

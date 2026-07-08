@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -32,7 +31,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for JobCancel.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobCancelTest {
 
@@ -47,14 +46,14 @@ public class JobCancelTest {
     public void init() throws ZosmfRequestException {
         mockPutJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockPutJsonZosmfRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockPutJsonZosmfRequest).setUrl(any());
         doCallRealMethod().when(mockPutJsonZosmfRequest).getUrl();
 
         mockPutJsonZosmfRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPutJsonZosmfRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setUrl(any());

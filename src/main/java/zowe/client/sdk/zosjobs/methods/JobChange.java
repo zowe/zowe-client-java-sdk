@@ -9,11 +9,11 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -35,13 +35,13 @@ import java.util.Map;
  * placing a job on hold, and releasing a held job.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobChange {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobChange.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * JobChange constructor.
@@ -52,6 +52,7 @@ public class JobChange {
     public JobChange(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -79,7 +80,7 @@ public class JobChange {
      *
      * @param jobName  job name
      * @param jobId    job id
-     * @param jobClass new job class (for example A, B, C)
+     * @param jobClass new job class (for example, A, B, C)
      * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
@@ -99,7 +100,7 @@ public class JobChange {
      * Change the class of a job using a Job object.
      *
      * @param job      job document
-     * @param jobClass new job class (for example A, B, C)
+     * @param jobClass new job class (for example, A, B, C)
      * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
@@ -136,11 +137,8 @@ public class JobChange {
         changeMap.put("class", modifyInputData.getJobClass().get());
         changeMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(changeMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(changeMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
@@ -208,11 +206,8 @@ public class JobChange {
         holdMap.put("request", "hold");
         holdMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(holdMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(holdMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
@@ -280,11 +275,8 @@ public class JobChange {
         releaseMap.put("request", "release");
         releaseMap.put("version", version);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(releaseMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(releaseMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
@@ -300,9 +292,9 @@ public class JobChange {
         ValidateUtils.checkIllegalParameter(modifyInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
         return zosmfUrl +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobName().get() +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobId().get();
     }
 

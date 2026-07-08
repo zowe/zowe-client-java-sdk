@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -19,6 +18,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssChangeTagInputData;
@@ -35,12 +35,12 @@ import java.util.Map;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssChangeTag {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssChangeTag Constructor
@@ -51,6 +51,7 @@ public class UssChangeTag {
     public UssChangeTag(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -155,11 +156,8 @@ public class UssChangeTag {
         }
         changeTagInputData.getLinks().ifPresent(links -> changeTagMap.put("links", links.getValue()));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(changeTagMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(changeTagMap));
 
         return request.executeRequest();
     }

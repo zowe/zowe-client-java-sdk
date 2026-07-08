@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -19,6 +18,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.factory.SetAclInputFactory;
@@ -34,12 +34,12 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssSetAcl {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssSetAcl Constructor
@@ -50,6 +50,7 @@ public class UssSetAcl {
     public UssSetAcl(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -74,7 +75,7 @@ public class UssSetAcl {
      * Sets the ACL for a USS file or directory
      *
      * @param targetPath UNIX path to the target file or directory
-     * @param setValue sets the extended ACL entries that are specified by 'entries'
+     * @param setValue   sets the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
@@ -86,7 +87,7 @@ public class UssSetAcl {
     /**
      * Modifies the specified ACL entry for the file or directory
      *
-     * @param targetPath UNIX path to the target file or directory
+     * @param targetPath  UNIX path to the target file or directory
      * @param modifyValue modifies the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -99,7 +100,7 @@ public class UssSetAcl {
     /**
      * Deletes the specified ACL entry from the file or directory
      *
-     * @param targetPath UNIX path to the target file or directory
+     * @param targetPath  UNIX path to the target file or directory
      * @param deleteValue deletes the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
@@ -127,7 +128,7 @@ public class UssSetAcl {
      * Modifies the specified ACL entry for the file or directory and deletes the specified ACL
      * entry from the file or directory
      *
-     * @param targetPath UNIX path to the target file or directory
+     * @param targetPath  UNIX path to the target file or directory
      * @param modifyValue modifies the extended ACL entries that are specified by 'entries'
      * @param deleteValue deletes the extended ACL entries that are specified by 'entries' type
      * @return Response object
@@ -169,11 +170,8 @@ public class UssSetAcl {
         setAclInputData.getModify().ifPresent(modify -> setAclMap.put("modify", modify));
         setAclInputData.getDelete().ifPresent(delete -> setAclMap.put("delete", delete));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(setAclMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(setAclMap));
 
         return request.executeRequest();
     }

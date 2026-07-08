@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -41,6 +41,7 @@ class UssSetAclTest {
     private ZosConnection connection;
     private PutJsonZosmfRequest request;
     private Response response;
+    private final ObjectMapper mapper = new ObjectMapper();
     private UssSetAcl ussSetAcl;
 
     @BeforeEach
@@ -83,15 +84,15 @@ class UssSetAclTest {
 
         assertSame(response, actualResponse);
         verify(request).setUrl(getExpectedUrl());
-        final JSONObject body = getRequestBody();
+        final JsonNode body = getRequestBody();
 
-        assertEquals("setfacl", body.get("request"));
-        assertEquals(LinkType.FOLLOW.getValue(), body.get("links"));
-        assertEquals("user:test:rwx", body.get("set"));
-        assertFalse(body.containsKey("abort"));
-        assertFalse(body.containsKey("modify"));
-        assertFalse(body.containsKey("delete"));
-        assertFalse(body.containsKey("delete-type"));
+        assertEquals("setfacl", body.get("request").asText());
+        assertEquals(LinkType.FOLLOW.getValue(), body.get("links").asText());
+        assertEquals("user:test:rwx", body.get("set").asText());
+        assertFalse(body.has("abort"));
+        assertFalse(body.has("modify"));
+        assertFalse(body.has("delete"));
+        assertFalse(body.has("delete-type"));
     }
 
     @Test
@@ -100,15 +101,15 @@ class UssSetAclTest {
 
         assertSame(response, actualResponse);
         verify(request).setUrl(getExpectedUrl());
-        final JSONObject body = getRequestBody();
+        final JsonNode body = getRequestBody();
 
-        assertEquals("setfacl", body.get("request"));
-        assertEquals(LinkType.FOLLOW.getValue(), body.get("links"));
-        assertEquals("user:test:rwx", body.get("modify"));
-        assertFalse(body.containsKey("abort"));
-        assertFalse(body.containsKey("set"));
-        assertFalse(body.containsKey("delete"));
-        assertFalse(body.containsKey("delete-type"));
+        assertEquals("setfacl", body.get("request").asText());
+        assertEquals(LinkType.FOLLOW.getValue(), body.get("links").asText());
+        assertEquals("user:test:rwx", body.get("modify").asText());
+        assertFalse(body.has("abort"));
+        assertFalse(body.has("set"));
+        assertFalse(body.has("delete"));
+        assertFalse(body.has("delete-type"));
     }
 
     @Test
@@ -117,15 +118,15 @@ class UssSetAclTest {
 
         assertSame(response, actualResponse);
         verify(request).setUrl(getExpectedUrl());
-        final JSONObject body = getRequestBody();
+        final JsonNode body = getRequestBody();
 
-        assertEquals("setfacl", body.get("request"));
-        assertEquals(LinkType.FOLLOW.getValue(), body.get("links"));
-        assertEquals("user:test:rwx", body.get("delete"));
-        assertFalse(body.containsKey("abort"));
-        assertFalse(body.containsKey("set"));
-        assertFalse(body.containsKey("modify"));
-        assertFalse(body.containsKey("delete-type"));
+        assertEquals("setfacl", body.get("request").asText());
+        assertEquals(LinkType.FOLLOW.getValue(), body.get("links").asText());
+        assertEquals("user:test:rwx", body.get("delete").asText());
+        assertFalse(body.has("abort"));
+        assertFalse(body.has("set"));
+        assertFalse(body.has("modify"));
+        assertFalse(body.has("delete-type"));
     }
 
     @Test
@@ -134,15 +135,15 @@ class UssSetAclTest {
 
         assertSame(response, actualResponse);
         verify(request).setUrl(getExpectedUrl());
-        final JSONObject body = getRequestBody();
+        final JsonNode body = getRequestBody();
 
-        assertEquals("setfacl", body.get("request"));
-        assertEquals(LinkType.FOLLOW.getValue(), body.get("links"));
-        assertEquals(DeleteAclType.ACCESS.getValue(), body.get("delete-type"));
-        assertFalse(body.containsKey("abort"));
-        assertFalse(body.containsKey("set"));
-        assertFalse(body.containsKey("modify"));
-        assertFalse(body.containsKey("delete"));
+        assertEquals("setfacl", body.get("request").asText());
+        assertEquals(LinkType.FOLLOW.getValue(), body.get("links").asText());
+        assertEquals(DeleteAclType.ACCESS.getValue(), body.get("delete-type").asText());
+        assertFalse(body.has("abort"));
+        assertFalse(body.has("set"));
+        assertFalse(body.has("modify"));
+        assertFalse(body.has("delete"));
     }
 
     @Test
@@ -155,15 +156,15 @@ class UssSetAclTest {
 
         assertSame(response, actualResponse);
         verify(request).setUrl(getExpectedUrl());
-        final JSONObject body = getRequestBody();
+        final JsonNode body = getRequestBody();
 
-        assertEquals("setfacl", body.get("request"));
-        assertEquals(LinkType.FOLLOW.getValue(), body.get("links"));
-        assertEquals("user:test:rwx", body.get("modify"));
-        assertEquals("group:test:r-x", body.get("delete"));
-        assertFalse(body.containsKey("abort"));
-        assertFalse(body.containsKey("set"));
-        assertFalse(body.containsKey("delete-type"));
+        assertEquals("setfacl", body.get("request").asText());
+        assertEquals(LinkType.FOLLOW.getValue(), body.get("links").asText());
+        assertEquals("user:test:rwx", body.get("modify").asText());
+        assertEquals("group:test:r-x", body.get("delete").asText());
+        assertFalse(body.has("abort"));
+        assertFalse(body.has("set"));
+        assertFalse(body.has("delete-type"));
     }
 
     @Test
@@ -178,15 +179,15 @@ class UssSetAclTest {
 
         assertSame(response, actualResponse);
         verify(request).setUrl(getExpectedUrl());
-        final JSONObject body = getRequestBody();
+        final JsonNode body = getRequestBody();
 
-        assertEquals("setfacl", body.get("request"));
-        assertEquals(true, body.get("abort"));
-        assertEquals(LinkType.SUPPRESS.getValue(), body.get("links"));
-        assertEquals("user:test:rwx", body.get("set"));
-        assertFalse(body.containsKey("modify"));
-        assertFalse(body.containsKey("delete"));
-        assertFalse(body.containsKey("delete-type"));
+        assertEquals("setfacl", body.get("request").asText());
+        assertTrue(body.get("abort").asBoolean());
+        assertEquals(LinkType.SUPPRESS.getValue(), body.get("links").asText());
+        assertEquals("user:test:rwx", body.get("set").asText());
+        assertFalse(body.has("modify"));
+        assertFalse(body.has("delete"));
+        assertFalse(body.has("delete-type"));
     }
 
     @Test
@@ -217,11 +218,11 @@ class UssSetAclTest {
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(TARGET_PATH));
     }
 
-    private JSONObject getRequestBody() throws Exception {
+    private JsonNode getRequestBody() throws Exception {
         final ArgumentCaptor<String> bodyCaptor = ArgumentCaptor.forClass(String.class);
         verify(request).setBody(bodyCaptor.capture());
 
-        return (JSONObject) new JSONParser().parse(bodyCaptor.getValue());
+        return mapper.readTree(bodyCaptor.getValue());
     }
 
 }

@@ -13,7 +13,7 @@ package zowe.client.sdk.core;
  * Class to represent an authentication type used for the http request.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public enum AuthType {
 

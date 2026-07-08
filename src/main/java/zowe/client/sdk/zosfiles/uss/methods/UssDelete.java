@@ -10,10 +10,7 @@
 package zowe.client.sdk.zosfiles.uss.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -29,12 +26,12 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-delete-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssDelete {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssDelete Constructor
@@ -45,6 +42,7 @@ public class UssDelete {
     public UssDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -95,10 +93,6 @@ public class UssDelete {
                 ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
-
         if (recursive) {
             request.setHeaders(Map.of("X-IBM-Option", "recursive"));
         }
@@ -120,12 +114,10 @@ public class UssDelete {
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_ZFS_FILES + "/" +
+                ZosFilesConstants.RES_ZFS_FILES +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
         request.setUrl(url);
 
         return request.executeRequest();

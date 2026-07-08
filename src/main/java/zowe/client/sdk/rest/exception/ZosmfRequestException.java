@@ -15,7 +15,7 @@ import zowe.client.sdk.rest.Response;
  * Custom exception to represent z/OSMF request error state
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfRequestException extends Exception {
 

@@ -23,7 +23,7 @@ import zowe.client.sdk.zosfiles.uss.types.LinkType;
  * cannot be combined with any other ACL operation keyword.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class SetAclInputFactory {
 

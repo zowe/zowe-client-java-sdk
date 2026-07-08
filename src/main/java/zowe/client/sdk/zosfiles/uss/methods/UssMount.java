@@ -9,15 +9,12 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssMountInputData;
@@ -34,12 +31,12 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-unmount-unix-file-system">z/OSMF REST UNMOUNT API</a>
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssMount {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssMount Constructor
@@ -50,6 +47,7 @@ public class UssMount {
     public UssMount(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -126,7 +124,8 @@ public class UssMount {
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_MFS + "/" +
+                ZosFilesConstants.RES_MFS +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(fileSystemName);
 
         final Map<String, Object> mountMap = new HashMap<>();
@@ -135,11 +134,8 @@ public class UssMount {
         mountInputData.getFsType().ifPresent(str -> mountMap.put("fs-type", str));
         mountInputData.getMode().ifPresent(str -> mountMap.put("mode", str.getValue()));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(mountMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(mountMap));
 
         return request.executeRequest();
     }

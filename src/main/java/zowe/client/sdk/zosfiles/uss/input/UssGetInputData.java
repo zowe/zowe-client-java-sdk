@@ -19,7 +19,7 @@ import java.util.OptionalInt;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssGetInputData {
 
@@ -261,7 +261,7 @@ public class UssGetInputData {
          * Set research value
          *
          * @param research string value
-         * @return UssGetInputData.Builder this object
+         * @return Builder this object
          */
         public Builder research(final String research) {
             if (this.search != null) {

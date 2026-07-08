@@ -10,10 +10,7 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.GetStreamZosmfRequest;
-import zowe.client.sdk.rest.ZosmfHeaders;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -38,12 +35,12 @@ import java.util.stream.IntStream;
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnGet {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DsnGet Constructor
@@ -54,6 +51,7 @@ public class DsnGet {
     public DsnGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
     }
 
     /**
@@ -124,7 +122,9 @@ public class DsnGet {
         ValidateUtils.checkNullParameter(downloadInputData, "downloadInputData");
 
         String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/";
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM;
 
         if (downloadInputData.getVolume().isPresent()) {
             url += "-(" + downloadInputData.getVolume().get() + ")/";
@@ -168,9 +168,6 @@ public class DsnGet {
         }
         headers.put(key, value);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_STREAM);
-        }
         request.setHeaders(headers);
         request.setUrl(url);
 

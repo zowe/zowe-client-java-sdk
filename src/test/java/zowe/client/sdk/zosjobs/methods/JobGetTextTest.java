@@ -13,7 +13,6 @@ import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetTextZosmfRequest;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for JobGet.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobGetTextTest {
 
@@ -47,10 +46,9 @@ public class JobGetTextTest {
 
     @Test
     public void tstJobGetTextSpoolContentByIdSuccess() throws ZosmfRequestException {
-        JobGet getJobs = new JobGet(connection);
+        JobGet getJobs = new JobGet(connection, mockTextGetRequest);
         Mockito.when(mockTextGetRequest.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
-        Whitebox.setInternalState(getJobs, "request", mockTextGetRequest);
 
         final String results = getJobs.getSpoolContent("jobName", "jobId", 1L);
         assertEquals("https://1:443/zosmf/restjobs/jobs/jobName/jobId/files/1/records", getJobs.getUrl());
@@ -59,10 +57,9 @@ public class JobGetTextTest {
 
     @Test
     public void tstJobGetTextSpoolContentByIdToggleTokenSuccess() throws ZosmfRequestException {
-        JobGet getJobs = new JobGet(tokenConnection);
         GetTextZosmfRequest mockTextGetRequestToken = Mockito.mock(GetTextZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
-        Whitebox.setInternalState(getJobs, "request", mockTextGetRequestToken);
+        JobGet getJobs = new JobGet(tokenConnection, mockTextGetRequestToken);
         Mockito.when(mockTextGetRequestToken.executeRequest()).thenReturn(
                 new Response("1\n2\n3\n", 200, "success"));
         doCallRealMethod().when(mockTextGetRequestToken).setHeaders(anyMap());

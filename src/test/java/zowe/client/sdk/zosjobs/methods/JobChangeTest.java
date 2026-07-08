@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosjobs.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +17,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.TestJsonUtils;
 import zowe.client.sdk.zosjobs.input.JobModifyInputData;
 import zowe.client.sdk.zosjobs.model.Job;
 import zowe.client.sdk.zosjobs.response.JobFeedback;
@@ -33,7 +32,7 @@ import static org.mockito.Mockito.*;
  * Class containing unit tests for JobChange.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobChangeTest {
 
@@ -48,7 +47,7 @@ public class JobChangeTest {
     private final JobChange jobChange = new JobChange(connection);
 
     @BeforeEach
-    public void init() throws ZosmfRequestException {
+    public void init() throws Exception {
         String jsonResponse = "{\"jobid\":\"JOBID\",\"jobname\":\"JOBNAME\",\"original-jobid\":\"JOB00023\",\"owner\":" +
                 "\"IBMUSER\",\"member\":\"JES2\",\"sysname\":\"SY1\",\"job-correlator\":\"J0000023SY1.....CC20F378.......:" +
                 "\",\"status\":\"0\"}";
@@ -66,7 +65,7 @@ public class JobChangeTest {
         mockPutJsonZosmfRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPutJsonZosmfRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).setUrl(any());
@@ -80,7 +79,7 @@ public class JobChangeTest {
     }
 
     @Test
-    public void tstChangeClassCommonSuccess() throws ZosmfRequestException {
+    public void tstChangeClassCommonSuccess() throws Exception {
         JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
                 .jobClass(classs)
                 .version(version)
@@ -109,12 +108,12 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstChangeClassCommonWithTokenSuccess() throws ZosmfRequestException {
+    public void tstChangeClassCommonWithTokenSuccess() throws Exception {
         JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
                 .jobClass(classs)
                 .version(version)
@@ -144,12 +143,12 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequestToken).setUrl(anyString());
-        verify(mockPutJsonZosmfRequestToken).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequestToken).setBody(TestJsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequestToken).executeRequest();
     }
 
     @Test
-    public void tstChangeClassSuccess() throws ZosmfRequestException {
+    public void tstChangeClassSuccess() throws Exception {
         final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
         final JobFeedback result = jobChange.changeClass("JOBNAME", "JOBID", classs, version);
 
@@ -174,12 +173,12 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstChangeClassByJobSuccess() throws ZosmfRequestException {
+    public void tstChangeClassByJobSuccess() throws Exception {
         final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
         final Job job = Job.builder().jobName("JOBNAME").jobId("JOBID").build();
         final JobFeedback result = jobChange.changeClassByJob(job, classs, version);
@@ -201,12 +200,12 @@ public class JobChangeTest {
 
         // verify request setup
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(changeMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(changeMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstHoldCommonSuccess() throws ZosmfRequestException {
+    public void tstHoldCommonSuccess() throws Exception {
         JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
                 .version(version)
                 .build();
@@ -230,12 +229,12 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstHoldCommonWithTokenSuccess() throws ZosmfRequestException {
+    public void tstHoldCommonWithTokenSuccess() throws Exception {
         JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
                 .version(version)
                 .build();
@@ -257,12 +256,12 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequestToken).setUrl(anyString());
-        verify(mockPutJsonZosmfRequestToken).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequestToken).setBody(TestJsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequestToken).executeRequest();
     }
 
     @Test
-    public void tstHoldSuccess() throws ZosmfRequestException {
+    public void tstHoldSuccess() throws Exception {
         final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
         final JobFeedback result = jobChange.hold("JOBNAME", "JOBID", version);
 
@@ -275,12 +274,12 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstHoldByJobSuccess() throws ZosmfRequestException {
+    public void tstHoldByJobSuccess() throws Exception {
         final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
         final Job job = Job.builder().jobName("JOBNAME").jobId("JOBID").build();
 
@@ -295,12 +294,12 @@ public class JobChangeTest {
         holdMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(holdMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(holdMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstReleaseSuccess() throws ZosmfRequestException {
+    public void tstReleaseSuccess() throws Exception {
         final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
         final JobFeedback result = jobChange.release("JOBNAME", "JOBID", version);
 
@@ -313,12 +312,12 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstReleaseByJobSuccess() throws ZosmfRequestException {
+    public void tstReleaseByJobSuccess() throws Exception {
         final JobChange jobChange = new JobChange(connection, mockPutJsonZosmfRequest);
         final Job job = Job.builder().jobName("JOBNAME").jobId("JOBID").build();
 
@@ -333,12 +332,12 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstReleaseCommonSuccess() throws ZosmfRequestException {
+    public void tstReleaseCommonSuccess() throws Exception {
         JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
                 .version(version)
                 .build();
@@ -362,12 +361,12 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequest).setUrl(anyString());
-        verify(mockPutJsonZosmfRequest).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequest).setBody(TestJsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequest).executeRequest();
     }
 
     @Test
-    public void tstReleaseCommonWithTokenSuccess() throws ZosmfRequestException {
+    public void tstReleaseCommonWithTokenSuccess() throws Exception {
         JobModifyInputData inputData = new JobModifyInputData.Builder("JOBNAME", "JOBID")
                 .version(version)
                 .build();
@@ -389,7 +388,7 @@ public class JobChangeTest {
         releaseMap.put("version", version);
 
         verify(mockPutJsonZosmfRequestToken).setUrl(anyString());
-        verify(mockPutJsonZosmfRequestToken).setBody(new JSONObject(releaseMap).toString());
+        verify(mockPutJsonZosmfRequestToken).setBody(TestJsonUtils.toJsonString(releaseMap));
         verify(mockPutJsonZosmfRequestToken).executeRequest();
     }
 

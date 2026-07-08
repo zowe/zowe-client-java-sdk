@@ -22,7 +22,7 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-unmount-unix-file-system">z/OSMF REST UNMOUNT API</a>
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssMountInputData {
 

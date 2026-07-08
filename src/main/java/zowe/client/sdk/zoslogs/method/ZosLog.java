@@ -29,7 +29,7 @@ import java.util.List;
  * Retrieves z/OS log data through the z/OSMF REST API.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosLog {
 
@@ -37,7 +37,7 @@ public class ZosLog {
     private static final String CONTEXT = "issueCommand";
     private static final int ZOSMF_MAX_LOG_ITEMS = 10_000;
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ZosLog constructor
@@ -48,6 +48,7 @@ public class ZosLog {
     public ZosLog(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -176,8 +177,7 @@ public class ZosLog {
     private @NonNull String getUrl(final ZosLogInputData logInputData, final long nextTimestamp) {
         ValidateUtils.checkNullParameter(logInputData, "logInputData");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl())
-                .append(RESOURCE);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl()).append(RESOURCE);
 
         final List<String> queryParams = new ArrayList<>();
 
@@ -210,9 +210,7 @@ public class ZosLog {
      * @author Frank Giordano
      */
     private void setUrl(final String url) {
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
+
         request.setUrl(url);
     }
 

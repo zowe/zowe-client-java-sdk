@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * hyphenated JSON attribute names to Java-friendly field names.</p>
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class JobFeedback {

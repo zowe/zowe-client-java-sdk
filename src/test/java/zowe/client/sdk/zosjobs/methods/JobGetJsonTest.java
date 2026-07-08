@@ -10,12 +10,12 @@
 package zowe.client.sdk.zosjobs.methods;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.powermock.reflect.Whitebox;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
@@ -28,9 +28,6 @@ import zowe.client.sdk.zosjobs.input.CommonJobInputData;
 import zowe.client.sdk.zosjobs.model.Job;
 import zowe.client.sdk.zosjobs.model.JobStepData;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -38,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Class containing unit tests for JobGet.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 67.0
  */
 public class JobGetJsonTest {
 
@@ -46,63 +43,55 @@ public class JobGetJsonTest {
             .createBasicConnection("1", 443, "1", "1");
     private GetJsonZosmfRequest mockJsonGetRequest;
     private JobGet getJobs;
-    private JSONObject jobJson;
-    private JSONArray stepDataArray;
+    private final ObjectMapper mapper = new ObjectMapper();
+    private ObjectNode jobJson;
+    private ArrayNode stepDataArray;
 
     @BeforeEach
-    @SuppressWarnings("unchecked")
     public void init() {
+
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        getJobs = new JobGet(connection);
-        Whitebox.setInternalState(getJobs, "request", mockJsonGetRequest);
+        getJobs = new JobGet(connection, mockJsonGetRequest);
 
-        final Map<String, String> jsonMap = getJsonObject();
-        jobJson = new JSONObject(jsonMap);
+        jobJson = mapper.createObjectNode();
+        jobJson.put("jobid", "jobid");
+        jobJson.put("jobname", "jobname");
+        jobJson.put("subsystem", "subsystem");
+        jobJson.put("owner", "owner");
+        jobJson.put("status", "status");
+        jobJson.put("type", "type");
+        jobJson.put("class", "class");
+        jobJson.put("retcode", "retcode");
+        jobJson.put("url", "url");
+        jobJson.put("files-url", "files-url");
+        jobJson.put("job-correlator", "job-correlator");
+        jobJson.put("phase-name", "phase-name");
 
-        // step data initialize
-        final Map<String, String> stepDataMap = new HashMap<>();
-        stepDataMap.put("smfid", "SP21");
-        stepDataMap.put("active", "true");
-        stepDataMap.put("step-number", "1");
-        stepDataMap.put("proc-step-name", "STARTING");
-        stepDataMap.put("step-name", "IEFPROC ");
-        stepDataMap.put("program-name", "BLSQPRMI");
-        final JSONObject stepData = new JSONObject(stepDataMap);
-        stepDataArray = new JSONArray();
+        stepDataArray = mapper.createArrayNode();
+
+        ObjectNode stepData = mapper.createObjectNode();
+        stepData.put("smfid", "SP21");
+        stepData.put("active", "true");
+        stepData.put("step-number", "1");
+        stepData.put("proc-step-name", "STARTING");
+        stepData.put("step-name", "IEFPROC ");
+        stepData.put("program-name", "BLSQPRMI");
+
         stepDataArray.add(stepData);
     }
 
-    private static Map<String, String> getJsonObject() {
-        final Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("jobid", "jobid");
-        jsonMap.put("jobname", "jobname");
-        jsonMap.put("subsystem", "subsystem");
-        jsonMap.put("owner", "owner");
-        jsonMap.put("status", "status");
-        jsonMap.put("type", "type");
-        jsonMap.put("class", "class");
-        jsonMap.put("retcode", "retcode");
-        jsonMap.put("url", "url");
-        jsonMap.put("files-url", "files-url");
-        jsonMap.put("job-correlator", "job-correlator");
-        jsonMap.put("phase-name", "phase-name");
-        return jsonMap;
-    }
-
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonFromMultipleJobsResultsExceptionFailure() throws ZosmfRequestException {
         final String msg = "expected 1 job returned but received 2 jobs.";
-        final JSONArray jsonArray = new JSONArray();
+        final ObjectMapper mapper = new ObjectMapper();
+        final ArrayNode jsonArray = mapper.createArrayNode();
 
-        final Map<String, String> jsonJobMap1 = new HashMap<>();
-        jsonJobMap1.put("jobid", "job1");
-        final Map<String, String> jsonJob1 = new JSONObject(jsonJobMap1);
+        final ObjectNode jsonJob1 = mapper.createObjectNode();
+        jsonJob1.put("jobid", "job1");
         jsonArray.add(jsonJob1);
 
-        final Map<String, String> jsonJobMap2 = new HashMap<>();
-        jsonJobMap2.put("jobid", "job2");
-        final Map<String, String> jsonJob2 = new JSONObject(jsonJobMap2);
+        final ObjectNode jsonJob2 = mapper.createObjectNode();
+        jsonJob2.put("jobid", "job2");
         jsonArray.add(jsonJob2);
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
@@ -120,10 +109,10 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonWithAllJobMembersSuccess() throws ZosmfRequestException {
-        final JSONArray jsonArray = new JSONArray();
-        jsonArray.add(jobJson);
+        final ObjectMapper mapper = new ObjectMapper();
+        final ArrayNode jsonArray = mapper.createArrayNode();
+        jsonArray.add(jobJson); // jobJson must be JsonNode
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
                 new Response(jsonArray, 200, "success"));
@@ -145,13 +134,11 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonWithJobIdOnlySuccess() throws ZosmfRequestException {
-        final JSONArray jsonArray = new JSONArray();
-
-        final Map<String, String> jsonJobMap = new HashMap<>();
-        jsonJobMap.put("jobid", "job");
-        final JSONObject jsonJob = new JSONObject(jsonJobMap);
+        final ObjectMapper mapper = new ObjectMapper();
+        final ArrayNode jsonArray = mapper.createArrayNode();
+        final ObjectNode jsonJob = mapper.createObjectNode();
+        jsonJob.put("jobid", "job");
         jsonArray.add(jsonJob);
 
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
@@ -163,13 +150,12 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonStatusWithOutStepDataAndSomeEmptyValuesSuccess() throws ZosmfRequestException {
-        final JSONObject jsonResponse = new JSONObject();
+        final ObjectNode jsonResponse = mapper.createObjectNode();
         jsonResponse.put("retcode", "null");
         jsonResponse.put("jobname", "BLSJPRMI");
         jsonResponse.put("status", "ACTIVE");
-        jsonResponse.put("step-data", null);
+        jsonResponse.set("step-data", null);
         jsonResponse.put("owner", "IBMUSER");
         jsonResponse.put("subsystem", "JES2");
         jsonResponse.put("phase", 20);
@@ -209,9 +195,8 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonStatusWithStepDataSuccess() throws ZosmfRequestException {
-        final JSONObject jsonResponse = new JSONObject();
+        final ObjectNode jsonResponse = mapper.createObjectNode();
         jsonResponse.put("retcode", "null");
         jsonResponse.put("jobname", "BLSJPRMI");
         jsonResponse.put("status", "ACTIVE");
@@ -221,7 +206,7 @@ public class JobGetJsonTest {
         jsonResponse.put("jobid", "STC00052");
         jsonResponse.put("url", "https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A");
         jsonResponse.put("phase-name", "Job is on the hard copy queue");
-        jsonResponse.put("step-data", stepDataArray);
+        jsonResponse.set("step-data", stepDataArray);
         jsonResponse.put("owner", "IBMUSER");
         jsonResponse.put("subsystem", "JES2");
         jsonResponse.put("files-url", "https://host:port/zosmf/restjobs/jobs/S0000052SY1.....CE35BDE8.......%3A/files");
@@ -273,13 +258,12 @@ public class JobGetJsonTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void tstJobGetJsonStatusWithStepDataFlagTrue() throws ZosmfRequestException {
-        final JSONObject jsonResponse = new JSONObject();
+        final ObjectNode jsonResponse = mapper.createObjectNode();
         jsonResponse.put("jobname", "BLSJPRMI");
         jsonResponse.put("jobid", "STC00052");
         jsonResponse.put("status", "ACTIVE");
-        jsonResponse.put("step-data", stepDataArray);
+        jsonResponse.set("step-data", stepDataArray);
 
         final Response response = new Response(jsonResponse, 200, "success");
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(response);

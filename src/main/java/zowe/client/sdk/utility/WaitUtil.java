@@ -7,13 +7,13 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.utility.timer;
+package zowe.client.sdk.utility;
 
 /**
  * Global Utility Class with static helper methods.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class WaitUtil {
 
@@ -31,11 +31,10 @@ public final class WaitUtil {
      * @author Frank Giordano
      */
     public static void wait(final int time) {
-        final Timer timer = new Timer(time).initialize();
-        while (true) {
-            if (timer.isEnded()) {
-                break;
-            }
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 

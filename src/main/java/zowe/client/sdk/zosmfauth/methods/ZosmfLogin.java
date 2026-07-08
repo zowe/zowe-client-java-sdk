@@ -27,12 +27,12 @@ import zowe.client.sdk.zosmfauth.response.ZosmfLoginResponse;
  *
  * @author Esteban Sandoval
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfLogin {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * ZosmfLogin constructor
@@ -43,6 +43,7 @@ public class ZosmfLogin {
     public ZosmfLogin(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -76,9 +77,6 @@ public class ZosmfLogin {
     public ZosmfLoginResponse login() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
         request.setUrl(url);
         request.setBody("");
 

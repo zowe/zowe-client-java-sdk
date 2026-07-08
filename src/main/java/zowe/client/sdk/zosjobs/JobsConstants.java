@@ -13,7 +13,7 @@ package zowe.client.sdk.zosjobs;
  * Constants for various job-related info
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class JobsConstants {
 
@@ -38,11 +38,6 @@ public final class JobsConstants {
      * Wildcard prefix
      */
     public static final String DEFAULT_PREFIX = "*";
-
-    /**
-     * File delimiter
-     */
-    public static final String FILE_DELIM = "/";
 
     /**
      * Use for an illegal exception error message

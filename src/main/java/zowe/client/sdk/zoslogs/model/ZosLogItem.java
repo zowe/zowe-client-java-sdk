@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Represents the details of one log item.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ZosLogItem {

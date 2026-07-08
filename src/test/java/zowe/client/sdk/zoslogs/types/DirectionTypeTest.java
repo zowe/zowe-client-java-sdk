@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Unit tests for DirectionType class.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 class DirectionTypeTest {
 

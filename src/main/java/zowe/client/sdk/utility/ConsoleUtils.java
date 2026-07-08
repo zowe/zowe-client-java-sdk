@@ -13,7 +13,7 @@ package zowe.client.sdk.utility;
  * Utility class contains helper methods for console processing.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public final class ConsoleUtils {
 

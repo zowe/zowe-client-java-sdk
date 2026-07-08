@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PostJsonZosmfRequest;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -29,12 +30,12 @@ import zowe.client.sdk.zostso.response.TsoStartResponse;
  * This class handles sending the request to start the TSO session via z/OSMF
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TsoStart {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -46,6 +47,7 @@ public class TsoStart {
     public TsoStart(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
     }
 
     /**
@@ -78,7 +80,10 @@ public class TsoStart {
      */
     public TsoStartResponse start(final StartTsoInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
-        final String url = connection.getZosmfUrl() + TsoConstants.RESOURCE + "/" + TsoConstants.RES_START_TSO +
+        final String url = connection.getZosmfUrl() +
+                TsoConstants.RESOURCE +
+                UrlConstants.URL_PATH_DELIM +
+                TsoConstants.RES_START_TSO +
                 "?" + "acct" + "=" + EncodeUtils.encodeURIComponent(inputData.getAccount()
                 .orElseThrow(() -> new ZosmfRequestException("accountNumber is not specified"))) +
                 "&" + "proc" + "=" + inputData.getLogonProcedure().orElse(TsoConstants.DEFAULT_PROC) +
@@ -88,9 +93,6 @@ public class TsoStart {
                 "&" + "cols" + "=" + inputData.getColumns().orElse(TsoConstants.DEFAULT_COLS) +
                 "&" + "rsize" + "=" + inputData.getRegionSize().orElse(TsoConstants.DEFAULT_RSIZE);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.POST_JSON);
-        }
         request.setUrl(url);
         request.setBody("");
 

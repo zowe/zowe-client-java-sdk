@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -31,7 +30,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for DsnDelete.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnDeleteTest {
 
@@ -46,14 +45,14 @@ public class DsnDeleteTest {
     public void init() throws ZosmfRequestException {
         mockDeleteRequest = Mockito.mock(DeleteJsonZosmfRequest.class);
         Mockito.when(mockDeleteRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockDeleteRequest).setUrl(any());
         doCallRealMethod().when(mockDeleteRequest).getUrl();
 
         mockDeleteRequestToken = Mockito.mock(DeleteJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockDeleteRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockDeleteRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockDeleteRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockDeleteRequestToken).setUrl(any());

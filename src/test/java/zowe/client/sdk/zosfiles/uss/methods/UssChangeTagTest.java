@@ -34,7 +34,7 @@ import static org.mockito.Mockito.withSettings;
  *
  * @author James Kostrewski
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssChangeTagTest {
 
@@ -57,7 +57,7 @@ public class UssChangeTagTest {
         mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
-                new Response(new org.json.simple.JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
-import zowe.client.sdk.utility.timer.WaitUtil;
+import zowe.client.sdk.utility.WaitUtil;
 import zowe.client.sdk.zosjobs.input.CommonJobInputData;
 import zowe.client.sdk.zosjobs.input.JobGetInputData;
 import zowe.client.sdk.zosjobs.input.JobMonitorInputData;
@@ -31,7 +31,7 @@ import java.util.List;
  * in MonitorJobs invoke z/OSMF jobs REST endpoints to collect job status information.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobMonitor {
 

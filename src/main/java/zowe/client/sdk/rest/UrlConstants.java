@@ -13,14 +13,14 @@ package zowe.client.sdk.rest;
  * Constants for various Rest query info
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
-public final class QueryConstants {
+public final class UrlConstants {
 
     /**
      * Private constructor defined to avoid instantiation of class
      */
-    private QueryConstants() {
+    private UrlConstants() {
         throw new IllegalStateException("Constants class");
     }
 
@@ -32,5 +32,10 @@ public final class QueryConstants {
      * Query identifier
      */
     public static final String QUERY_ID = "?";
+
+    /**
+     * URL path segment delimiter.
+     */
+    public static final String URL_PATH_DELIM = "/";
 
 }

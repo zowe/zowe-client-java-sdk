@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -24,7 +24,9 @@ import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -32,12 +34,12 @@ import java.util.regex.Pattern;
  * Provides Unix System Services (USS) extattr functionality
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssExtAttr {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssCopy Constructor
@@ -48,6 +50,7 @@ public class UssExtAttr {
     public UssExtAttr(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -69,23 +72,28 @@ public class UssExtAttr {
     }
 
     /**
-     * Returns a response string documenting listing attributes
+     * Returns a list documenting listing attributes
      *
-     * @param targetPath UNIX path to the target file or directory
-     * @return string output
+     * @param targetPath UNIX path to the target file; an attribute listing is only returned for a file,
+     *                   if a directory path is given without specifying a file, an IBM JSON error document
+     *                   is returned instead
+     * @return list of attribute strings
      * @throws ZosmfRequestException request error state
      * @author James Kostrewski
      */
-    @SuppressWarnings("unchecked")
-    public String display(final String targetPath) throws ZosmfRequestException {
+    @SuppressWarnings("DuplicatedCode")
+    public List<String> get(final String targetPath) throws ZosmfRequestException {
         final Map<String, String> requestMap = new HashMap<>();
         requestMap.put("request", "extattr");
         final Response response = executeRequest(targetPath, requestMap);
-        final JSONObject json = JsonUtils.parse(response.getResponsePhrase()
+        final JsonNode json = JsonUtils.parse(response.getResponsePhrase()
                 .orElseThrow(() -> new IllegalStateException(ZosFilesConstants.RESPONSE_PHRASE_ERROR)).toString());
-        final StringBuilder str = new StringBuilder();
-        ((JSONArray) json.get("stdout")).forEach(item -> str.append(item.toString()).append("\n"));
-        return str.toString();
+        final List<String> attributes = new ArrayList<>();
+        final JsonNode stdout = json.get("stdout");
+        if (stdout != null && stdout.isArray()) {
+            stdout.forEach(item -> attributes.add(item.asText()));
+        }
+        return attributes;
     }
 
     /**
@@ -125,7 +133,7 @@ public class UssExtAttr {
     }
 
     /**
-     * Execute request for given path and JSON map
+     * Execute a request for a given path and JSON map
      *
      * @param targetPath UNIX path to the target file or directory
      * @param jsonMap    map representing request body
@@ -142,11 +150,8 @@ public class UssExtAttr {
                 ZosFilesConstants.RES_USS_FILES +
                 EncodeUtils.encodeURIComponent(FileUtils.validatePath(targetPath));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(jsonMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(jsonMap));
 
         return request.executeRequest();
     }

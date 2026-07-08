@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.*;
  * Class containing unit tests for DsnCopy.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnCopyTest {
 
@@ -43,14 +42,14 @@ public class DsnCopyTest {
     public void init() throws ZosmfRequestException {
         mockJsonPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockJsonPutRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonPutRequest).setUrl(any());
         doCallRealMethod().when(mockJsonPutRequest).getUrl();
 
         mockJsonPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockJsonPutRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockJsonPutRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockJsonPutRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockJsonPutRequestToken).setUrl(any());

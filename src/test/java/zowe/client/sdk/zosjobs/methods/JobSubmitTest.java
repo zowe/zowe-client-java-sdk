@@ -9,8 +9,9 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -36,7 +37,7 @@ import static org.mockito.Mockito.*;
  * Class containing unit tests for JobSubmit.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobSubmitTest {
 
@@ -52,7 +53,7 @@ public class JobSubmitTest {
 
     @BeforeEach
     public void init() throws ZosmfRequestException {
-        JSONObject jobJson = getJsonObject();
+        ObjectNode jobJson = getJsonObject();
 
         mockPutJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class);
         mockPutTextZosmfRequest = Mockito.mock(PutTextZosmfRequest.class);
@@ -76,7 +77,7 @@ public class JobSubmitTest {
         doCallRealMethod().when(mockPutJsonZosmfRequestToken).getUrl();
     }
 
-    private static JSONObject getJsonObject() {
+    private static ObjectNode getJsonObject() {
         final Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("jobid", "jobid");
         jsonMap.put("jobname", "jobname");
@@ -90,7 +91,10 @@ public class JobSubmitTest {
         jsonMap.put("files-url", "files-url");
         jsonMap.put("job-correlator", "job-correlator");
         jsonMap.put("phase-name", "phase-name");
-        return new JSONObject(jsonMap);
+        final ObjectMapper mapper = new ObjectMapper();
+        final ObjectNode node = mapper.createObjectNode();
+        jsonMap.forEach(node::put);
+        return node;
     }
 
     @Test

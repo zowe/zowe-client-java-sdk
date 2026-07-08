@@ -7,26 +7,26 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.rest;
+package zowe.client.sdk.zosvariables;
 
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.utility.UtilsTestHelper;
 
 /**
- * Class containing unit test for QueryConstantsTest.
+ * Class containing unit test for SystemVariableConstants.
  *
- * @author Frank Giordano
- * @version 6.0
+ * @author Chaitanya Katore
+ * @version 7.0
  */
-public class QueryConstantsTest {
+public class VariableConstantsTest {
 
     /**
      * Validate class structure
      */
     @Test
-    public void tstQueryConstantsClassStructureSuccess() {
+    public void tstSystemVariableConstantsClassStructureSuccess() {
         final String privateConstructorExceptionMsg = "Constants class";
-        UtilsTestHelper.validateClass(QueryConstants.class, privateConstructorExceptionMsg);
+        UtilsTestHelper.validateClass(VariableConstants.class, privateConstructorExceptionMsg);
     }
 
 }

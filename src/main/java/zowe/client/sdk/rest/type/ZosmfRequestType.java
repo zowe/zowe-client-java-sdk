@@ -13,7 +13,7 @@ package zowe.client.sdk.rest.type;
  * z/OSMF Request CRUD types
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public enum ZosmfRequestType {
 

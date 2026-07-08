@@ -31,13 +31,13 @@ import java.util.stream.IntStream;
  * This class holds the helper functions that are used to gather z/OSMF information through the z/OSMF APIs.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfStatus {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * CheckStatus Constructor.
@@ -48,6 +48,7 @@ public class ZosmfStatus {
     public ZosmfStatus(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -80,9 +81,6 @@ public class ZosmfStatus {
     public ZosmfInfoResponse get() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + ZosmfConstants.INFO;
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
-        }
         request.setUrl(url);
 
         final String responsePhrase = request.executeRequest()
@@ -96,7 +94,7 @@ public class ZosmfStatus {
         Optional.ofNullable(jsonStr.optJSONArray("plugins"))
                 .ifPresent(plugins -> {
                     ZosmfPlugin[] zosmfPluginsInfo = IntStream.range(0, plugins.length())
-                            .mapToObj(i -> safeParse(String.valueOf(plugins.get(i)), ZosmfPlugin.class))
+                            .mapToObj(i -> safeParsePlugin(String.valueOf(plugins.get(i)), ZosmfPlugin.class))
                             .filter(Optional::isPresent) // Filter out any empty Optionals (failed parses)
                             .map(Optional::get) // Unwrap the Optionals
                             .toArray(ZosmfPlugin[]::new);
@@ -110,11 +108,12 @@ public class ZosmfStatus {
     }
 
     // A helper method to wrap the potentially throwing `parseResponse` call.
-    private <T> Optional<T> safeParse(String responseString, @SuppressWarnings("SameParameterValue") Class<T> classs) {
+    private <T> Optional<T> safeParsePlugin(String responseString,
+                                            @SuppressWarnings("SameParameterValue") Class<T> classs) {
         try {
             return Optional.ofNullable(JsonUtils.parseResponse(responseString, classs, "get"));
         } catch (Exception e) {
-            LOG.error("Failed to parse response: {}", responseString, e);
+            LOG.warn("Skipping invalid z/OSMF plugin entry: {}", responseString, e);
             return Optional.empty();
         }
     }

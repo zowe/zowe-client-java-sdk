@@ -11,6 +11,7 @@ package zowe.client.sdk.zostso.methods;
 
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -23,12 +24,12 @@ import zowe.client.sdk.zostso.TsoConstants;
  * This class handles sending the TSO command to be performed via z/OSMF
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TsoSend {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * TsoSend constructor
@@ -39,6 +40,7 @@ public class TsoSend {
     public TsoSend(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -74,14 +76,14 @@ public class TsoSend {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
         ValidateUtils.checkIllegalParameter(command, "command");
         final String url = connection.getZosmfUrl() +
-                TsoConstants.RESOURCE + "/" +
-                TsoConstants.RES_START_TSO + "/" +
-                sessionId + TsoConstants.RES_DONT_READ_REPLY;
+                TsoConstants.RESOURCE +
+                UrlConstants.URL_PATH_DELIM +
+                TsoConstants.RES_START_TSO +
+                UrlConstants.URL_PATH_DELIM +
+                sessionId +
+                TsoConstants.RES_DONT_READ_REPLY;
         final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
 
-        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody(body);
 

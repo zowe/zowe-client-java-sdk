@@ -9,8 +9,8 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -31,7 +31,7 @@ import java.util.List;
  * Class to handle getting a job and started task information
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobGet {
 
@@ -113,9 +113,9 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get() +
                 JobsConstants.RESOURCE_SPOOL_FILES +
                 JobsConstants.RESOURCE_JCL_CONTENT +
@@ -217,7 +217,7 @@ public class JobGet {
         List<Job> jobs = new ArrayList<>();
 
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + QueryConstants.QUERY_ID;
+                JobsConstants.RESOURCE + UrlConstants.QUERY_ID;
 
         if (getInputData != null) {
             if (getInputData.getOwner().isPresent()) {
@@ -225,23 +225,23 @@ public class JobGet {
             }
             if (getInputData.getPrefix().isPresent()) {
                 if (!JobsConstants.DEFAULT_PREFIX.equals(getInputData.getPrefix().get())) {
-                    if (url.contains(QueryConstants.QUERY_ID)) {
-                        url += QueryConstants.COMBO_ID;
+                    if (url.contains(UrlConstants.QUERY_ID)) {
+                        url += UrlConstants.COMBO_ID;
                     }
                     url += JobsConstants.QUERY_PREFIX + EncodeUtils.encodeURIComponent(getInputData.getPrefix().get());
                 }
             }
             if (getInputData.getMaxJobs().isPresent()) {
                 if (getInputData.getMaxJobs().getAsInt() != JobsConstants.DEFAULT_MAX_JOBS) {
-                    if (url.contains(QueryConstants.QUERY_ID)) {
-                        url += QueryConstants.COMBO_ID;
+                    if (url.contains(UrlConstants.QUERY_ID)) {
+                        url += UrlConstants.COMBO_ID;
                     }
                     url += JobsConstants.QUERY_MAX_JOBS + getInputData.getMaxJobs().getAsInt();
                 }
             }
             if (getInputData.getJobId().isPresent()) {
-                if (url.contains(QueryConstants.QUERY_ID)) {
-                    url += QueryConstants.COMBO_ID;
+                if (url.contains(UrlConstants.QUERY_ID)) {
+                    url += UrlConstants.COMBO_ID;
                 }
                 url += JobsConstants.QUERY_JOBID + getInputData.getJobId().get();
             }
@@ -263,8 +263,8 @@ public class JobGet {
                 .toString();
 
         final String context = "getCommon";
-        final JSONArray results = JsonUtils.parseArray(responsePhrase);
-        for (final Object jsonObj : results) {
+        final ArrayNode results = (ArrayNode) JsonUtils.parse(responsePhrase);
+        for (final JsonNode jsonObj : results) {
             jobs.add(JsonUtils.parseResponse(String.valueOf(jsonObj), Job.class, context));
         }
 
@@ -315,12 +315,12 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(jobFile.getJobName()) +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 jobFile.getJobId() +
                 JobsConstants.RESOURCE_SPOOL_FILES +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 jobFile.getId() +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
 
@@ -379,9 +379,9 @@ public class JobGet {
 
         url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get() +
                 "/files";
 
@@ -398,10 +398,9 @@ public class JobGet {
                 .toString();
 
         final String context = "getSpoolFilesCommon";
-        final JSONArray results = JsonUtils.parseArray(responsePhrase);
-        for (final Object obj : results) {
-            final JSONObject jsonObj = (JSONObject) obj;
-            files.add(JsonUtils.parseResponse(jsonObj.toJSONString(), JobFile.class, context));
+        final ArrayNode results = (ArrayNode) JsonUtils.parse(responsePhrase);
+        for (final JsonNode jsonObj : results) {
+            files.add(JsonUtils.parseResponse(String.valueOf(jsonObj), JobFile.class, context));
         }
 
         return files;
@@ -477,8 +476,10 @@ public class JobGet {
         ValidateUtils.checkIllegalParameter(commonInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(commonInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
-        url = connection.getZosmfUrl() + JobsConstants.RESOURCE + "/" +
-                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) + "/" +
+        url = connection.getZosmfUrl() + JobsConstants.RESOURCE +
+                UrlConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
+                UrlConstants.URL_PATH_DELIM +
                 commonInputData.getJobId().get();
 
         if (commonInputData.isStepData()) {

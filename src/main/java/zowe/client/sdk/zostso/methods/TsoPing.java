@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.UrlConstants;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -26,12 +27,12 @@ import zowe.client.sdk.zostso.response.TsoCommonResponse;
  * This class handles sending a ping request to z/OSMF TSO to keep the session alive.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TsoPing {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -43,6 +44,7 @@ public class TsoPing {
     public TsoPing(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -76,11 +78,11 @@ public class TsoPing {
     @SuppressWarnings("DuplicatedCode")
     public TsoCommonResponse ping(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
-        final String url = connection.getZosmfUrl() + TsoConstants.RES_PING + "/" + sessionId;
+        final String url = connection.getZosmfUrl() +
+                TsoConstants.RES_PING +
+                UrlConstants.URL_PATH_DELIM +
+                sessionId;
 
-        if (request == null || !(request instanceof PutJsonZosmfRequest)) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
         request.setBody("");
 

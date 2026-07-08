@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -32,7 +31,7 @@ import static org.mockito.Mockito.withSettings;
  * Class containing unit tests for DsnCreate.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnCreateTest {
 
@@ -47,14 +46,14 @@ public class DsnCreateTest {
     public void init() throws ZosmfRequestException {
         mockPostRequest = Mockito.mock(PostJsonZosmfRequest.class);
         Mockito.when(mockPostRequest.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockPostRequest).setUrl(any());
         doCallRealMethod().when(mockPostRequest).getUrl();
 
         mockPostRequestToken = Mockito.mock(PostJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPostRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(), 200, "success"));
+                new Response("{}", 200, "success"));
         doCallRealMethod().when(mockPostRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPostRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockPostRequestToken).setUrl(any());

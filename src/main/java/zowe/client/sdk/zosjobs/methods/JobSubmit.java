@@ -9,7 +9,7 @@
  */
 package zowe.client.sdk.zosjobs.methods;
 
-import org.json.simple.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -35,7 +35,7 @@ import java.util.Map;
  * Class to handle submitting of z/OS batch jobs and started tasks via z/OSMF
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class JobSubmit {
 
@@ -215,7 +215,7 @@ public class JobSubmit {
             request.setHeaders(getSubstitutionHeaders(submitInputData.getJclSymbols().get()));
         }
         request.setUrl(url);
-        request.setBody(new JSONObject(submitMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(submitMap));
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()

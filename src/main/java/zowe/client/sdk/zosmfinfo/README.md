@@ -24,7 +24,7 @@ import java.util.Arrays;
  * Class example to showcase ZosmfStatus class functionality.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfStatusExp extends TstZosConnection {
 
@@ -75,7 +75,7 @@ import java.util.Arrays;
  * Class example to showcase ZosmfSystems class functionality.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosmfSystemsExp extends TstZosConnection {
 
@@ -123,7 +123,7 @@ import zowe.client.sdk.teamconfig.model.ProfileDao;
  * duplicating connection details in each example.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TstZosConnection {
 

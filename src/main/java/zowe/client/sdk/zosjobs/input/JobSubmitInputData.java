@@ -16,7 +16,7 @@ import java.util.Optional;
  * Parameters for JobSubmit API input data
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 67.0
  */
 public class JobSubmitInputData {
 

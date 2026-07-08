@@ -10,15 +10,12 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
@@ -29,12 +26,12 @@ import java.util.Map;
  * Provides rename dataset and member functionality
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class DsnRename {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
     private String url;
 
     /**
@@ -46,6 +43,7 @@ public class DsnRename {
     public DsnRename(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -113,7 +111,9 @@ public class DsnRename {
      */
     private void setUrl(final String... args) {
         url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + "/" +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(args[0]);
         if (args.length > 1) {
             url += "(" + EncodeUtils.encodeURIComponent(args[1]) + ")";
@@ -140,14 +140,10 @@ public class DsnRename {
             fromDataSetReq.put("member", args[1]);
         }
 
-        final JSONObject fromDataSetObj = new JSONObject(fromDataSetReq);
-        renameMap.put("from-dataset", fromDataSetObj);
+        renameMap.put("from-dataset", fromDataSetReq);
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(renameMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(renameMap));
 
         return request.executeRequest();
     }

@@ -33,7 +33,7 @@ import static org.mockito.Mockito.doCallRealMethod;
  * Class containing unit test for ZosLog class.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class ZosLogTest {
 

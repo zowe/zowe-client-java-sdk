@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.uss.methods;
 
-import org.json.simple.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
@@ -19,6 +18,7 @@ import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.FileUtils;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.uss.input.UssChangeOwnerInputData;
@@ -30,12 +30,12 @@ import java.util.Map;
  * Parameter container class for Unix System Services (USS) chown operation
  *
  * @author James Kostrewski
- * @version 6.0
+ * @version 7.0
  */
 public class UssChangeOwner {
 
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * UssChangeOwner constructor
@@ -46,6 +46,7 @@ public class UssChangeOwner {
     public UssChangeOwner(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
     }
 
     /**
@@ -109,11 +110,8 @@ public class UssChangeOwner {
         final String errMsg = "owner not specified";
         changeOnerMap.put("owner", changeOwnerInputData.getOwner().orElseThrow(() -> new IllegalStateException(errMsg)));
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
         request.setUrl(url);
-        request.setBody(new JSONObject(changeOnerMap).toString());
+        request.setBody(JsonUtils.asRequestBodyJson(changeOnerMap));
 
         return request.executeRequest();
     }

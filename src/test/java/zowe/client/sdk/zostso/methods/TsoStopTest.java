@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for the TsoStop class.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class TsoStopTest {
 

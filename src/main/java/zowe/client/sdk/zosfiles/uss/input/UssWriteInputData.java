@@ -18,7 +18,7 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-write-data-zos-unix-file">z/OSMF REST API</a>
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public class UssWriteInputData {
 
@@ -205,7 +205,7 @@ public class UssWriteInputData {
         }
 
         /**
-         * Set binary boolean value
+         * Set a binary boolean value
          *
          * @param binary boolean true or false value
          * @return Builder this object

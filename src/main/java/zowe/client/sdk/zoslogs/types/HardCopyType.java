@@ -14,7 +14,7 @@ package zowe.client.sdk.zoslogs.types;
  * Enum class representing z/OS Log type to gather log data from.
  *
  * @author Frank Giordano
- * @version 6.0
+ * @version 7.0
  */
 public enum HardCopyType {
 

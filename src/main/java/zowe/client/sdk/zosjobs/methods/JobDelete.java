@@ -27,13 +27,13 @@ import java.util.Map;
  * DeleteJobs class to handle Job delete
  *
  * @author Nikunj Goyal
- * @version 6.0
+ * @version 7.0
  */
 public class JobDelete {
 
     private static final Logger LOG = LoggerFactory.getLogger(JobDelete.class);
     private final ZosConnection connection;
-    private ZosmfRequest request;
+    private final ZosmfRequest request;
 
     /**
      * DeleteJobs constructor.
@@ -44,6 +44,7 @@ public class JobDelete {
     public JobDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
     }
 
     /**
@@ -111,9 +112,9 @@ public class JobDelete {
 
         final String url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobName().get() +
-                JobsConstants.FILE_DELIM +
+                UrlConstants.URL_PATH_DELIM +
                 modifyInputData.getJobId().get();
 
         final Map<String, String> headers = new HashMap<>();
@@ -137,9 +138,6 @@ public class JobDelete {
             throw new IllegalArgumentException("invalid version specified");
         }
 
-        if (request == null) {
-            request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.DELETE_JSON);
-        }
         request.setHeaders(headers);
         request.setUrl(url);
 
