@@ -88,12 +88,11 @@ public class WorkflowArchive {
                 WorkflowConstants.WORKFLOWS_RESOURCE +
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(workflowKey) +
-                UrlConstants.URL_PATH_DELIM +
-                OPERATIONS_RESOURCE +
+                UrlConstants.URL_PATH_DELIM + OPERATIONS_RESOURCE +
                 UrlConstants.URL_PATH_DELIM + ARCHIVE_RESOURCE;
 
-        request.setBody("{}");
         request.setUrl(url);
+        request.setBody("{}");
         return request.executeRequest();
     }
 

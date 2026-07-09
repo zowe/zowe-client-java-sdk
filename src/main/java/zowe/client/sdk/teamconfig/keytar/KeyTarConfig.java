@@ -40,9 +40,9 @@ public class KeyTarConfig {
     /**
      * KeyTarConfig constructor
      *
-     * @param location location of the Zowe Global Team Configuration filename and path
-     * @param userName userName specified from parsed KeyTar keyValue
-     * @param password password specified from parsed KeyTar keyValue
+     * @param location  location of the Zowe Global Team Configuration filename and path
+     * @param userName  userName specified from parsed KeyTar keyValue
+     * @param password  password specified from parsed KeyTar keyValue
      * @param storeName store name specified in the OS credential store
      * @author Frank Giordano
      */
