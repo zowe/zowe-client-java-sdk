@@ -42,7 +42,7 @@ public class WorkflowArchive {
     /**
      * WorkflowArchive Constructor.
      *
-     * @param connection ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @author Adithe Das
      */
     public WorkflowArchive(final ZosConnection connection) {
@@ -58,7 +58,7 @@ public class WorkflowArchive {
      * <p>
      * This constructor is package-private.
      *
-     * @param connection z/OS connection information
+     * @param connection for connection information, see ZosConnection object
      * @param request    compatible ZosmfRequest interface object
      * @author Adithe Das
      */
