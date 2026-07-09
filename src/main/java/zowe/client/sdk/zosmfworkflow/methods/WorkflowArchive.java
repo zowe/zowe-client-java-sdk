@@ -92,6 +92,7 @@ public class WorkflowArchive {
                 OPERATIONS_RESOURCE +
                 UrlConstants.URL_PATH_DELIM + ARCHIVE_RESOURCE;
 
+        request.setBody("{}");
         request.setUrl(url);
         return request.executeRequest();
     }
