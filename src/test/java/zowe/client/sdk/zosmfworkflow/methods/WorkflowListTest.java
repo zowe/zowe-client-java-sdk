@@ -50,7 +50,6 @@ public class WorkflowListTest {
     private final ObjectMapper mapper = new ObjectMapper();
     private GetJsonZosmfRequest mockJsonGetRequestToken;
 
-    @SuppressWarnings("unchecked")
     @BeforeEach
     public void init() throws ZosmfRequestException {
         final ObjectNode archivedObj = mapper.createObjectNode();
