@@ -33,17 +33,22 @@ import java.util.Map;
  * This operation issues a command, based on the properties that are specified in the request body.
  * On successful completion, HTTP status code 200 is returned. A JSON object typically contains the
  * command response.
+ *
  * <p>
  * When a command is issued synchronously, the console API attempts to get the solicited messages
  * immediately after the command is issued. If there are no messages available within a certain time
  * interval, approximately 3 seconds when your system workload is not high, the API returns
  * "cmd-response": "" in the response body.
+ *
  * <p>
  * A value for cmd-response of the empty string, "", usually means that there is no command response.
  * However, it is also possible that the command response arrived after 3 seconds. If that is the case,
  * you can use the cmd-response-url field in the response body to retrieve the command response.
  * You might do this several times to ensure that all messages that are related to the command
  * are retrieved. This is prebuilt for you via the ConsoleGet class in this package.
+ *
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-issue-command-from-system-console">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

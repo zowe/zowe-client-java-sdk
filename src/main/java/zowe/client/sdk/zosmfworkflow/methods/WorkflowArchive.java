@@ -21,9 +21,9 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 /**
  * Archive a z/OSMF workflow instance.
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-archive-workflow-instance">z/OSMF REST API</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-archived-workflows-system">z/OSMF REST API</a>
  *
- * @author Adithe Das
+ * @author Shantanu Danej
  * @version 7.0
  */
 public class WorkflowArchive {

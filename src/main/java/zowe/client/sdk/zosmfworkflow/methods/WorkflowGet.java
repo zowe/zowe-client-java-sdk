@@ -28,12 +28,9 @@ import zowe.client.sdk.zosmfworkflow.response.WorkflowGetPropertiesResponse;
 /**
  * Provides retrieve workflow definition and properties functionality through the z/OSMF workflow REST API.
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-retrieve-workflow-definition">z/OSMF REST API</a>
- * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-properties-archived-workflow">z/OSMF REST API (Archived)</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-properties-workflow">z/OSMF REST API</a>
  *
- * @author Ashish Kumar Dash
- * @author Eshaan Gupta
+ * @author Shantanu Danej
  * @version 7.0
  */
 public class WorkflowGet {

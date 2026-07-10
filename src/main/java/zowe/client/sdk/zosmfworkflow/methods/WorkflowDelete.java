@@ -20,10 +20,9 @@ import zowe.client.sdk.zosmfworkflow.WorkflowConstants;
 /**
  * Delete a z/OSMF workflow instance.
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow"> z/OSMF REST API </a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-delete-workflow">z/OSMF REST API</a>
  *
- * @author Adithe Das
- * @author Muhammad Imran
+ * @author Shantanu Danej
  * @author Frank Giordano
  * @version 7.0
  */

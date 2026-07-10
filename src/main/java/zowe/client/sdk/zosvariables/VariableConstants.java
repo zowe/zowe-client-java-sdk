@@ -11,6 +11,10 @@ package zowe.client.sdk.zosvariables;
 
 /**
  * Constants for z/OS system variables REST processing.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-zos-system-variable">
+ * z/OSMF REST API
+ * </a>
  *
  * @author Chaitanya Katore
  * @version 7.0

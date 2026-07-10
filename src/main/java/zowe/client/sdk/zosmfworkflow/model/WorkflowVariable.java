@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-create-workflow">z/OSMF REST API</a>
  *
- * @author Ashish Kumar Dash
+ * @author Shantanu Danej
  * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)

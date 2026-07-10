@@ -23,7 +23,7 @@ import zowe.client.sdk.zosmfauth.ZosmfAuthConstants;
 /**
  * Provides z/OSMF authentication logout service
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-log-out-zosmf-server">z/OSMF REST API </a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-log-out-zosmf-server">z/OSMF REST API</a>
  *
  * @author Esteban Sandoval
  * @author Frank Giordano

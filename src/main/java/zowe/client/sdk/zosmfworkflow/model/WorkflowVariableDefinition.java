@@ -21,7 +21,7 @@ import java.util.List;
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-retrieve-workflow-definition">z/OSMF REST API</a>
  *
- * @author Ashish Kumar Dash
+ * @author Shantanu Danej
  * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)

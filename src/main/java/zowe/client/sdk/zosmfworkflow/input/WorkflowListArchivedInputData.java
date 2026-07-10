@@ -19,7 +19,7 @@ import java.util.Optional;
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-archived-workflows-system">z/OSMF REST API</a>
  *
- * @author Muhammad Imran
+ * @author Shantanu Danej
  * @version 7.0
  */
 public class WorkflowListArchivedInputData {

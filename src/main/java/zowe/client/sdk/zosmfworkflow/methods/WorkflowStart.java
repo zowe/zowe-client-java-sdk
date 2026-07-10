@@ -24,7 +24,7 @@ import zowe.client.sdk.zosmfworkflow.input.WorkflowStartInputData;
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-start-workflow">z/OSMF REST API</a>
  *
- * @author Eshaan Gupta
+ * @author Shantanu Danej
  * @version 7.0
  */
 public class WorkflowStart {

@@ -33,7 +33,9 @@ import java.util.Map;
 /**
  * Provides Unix System Services (USS) list object functionality
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-files-directories-unix-file-path">z/OSMF REST API file List</a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-files-directories-unix-file-path">
+ * z/OSMF REST API file List
+ * </a>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-zos-unix-filesystems">z/OSMF REST API zFS List</a>
  *
  * @author Frank Giordano

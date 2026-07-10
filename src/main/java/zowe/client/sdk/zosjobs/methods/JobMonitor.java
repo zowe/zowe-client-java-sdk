@@ -29,6 +29,8 @@ import java.util.List;
 /**
  * APIs for monitoring the status of a job. Use these APIs to wait for a job to enter the specified status. All APIs
  * in MonitorJobs invoke z/OSMF jobs REST endpoints to collect job status information.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-jobs-owner-prefix-job-id">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

@@ -19,6 +19,8 @@ import zowe.client.sdk.zosfiles.ZosFilesConstants;
 
 /**
  * Provides write dataset and member functionality
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-write-data-zos-data-set-member">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
  * @author Frank Giordano

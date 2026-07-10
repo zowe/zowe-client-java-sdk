@@ -24,6 +24,8 @@ import java.util.List;
 
 /**
  * Issue tso command via z/OSMF restful api
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-issue-tsoe-command-zosmf-rest-api">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

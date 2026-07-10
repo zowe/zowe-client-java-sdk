@@ -42,7 +42,6 @@ public final class JsonUtils {
      * <p>
      * The returned JsonNode may represent either a JSON object or a JSON array.
      * Callers can inspect the node type as needed.
-     * </p>
      *
      * @param item JSON string representation
      * @return JsonNode (ObjectNode, ArrayNode, etc.)
@@ -62,7 +61,6 @@ public final class JsonUtils {
      * <p>
      * This method validates that the parsed JSON content is an array and throws
      * a {@link ZosmfRequestException} if the content is not a JSON array.
-     * </p>
      *
      * @param item JSON array string representation returned from a z/OSMF request
      * @return ArrayNode representing the parsed JSON array

@@ -28,6 +28,8 @@ import java.util.Map;
 
 /**
  * Parameter container class for Unix System Services (USS) chown operation
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-create-sequential-partitioned-data-set">z/OSMF REST API</a>
  *
  * @author James Kostrewski
  * @version 7.0

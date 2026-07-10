@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * The z/OSMF tso start response.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=tass-get-response-command-that-was-issued-tsoe-rest-api">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0
