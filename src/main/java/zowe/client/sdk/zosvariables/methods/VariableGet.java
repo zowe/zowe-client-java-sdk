@@ -22,6 +22,8 @@ import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosvariables.VariableConstants;
 import zowe.client.sdk.zosvariables.input.factory.VariableGetInputData;
 import zowe.client.sdk.zosvariables.response.VariableGetResponse;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,37 +102,33 @@ public class VariableGet {
         ValidateUtils.checkNullParameter(inputData, "inputData");
         final StringBuilder url = new StringBuilder();
 
+        url.append(connection.getZosmfUrl()).append(VariableConstants.RESOURCE).append(UrlConstants.URL_PATH_DELIM);
+
         if (inputData.isLocal()) {
-            url.append(connection.getZosmfUrl()).append(VariableConstants.RESOURCE).append(UrlConstants.URL_PATH_DELIM).append("local");
+            url.append("local");
 
         } else {
-            url.append(connection.getZosmfUrl()).append(VariableConstants.RESOURCE).append(UrlConstants.URL_PATH_DELIM);
 
-            inputData.getSysplexName().ifPresentOrElse(sysplexName -> {ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
-                        url.append(EncodeUtils.encodeURIComponent(sysplexName));
-                        }, () -> ValidateUtils.checkIllegalParameter(null, "sysplexName"));
-                        url.append(".");
+            final String sysplexName = inputData.getSysplexName().orElse(null);
+            ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
 
-            inputData.getSystemName().ifPresentOrElse(systemName -> {
-                        ValidateUtils.checkIllegalParameter(systemName, "systemName");
-                        url.append(EncodeUtils.encodeURIComponent(systemName));
-                        },() -> ValidateUtils.checkIllegalParameter(null, "systemName"));
+            final String systemName = inputData.getSystemName().orElse(null);
+            ValidateUtils.checkIllegalParameter(systemName, "systemName");
+
+            url.append(EncodeUtils.encodeURIComponent(sysplexName)).append(".").append(EncodeUtils.encodeURIComponent(systemName));
         }
 
-        boolean first = true;
-        final List<String> variableNames = inputData.getVariableNames().orElse(null);
+        final List<String> queryParams = new ArrayList<>();
 
-        if (variableNames != null && !variableNames.isEmpty()) {
-            for (final String variableName : variableNames) {
-                url.append(first ? "?" : "&");
-                first = false;
-                url.append("var-name=").append(EncodeUtils.encodeURIComponent(variableName));
+        inputData.getVariableNames().ifPresent(variableNames -> {
+            if (!variableNames.isEmpty()) {
+                variableNames.forEach(variableName -> queryParams.add("var-name=" + EncodeUtils.encodeURIComponent(variableName)));
             }
-        }
+        });
+        inputData.getVariableType().ifPresent(variableType ->queryParams.add("source=" + variableType.getValue()));
 
-        if (inputData.getVariableType().isPresent()) {
-            url.append(first ? "?" : "&");
-            url.append("source=").append(inputData.getVariableType().get().getValue());
+        if (!queryParams.isEmpty()) {
+            url.append("?").append(String.join("&", queryParams));
         }
 
         request.setUrl(url.toString());
