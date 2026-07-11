@@ -29,6 +29,8 @@ import java.util.*;
 
 /**
  * Provides list dataset and member functionality
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-zos-data-sets-system">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

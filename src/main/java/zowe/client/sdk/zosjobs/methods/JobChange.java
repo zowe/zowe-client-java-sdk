@@ -33,6 +33,8 @@ import java.util.Map;
  * <p>
  * Provides operations to modify a job’s attributes, including changing its job class,
  * placing a job on hold, and releasing a held job.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-change-job-class">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

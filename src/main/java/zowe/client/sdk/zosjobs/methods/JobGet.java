@@ -29,6 +29,8 @@ import java.util.List;
 
 /**
  * Class to handle getting a job and started task information
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-jobs-owner-prefix-job-id">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

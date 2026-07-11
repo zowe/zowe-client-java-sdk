@@ -25,6 +25,8 @@ import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 /**
  * This class handles sending a ping request to z/OSMF TSO to keep the session alive.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-ping-tsoe-address-space">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

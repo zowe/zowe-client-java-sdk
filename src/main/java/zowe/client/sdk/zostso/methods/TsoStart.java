@@ -28,6 +28,8 @@ import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 /**
  * This class handles sending the request to start the TSO session via z/OSMF
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-start-reconnect-tsoe-address-space">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

@@ -24,6 +24,8 @@ import java.util.Map;
 
 /**
  * Provides create dataset and member functionality
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-create-sequential-partitioned-data-set">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
  * @author Frank Giordano

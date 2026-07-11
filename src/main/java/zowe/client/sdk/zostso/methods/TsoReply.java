@@ -25,6 +25,8 @@ import zowe.client.sdk.zostso.TsoConstants;
 
 /**
  * This class handles sending a request to z/OSMF TSO for additional TSO message data
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-receive-messages-from-tsoe-address-space">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

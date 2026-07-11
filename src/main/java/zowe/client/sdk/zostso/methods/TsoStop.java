@@ -25,6 +25,8 @@ import zowe.client.sdk.zostso.response.TsoCommonResponse;
 
 /**
  * This class handles sending the request to end the TSO session via z/OSMF
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-end-tsoe-address-space">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

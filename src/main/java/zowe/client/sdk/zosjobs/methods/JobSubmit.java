@@ -33,6 +33,8 @@ import java.util.Map;
 
 /**
  * Class to handle submitting of z/OS batch jobs and started tasks via z/OSMF
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-submit-job">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0
