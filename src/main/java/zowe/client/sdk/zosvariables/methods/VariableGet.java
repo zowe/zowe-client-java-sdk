@@ -85,8 +85,8 @@ public class VariableGet {
     public VariableGetResponse get(final VariableGetInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
-                        VariableConstants.RESOURCE +
-                        UrlConstants.URL_PATH_DELIM);
+                VariableConstants.RESOURCE +
+                UrlConstants.URL_PATH_DELIM);
 
         if (inputData.isLocal()) {
             url.append("local");
@@ -110,8 +110,8 @@ public class VariableGet {
         request.setUrl(url.toString());
 
         return JsonUtils.parseResponse(request.executeRequest()
-                .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
-                .toString(),
+                        .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
+                        .toString(),
                 VariableGetResponse.class, GET_CONTEXT
         );
     }
