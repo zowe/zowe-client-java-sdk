@@ -84,10 +84,9 @@ public class VariableGet {
      */
     public VariableGetResponse get(final VariableGetInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
-        final StringBuilder url = new StringBuilder(
-                connection.getZosmfUrl()
-                        + VariableConstants.RESOURCE
-                        + UrlConstants.URL_PATH_DELIM);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
+                        VariableConstants.RESOURCE +
+                        UrlConstants.URL_PATH_DELIM);
 
         if (inputData.isLocal()) {
             url.append("local");
