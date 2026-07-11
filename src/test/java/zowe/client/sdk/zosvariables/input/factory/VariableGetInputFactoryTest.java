@@ -36,8 +36,8 @@ public class VariableGetInputFactoryTest {
 
     @Test
     public void tstCreateSystemInputWithFiltersSuccess() {
-        VariableGetInputData input =
-                VariableGetInputFactory.createGetInputForZosVariable("PLEX1", "SYS1", Arrays.asList("VAR1", "VAR2"));
+        VariableGetInputData input = VariableGetInputFactory.createGetInputForZosVariable(
+                "PLEX1", "SYS1", Arrays.asList("VAR1", "VAR2"));
         assertEquals("PLEX1", input.getSysplexName().orElse(null));
         assertEquals("SYS1", input.getSystemName().orElse(null));
         assertEquals(Arrays.asList("VAR1", "VAR2"), input.getVariableNames().orElse(null));
