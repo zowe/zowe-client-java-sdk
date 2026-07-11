@@ -28,8 +28,10 @@ public class VariableGetResponseTest {
 
     @Test
     public void tstVariableGetResponseConstructorSuccess() {
-        List<VariableResponse> variables = List.of(new VariableResponse("SYSNAME", "ZOS01", "System name"));
-        List<VariableResponse> symbols = List.of(new VariableResponse("&SYSNAME", "ZOS01", "System symbol"));
+        List<VariableResponse> variables =
+                List.of(new VariableResponse("SYSNAME", "ZOS01", "System name"));
+        List<VariableResponse> symbols =
+                List.of(new VariableResponse("&SYSNAME", "ZOS01", "System symbol"));
         VariableGetResponse response = new VariableGetResponse(variables, symbols);
         assertEquals(1, response.getSystemVariableList().size());
         assertEquals(1, response.getSystemSymbolList().size());
@@ -44,7 +46,8 @@ public class VariableGetResponseTest {
 
     @Test
     public void tstVariableGetResponseToStringSuccess() {
-        List<VariableResponse> variables = List.of(new VariableResponse("SYSNAME", "ZOS01", "System name"));
+        List<VariableResponse> variables =
+                List.of(new VariableResponse("SYSNAME", "ZOS01", "System name"));
         VariableGetResponse response = new VariableGetResponse(variables, Collections.emptyList());
         String result = response.toString();
         assertTrue(result.contains("systemVariableList"));
