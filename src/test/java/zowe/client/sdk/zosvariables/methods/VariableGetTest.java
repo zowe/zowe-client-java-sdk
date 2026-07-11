@@ -110,6 +110,7 @@ public class VariableGetTest {
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertTrue(response.getSystemVariableList().isEmpty());
+        assertTrue(response.getSystemSymbolList().isEmpty());
         assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/PLEX1.SYS1?source=variable", mockRequest.getUrl());
     }
 
@@ -158,6 +159,10 @@ public class VariableGetTest {
         assertNotNull(response);
         assertFalse(response.getSystemVariableList().isEmpty());
         assertEquals(1, response.getSystemVariableList().size());
+        VariableResponse variable = response.getSystemVariableList().get(0);
+        assertEquals("SYSNAME", variable.getName());
+        assertEquals("SYS1", variable.getValue());
+        assertEquals("System name", variable.getDescription());
     }
 
     @Test

@@ -38,7 +38,11 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosVariable(final String sysplexName, final String systemName) {
-        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableType(VariableType.VARIABLE).setLocal(false).build();
+        return new VariableGetInputData.Builder()
+                .setSysplexName(sysplexName)
+                .setSystemName(systemName)
+                .setVariableType(VariableType.VARIABLE)
+                .setLocal(false).build();
     }
 
     /**
@@ -50,7 +54,12 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosVariable(final String sysplexName, final String systemName, final List<String> variableNames) {
-        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableNames(variableNames).setVariableType(VariableType.VARIABLE).setLocal(false).build();
+        return new VariableGetInputData.Builder()
+                .setSysplexName(sysplexName)
+                .setSystemName(systemName)
+                .setVariableNames(variableNames)
+                .setVariableType(VariableType.VARIABLE)
+                .setLocal(false).build();
     }
 
     /**
@@ -61,7 +70,11 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosmfSymbol(final String sysplexName, final String systemName) {
-        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableType(VariableType.SYMBOL).setLocal(false).build();
+        return new VariableGetInputData.Builder()
+                .setSysplexName(sysplexName)
+                .setSystemName(systemName)
+                .setVariableType(VariableType.SYMBOL)
+                .setLocal(false).build();
     }
 
     /**
@@ -73,7 +86,12 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosmfSymbol(final String sysplexName, final String systemName, final List<String> variableNames) {
-        return new VariableGetInputData.Builder().setSysplexName(sysplexName).setSystemName(systemName).setVariableNames(variableNames).setVariableType(VariableType.SYMBOL).setLocal(false).build();
+        return new VariableGetInputData.Builder()
+                .setSysplexName(sysplexName)
+                .setSystemName(systemName)
+                .setVariableNames(variableNames)
+                .setVariableType(VariableType.SYMBOL)
+                .setLocal(false).build();
     }
 
     /**
@@ -82,7 +100,9 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosVariableLocal() {
-        return new VariableGetInputData.Builder().setVariableType(VariableType.VARIABLE).setLocal(true).build();
+        return new VariableGetInputData.Builder()
+                .setVariableType(VariableType.VARIABLE)
+                .setLocal(true).build();
     }
 
     /**
@@ -92,7 +112,10 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosVariableLocal(final List<String> variableNames) {
-        return new VariableGetInputData.Builder().setVariableNames(variableNames).setVariableType(VariableType.VARIABLE).setLocal(true).build();
+        return new VariableGetInputData.Builder()
+                .setVariableNames(variableNames)
+                .setVariableType(VariableType.VARIABLE)
+                .setLocal(true).build();
     }
 
     /**
@@ -101,7 +124,9 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosmfSymbolLocal() {
-        return new VariableGetInputData.Builder().setVariableType(VariableType.SYMBOL).setLocal(true).build();
+        return new VariableGetInputData.Builder()
+                .setVariableType(VariableType.SYMBOL)
+                .setLocal(true).build();
     }
 
     /**
@@ -111,7 +136,10 @@ public final class VariableGetInputFactory {
      * @return VariableGetInputData
      */
     public static VariableGetInputData createGetInputForZosmfSymbolLocal(final List<String> variableNames) {
-        return new VariableGetInputData.Builder().setVariableNames(variableNames).setVariableType(VariableType.SYMBOL).setLocal(true).build();
+        return new VariableGetInputData.Builder()
+                .setVariableNames(variableNames)
+                .setVariableType(VariableType.SYMBOL)
+                .setLocal(true).build();
     }
 
 }

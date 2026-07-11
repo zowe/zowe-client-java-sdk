@@ -47,7 +47,10 @@ public final class VariableResponse {
      * @param description variable description
      */
     @JsonCreator
-    public VariableResponse(@JsonProperty("name") final String name, @JsonProperty("value") final String value, @JsonProperty("description") final String description) {
+    public VariableResponse(
+            @JsonProperty("name") final String name,
+            @JsonProperty("value") final String value,
+            @JsonProperty("description") final String description) {
         this.name = name == null ? "" : name;
         this.value = value == null ? "" : value;
         this.description = description == null ? "" : description;

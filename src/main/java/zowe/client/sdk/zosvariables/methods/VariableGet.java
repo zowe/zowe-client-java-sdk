@@ -29,9 +29,7 @@ import java.util.List;
 /**
  * Class to handle retrieval of z/OS system variables.
  * <p>
- * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-system-variables">
- * z/OSMF REST API
- * </a>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-system-variables">z/OSMF REST API</a>
  *
  * @author Adithe Das
  * @version 7.0
@@ -77,13 +75,10 @@ public class VariableGet {
     VariableGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
-
         this.connection = connection;
-
         if (!(request instanceof GetJsonZosmfRequest)) {
             throw new IllegalStateException("GET_JSON request type required");
         }
-
         this.request = request;
     }
 
@@ -100,33 +95,31 @@ public class VariableGet {
      */
     public VariableGetResponse get(final VariableGetInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
-        final StringBuilder url = new StringBuilder();
-
-        url.append(connection.getZosmfUrl()).append(VariableConstants.RESOURCE).append(UrlConstants.URL_PATH_DELIM);
+        final StringBuilder url = new StringBuilder(
+                connection.getZosmfUrl()
+                        + VariableConstants.RESOURCE
+                        + UrlConstants.URL_PATH_DELIM);
 
         if (inputData.isLocal()) {
             url.append("local");
         } else {
-            inputData.getSysplexName().ifPresent(v -> url.append(EncodeUtils.encodeURIComponent(v)));
+            inputData.getSysplexName().ifPresent(name -> url.append(EncodeUtils.encodeURIComponent(name)));
             url.append(".");
-            inputData.getSystemName().ifPresent(v -> url.append(EncodeUtils.encodeURIComponent(v)));
+            inputData.getSystemName().ifPresent(name -> url.append(EncodeUtils.encodeURIComponent(name)));
         }
 
         final List<String> queryParams = new ArrayList<>();
-
         inputData.getVariableNames().ifPresent(variableNames -> {
             if (!variableNames.isEmpty()) {
-                variableNames.forEach(variableName -> queryParams.add("var-name=" + EncodeUtils.encodeURIComponent(variableName)));
+                variableNames.forEach(name -> queryParams.add("var-name=" + EncodeUtils.encodeURIComponent(name)));
             }
         });
-        inputData.getVariableType().ifPresent(variableType ->queryParams.add("source=" + variableType.getValue()));
+        inputData.getVariableType().ifPresent(type ->queryParams.add("source=" + type.getValue()));
 
         if (!queryParams.isEmpty()) {
             url.append("?").append(String.join("&", queryParams));
         }
-
         request.setUrl(url.toString());
-
         final String response = request.executeRequest().getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase")).toString();
         return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
     }
