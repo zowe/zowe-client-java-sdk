@@ -26,6 +26,8 @@ import java.util.Map;
 
 /**
  * CancelJobs class to handle Job cancel on z/OS
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-cancel-job">z/OSMF REST API</a>
  *
  * @author Nikunj Goyal
  * @author Frank Giordano
