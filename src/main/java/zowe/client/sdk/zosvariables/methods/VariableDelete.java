@@ -30,7 +30,6 @@ import java.util.List;
  */
 public class VariableDelete {
 
-
     private final ZosConnection connection;
     private final ZosmfRequest request;
 

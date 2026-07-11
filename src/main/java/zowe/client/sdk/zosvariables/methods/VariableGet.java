@@ -36,19 +36,8 @@ import java.util.List;
  */
 public class VariableGet {
 
-    /**
-     * JSON parsing context.
-     */
     private static final String GET_CONTEXT = "getVariables";
-
-    /**
-     * z/OSMF connection object.
-     */
     private final ZosConnection connection;
-
-    /**
-     * z/OSMF request object.
-     */
     private final ZosmfRequest request;
 
     /**
@@ -120,8 +109,12 @@ public class VariableGet {
             url.append("?").append(String.join("&", queryParams));
         }
         request.setUrl(url.toString());
-        final String response = request.executeRequest().getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase")).toString();
-        return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
+
+        return JsonUtils.parseResponse(request.executeRequest()
+                .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
+                .toString(),
+                VariableGetResponse.class, GET_CONTEXT
+        );
     }
 
 }
