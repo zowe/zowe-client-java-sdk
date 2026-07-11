@@ -32,7 +32,6 @@ public class VariableGetResponseTest {
         List<VariableResponse> variables = Arrays.asList(new VariableResponse("SYSNAME", "ZOS01", "System name"));
         List<VariableResponse> symbols = Arrays.asList(new VariableResponse("&SYSNAME", "ZOS01", "System symbol"));
         VariableGetResponse response = new VariableGetResponse(variables, symbols);
-
         assertEquals(1, response.getSystemVariableList().size());
         assertEquals(1, response.getSystemSymbolList().size());
     }
@@ -40,7 +39,6 @@ public class VariableGetResponseTest {
     @Test
     public void tstVariableGetResponseNullListsSuccess() {
         VariableGetResponse response = new VariableGetResponse(null, null);
-
         assertEquals(Collections.emptyList(), response.getSystemVariableList());
         assertEquals(Collections.emptyList(), response.getSystemSymbolList());
     }
@@ -49,9 +47,7 @@ public class VariableGetResponseTest {
     public void tstVariableGetResponseToStringSuccess() {
         List<VariableResponse> variables = Arrays.asList(new VariableResponse("SYSNAME", "ZOS01", "System name"));
         VariableGetResponse response = new VariableGetResponse(variables, Collections.emptyList());
-
         String result = response.toString();
-
         assertTrue(result.contains("systemVariableList"));
         assertTrue(result.contains("SYSNAME"));
     }

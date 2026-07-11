@@ -43,10 +43,7 @@ public final class VariableGetResponse {
      * @param systemSymbolList list of system symbols
      */
     @JsonCreator
-    public VariableGetResponse( @JsonProperty ("system-variable-list")
-    final List<VariableResponse> systemVariableList, @JsonProperty("system-symbol-list")
-
-    final List<VariableResponse> systemSymbolList) {
+    public VariableGetResponse(@JsonProperty ("system-variable-list")final List<VariableResponse> systemVariableList, @JsonProperty("system-symbol-list") final List<VariableResponse> systemSymbolList) {
         this.systemVariableList = systemVariableList == null ? Collections.emptyList(): systemVariableList;
         this.systemSymbolList = systemSymbolList == null ? Collections.emptyList(): systemSymbolList;
     }

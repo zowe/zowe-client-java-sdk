@@ -12,6 +12,8 @@ package zowe.client.sdk.zosvariables.input.factory;
 
 import java.util.List;
 import java.util.Optional;
+
+import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosvariables.type.VariableType;
 
 /**
@@ -24,13 +26,14 @@ import zowe.client.sdk.zosvariables.type.VariableType;
  */
 
 public class VariableGetInputData {
+
     /**
-     * Sysplex name.
+     * Required sysplex name when local is false.
      */
     private final String sysplexName;
 
     /**
-     * System name.
+     * Required system name when local is false.
      */
     private final String systemName;
 
@@ -51,16 +54,22 @@ public class VariableGetInputData {
 
     /**
      * VariableGetInputData constructor.
+     * <p>
+     * This constructor is package-private.
      *
      * @param builder VariableGetInputData.Builder builder
      */
     VariableGetInputData(final Builder builder) {
-        this.sysplexName = builder.sysplexName;
-        this.systemName = builder.systemName;
-        this.local = builder.local;
-        this.variableNames = builder.variableNames;
-        this.variableType = builder.variableType;
-    }
+            this.local = builder.local;
+            if (!this.local) {
+                ValidateUtils.checkIllegalParameter(builder.sysplexName, "sysplexName");
+                ValidateUtils.checkIllegalParameter(builder.systemName, "systemName");
+            }
+            this.sysplexName = builder.sysplexName;
+            this.systemName = builder.systemName;
+            this.variableNames = builder.variableNames;
+            this.variableType = builder.variableType;
+        }
 
     /**
      * Retrieve sysplex name.

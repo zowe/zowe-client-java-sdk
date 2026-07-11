@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class VariableResponse {
+
     /**
      * Variable or symbol name.
      */

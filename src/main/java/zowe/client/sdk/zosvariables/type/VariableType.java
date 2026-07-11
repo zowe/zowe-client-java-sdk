@@ -30,8 +30,8 @@ public enum VariableType {
     /**
      * REST API value.
      */
-
     private final String value;
+
     VariableType(final String value) {
         this.value = value;
     }
@@ -41,7 +41,6 @@ public enum VariableType {
      *
      * @return value
      */
-
     public String getValue() {
         return value;
     }

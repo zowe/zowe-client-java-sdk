@@ -25,7 +25,6 @@ public class VariableResponseTest {
     @Test
     public void tstVariableResponseConstructorSuccess() {
         VariableResponse response = new VariableResponse("SYSNAME", "ZOS01", "System name");
-
         assertEquals("SYSNAME", response.getName());
         assertEquals("ZOS01", response.getValue());
         assertEquals("System name", response.getDescription());
@@ -34,7 +33,6 @@ public class VariableResponseTest {
     @Test
     public void tstVariableResponseNullValuesSuccess() {
         VariableResponse response = new VariableResponse(null, null, null);
-
         assertEquals("", response.getName());
         assertEquals("", response.getValue());
         assertEquals("", response.getDescription());
@@ -43,9 +41,7 @@ public class VariableResponseTest {
     @Test
     public void tstVariableResponseToStringSuccess() {
         VariableResponse response = new VariableResponse("SYSNAME", "ZOS01", "System name");
-
         String result = response.toString();
-
         assertTrue(result.contains("SYSNAME"));
         assertTrue(result.contains("ZOS01"));
         assertTrue(result.contains("System name"));

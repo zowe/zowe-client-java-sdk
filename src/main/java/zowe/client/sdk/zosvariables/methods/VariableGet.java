@@ -106,16 +106,10 @@ public class VariableGet {
 
         if (inputData.isLocal()) {
             url.append("local");
-
         } else {
-
-            final String sysplexName = inputData.getSysplexName().orElse(null);
-            ValidateUtils.checkIllegalParameter(sysplexName, "sysplexName");
-
-            final String systemName = inputData.getSystemName().orElse(null);
-            ValidateUtils.checkIllegalParameter(systemName, "systemName");
-
-            url.append(EncodeUtils.encodeURIComponent(sysplexName)).append(".").append(EncodeUtils.encodeURIComponent(systemName));
+            inputData.getSysplexName().ifPresent(v -> url.append(EncodeUtils.encodeURIComponent(v)));
+            url.append(".");
+            inputData.getSystemName().ifPresent(v -> url.append(EncodeUtils.encodeURIComponent(v)));
         }
 
         final List<String> queryParams = new ArrayList<>();
@@ -135,7 +129,6 @@ public class VariableGet {
 
         final String response = request.executeRequest().getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase")).toString();
         return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
-
     }
 
 }
