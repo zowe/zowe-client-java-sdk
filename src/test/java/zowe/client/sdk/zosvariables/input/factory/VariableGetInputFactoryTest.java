@@ -8,9 +8,12 @@
  * Copyright Contributors to the Zowe Project.
  */
 package zowe.client.sdk.zosvariables.input.factory;
+
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.zosvariables.type.VariableType;
+
 import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

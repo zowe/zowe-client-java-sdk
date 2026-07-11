@@ -12,6 +12,7 @@ package zowe.client.sdk.zosvariables.response;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -44,10 +45,10 @@ public final class VariableGetResponse {
      */
     @JsonCreator
     public VariableGetResponse(
-            @JsonProperty ("system-variable-list")final List<VariableResponse> systemVariableList,
+            @JsonProperty("system-variable-list") final List<VariableResponse> systemVariableList,
             @JsonProperty("system-symbol-list") final List<VariableResponse> systemSymbolList) {
-        this.systemVariableList = systemVariableList == null ? Collections.emptyList(): systemVariableList;
-        this.systemSymbolList = systemSymbolList == null ? Collections.emptyList(): systemSymbolList;
+        this.systemVariableList = systemVariableList == null ? Collections.emptyList() : systemVariableList;
+        this.systemSymbolList = systemSymbolList == null ? Collections.emptyList() : systemSymbolList;
     }
 
     /**

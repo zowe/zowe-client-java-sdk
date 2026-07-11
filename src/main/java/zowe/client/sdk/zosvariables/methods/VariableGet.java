@@ -114,7 +114,7 @@ public class VariableGet {
                 variableNames.forEach(name -> queryParams.add("var-name=" + EncodeUtils.encodeURIComponent(name)));
             }
         });
-        inputData.getVariableType().ifPresent(type ->queryParams.add("source=" + type.getValue()));
+        inputData.getVariableType().ifPresent(type -> queryParams.add("source=" + type.getValue()));
 
         if (!queryParams.isEmpty()) {
             url.append("?").append(String.join("&", queryParams));
