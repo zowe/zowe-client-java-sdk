@@ -70,7 +70,7 @@ public class VariableGetInputData {
     }
 
     /**
-     * Retrieve sysplex name.
+     * Returns the target sysplex name.
      *
      * @return sysplex name
      */
@@ -79,7 +79,7 @@ public class VariableGetInputData {
     }
 
     /**
-     * Retrieve system name.
+     * Returns the target z/OS system name.
      *
      * @return system name
      */
@@ -97,7 +97,7 @@ public class VariableGetInputData {
     }
 
     /**
-     * Retrieve variable names.
+     * Returns the names of the requested variables, if specified.
      *
      * @return optional list of variable names
      */
@@ -143,12 +143,6 @@ public class VariableGetInputData {
          * Variable type.
          */
         private VariableType variableType;
-
-        /**
-         * Create a new Builder instance.
-         */
-        Builder() {
-        }
 
         /**
          * Set sysplex name.
