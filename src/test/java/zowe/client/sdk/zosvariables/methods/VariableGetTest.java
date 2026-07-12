@@ -14,11 +14,15 @@ import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosvariables.input.factory.VariableGetInputData;
 import zowe.client.sdk.zosvariables.input.factory.VariableGetInputFactory;
 import zowe.client.sdk.zosvariables.response.VariableGetResponse;
 import zowe.client.sdk.zosvariables.response.VariableResponse;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class VariableGetTest {
 
-    private final ZosConnection connection = ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
+    private final ZosConnection connection =
+            ZosConnectionFactory.createBasicConnection("1", 443, "1", "1");
 
     @Test
     public void tstVariableGetPrimaryConstructorWithValidConnectionSuccess() {
@@ -41,7 +46,8 @@ public class VariableGetTest {
 
     @Test
     public void tstVariableGetPrimaryConstructorWithNullConnectionFailure() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> new VariableGet(null));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> new VariableGet(null));
         assertEquals("connection is null", exception.getMessage());
     }
 
@@ -56,14 +62,16 @@ public class VariableGetTest {
     @Test
     public void tstVariableGetSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> new VariableGet(null, mockRequest));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> new VariableGet(null, mockRequest));
         assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetSecondaryConstructorWithNullRequestFailure() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> new VariableGet(mockConnection, null));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> new VariableGet(mockConnection, null));
         assertEquals("request is null", exception.getMessage());
     }
 
@@ -71,42 +79,48 @@ public class VariableGetTest {
     public void tstVariableGetSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         ZosmfRequest mockRequest = Mockito.mock(ZosmfRequest.class);
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> new VariableGet(mockConnection, mockRequest));
+        IllegalStateException exception = assertThrows(IllegalStateException.class,
+                () -> new VariableGet(mockConnection, mockRequest));
         assertEquals("GET_JSON request type required", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetNullSysplexNameFailure() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> VariableGetInputFactory.createGetInputForZosVariable(null, "SYS1"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> VariableGetInputFactory.createZosVariable(null, "SYS1"));
         assertEquals("sysplexName is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetEmptySysplexNameFailure() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> VariableGetInputFactory.createGetInputForZosVariable("", "SYS1"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> VariableGetInputFactory.createZosVariable("", "SYS1"));
         assertEquals("sysplexName is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetNullSystemNameFailure() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> VariableGetInputFactory.createGetInputForZosVariable("PLEX1", null));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> VariableGetInputFactory.createZosVariable("PLEX1", null));
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetEmptySystemNameFailure() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> VariableGetInputFactory.createGetInputForZosVariable("PLEX1", ""));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> VariableGetInputFactory.createZosVariable("PLEX1", ""));
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetSuccess() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-variable-list\":[]}", 200, "OK"));
+        Mockito.when(mockRequest.executeRequest())
+                .thenReturn(new Response("{\"system-variable-list\":[]}", 200, "OK"));
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createGetInputForZosVariable("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertTrue(response.getSystemVariableList().isEmpty());
@@ -117,11 +131,12 @@ public class VariableGetTest {
     @Test
     public void tstVariableGetLocalSuccess() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-variable-list\":[]}", 200, "OK"));
+        Mockito.when(mockRequest.executeRequest())
+                .thenReturn(new Response("{\"system-variable-list\":[]}", 200, "OK"));
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createGetInputForZosVariableLocal();
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableLocal();
         assertNotNull(variableGet.get(input));
         assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/local?source=variable", mockRequest.getUrl());
     }
@@ -129,32 +144,40 @@ public class VariableGetTest {
     @Test
     public void tstVariableGetInvalidJsonFailure() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{{", 200, "OK"));
+        Mockito.when(mockRequest.executeRequest())
+                .thenReturn(new Response("{{", 200, "OK"));
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createGetInputForZosVariable("PLEX1", "SYS1");
-        assertThrows(zowe.client.sdk.rest.exception.ZosmfRequestException.class, () -> variableGet.get(input));
+        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
+        assertThrows(ZosmfRequestException.class, () -> variableGet.get(input));
     }
 
     @Test
     public void tstVariableGetWithQueryParametersSuccess() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-variable-list\":[]}", 200, "OK"));
+        Mockito.when(mockRequest.executeRequest())
+                .thenReturn(new Response("{\"system-variable-list\":[]}", 200, "OK"));
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createGetInputForZosVariable("PLEX1", "SYS1", java.util.Arrays.asList("VAR1", "VAR2"));
+        VariableGetInputData input = VariableGetInputFactory.createZosVariable(
+                "PLEX1",
+                "SYS1",
+                Arrays.asList("VAR1", "VAR2")
+        );
         assertNotNull(variableGet.get(input));
-        assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/PLEX1.SYS1?var-name=VAR1&var-name=VAR2&source=variable", mockRequest.getUrl());
+        String url = "https://1:443/zosmf/variables/rest/1.0/systems/PLEX1.SYS1?var-name=VAR1&var-name=VAR2&source=variable";
+        assertEquals(url, mockRequest.getUrl());
     }
 
     @Test
     public void tstVariableGetNonEmptyVariableListSuccess() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-variable-list\":[{\"name\":\"SYSNAME\",\"value\":\"SYS1\",\"description\":\"System name\"}]}", 200, "OK"));
+        String json = "{\"system-variable-list\":[{\"name\":\"SYSNAME\",\"value\":\"SYS1\",\"description\":\"System name\"}]}";
+        Mockito.when(mockRequest.executeRequest()).thenReturn(new Response(json, 200, "OK"));
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createGetInputForZosVariable("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertFalse(response.getSystemVariableList().isEmpty());
@@ -168,11 +191,12 @@ public class VariableGetTest {
     @Test
     public void tstVariableGetSystemSymbolListSuccess() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        Mockito.when(mockRequest.executeRequest()).thenReturn(new zowe.client.sdk.rest.Response("{\"system-symbol-list\":[{\"name\":\"&SYSNAME\",\"value\":\"SYS1\",\"description\":\"System symbol\"}]}", 200, "OK"));
+        String json = "{\"system-symbol-list\":[{\"name\":\"&SYSNAME\",\"value\":\"SYS1\",\"description\":\"System symbol\"}]}";
+        Mockito.when(mockRequest.executeRequest()).thenReturn(new Response(json, 200, "OK"));
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createGetInputForZosVariable("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertFalse(response.getSystemSymbolList().isEmpty());

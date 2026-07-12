@@ -37,8 +37,8 @@ public final class VariableGetInputFactory {
      * @param systemName system name
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosVariable(final String sysplexName,
-                                                                    final String systemName) {
+    public static VariableGetInputData createZosVariable(final String sysplexName,
+                                                         final String systemName) {
         return new VariableGetInputData.Builder()
                 .setSysplexName(sysplexName)
                 .setSystemName(systemName)
@@ -55,9 +55,9 @@ public final class VariableGetInputFactory {
      * @param variableNames variable names
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosVariable(final String sysplexName,
-                                                                    final String systemName,
-                                                                    final List<String> variableNames) {
+    public static VariableGetInputData createZosVariable(final String sysplexName,
+                                                         final String systemName,
+                                                         final List<String> variableNames) {
         return new VariableGetInputData.Builder()
                 .setSysplexName(sysplexName)
                 .setSystemName(systemName)
@@ -74,8 +74,8 @@ public final class VariableGetInputFactory {
      * @param systemName system name
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosmfSymbol(final String sysplexName,
-                                                                    final String systemName) {
+    public static VariableGetInputData createZosmfSymbol(final String sysplexName,
+                                                         final String systemName) {
         return new VariableGetInputData.Builder()
                 .setSysplexName(sysplexName)
                 .setSystemName(systemName)
@@ -92,9 +92,9 @@ public final class VariableGetInputFactory {
      * @param variableNames variable names
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosmfSymbol(final String sysplexName,
-                                                                    final String systemName,
-                                                                    final List<String> variableNames) {
+    public static VariableGetInputData createZosmfSymbol(final String sysplexName,
+                                                         final String systemName,
+                                                         final List<String> variableNames) {
         return new VariableGetInputData.Builder()
                 .setSysplexName(sysplexName)
                 .setSystemName(systemName)
@@ -109,7 +109,7 @@ public final class VariableGetInputFactory {
      *
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosVariableLocal() {
+    public static VariableGetInputData createZosVariableLocal() {
         return new VariableGetInputData.Builder()
                 .setVariableType(VariableType.VARIABLE)
                 .setLocal(true)
@@ -122,7 +122,7 @@ public final class VariableGetInputFactory {
      * @param variableNames variable names
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosVariableLocal(final List<String> variableNames) {
+    public static VariableGetInputData createZosVariableLocal(final List<String> variableNames) {
         return new VariableGetInputData.Builder()
                 .setVariableNames(variableNames)
                 .setVariableType(VariableType.VARIABLE)
@@ -135,7 +135,7 @@ public final class VariableGetInputFactory {
      *
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosmfSymbolLocal() {
+    public static VariableGetInputData createZosmfSymbolLocal() {
         return new VariableGetInputData.Builder()
                 .setVariableType(VariableType.SYMBOL)
                 .setLocal(true)
@@ -148,7 +148,7 @@ public final class VariableGetInputFactory {
      * @param variableNames variable names
      * @return VariableGetInputData
      */
-    public static VariableGetInputData createGetInputForZosmfSymbolLocal(final List<String> variableNames) {
+    public static VariableGetInputData createZosmfSymbolLocal(final List<String> variableNames) {
         return new VariableGetInputData.Builder()
                 .setVariableNames(variableNames)
                 .setVariableType(VariableType.SYMBOL)
