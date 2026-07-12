@@ -59,7 +59,7 @@ public class VariableGetInputData {
      */
     VariableGetInputData(final Builder builder) {
         this.local = builder.local;
-        if (!this.local) {
+        if (!builder.local) {
             ValidateUtils.checkIllegalParameter(builder.sysplexName, "sysplexName");
             ValidateUtils.checkIllegalParameter(builder.systemName, "systemName");
         }
