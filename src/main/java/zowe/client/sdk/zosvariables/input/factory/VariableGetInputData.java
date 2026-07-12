@@ -65,7 +65,7 @@ public class VariableGetInputData {
         }
         this.sysplexName = builder.sysplexName;
         this.systemName = builder.systemName;
-        this.variableNames = builder.variableNames;
+        this.variableNames = builder.variableNames == null ? null : List.copyOf(builder.variableNames);
         this.variableType = builder.variableType;
     }
 
@@ -106,7 +106,7 @@ public class VariableGetInputData {
     }
 
     /**
-     * Retrieve variable type.
+     * Returns the requested variable type.
      *
      * @return optional variable type
      */
@@ -117,7 +117,7 @@ public class VariableGetInputData {
     /**
      * Builder class for VariableGetInputData.
      */
-    public static final class Builder {
+    static final class Builder {
 
         /**
          * Sysplex name.
