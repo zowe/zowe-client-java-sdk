@@ -34,7 +34,7 @@ public final class VariableGetInputFactory {
      * Create input for z/OS variables.
      *
      * @param sysplexName name of the target sysplex
-     * @param systemName name of the target z/OS system
+     * @param systemName  name of the target z/OS system
      * @return VariableGetInputData
      */
     public static VariableGetInputData createZosVariable(final String sysplexName,
@@ -50,8 +50,8 @@ public final class VariableGetInputFactory {
     /**
      * Create input for z/OS variables with filters.
      *
-     * @param sysplexName name of the target sysplex
-     * @param systemName name of the target z/OS system
+     * @param sysplexName   name of the target sysplex
+     * @param systemName    name of the target z/OS system
      * @param variableNames names of the variables to retrieve; if {@code null} or empty,
      *                      all variables are returned
      * @return VariableGetInputData
@@ -72,7 +72,7 @@ public final class VariableGetInputFactory {
      * Create input for z/OSMF system symbols.
      *
      * @param sysplexName name of the target sysplex (local sysplex only)
-     * @param systemName name of the target z/OS system
+     * @param systemName  name of the target z/OS system
      * @return VariableGetInputData
      */
     public static VariableGetInputData createZosmfSymbol(final String sysplexName,
@@ -88,8 +88,8 @@ public final class VariableGetInputFactory {
     /**
      * Create input for z/OSMF system symbols with filters.
      *
-     * @param sysplexName name of the target sysplex (local sysplex only)
-     * @param systemName name of the target z/OS system
+     * @param sysplexName   name of the target sysplex (local sysplex only)
+     * @param systemName    name of the target z/OS system
      * @param variableNames names of the variables to retrieve; if {@code null} or empty,
      *                      all variables are returned
      * @return VariableGetInputData

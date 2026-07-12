@@ -41,7 +41,7 @@ public final class VariableGetResponse {
      * VariableGetResponse Jackson constructor.
      *
      * @param systemVariableList list of system variables
-     * @param systemSymbolList list of system symbols
+     * @param systemSymbolList   list of system symbols
      */
     @JsonCreator
     public VariableGetResponse(
