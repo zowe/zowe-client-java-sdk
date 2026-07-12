@@ -7,7 +7,6 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-
 package zowe.client.sdk.zosvariables.input.factory;
 
 import zowe.client.sdk.utility.ValidateUtils;
@@ -24,7 +23,6 @@ import java.util.Optional;
  * @author Adithe Das
  * @version 7.0
  */
-
 public class VariableGetInputData {
 
     /**
@@ -164,7 +162,7 @@ public class VariableGetInputData {
         }
 
         /**
-         * Set system name.
+         * Set the system name.
          *
          * @param systemName system name
          * @return VariableGetInputData.Builder
@@ -175,7 +173,7 @@ public class VariableGetInputData {
         }
 
         /**
-         * Set local system flag.
+         * Set a local system flag.
          *
          * @param local true if retrieving variables from the local system
          * @return VariableGetInputData.Builder
@@ -197,7 +195,7 @@ public class VariableGetInputData {
         }
 
         /**
-         * Set variable type.
+         * Set a variable type.
          *
          * @param variableType variable type
          * @return VariableGetInputData.Builder

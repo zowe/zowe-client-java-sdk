@@ -7,7 +7,6 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-
 package zowe.client.sdk.zosvariables.input.factory;
 
 import zowe.client.sdk.zosvariables.type.VariableType;
