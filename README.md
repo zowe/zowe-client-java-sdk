@@ -111,8 +111,10 @@ zowe.client.sdk.zosuss.method
 
 zowe.client.sdk.zosvariables.method
 
+    VariableCreate
     VariableDelete
     VariableExport
+    VariableGet
     VariableImport
           
 ## TeamConfig Package  
