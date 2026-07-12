@@ -46,7 +46,7 @@ public class VariableGetInputData {
     private final List<String> variableNames;
 
     /**
-     * Optional variable type filter.
+     * Required variable type to retrieve.
      */
     private final VariableType variableType;
 
@@ -58,6 +58,8 @@ public class VariableGetInputData {
      * @param builder VariableGetInputData.Builder builder
      */
     VariableGetInputData(final Builder builder) {
+        ValidateUtils.checkNullParameter(builder.variableType, "variableType");
+        ValidateUtils.checkIllegalParameter(builder.variableType.getValue(), "variableType");
         this.local = builder.local;
         if (!builder.local) {
             ValidateUtils.checkIllegalParameter(builder.sysplexName, "sysplexName");
@@ -74,8 +76,8 @@ public class VariableGetInputData {
      *
      * @return sysplex name
      */
-    public Optional<String> getSysplexName() {
-        return Optional.ofNullable(sysplexName);
+    public String getSysplexName() {
+        return sysplexName;
     }
 
     /**
@@ -83,14 +85,14 @@ public class VariableGetInputData {
      *
      * @return system name
      */
-    public Optional<String> getSystemName() {
-        return Optional.ofNullable(systemName);
+    public String getSystemName() {
+        return systemName;
     }
 
     /**
-     * Determine whether the local system is requested.
+     * Returns whether variables are retrieved from the local system.
      *
-     * @return true if retrieving variables from the local system; false otherwise
+     * @return {@code true} if the local system is requested; {@code false} otherwise
      */
     public boolean isLocal() {
         return local;
@@ -108,10 +110,10 @@ public class VariableGetInputData {
     /**
      * Returns the requested variable type.
      *
-     * @return optional variable type
+     * @return variable type
      */
-    public Optional<VariableType> getVariableType() {
-        return Optional.ofNullable(variableType);
+    public VariableType getVariableType() {
+        return variableType;
     }
 
     /**

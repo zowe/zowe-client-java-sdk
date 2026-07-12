@@ -42,8 +42,8 @@ public final class VariableResponse {
     /**
      * VariableResponse Jackson constructor.
      *
-     * @param name variable name
-     * @param value variable value
+     * @param name        variable name
+     * @param value       variable value
      * @param description variable description
      */
     @JsonCreator

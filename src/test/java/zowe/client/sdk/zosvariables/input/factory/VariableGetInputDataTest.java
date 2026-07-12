@@ -32,21 +32,52 @@ public class VariableGetInputDataTest {
                 .setVariableType(VariableType.VARIABLE)
                 .setLocal(false)
                 .build();
-        assertEquals("PLEX1", input.getSysplexName().orElse(null));
-        assertEquals("SYS1", input.getSystemName().orElse(null));
+        assertEquals("PLEX1", input.getSysplexName());
+        assertEquals("SYS1", input.getSystemName());
         assertEquals(Arrays.asList("VAR1", "VAR2"), input.getVariableNames().orElse(null));
-        assertEquals(VariableType.VARIABLE, input.getVariableType().orElse(null));
+        assertEquals(VariableType.VARIABLE, input.getVariableType());
         assertFalse(input.isLocal());
     }
 
     @Test
-    public void tstVariableGetInputDataBuilderLocalSuccess() {
-        VariableGetInputData input = new VariableGetInputData.Builder().setLocal(true).build();
+    public void tstVariableGetInputDataBuilderLocalSystemSuccess() {
+        VariableGetInputData input = new VariableGetInputData.Builder()
+                .setLocal(true)
+                .setVariableType(VariableType.VARIABLE)
+                .build();
         assertTrue(input.isLocal());
-        assertFalse(input.getSysplexName().isPresent());
-        assertFalse(input.getSystemName().isPresent());
+        assertNull(input.getSysplexName());
+        assertNull(input.getSystemName());
         assertFalse(input.getVariableNames().isPresent());
-        assertFalse(input.getVariableType().isPresent());
+        assertEquals("variable", input.getVariableType().getValue());
+    }
+
+    @Test
+    public void tstVariableGetInputDataBuilderSymbolSuccess() {
+        VariableGetInputData input = new VariableGetInputData.Builder()
+                .setSysplexName("PLEX1").setSystemName("SYS1")
+                .setVariableNames(Arrays.asList("VAR1", "VAR2"))
+                .setVariableType(VariableType.SYMBOL)
+                .setLocal(false)
+                .build();
+        assertEquals("PLEX1", input.getSysplexName());
+        assertEquals("SYS1", input.getSystemName());
+        assertEquals(Arrays.asList("VAR1", "VAR2"), input.getVariableNames().orElse(null));
+        assertEquals(VariableType.SYMBOL, input.getVariableType());
+        assertFalse(input.isLocal());
+    }
+
+    @Test
+    public void tstVariableGetInputDataBuilderLocalSymbolSuccess() {
+        VariableGetInputData input = new VariableGetInputData.Builder()
+                .setLocal(true)
+                .setVariableType(VariableType.SYMBOL)
+                .build();
+        assertTrue(input.isLocal());
+        assertNull(input.getSysplexName());
+        assertNull(input.getSystemName());
+        assertFalse(input.getVariableNames().isPresent());
+        assertEquals("symbol", input.getVariableType().getValue());
     }
 
 }

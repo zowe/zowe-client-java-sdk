@@ -59,7 +59,7 @@ public class VariableGet {
      * This constructor is package-private.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request any compatible ZosmfRequest Interface object
+     * @param request    any compatible ZosmfRequest Interface object
      */
     VariableGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -85,15 +85,14 @@ public class VariableGet {
     public VariableGetResponse get(final VariableGetInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
-                VariableConstants.RESOURCE +
-                UrlConstants.URL_PATH_DELIM);
+                VariableConstants.RESOURCE + UrlConstants.URL_PATH_DELIM);
 
         if (inputData.isLocal()) {
             url.append("local");
         } else {
-            inputData.getSysplexName().ifPresent(name -> url.append(EncodeUtils.encodeURIComponent(name)));
-            url.append(".");
-            inputData.getSystemName().ifPresent(name -> url.append(EncodeUtils.encodeURIComponent(name)));
+            final String sysplexName = EncodeUtils.encodeURIComponent(inputData.getSysplexName());
+            final String sysName = EncodeUtils.encodeURIComponent(inputData.getSystemName());
+            url.append(sysplexName).append(".").append(sysName);
         }
 
         final List<String> queryParams = new ArrayList<>();
@@ -102,18 +101,17 @@ public class VariableGet {
                 variableNames.forEach(name -> queryParams.add("var-name=" + EncodeUtils.encodeURIComponent(name)));
             }
         });
-        inputData.getVariableType().ifPresent(type -> queryParams.add("source=" + type.getValue()));
+        queryParams.add("source=" + inputData.getVariableType().getValue());
 
-        if (!queryParams.isEmpty()) {
-            url.append("?").append(String.join("&", queryParams));
-        }
+        url.append("?").append(String.join("&", queryParams));
         request.setUrl(url.toString());
 
-        return JsonUtils.parseResponse(request.executeRequest()
+        final String response =
+                request.executeRequest()
                         .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
-                        .toString(),
-                VariableGetResponse.class, GET_CONTEXT
-        );
+                        .toString();
+
+        return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
     }
 
 }
