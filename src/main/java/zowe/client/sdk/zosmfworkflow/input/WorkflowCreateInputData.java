@@ -330,7 +330,7 @@ public class WorkflowCreateInputData {
 
     /**
      * Create a builder pre-populated with the values of this instance. Useful for producing a modified copy,
-     * for example swapping local file paths for the uploaded USS paths during a local workflow create.
+     * for example, swapping local file paths for the uploaded USS paths during a local workflow create.
      *
      * @return builder instance populated with this instance's values
      */
