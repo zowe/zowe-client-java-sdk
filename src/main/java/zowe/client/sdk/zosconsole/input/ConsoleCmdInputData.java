@@ -15,6 +15,8 @@ import java.util.Optional;
 
 /**
  * The z/OSMF console command API parameters. See the z/OSMF REST API documentation for full details.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-issue-command-from-system-console">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

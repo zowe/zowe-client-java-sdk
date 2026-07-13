@@ -32,6 +32,7 @@ import java.util.List;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-system-variables">z/OSMF REST API</a>
  *
  * @author Adithe Das
+ * @author Frank Giordano
  * @version 7.0
  */
 public class VariableGet {
@@ -44,6 +45,7 @@ public class VariableGet {
      * VariableGet Constructor.
      *
      * @param connection for connection information, see ZosConnection object
+     * @author Adithe Das
      */
     public VariableGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -60,6 +62,7 @@ public class VariableGet {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZosmfRequest Interface object
+     * @author Adithe Das
      */
     VariableGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -81,6 +84,8 @@ public class VariableGet {
      * @param inputData input parameters for retrieving system variables
      * @return VariableGetResponse object
      * @throws ZosmfRequestException request error state
+     * @author Adithe Das
+     * @author Frank Giordano
      */
     public VariableGetResponse get(final VariableGetInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");

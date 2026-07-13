@@ -24,6 +24,8 @@ import java.util.Map;
 
 /**
  * Provides rename dataset and member functionality
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-data-set-member-utilities">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

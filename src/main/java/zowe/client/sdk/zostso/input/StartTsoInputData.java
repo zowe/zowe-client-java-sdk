@@ -13,6 +13,8 @@ import java.util.Optional;
 
 /**
  * TSO start command z/OSMF parameters
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-start-reconnect-tsoe-address-space">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

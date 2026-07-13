@@ -16,6 +16,8 @@ import java.util.Optional;
 
 /**
  * Parameter container class for the list data set function
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-zos-data-sets-system">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
  * @version 7.0

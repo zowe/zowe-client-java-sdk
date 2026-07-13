@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * The plugin information structure for the plugin property of the z/OSMF info response.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=service-retrieve-zosmf-information">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

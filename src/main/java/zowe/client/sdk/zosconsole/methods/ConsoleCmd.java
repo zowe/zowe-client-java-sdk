@@ -44,6 +44,8 @@ import java.util.Map;
  * you can use the cmd-response-url field in the response body to retrieve the command response.
  * You might do this several times to ensure that all messages that are related to the command
  * are retrieved. This is prebuilt for you via the ConsoleGet class in this package.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-issue-command-from-system-console">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

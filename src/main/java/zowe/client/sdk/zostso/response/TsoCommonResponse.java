@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * The z/OSMF tso common response.
  * <p>
- * This class is used to parse the response from the z/OSMF tso apis using jackson library.
+ * This class is used to parse the response from the z/OSMF tso APIs using jackson library.
  *
  * @author Frank Giordano
  * @version 7.0

@@ -14,8 +14,8 @@ import java.util.OptionalInt;
 
 /**
  * Parameter container class for create dataset API
- * z/OSMF REST API information:
- * <a href="https://www.ibm.com/support/knowledgecenter/SSLTBW_2.3.0/com.ibm.zos.v2r3.izua700/IZUHPINFO_API_CreateDataSet.htm#CreateDataSet">...</a>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-create-sequential-partitioned-data-set">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
  * @version 7.0

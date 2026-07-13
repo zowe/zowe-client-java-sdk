@@ -14,6 +14,8 @@ import zowe.client.sdk.rest.Response;
 
 /**
  * Holds Login response information
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-log-in-zosmf-server">z/OSMF REST API </a>
  *
  * @author Frank Giordano
  * @version 7.0

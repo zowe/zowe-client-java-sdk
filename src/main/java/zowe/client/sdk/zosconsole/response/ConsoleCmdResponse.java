@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * z/OSMF synchronous console command response messages. See the z/OSMF REST API publication for complete details.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-issue-command-from-system-console">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

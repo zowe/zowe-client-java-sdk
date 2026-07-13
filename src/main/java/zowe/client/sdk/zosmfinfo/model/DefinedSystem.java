@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * The z/OSMF object returned for every defined system.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-systems-defined-zosmf">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 67.0
