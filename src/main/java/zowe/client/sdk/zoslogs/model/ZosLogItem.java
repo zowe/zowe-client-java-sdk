@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the details of one log item.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

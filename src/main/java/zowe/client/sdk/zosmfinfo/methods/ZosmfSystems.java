@@ -22,6 +22,8 @@ import zowe.client.sdk.zosmfinfo.response.ZosmfSystemsResponse;
 
 /**
  * This class is used to list the systems defined to z/OSMF through the z/OSMF APIs.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-systems-defined-zosmf">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

@@ -13,6 +13,8 @@ import java.util.Optional;
 
 /**
  * Parameters for various common Job API input data
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-jobs-owner-prefix-job-id">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

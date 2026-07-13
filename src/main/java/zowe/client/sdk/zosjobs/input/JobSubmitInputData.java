@@ -14,6 +14,8 @@ import java.util.Optional;
 
 /**
  * Parameters for JobSubmit API input data
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-submit-job">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 67.0

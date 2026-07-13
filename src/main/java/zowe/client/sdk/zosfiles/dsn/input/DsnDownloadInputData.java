@@ -16,6 +16,8 @@ import java.util.OptionalLong;
 
 /**
  * Parameter container class for the download data set function
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-retrieve-contents-zos-data-set-member">z/OSMF REST API</a>
  *
  * @author Nikunj Goyal
  * @version 7.0

@@ -12,6 +12,8 @@ package zowe.client.sdk.zoslogs.types;
 
 /**
  * Enum class representing a direction to gather log data from.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

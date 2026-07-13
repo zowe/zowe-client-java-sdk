@@ -29,6 +29,8 @@ import java.util.stream.IntStream;
 
 /**
  * This class holds the helper functions that are used to gather z/OSMF information through the z/OSMF APIs.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=service-retrieve-zosmf-information">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

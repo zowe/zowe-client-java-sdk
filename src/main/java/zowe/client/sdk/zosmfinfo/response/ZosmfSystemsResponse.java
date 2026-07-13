@@ -18,6 +18,8 @@ import java.util.Arrays;
 
 /**
  * API response for list systems defined to z/OSMF.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-list-systems-defined-zosmf">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

@@ -19,9 +19,8 @@ import java.util.List;
 
 /**
  * Standard log response document. Represents the details about the messages and logs.
- *
- * <p>Refactored as an immutable Jackson POJO without Optional or builder.
- * Uses primitive {@code long} defaults for numeric fields when null.</p>
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/2.5.0?topic=services-get-messages-from-hardcopy-log">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

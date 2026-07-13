@@ -19,6 +19,8 @@ import java.util.Arrays;
 /**
  * The z/OSMF info API response.
  * Immutable class using Jackson for JSON parsing.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=service-retrieve-zosmf-information">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0

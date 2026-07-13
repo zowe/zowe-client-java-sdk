@@ -22,6 +22,8 @@ import zowe.client.sdk.zosconsole.response.ConsoleGetResponse;
  * the time interval and can be retrieved.
  * <p>
  * Response messages are stored in the response key of the console issue command request.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-get-command-response">z/OSMF REST API</a>
  *
  * @author Frank Giordano
  * @version 7.0
