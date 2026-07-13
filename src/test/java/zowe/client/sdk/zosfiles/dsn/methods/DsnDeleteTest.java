@@ -10,17 +10,22 @@
 package zowe.client.sdk.zosfiles.dsn.methods;
 
 import kong.unirest.core.Cookie;
+import kong.unirest.core.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
+import org.mockito.ArgumentCaptor;
 import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
+import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.DeleteMigratedInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -40,6 +45,8 @@ public class DsnDeleteTest {
             .createTokenConnection("1", 443, new Cookie("hello=hello"));
     private DeleteJsonZosmfRequest mockDeleteRequest;
     private DeleteJsonZosmfRequest mockDeleteRequestToken;
+    private PutJsonZosmfRequest mockPutRequest;
+    private PutJsonZosmfRequest mockPutRequestToken;
 
     @BeforeEach
     public void init() throws ZosmfRequestException {
@@ -58,6 +65,22 @@ public class DsnDeleteTest {
         doCallRealMethod().when(mockDeleteRequestToken).setUrl(any());
         doCallRealMethod().when(mockDeleteRequestToken).getHeaders();
         doCallRealMethod().when(mockDeleteRequestToken).getUrl();
+
+        mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
+        Mockito.when(mockPutRequest.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockPutRequest).setUrl(any());
+        doCallRealMethod().when(mockPutRequest).getUrl();
+
+        mockPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
+                withSettings().useConstructor(tokenConnection));
+        Mockito.when(mockPutRequestToken.executeRequest()).thenReturn(
+                new Response(new JSONObject(), 200, "success"));
+        doCallRealMethod().when(mockPutRequestToken).setHeaders(anyMap());
+        doCallRealMethod().when(mockPutRequestToken).setStandardHeaders();
+        doCallRealMethod().when(mockPutRequestToken).setUrl(any());
+        doCallRealMethod().when(mockPutRequestToken).getHeaders();
+        doCallRealMethod().when(mockPutRequestToken).getUrl();
     }
 
     @Test
@@ -151,4 +174,52 @@ public class DsnDeleteTest {
         );
         assertEquals("connection is null", exception.getMessage());
     }
+
+    @Test
+    public void tstDsnDeleteMigratedDatasetSuccess() throws ZosmfRequestException {
+        final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest, mockPutRequest);
+        final Response response = dsnDelete.deleteMigrated("TEST.MIGRATED.DATASET");
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.MIGRATED.DATASET", mockPutRequest.getUrl());
+
+        final ArgumentCaptor<String> bodyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mockPutRequest).setBody(bodyCaptor.capture());
+        assertTrue(bodyCaptor.getValue().contains("\"request\":\"hdelete\""));
+    }
+
+    @Test
+    public void tstDsnDeleteMigratedDatasetWithOptionsSuccess() throws ZosmfRequestException {
+        final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest, mockPutRequest);
+        final DeleteMigratedInputData inputData = new DeleteMigratedInputData.Builder()
+                .wait(true)
+                .purge(true)
+                .build();
+        final Response response = dsnDelete.deleteMigrated("TEST.MIGRATED.DATASET", inputData);
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.MIGRATED.DATASET", mockPutRequest.getUrl());
+
+        final ArgumentCaptor<String> bodyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mockPutRequest).setBody(bodyCaptor.capture());
+        final String body = bodyCaptor.getValue();
+        assertTrue(body.contains("\"request\":\"hdelete\""));
+        assertTrue(body.contains("\"wait\":true"));
+        assertTrue(body.contains("\"purge\":true"));
+    }
+
+    @Test
+    public void tstDsnDeleteSecondaryConstructorWithInvalidPutRequestType() {
+        ZosConnection connection = Mockito.mock(ZosConnection.class);
+        ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
+        ZosmfRequest invalidPutRequest = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> new DsnDelete(connection, request, invalidPutRequest)
+        );
+        assertEquals("PUT_JSON request type required", exception.getMessage());
+    }
+
 }

@@ -398,6 +398,7 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.DeleteMigratedInputData;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
 
 /**
@@ -424,6 +425,7 @@ public class DsnDeleteExp extends TstZosConnection {
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         deleteDataSet(dataSetName);
         deleteMember(dataSetName, member);
+        deleteMigratedDataSet(dataSetName);
     }
 
     /**
@@ -460,6 +462,31 @@ public class DsnDeleteExp extends TstZosConnection {
         try {
             DsnDelete zosDsn = new DsnDelete(connection);
             response = zosDsn.delete(dataSetName, member);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+
+        System.out.println(response.toString());
+    }
+
+    /**
+     * Delete a migrated dataset
+     *
+     * @param dataSetName name of a dataset to delete (e.g. 'DATASET.LIB')
+     */
+    public static void deleteMigratedDataSet(String dataSetName) {
+        Response response;
+        try {
+            DsnDelete zosDsn = new DsnDelete(connection);
+            DeleteMigratedInputData inputData = new DeleteMigratedInputData.Builder()
+                    .wait(true)
+                    .purge(true)
+                    .build();
+            response = zosDsn.deleteMigrated(dataSetName, inputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
