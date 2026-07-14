@@ -75,11 +75,10 @@ public class VariableGet {
     }
 
     /**
-     * Retrieve z/OS system variables.
+     * Retrieve z/OSMF variables or z/OS system symbols from a selected system
+     * or the local system based on the supplied input data.
      * <p>
-     * This method retrieves system variables from either a specified
-     * z/OS system or the local system based on the supplied input data.
-     * Optional variable name and variable type filters may also be specified.
+     * Optional variable name filter may also be specified; variable type filter is required.
      *
      * @param inputData input parameters for retrieving system variables
      * @return VariableGetResponse object
@@ -112,8 +111,8 @@ public class VariableGet {
         request.setUrl(url.toString());
 
         final String response = request.executeRequest()
-                        .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
-                        .toString();
+                .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
+                .toString();
 
         return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
     }
