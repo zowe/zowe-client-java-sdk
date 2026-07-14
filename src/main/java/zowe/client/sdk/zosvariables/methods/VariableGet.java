@@ -80,32 +80,32 @@ public class VariableGet {
      * <p>
      * Optional variable name filter may also be specified; variable type filter is required.
      *
-     * @param inputData input parameters for retrieving system variables
+     * @param getInputData input parameters for retrieving system variables
      * @return VariableGetResponse object
      * @throws ZosmfRequestException request error state
      * @author Adithe Das
      * @author Frank Giordano
      */
-    public VariableGetResponse get(final VariableGetInputData inputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(inputData, "inputData");
+    public VariableGetResponse get(final VariableGetInputData getInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(getInputData, "inputData");
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 VariableConstants.RESOURCE + UrlConstants.URL_PATH_DELIM);
 
-        if (inputData.isLocal()) {
+        if (getInputData.isLocal()) {
             url.append("local");
         } else {
-            final String sysplexName = EncodeUtils.encodeURIComponent(inputData.getSysplexName());
-            final String sysName = EncodeUtils.encodeURIComponent(inputData.getSystemName());
+            final String sysplexName = EncodeUtils.encodeURIComponent(getInputData.getSysplexName());
+            final String sysName = EncodeUtils.encodeURIComponent(getInputData.getSystemName());
             url.append(sysplexName).append(".").append(sysName);
         }
 
         final List<String> queryParams = new ArrayList<>();
-        inputData.getVariableNames().ifPresent(variableNames -> {
+        getInputData.getVariableNames().ifPresent(variableNames -> {
             if (!variableNames.isEmpty()) {
                 variableNames.forEach(name -> queryParams.add("var-name=" + EncodeUtils.encodeURIComponent(name)));
             }
         });
-        queryParams.add("source=" + inputData.getVariableType().getValue());
+        queryParams.add("source=" + getInputData.getVariableType().getValue());
 
         url.append("?").append(String.join("&", queryParams));
         request.setUrl(url.toString());
