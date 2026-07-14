@@ -111,8 +111,7 @@ public class VariableGet {
         url.append("?").append(String.join("&", queryParams));
         request.setUrl(url.toString());
 
-        final String response =
-                request.executeRequest()
+        final String response = request.executeRequest()
                         .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
                         .toString();
 
