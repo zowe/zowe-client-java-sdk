@@ -111,7 +111,7 @@ public class WorkflowCancelTest {
         Mockito.verify(mockPutRequest, Mockito.never()).setBody(any());
 
         assertEquals(
-                "https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY/operations/cancel",
+                "https://1:443/workflow/rest/1.0/workflows/TESTKEY/operations/cancel",
                 mockPutRequest.getUrl()
         );
     }
@@ -169,7 +169,7 @@ public class WorkflowCancelTest {
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockPutRequestToken.getHeaders().toString());
         assertEquals("AutomationExample|Canceled|1423679433714", response.getWorkflowName());
-        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows/test-key/operations/cancel",
+        assertEquals("https://1:443/workflow/rest/1.0/workflows/test-key/operations/cancel",
                 mockPutRequestToken.getUrl());
     }
 
