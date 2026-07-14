@@ -72,6 +72,11 @@ public final class WorkflowConstants {
     public static final String OPERATIONS_START = URL_PATH_DELIM + "operations" + URL_PATH_DELIM + "start";
 
     /**
+     * Operations cancel path segment for workflow cancel operation.
+     */
+    public static final String OPERATIONS_CANCEL = URL_PATH_DELIM + "operations" + URL_PATH_DELIM + "cancel";
+
+    /**
      * Default USS directory used to hold local workflow files temporarily uploaded for a local create.
      */
     public static final String TEMP_PATH = "/tmp";
