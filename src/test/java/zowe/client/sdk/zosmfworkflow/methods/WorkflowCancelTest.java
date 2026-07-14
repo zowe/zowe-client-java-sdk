@@ -10,7 +10,6 @@
 package zowe.client.sdk.zosmfworkflow.methods;
 
 import kong.unirest.core.Cookie;
-import kong.unirest.core.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
@@ -100,7 +99,7 @@ public class WorkflowCancelTest {
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443");
         PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
         Mockito.when(mockPutRequest.executeRequest())
-                .thenReturn(new Response(new JSONObject(CANCEL_JSON), 200, "success"));
+                .thenReturn(new Response(CANCEL_JSON, 200, "success"));
 
         doCallRealMethod().when(mockPutRequest).setUrl(any());
         doCallRealMethod().when(mockPutRequest).getUrl();
@@ -110,6 +109,11 @@ public class WorkflowCancelTest {
 
         assertEquals("AutomationExample|Canceled|1423679433714", response.getWorkflowName());
         Mockito.verify(mockPutRequest, Mockito.never()).setBody(any());
+
+        assertEquals(
+                "https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY/operations/cancel",
+                mockPutRequest.getUrl()
+        );
     }
 
     @Test
@@ -135,26 +139,6 @@ public class WorkflowCancelTest {
     }
 
     @Test
-    public void tstWorkflowCancelUrlGenerationSuccess() throws ZosmfRequestException {
-        ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
-        Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
-        PutJsonZosmfRequest mockPutRequest = Mockito.mock(PutJsonZosmfRequest.class);
-        Mockito.when(mockPutRequest.executeRequest())
-                .thenReturn(new Response(new JSONObject(CANCEL_JSON), 200, "success"));
-
-        doCallRealMethod().when(mockPutRequest).setUrl(any());
-        doCallRealMethod().when(mockPutRequest).getUrl();
-
-        WorkflowCancel workflowCancel = new WorkflowCancel(mockConnection, mockPutRequest);
-        workflowCancel.cancel("TESTKEY");
-
-        assertEquals(
-                "https://1:443/zosmf/workflow/rest/1.0/workflows/TESTKEY/operations/cancel",
-                mockPutRequest.getUrl()
-        );
-    }
-
-    @Test
     public void tstWorkflowCancelKeyEmptyFailure() {
         ZosConnection mockConnection = Mockito.mock(ZosConnection.class);
         Mockito.when(mockConnection.getZosmfUrl()).thenReturn("https://1:443/zosmf");
@@ -172,7 +156,7 @@ public class WorkflowCancelTest {
         PutJsonZosmfRequest mockPutRequestToken = Mockito.mock(PutJsonZosmfRequest.class,
                 withSettings().useConstructor(tokenConnection));
         Mockito.when(mockPutRequestToken.executeRequest()).thenReturn(
-                new Response(new JSONObject(CANCEL_JSON), 200, "success"));
+                new Response(CANCEL_JSON, 200, "success"));
         doCallRealMethod().when(mockPutRequestToken).setHeaders(anyMap());
         doCallRealMethod().when(mockPutRequestToken).setStandardHeaders();
         doCallRealMethod().when(mockPutRequestToken).setUrl(any());
