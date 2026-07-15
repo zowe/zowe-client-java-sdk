@@ -14,6 +14,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
@@ -104,6 +105,67 @@ public class DsnUpdate {
 
         request.setUrl(url.toString());
         request.setBody(JsonUtils.asRequestBodyJson(renameMap));
+
+        return request.executeRequest();
+    }
+
+    /**
+     * Delete a migrated dataset
+     *
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Charishma1707
+     */
+    public Response deleteMigrated(final String dataSetName) throws ZosmfRequestException {
+        return deleteMigratedCommon(dataSetName, null, null);
+    }
+
+    /**
+     * Delete a migrated dataset with wait and purge options
+     *
+     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param wait        if true, the function waits for completion of the request
+     * @param purge       if true, the function uses PURGE=YES on ARCHDEL request
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Charishma1707
+     */
+    public Response deleteMigrated(final String dataSetName, final boolean wait, final boolean purge)
+            throws ZosmfRequestException {
+        return deleteMigratedCommon(dataSetName, wait, purge);
+    }
+
+    /**
+     * Common helper method to delete a migrated dataset
+     *
+     * @param dataSetName name of a dataset
+     * @param wait        optional wait parameter
+     * @param purge       optional purge parameter
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    private Response deleteMigratedCommon(final String dataSetName, final Boolean wait, final Boolean purge)
+            throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+
+        final String url = connection.getZosmfUrl() +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(dataSetName);
+
+        final Map<String, Object> deleteMap = new HashMap<>();
+        deleteMap.put("request", "hdelete");
+        if (wait != null) {
+            deleteMap.put("wait", wait);
+        }
+        if (purge != null) {
+            deleteMap.put("purge", purge);
+        }
+
+        request.setUrl(url);
+        request.setBody(JsonUtils.asRequestBodyJson(deleteMap));
 
         return request.executeRequest();
     }

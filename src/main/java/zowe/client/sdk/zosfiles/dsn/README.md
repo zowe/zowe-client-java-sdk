@@ -471,6 +471,137 @@ public class DsnDeleteExp extends TstZosConnection {
         System.out.println(response.toString());
     }
 
+
+}
+`````
+
+**Update dataset and member**
+
+````java
+package zowe.client.sdk.examples.zosfiles.dsn;
+
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.core.ZosConnectionFactory;
+import zowe.client.sdk.examples.TstZosConnection;
+import zowe.client.sdk.rest.Response;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.DsnRenameInputData;
+import zowe.client.sdk.zosfiles.dsn.methods.DsnUpdate;
+
+/**
+ * Class example to showcase Update dataset and member functionality via DsnUpdate class.
+ *
+ * @author Frank Giordano
+ * @author Charishma1707
+ * @version 7.0
+ */
+public class DsnUpdateExp extends TstZosConnection {
+
+    private static ZosConnection connection;
+
+    /**
+     * The main method defines z/OSMF host and user connection and other parameters needed to showcase
+     * DsnUpdate functionality.
+     *
+     * @param args for main isn't used
+     */
+    public static void main(String[] args) {
+        String datasetName = "xxx";
+        String newDatasetName = "xxx";
+        String memberName = "xxx";
+        String newMemberName = "xxx";
+        connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
+        renameDataSet(datasetName, newDatasetName);
+        renameMember(datasetName, memberName, newMemberName);
+        deleteMigratedDataSet(datasetName);
+        deleteMigratedDataSetWithOptions(datasetName);
+    }
+
+    /**
+     * Rename a dataset
+     *
+     * @param datasetName    existing dataset name
+     * @param newDatasetName new dataset name
+     */
+    public static void renameDataSet(String datasetName, String newDatasetName) {
+        Response response;
+        try {
+            DsnUpdate dsnUpdate = new DsnUpdate(connection);
+            DsnRenameInputData renameInputData = DsnRenameInputData.forDataset(datasetName, newDatasetName);
+            response = dsnUpdate.rename(renameInputData);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+        System.out.println(response.toString());
+    }
+
+    /**
+     * Rename a member within a partitioned dataset
+     *
+     * @param datasetName    partitioned dataset containing the member
+     * @param memberName     existing member name
+     * @param newMemberName  new member name
+     */
+    public static void renameMember(String datasetName, String memberName, String newMemberName) {
+        Response response;
+        try {
+            DsnUpdate dsnUpdate = new DsnUpdate(connection);
+            DsnRenameInputData renameInputData = DsnRenameInputData.forMember(datasetName, memberName, newMemberName);
+            response = dsnUpdate.rename(renameInputData);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+        System.out.println(response.toString());
+    }
+
+    /**
+     * Delete a migrated dataset
+     *
+     * @param dataSetName name of a migrated dataset to delete
+     */
+    public static void deleteMigratedDataSet(String dataSetName) {
+        Response response;
+        try {
+            DsnUpdate dsnUpdate = new DsnUpdate(connection);
+            response = dsnUpdate.deleteMigrated(dataSetName);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+        System.out.println(response.toString());
+    }
+
+    /**
+     * Delete a migrated dataset with options (wait and purge)
+     *
+     * @param dataSetName name of a migrated dataset to delete
+     */
+    public static void deleteMigratedDataSetWithOptions(String dataSetName) {
+        Response response;
+        try {
+            DsnUpdate dsnUpdate = new DsnUpdate(connection);
+            response = dsnUpdate.deleteMigrated(dataSetName, true, true);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+        System.out.println(response.toString());
+    }
+
 }
 `````
 
