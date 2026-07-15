@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
@@ -142,12 +141,7 @@ public class WorkflowList {
                 .toString();
 
         final List<WorkflowArchivedResponse> results = new ArrayList<>();
-        final JsonNode root;
-        try {
-            root = OBJECT_MAPPER.readTree(responsePhrase);
-        } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException("Failed to parse archived workflows response", e);
-        }
+        final JsonNode root = JsonUtils.parse(responsePhrase);
         final JsonNode nodes = root.path("archivedWorkflows");
 
         if (nodes.isArray()) {
