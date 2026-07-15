@@ -37,7 +37,6 @@ public class DsnUpdate {
 
     private final ZosConnection connection;
     private final ZosmfRequest request;
-    private String url;
 
     /**
      * DsnUpdate Constructor
