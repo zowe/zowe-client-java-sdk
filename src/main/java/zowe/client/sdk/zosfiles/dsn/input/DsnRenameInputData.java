@@ -55,7 +55,6 @@ public final class DsnRenameInputData {
     public static DsnRenameInputData forDataset(
             final String sourceDatasetName,
             final String destinationDatasetName) {
-
         ValidateUtils.checkIllegalParameter(sourceDatasetName, "sourceDatasetName");
         ValidateUtils.checkIllegalParameter(destinationDatasetName, "destinationDatasetName");
 
@@ -79,7 +78,6 @@ public final class DsnRenameInputData {
             final String datasetName,
             final String sourceMemberName,
             final String destinationMemberName) {
-
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkIllegalParameter(sourceMemberName, "sourceMemberName");
         ValidateUtils.checkIllegalParameter(destinationMemberName, "destinationMemberName");
