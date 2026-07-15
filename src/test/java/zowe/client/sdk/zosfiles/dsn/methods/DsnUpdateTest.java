@@ -193,4 +193,36 @@ public class DsnUpdateTest {
         assertTrue(requestBody.get("purge").asBoolean());
     }
 
+    @Test
+    public void tstDsnUpdateRecallMigratedDatasetSuccess() throws ZosmfRequestException, JsonProcessingException {
+        final DsnUpdate dsnUpdate = new DsnUpdate(connection, mockJsonPutRequest);
+        final Response response = dsnUpdate.recallMigrated("TEST.MIGRATED.DATASET");
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.MIGRATED.DATASET", mockJsonPutRequest.getUrl());
+
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockJsonPutRequest).setBody(bodyCaptor.capture());
+        final JsonNode requestBody = mapper.readTree(bodyCaptor.getValue().toString());
+        assertEquals("hrecall", requestBody.get("request").asText());
+        assertNull(requestBody.get("wait"));
+    }
+
+    @Test
+    public void tstDsnUpdateRecallMigratedDatasetWithWaitSuccess() throws ZosmfRequestException, JsonProcessingException {
+        final DsnUpdate dsnUpdate = new DsnUpdate(connection, mockJsonPutRequest);
+        final Response response = dsnUpdate.recallMigrated("TEST.MIGRATED.DATASET", true);
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.MIGRATED.DATASET", mockJsonPutRequest.getUrl());
+
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockJsonPutRequest).setBody(bodyCaptor.capture());
+        final JsonNode requestBody = mapper.readTree(bodyCaptor.getValue().toString());
+        assertEquals("hrecall", requestBody.get("request").asText());
+        assertTrue(requestBody.get("wait").asBoolean());
+    }
+
 }

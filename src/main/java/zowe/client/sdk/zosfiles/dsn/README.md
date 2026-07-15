@@ -493,6 +493,7 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnUpdate;
  *
  * @author Frank Giordano
  * @author Charishma1707
+ * @author Shaurya2k06
  * @version 7.0
  */
 public class DsnUpdateExp extends TstZosConnection {
@@ -515,6 +516,8 @@ public class DsnUpdateExp extends TstZosConnection {
         renameMember(datasetName, memberName, newMemberName);
         deleteMigratedDataSet(datasetName);
         deleteMigratedDataSetWithOptions(datasetName);
+        recallMigratedDataSet(datasetName);
+        recallMigratedDataSetWithWait(datasetName);
     }
 
     /**
@@ -592,6 +595,46 @@ public class DsnUpdateExp extends TstZosConnection {
         try {
             DsnUpdate dsnUpdate = new DsnUpdate(connection);
             response = dsnUpdate.deleteMigrated(dataSetName, true, true);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+        System.out.println(response.toString());
+    }
+
+    /**
+     * Recall a migrated dataset
+     *
+     * @param dataSetName name of a migrated dataset to recall
+     */
+    public static void recallMigratedDataSet(String dataSetName) {
+        Response response;
+        try {
+            DsnUpdate dsnUpdate = new DsnUpdate(connection);
+            response = dsnUpdate.recallMigrated(dataSetName);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+        System.out.println(response.toString());
+    }
+
+    /**
+     * Recall a migrated dataset with wait option
+     *
+     * @param dataSetName name of a migrated dataset to recall
+     */
+    public static void recallMigratedDataSetWithWait(String dataSetName) {
+        Response response;
+        try {
+            DsnUpdate dsnUpdate = new DsnUpdate(connection);
+            response = dsnUpdate.recallMigrated(dataSetName, true);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
