@@ -51,10 +51,10 @@ public class VariableImport {
      * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private.
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZosmfRequest Interface object
+     * @param request    a {@link PostJsonZosmfRequest} implementation object
      * @author Chaitanya Katore
      */
     VariableImport(final ZosConnection connection, final ZosmfRequest request) {

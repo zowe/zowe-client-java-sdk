@@ -55,7 +55,7 @@ public class JobCancel {
      * Alternative CancelJobs constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with Mockito, and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    any compatible ZoweRequest Interface object
@@ -65,6 +65,7 @@ public class JobCancel {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
+        // TODO
         if (!(request instanceof PutJsonZosmfRequest) && !(request instanceof DeleteJsonZosmfRequest)) {
             throw new IllegalStateException("PUT_JSON request type required");
         }

@@ -12,9 +12,7 @@ package zowe.client.sdk.zoslogs.method;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.GetJsonZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.JsonUtils;
@@ -57,10 +55,10 @@ public class ZosLog {
      * Alternative ZosLog constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with Mockito, and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface object
+     * @param request    a {@link GetJsonZosmfRequest} implementation object
      * @author Frank Giordano
      */
     ZosLog(final ZosConnection connection, final ZosmfRequest request) {

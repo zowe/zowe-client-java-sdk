@@ -12,10 +12,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.Response;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -56,9 +53,11 @@ public class UssExtAttr {
     /**
      * Alternative UssCopy constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with Mockito, and it is not recommended to be used by the larger community.
+     * <p>
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface object
+     * @param request    a {@link PutJsonZosmfRequest} implementation object
      * @author James Kostrewski
      */
     UssExtAttr(final ZosConnection connection, final ZosmfRequest request) {

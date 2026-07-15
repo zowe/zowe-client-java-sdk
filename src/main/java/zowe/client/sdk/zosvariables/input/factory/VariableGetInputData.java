@@ -53,7 +53,7 @@ public class VariableGetInputData {
     /**
      * VariableGetInputData constructor.
      * <p>
-     * This constructor is package-private.
+     * This constructor is package-private visibility.
      *
      * @param builder VariableGetInputData.Builder builder
      */
