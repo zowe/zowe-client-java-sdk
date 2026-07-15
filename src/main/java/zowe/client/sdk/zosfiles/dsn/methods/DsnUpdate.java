@@ -1,0 +1,111 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ *
+ */
+package zowe.client.sdk.zosfiles.dsn.methods;
+
+import zowe.client.sdk.core.ZosConnection;
+import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.JsonUtils;
+import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosfiles.ZosFilesConstants;
+import zowe.client.sdk.zosfiles.dsn.input.DsnRenameInputData;
+import zowe.client.sdk.zosfiles.dsn.types.RenameType;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Provides various update actions against a dataset: rename, migrate, recall migrated dataset, and delete a
+ * migrated dataset.
+ * <p>
+ * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-data-set-member-utilities">z/OSMF REST API</a>
+ *
+ * @author Frank Giordano
+ * @version 7.0
+ */
+public class DsnUpdate {
+
+    private final ZosConnection connection;
+    private final ZosmfRequest request;
+    private String url;
+
+    /**
+     * DsnUpdate Constructor
+     *
+     * @param connection for connection information, see ZosConnection object
+     * @author Frank Giordano
+     */
+    public DsnUpdate(final ZosConnection connection) {
+        ValidateUtils.checkNullParameter(connection, "connection");
+        this.connection = connection;
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+    }
+
+    /**
+     * Alternative DsnUpdate constructor with ZoweRequest object. This is mainly used for internal code unit testing
+     * with Mockito, and it is not recommended to be used by the larger community.
+     * <p>
+     * This constructor is package-private visibility.
+     *
+     * @param connection for connection information, see ZosConnection object
+     * @param request    a {@link PutJsonZosmfRequest} implementation object
+     * @author Frank Giordano
+     */
+    DsnUpdate(final ZosConnection connection, final ZosmfRequest request) {
+        ValidateUtils.checkNullParameter(connection, "connection");
+        ValidateUtils.checkNullParameter(request, "request");
+        this.connection = connection;
+        if (!(request instanceof PutJsonZosmfRequest)) {
+            throw new IllegalStateException("PUT_JSON request type required");
+        }
+        this.request = request;
+    }
+
+    /**
+     * Rename a dataset or a member of a dataset
+     *
+     * @param renameInputData rename parameters, see DsnRenameInputData object
+     * @return Response object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public Response rename(DsnRenameInputData renameInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(renameInputData, "renameInputData");
+
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM);
+
+        final Map<String, Object> renameMap = new HashMap<>();
+        final Map<String, Object> fromDatasetMap = new HashMap<>();
+        renameMap.put("request", "rename");
+        fromDatasetMap.put("dsn", renameInputData.getSourceDatasetName());
+
+        if (renameInputData.getType() == RenameType.DATASET) {
+            url.append(renameInputData.getDestinationDatasetName());
+        } else if (renameInputData.getType() == RenameType.MEMBER) {
+            url.append(renameInputData.getSourceDatasetName())
+                    .append("(")
+                    .append(renameInputData.getDestinationMemberName())
+                    .append(")");
+            fromDatasetMap.put("member", renameInputData.getSourceMemberName());
+        }
+        renameMap.put("from-dataset", fromDatasetMap);
+
+        request.setUrl(url.toString());
+        request.setBody(JsonUtils.asRequestBodyJson(renameMap));
+
+        return request.executeRequest();
+    }
+
+}
