@@ -160,6 +160,38 @@ public class DsnUpdateTest {
     }
 
     @Test
+    public void tstDsnUpdateMigrateDatasetSuccess() throws ZosmfRequestException, JsonProcessingException {
+        final DsnUpdate dsnUpdate = new DsnUpdate(connection, mockJsonPutRequest);
+        final Response response = dsnUpdate.migrate("TEST.DATASET");
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockJsonPutRequest.getUrl());
+
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockJsonPutRequest).setBody(bodyCaptor.capture());
+        final JsonNode requestBody = mapper.readTree(bodyCaptor.getValue().toString());
+        assertEquals("hmigrate", requestBody.get("request").asText());
+        assertNull(requestBody.get("wait"));
+    }
+
+    @Test
+    public void tstDsnUpdateMigrateDatasetWithWaitSuccess() throws ZosmfRequestException, JsonProcessingException {
+        final DsnUpdate dsnUpdate = new DsnUpdate(connection, mockJsonPutRequest);
+        final Response response = dsnUpdate.migrate("TEST.DATASET", true);
+        assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("success", response.getStatusText().orElse("n\\a"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET", mockJsonPutRequest.getUrl());
+
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockJsonPutRequest).setBody(bodyCaptor.capture());
+        final JsonNode requestBody = mapper.readTree(bodyCaptor.getValue().toString());
+        assertEquals("hmigrate", requestBody.get("request").asText());
+        assertTrue(requestBody.get("wait").asBoolean());
+    }
+
+    @Test
     public void tstDsnUpdateDeleteMigratedDatasetSuccess() throws ZosmfRequestException, JsonProcessingException {
         final DsnUpdate dsnUpdate = new DsnUpdate(connection, mockJsonPutRequest);
         final Response response = dsnUpdate.deleteMigrated("TEST.MIGRATED.DATASET");

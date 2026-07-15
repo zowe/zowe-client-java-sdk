@@ -109,6 +109,61 @@ public class DsnUpdate {
     }
 
     /**
+     * Migrate a dataset
+     *
+     * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Ashish-Kumar-Dash
+     */
+    public Response migrate(final String datasetName) throws ZosmfRequestException {
+        return migrateCommon(datasetName, null);
+    }
+
+    /**
+     * Migrate a dataset with wait option
+     *
+     * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param wait        if true, the function waits for completion of the request
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Ashish-Kumar-Dash
+     */
+    public Response migrate(final String datasetName, final boolean wait) throws ZosmfRequestException {
+        return migrateCommon(datasetName, wait);
+    }
+
+    /**
+     * Common helper method to migrate a dataset
+     *
+     * @param datasetName name of a dataset
+     * @param wait        optional wait parameter
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    private Response migrateCommon(final String datasetName, final Boolean wait)
+            throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
+
+        final String url = connection.getZosmfUrl() +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(datasetName);
+
+        final Map<String, Object> migrateMap = new HashMap<>();
+        migrateMap.put("request", "hmigrate");
+        if (wait != null) {
+            migrateMap.put("wait", wait);
+        }
+
+        request.setUrl(url);
+        request.setBody(JsonUtils.asRequestBodyJson(migrateMap));
+
+        return request.executeRequest();
+    }
+
+    /**
      * Delete a migrated dataset
      *
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
