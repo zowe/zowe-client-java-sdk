@@ -10,7 +10,7 @@
 package zowe.client.sdk.zosmfworkflow.methods;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -38,8 +38,8 @@ import java.util.List;
  */
 public class WorkflowList {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String ARCHIVED_CONTEXT = "getArchivedCommon";
+    private static final String ARCHIVED_WORKFLOW_CONTEXT = "getArchivedCommon";
+    private static final String ARCHIVED_WORKFLOWS = "archivedWorkflows";
     private final ZosConnection connection;
     private final ZosmfRequest request;
 
@@ -142,12 +142,13 @@ public class WorkflowList {
 
         final List<WorkflowArchivedResponse> results = new ArrayList<>();
         final JsonNode root = JsonUtils.parse(responsePhrase);
-        final JsonNode nodes = root.path("archivedWorkflows");
+        final ArrayNode nodes = JsonUtils.getArrayByField(root, ARCHIVED_WORKFLOWS);
 
-        if (nodes.isArray()) {
-            for (final JsonNode node : nodes) {
-                results.add(JsonUtils.parseResponse(node.toString(), WorkflowArchivedResponse.class, ARCHIVED_CONTEXT));
-            }
+        for (final JsonNode node : nodes) {
+            results.add(JsonUtils.parseResponse(
+                    node.toString(),
+                    WorkflowArchivedResponse.class,
+                    ARCHIVED_WORKFLOW_CONTEXT));
         }
 
         return results;
