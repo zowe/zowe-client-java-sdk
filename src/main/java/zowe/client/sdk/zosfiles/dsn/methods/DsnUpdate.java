@@ -74,7 +74,7 @@ public class DsnUpdate {
      * Rename a dataset or a member of a dataset
      *
      * @param renameInputData rename parameters, see DsnRenameInputData object
-     * @return Response object
+     * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
