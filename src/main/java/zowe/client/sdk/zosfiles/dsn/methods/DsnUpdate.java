@@ -112,48 +112,48 @@ public class DsnUpdate {
     /**
      * Delete a migrated dataset
      *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Charishma1707
      */
-    public Response deleteMigrated(final String dataSetName) throws ZosmfRequestException {
-        return deleteMigratedCommon(dataSetName, null, null);
+    public Response deleteMigrated(final String datasetName) throws ZosmfRequestException {
+        return deleteMigratedCommon(datasetName, null, null);
     }
 
     /**
      * Delete a migrated dataset with wait and purge options
      *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @param wait        if true, the function waits for completion of the request
      * @param purge       if true, the function uses PURGE=YES on ARCHDEL request
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Charishma1707
      */
-    public Response deleteMigrated(final String dataSetName, final boolean wait, final boolean purge)
+    public Response deleteMigrated(final String datasetName, final boolean wait, final boolean purge)
             throws ZosmfRequestException {
-        return deleteMigratedCommon(dataSetName, wait, purge);
+        return deleteMigratedCommon(datasetName, wait, purge);
     }
 
     /**
      * Common helper method to delete a migrated dataset
      *
-     * @param dataSetName name of a dataset
+     * @param datasetName name of a dataset
      * @param wait        optional wait parameter
      * @param purge       optional purge parameter
      * @return http response object
      * @throws ZosmfRequestException request error state
      */
-    private Response deleteMigratedCommon(final String dataSetName, final Boolean wait, final Boolean purge)
+    private Response deleteMigratedCommon(final String datasetName, final Boolean wait, final Boolean purge)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
                 UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(dataSetName);
+                EncodeUtils.encodeURIComponent(datasetName);
 
         final Map<String, Object> deleteMap = new HashMap<>();
         deleteMap.put("request", "hdelete");
