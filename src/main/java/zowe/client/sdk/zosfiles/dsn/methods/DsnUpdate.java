@@ -140,6 +140,7 @@ public class DsnUpdate {
      * @param wait        optional wait parameter
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Ashish-Kumar-Dash
      */
     private Response migrateCommon(final String datasetName, final Boolean wait)
             throws ZosmfRequestException {
@@ -169,7 +170,7 @@ public class DsnUpdate {
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Charishma1707
+     * @author Charishma Alam
      */
     public Response deleteMigrated(final String datasetName) throws ZosmfRequestException {
         return deleteMigratedCommon(datasetName, null, null);
@@ -183,7 +184,7 @@ public class DsnUpdate {
      * @param purge       if true, the function uses PURGE=YES on ARCHDEL request
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Charishma1707
+     * @author Charishma Alam
      */
     public Response deleteMigrated(final String datasetName, final boolean wait, final boolean purge)
             throws ZosmfRequestException {
@@ -198,6 +199,7 @@ public class DsnUpdate {
      * @param purge       optional purge parameter
      * @return http response object
      * @throws ZosmfRequestException request error state
+     * @author Charishma Alam
      */
     private Response deleteMigratedCommon(final String datasetName, final Boolean wait, final Boolean purge)
             throws ZosmfRequestException {
