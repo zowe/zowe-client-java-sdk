@@ -32,7 +32,7 @@ public class DsnCopyExp extends TstZosConnection {
      * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnCopy functionality.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
@@ -48,7 +48,7 @@ public class DsnCopyExp extends TstZosConnection {
 
     /**
      * Example on how to call DsnCopy copy method.
-     * Copy method accepts a from and too strings for copying.
+     * Copy method accepts a from and to string for copying.
      * <p>
      * This copy method allows the following copy operations:
      * <p>
@@ -184,7 +184,7 @@ public class DsnCreateExp extends TstZosConnection {
      * The Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnCreate functionality.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
@@ -355,7 +355,7 @@ public class DsnGetInfoExp extends TstZosConnection {
      * The Main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnGet functionality.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Frank Giordano
      */
     public static void main(String[] args) {
@@ -415,7 +415,7 @@ public class DsnDeleteExp extends TstZosConnection {
      * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DeleteDataset functionality. Calls DeleteDataset example methods.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
@@ -505,7 +505,7 @@ public class DsnGetExp extends TstZosConnection {
      * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnGet class functionality.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
@@ -557,7 +557,7 @@ public class DsnGetExp extends TstZosConnection {
     }
 
     /**
-     * Convert exception message's byte stream of data into a string
+     * Convert an exception message's byte stream of data into a string
      *
      * @param e ZosmfRequestException object
      * @return string value
@@ -578,7 +578,7 @@ public class DsnGetExp extends TstZosConnection {
     /**
      * Convert a byte stream of data into a string
      *
-     * @param inputStream byte stream od data
+     * @param inputStream byte stream of data
      * @return string value
      * @throws IOException error processing byte stream
      * @author Frank Giordano
@@ -626,7 +626,7 @@ public class DsnListExp extends TstZosConnection {
      * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnList functionality.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
@@ -761,7 +761,7 @@ public class DsnWriteExp extends TstZosConnection {
      * The main method defines z/OSMF host and user connection and other parameters needed to showcase
      * DsnWrite functionality.
      *
-     * @param args for main not used
+     * @param args for main isn't used
      * @author Leonid Baranov
      */
     public static void main(String[] args) {

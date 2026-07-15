@@ -9,9 +9,13 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -19,20 +23,22 @@ import zowe.client.sdk.rest.PutJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.DsnRenameInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.withSettings;
+import static org.mockito.Mockito.*;
 
 /**
- * Class containing unit tests for DsnRename.
+ * Class containing unit tests for DsnUpdate.
  *
  * @author Frank Giordano
  * @version 7.0
  */
-public class DsnRenameTest {
+public class DsnUpdateTest {
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     private final ZosConnection connection = ZosConnectionFactory
             .createBasicConnection("1", 443, "1", "1");
@@ -61,78 +67,94 @@ public class DsnRenameTest {
     }
 
     @Test
-    public void tstDsnRenameDatasetSuccess() throws ZosmfRequestException {
-        final DsnRename dsnRename = new DsnRename(connection, mockJsonPutRequest);
-        final Response response = dsnRename.dataSetName("destination", "destination");
+    public void tstDsnUpdateRenameDatasetSuccess() throws ZosmfRequestException, JsonProcessingException {
+        final DsnUpdate dsnUpdate = new DsnUpdate(connection, mockJsonPutRequest);
+        final DsnRenameInputData renameInputData = DsnRenameInputData
+                .forDataset("sourceDataset", "destinationDataset");
+        final Response response = dsnUpdate.rename(renameInputData);
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:443/zosmf/restfiles/ds/destination", mockJsonPutRequest.getUrl());
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockJsonPutRequest).setBody(bodyCaptor.capture());
+        final JsonNode requestBody = mapper.readTree(bodyCaptor.getValue().toString());
+        assertEquals("rename", requestBody.get("request").asText());
+        assertEquals("{\"dsn\":\"sourceDataset\"}", requestBody.get("from-dataset").toString());
+        assertEquals("https://1:443/zosmf/restfiles/ds/destinationDataset", mockJsonPutRequest.getUrl());
     }
 
     @Test
-    public void tstDsnRenameMemberTokenSuccess() throws ZosmfRequestException {
-        final DsnRename dsnRename = new DsnRename(connection, mockJsonPutRequestToken);
-        final Response response = dsnRename.memberName("source", "name", "newName");
+    public void tstDsnUpdateRenameMemberTokenSuccess() throws ZosmfRequestException, JsonProcessingException {
+        final DsnUpdate dsnUpdate = new DsnUpdate(connection, mockJsonPutRequestToken);
+        final DsnRenameInputData renameInputData = DsnRenameInputData
+                .forMember("sourceDataset", "memberName", "newMemberName");
+        final Response response = dsnUpdate.rename(renameInputData);
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
                 mockJsonPutRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
-        assertEquals("https://1:443/zosmf/restfiles/ds/source(newName)", mockJsonPutRequestToken.getUrl());
+        final ArgumentCaptor<Object> bodyCaptor = ArgumentCaptor.forClass(Object.class);
+        verify(mockJsonPutRequestToken).setBody(bodyCaptor.capture());
+        final JsonNode requestBody = mapper.readTree(bodyCaptor.getValue().toString());
+        assertEquals("rename", requestBody.get("request").asText());
+        assertEquals("{\"member\":\"memberName\",\"dsn\":\"sourceDataset\"}",
+                requestBody.get("from-dataset").toString());
+        assertEquals("https://1:443/zosmf/restfiles/ds/sourceDataset(newMemberName)",
+                mockJsonPutRequestToken.getUrl());
     }
 
     @Test
-    public void tstDsnRenameSecondaryConstructorWithValidRequestType() {
+    public void tstDsnUpdateConstructorWithValidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
-        DsnRename dsnRename = new DsnRename(connection, request);
-        assertNotNull(dsnRename);
+        DsnUpdate dsnUpdate = new DsnUpdate(connection, request);
+        assertNotNull(dsnUpdate);
     }
 
     @Test
-    public void tstDsnRenameSecondaryConstructorWithNullConnection() {
+    public void tstDsnUpdateSecondaryConstructorWithNullConnection() {
         ZosmfRequest request = Mockito.mock(PutJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new DsnRename(null, request)
+                () -> new DsnUpdate(null, request)
         );
         assertEquals("connection is null", exception.getMessage());
     }
 
     @Test
-    public void tstDsnRenameSecondaryConstructorWithNullRequest() {
+    public void tstDsnUpdateSecondaryConstructorWithNullRequest() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new DsnRename(connection, null)
+                () -> new DsnUpdate(connection, null)
         );
         assertEquals("request is null", exception.getMessage());
     }
 
     @Test
-    public void tstDsnRenameSecondaryConstructorWithInvalidRequestType() {
+    public void tstDsnUpdateSecondaryConstructorWithInvalidRequestType() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a PutJsonZosmfRequest
         IllegalStateException exception = assertThrows(
                 IllegalStateException.class,
-                () -> new DsnRename(connection, request)
+                () -> new DsnUpdate(connection, request)
         );
         assertEquals("PUT_JSON request type required", exception.getMessage());
     }
 
     @Test
-    public void tstDsnRenamePrimaryConstructorWithValidConnection() {
+    public void tstDsnUpdatePrimaryConstructorWithValidConnection() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
-        DsnRename dsnRename = new DsnRename(connection);
-        assertNotNull(dsnRename);
+        DsnUpdate dsnUpdate = new DsnUpdate(connection);
+        assertNotNull(dsnUpdate);
     }
 
     @Test
-    public void tstDsnRenamePrimaryConstructorWithNullConnection() {
+    public void tstDsnUpdatePrimaryConstructorWithNullConnection() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new DsnRename(null)
+                () -> new DsnUpdate(null)
         );
         assertEquals("connection is null", exception.getMessage());
     }
