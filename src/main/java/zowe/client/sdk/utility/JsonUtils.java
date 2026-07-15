@@ -58,20 +58,21 @@ public final class JsonUtils {
     }
 
     /**
-     * Convenience method for array responses.
+     * Retrieves a named JSON array field from a parsed JSON object.
      * <p>
-     * This method validates that the parsed JSON content is an array and throws
-     * a {@link ZosmfRequestException} if the content is not a JSON array.
+     * This method validates that the specified field exists and is a JSON array.
+     * A {@link ZosmfRequestException} is thrown if the field is missing or is not a JSON array.
      * </p>
      *
-     * @param item JSON array string representation returned from a z/OSMF request
-     * @return ArrayNode representing the parsed JSON array
-     * @throws ZosmfRequestException if parsing fails or root is not an array
+     * @param root  the parsed root JSON object
+     * @param field the name of the JSON array field to retrieve
+     * @return the JSON array as an ArrayNode
+     * @throws ZosmfRequestException if the specified field is missing or is not a JSON array
      */
-    public static ArrayNode parseArray(final String item) throws ZosmfRequestException {
-        JsonNode node = parse(item);
+    public static ArrayNode getArrayByField(final JsonNode root, final String field) throws ZosmfRequestException {
+        JsonNode node = root.path(field);
         if (!node.isArray()) {
-            throw new ZosmfRequestException("Expected JSON array but got: " + node.getNodeType());
+            throw new ZosmfRequestException("Expected JSON array field '" + field + "'");
         }
         return (ArrayNode) node;
     }

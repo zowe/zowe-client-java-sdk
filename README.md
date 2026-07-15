@@ -46,7 +46,7 @@ zowe.client.sdk.zosfiles.dsn.methods
     DsnDelete
     DsnGet
     DsnList
-    DsnRename
+    DsnUpdate
     DsnWrite
   
 zowe.client.sdk.zosfiles.uss.methods  

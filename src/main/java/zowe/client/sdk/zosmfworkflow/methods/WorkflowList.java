@@ -9,9 +9,8 @@
  */
 package zowe.client.sdk.zosmfworkflow.methods;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
@@ -39,8 +38,8 @@ import java.util.List;
  */
 public class WorkflowList {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String ARCHIVED_CONTEXT = "getArchivedCommon";
+    private static final String ARCHIVED_WORKFLOW_CONTEXT = "getArchivedCommon";
+    private static final String ARCHIVED_WORKFLOWS = "archivedWorkflows";
     private final ZosConnection connection;
     private final ZosmfRequest request;
 
@@ -61,10 +60,10 @@ public class WorkflowList {
      * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private.
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface object
+     * @param request    a {@link GetJsonZosmfRequest} implementation object
      * @author Muhammad Imran
      */
     WorkflowList(final ZosConnection connection, final ZosmfRequest request) {
@@ -142,18 +141,14 @@ public class WorkflowList {
                 .toString();
 
         final List<WorkflowArchivedResponse> results = new ArrayList<>();
-        final JsonNode root;
-        try {
-            root = OBJECT_MAPPER.readTree(responsePhrase);
-        } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException("Failed to parse archived workflows response", e);
-        }
-        final JsonNode nodes = root.path("archivedWorkflows");
+        final JsonNode root = JsonUtils.parse(responsePhrase);
+        final ArrayNode nodes = JsonUtils.getArrayByField(root, ARCHIVED_WORKFLOWS);
 
-        if (nodes.isArray()) {
-            for (final JsonNode node : nodes) {
-                results.add(JsonUtils.parseResponse(node.toString(), WorkflowArchivedResponse.class, ARCHIVED_CONTEXT));
-            }
+        for (final JsonNode node : nodes) {
+            results.add(JsonUtils.parseResponse(
+                    node.toString(),
+                    WorkflowArchivedResponse.class,
+                    ARCHIVED_WORKFLOW_CONTEXT));
         }
 
         return results;

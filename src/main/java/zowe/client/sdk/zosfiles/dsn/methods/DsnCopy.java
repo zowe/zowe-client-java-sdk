@@ -52,10 +52,10 @@ public class DsnCopy {
      * Alternative DsnCopy constructor with ZoweRequest object. This is mainly used for internal code unit testing
      * with Mockito, and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface object
+     * @param request    a {@link PutJsonZosmfRequest} implementation object
      * @author Frank Giordano
      */
     DsnCopy(final ZosConnection connection, final ZosmfRequest request) {
@@ -185,7 +185,7 @@ public class DsnCopy {
     }
 
     /**
-     * Is a member name included in fromDataSetName string value
+     * Is a member name included in fromDataSetName string value?
      *
      * @param fromDataSetName string value representing a data set notation
      * @return boolean true or false

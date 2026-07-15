@@ -61,7 +61,7 @@ public class TsoCmd {
      * Alternative TsoCmd constructor with ZoweRequest object. This is mainly used for internal code unit
      * testing with Mockito, and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private
+     * This constructor is package-private visibility.
      *
      * @param connection    for connection information, see ZosConnection object
      * @param accountNumber account number for tso processing

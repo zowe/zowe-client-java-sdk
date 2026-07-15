@@ -58,10 +58,10 @@ public class VariableGet {
      * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private.
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZosmfRequest Interface object
+     * @param request    a {@link GetJsonZosmfRequest} implementation object
      * @author Adithe Das
      */
     VariableGet(final ZosConnection connection, final ZosmfRequest request) {
@@ -75,46 +75,45 @@ public class VariableGet {
     }
 
     /**
-     * Retrieve z/OS system variables.
+     * Retrieve z/OSMF variables or z/OS system symbols from a selected system
+     * or the local system based on the supplied input data.
      * <p>
-     * This method retrieves system variables from either a specified
-     * z/OS system or the local system based on the supplied input data.
-     * Optional variable name and variable type filters may also be specified.
+     * Optional variable name filter may also be specified; variable type filter is required.
      *
-     * @param inputData input parameters for retrieving system variables
+     * @param getInputData input parameters for retrieving system variables
      * @return VariableGetResponse object
      * @throws ZosmfRequestException request error state
      * @author Adithe Das
      * @author Frank Giordano
      */
-    public VariableGetResponse get(final VariableGetInputData inputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(inputData, "inputData");
+    public VariableGetResponse get(final VariableGetInputData getInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(getInputData, "getInputData");
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 VariableConstants.RESOURCE + UrlConstants.URL_PATH_DELIM);
 
-        if (inputData.isLocal()) {
+        if (getInputData.isLocal()) {
             url.append("local");
         } else {
-            final String sysplexName = EncodeUtils.encodeURIComponent(inputData.getSysplexName());
-            final String sysName = EncodeUtils.encodeURIComponent(inputData.getSystemName());
+            final String sysplexName = EncodeUtils.encodeURIComponent(getInputData.getSysplexName());
+            final String sysName = EncodeUtils.encodeURIComponent(getInputData.getSystemName());
             url.append(sysplexName).append(".").append(sysName);
         }
 
         final List<String> queryParams = new ArrayList<>();
-        inputData.getVariableNames().ifPresent(variableNames -> {
+        getInputData.getVariableNames().ifPresent(variableNames -> {
             if (!variableNames.isEmpty()) {
                 variableNames.forEach(name -> queryParams.add("var-name=" + EncodeUtils.encodeURIComponent(name)));
             }
         });
-        queryParams.add("source=" + inputData.getVariableType().getValue());
+        queryParams.add("source=" + getInputData.getVariableType().getValue());
 
         url.append("?").append(String.join("&", queryParams));
         request.setUrl(url.toString());
 
-        final String response =
-                request.executeRequest()
-                        .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
-                        .toString();
+        final String response = request.executeRequest()
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
+                .toString();
 
         return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
     }

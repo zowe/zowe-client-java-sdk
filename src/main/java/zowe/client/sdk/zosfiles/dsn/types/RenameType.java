@@ -10,36 +10,21 @@
 package zowe.client.sdk.zosfiles.dsn.types;
 
 /**
- * Operation enum for identifying the type of dataset request that will be performed.
+ * Supported rename operation types.
  *
  * @author Frank Giordano
  * @version 7.0
  */
-public enum OperationType {
+public enum RenameType {
 
     /**
-     * create type
+     * Rename a dataset.
      */
-    CREATE,
+    DATASET,
+
     /**
-     * read type
+     * Rename a member within a partitioned dataset (PDS).
      */
-    READ,
-    /**
-     * copy type
-     */
-    COPY,
-    /**
-     * delete type
-     */
-    DELETE,
-    /**
-     * write type
-     */
-    WRITE,
-    /**
-     * download type
-     */
-    DOWNLOAD
+    MEMBER
 
 }

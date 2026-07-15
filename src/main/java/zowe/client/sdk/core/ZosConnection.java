@@ -62,7 +62,7 @@ public final class ZosConnection {
     /**
      * ZosConnection constructor
      * <p>
-     * This constructor is package-private.
+     * This constructor is package-private visibility.
      * <p>
      * Use ZosConnectionFactory to initiate a ZosConnection Object.
      *

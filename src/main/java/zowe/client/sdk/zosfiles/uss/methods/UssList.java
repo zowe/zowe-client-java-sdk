@@ -59,9 +59,11 @@ public class UssList {
     /**
      * Alternative UssList constructor with ZoweRequest object. This is mainly used for internal code
      * unit testing with Mockito, and it is not recommended to be used by the larger community.
+     * <p>
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface object
+     * @param request    a {@link GetJsonZosmfRequest} implementation object
      * @author Frank Giordano
      */
     UssList(final ZosConnection connection, final ZosmfRequest request) {

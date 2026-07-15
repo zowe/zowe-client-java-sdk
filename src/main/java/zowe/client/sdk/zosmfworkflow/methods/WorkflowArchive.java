@@ -56,10 +56,10 @@ public class WorkflowArchive {
      * This is mainly used for internal code unit testing with Mockito,
      * and it is not recommended to be used by the larger community.
      * <p>
-     * This constructor is package-private.
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    compatible ZosmfRequest interface object
+     * @param request    a {@link PostJsonZosmfRequest} implementation object
      * @author Adithe Das
      */
     WorkflowArchive(final ZosConnection connection, final ZosmfRequest request) {

@@ -61,10 +61,10 @@ public class JobChange {
      * Alternative JobChange constructor with ZosmfRequest object.
      * This is mainly used for internal unit testing with Mockito.
      * <p>
-     * This constructor is package-private
+     * This constructor is package-private visibility.
      *
      * @param connection for connection information
-     * @param request    compatible ZosmfRequest object
+     * @param request    a {@link PutJsonZosmfRequest} implementation object
      * @author Frank Giordano
      */
     JobChange(final ZosConnection connection, final ZosmfRequest request) {
