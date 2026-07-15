@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides various update actions against a dataset: rename, migrate, recall migrated dataset, and delete a
- * migrated dataset.
+ * Provides various update actions against a dataset: rename (including member), migrate,
+ * recall migrated dataset, and delete a migrated dataset.
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-data-set-member-utilities">z/OSMF REST API</a>
  *
