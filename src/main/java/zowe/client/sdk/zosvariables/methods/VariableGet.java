@@ -87,7 +87,7 @@ public class VariableGet {
      * @author Frank Giordano
      */
     public VariableGetResponse get(final VariableGetInputData getInputData) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(getInputData, "inputData");
+        ValidateUtils.checkNullParameter(getInputData, "getInputData");
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
                 VariableConstants.RESOURCE + UrlConstants.URL_PATH_DELIM);
 
@@ -111,7 +111,8 @@ public class VariableGet {
         request.setUrl(url.toString());
 
         final String response = request.executeRequest()
-                .getResponsePhrase().orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
+                .getResponsePhrase()
+                .orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
                 .toString();
 
         return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
