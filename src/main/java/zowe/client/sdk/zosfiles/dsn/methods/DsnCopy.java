@@ -185,7 +185,7 @@ public class DsnCopy {
     }
 
     /**
-     * Is a member name included in fromDataSetName string value
+     * Is a member name included in fromDataSetName string value?
      *
      * @param fromDataSetName string value representing a data set notation
      * @return boolean true or false

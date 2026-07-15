@@ -140,7 +140,7 @@ public class DsnList {
      * Retrieve a list result of either members or datasets from rest api response.
      * Use null of either datasetLst or memberLst to denote the list object being processed.
      *
-     * @param response   Response object containing rest api result
+     * @param response   Response object containing a rest api result
      * @param datasetLst dataset arraylist object container
      * @param memberLst  member arraylist object container
      * @param <T>        DataSet or Member object
