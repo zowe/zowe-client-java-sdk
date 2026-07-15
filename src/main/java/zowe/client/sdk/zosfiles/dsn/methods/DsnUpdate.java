@@ -169,4 +169,59 @@ public class DsnUpdate {
         return request.executeRequest();
     }
 
+    /**
+     * Recall a migrated dataset
+     *
+     * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Shaurya2k06
+     */
+    public Response recallMigrated(final String datasetName) throws ZosmfRequestException {
+        return recallMigratedCommon(datasetName, null);
+    }
+
+    /**
+     * Recall a migrated dataset with wait option
+     *
+     * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param wait        if true, the function waits for completion of the request
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Shaurya2k06
+     */
+    public Response recallMigrated(final String datasetName, final boolean wait) throws ZosmfRequestException {
+        return recallMigratedCommon(datasetName, wait);
+    }
+
+    /**
+     * Common helper method to recall a migrated dataset
+     *
+     * @param datasetName name of a dataset
+     * @param wait        optional wait parameter
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    private Response recallMigratedCommon(final String datasetName, final Boolean wait)
+            throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
+
+        final String url = connection.getZosmfUrl() +
+                ZosFilesConstants.RESOURCE +
+                ZosFilesConstants.RES_DS_FILES +
+                UrlConstants.URL_PATH_DELIM +
+                EncodeUtils.encodeURIComponent(datasetName);
+
+        final Map<String, Object> recallMap = new HashMap<>();
+        recallMap.put("request", "hrecall");
+        if (wait != null) {
+            recallMap.put("wait", wait);
+        }
+
+        request.setUrl(url);
+        request.setBody(JsonUtils.asRequestBodyJson(recallMap));
+
+        return request.executeRequest();
+    }
+
 }
