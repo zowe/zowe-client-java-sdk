@@ -9,7 +9,6 @@
  */
 package zowe.client.sdk.zosfiles.dsn.methods;
 
-import kong.unirest.core.json.JSONObject;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -17,10 +16,6 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
-import zowe.client.sdk.zosfiles.dsn.input.DeleteMigratedInputData;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Provides delete dataset and member functionality
@@ -35,7 +30,6 @@ public class DsnDelete {
 
     private final ZosConnection connection;
     private final ZosmfRequest request;
-    private ZosmfRequest putRequest;
 
     /**
      * DsnDelete Constructor
@@ -67,32 +61,6 @@ public class DsnDelete {
             throw new IllegalStateException("DELETE_JSON request type required");
         }
         this.request = request;
-    }
-
-    /**
-     * Alternative DsnDelete constructor with ZoweRequest objects. This is mainly used for internal code unit testing
-     * with Mockito, and it is not recommended to be used by the larger community.
-     * <p>
-     * This constructor is package-private
-     *
-     * @param connection for connection information, see ZosConnection object
-     * @param request    any compatible ZoweRequest Interface object for delete
-     * @param putRequest any compatible ZoweRequest Interface object for put
-     * @author Frank Giordano
-     */
-    DsnDelete(final ZosConnection connection, final ZosmfRequest request, final ZosmfRequest putRequest) {
-        ValidateUtils.checkNullParameter(connection, "connection");
-        ValidateUtils.checkNullParameter(request, "request");
-        ValidateUtils.checkNullParameter(putRequest, "putRequest");
-        this.connection = connection;
-        if (!(request instanceof DeleteJsonZosmfRequest)) {
-            throw new IllegalStateException("DELETE_JSON request type required");
-        }
-        if (!(putRequest instanceof PutJsonZosmfRequest)) {
-            throw new IllegalStateException("PUT_JSON request type required");
-        }
-        this.request = request;
-        this.putRequest = putRequest;
     }
 
     /**
@@ -131,51 +99,6 @@ public class DsnDelete {
         request.setUrl(url);
 
         return request.executeRequest();
-    }
-
-    /**
-     * Delete a migrated dataset
-     *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @return http response object
-     * @throws ZosmfRequestException request error state
-     */
-    public Response deleteMigrated(final String dataSetName) throws ZosmfRequestException {
-        return deleteMigrated(dataSetName, null);
-    }
-
-    /**
-     * Delete a migrated dataset with optional parameters
-     *
-     * @param dataSetName             name of a dataset (e.g. 'DATASET.LIB')
-     * @param deleteMigratedInputData delete migrated input parameters, see DeleteMigratedInputData object
-     * @return http response object
-     * @throws ZosmfRequestException request error state
-     */
-    public Response deleteMigrated(final String dataSetName, final DeleteMigratedInputData deleteMigratedInputData)
-            throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-
-        final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES +
-                UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(dataSetName);
-
-        final Map<String, Object> deleteMap = new HashMap<>();
-        deleteMap.put("request", "hdelete");
-        if (deleteMigratedInputData != null) {
-            deleteMigratedInputData.getWait().ifPresent(v -> deleteMap.put("wait", v));
-            deleteMigratedInputData.getPurge().ifPresent(v -> deleteMap.put("purge", v));
-        }
-
-        if (putRequest == null) {
-            putRequest = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
-        }
-        putRequest.setUrl(url);
-        putRequest.setBody(new JSONObject(deleteMap).toString());
-
-        return putRequest.executeRequest();
     }
 
 }
