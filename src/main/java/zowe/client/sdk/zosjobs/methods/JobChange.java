@@ -64,7 +64,7 @@ public class JobChange {
      * This constructor is package-private visibility.
      *
      * @param connection for connection information
-     @param request    a {@link PutJsonZosmfRequest} implementation object
+     * @param request    a {@link PutJsonZosmfRequest} implementation object
      * @author Frank Giordano
      */
     JobChange(final ZosConnection connection, final ZosmfRequest request) {

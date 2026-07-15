@@ -1,7 +1,10 @@
 package zowe.client.sdk.zosconsole.methods;
 
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.*;
+import zowe.client.sdk.rest.GetJsonZosmfRequest;
+import zowe.client.sdk.rest.UrlConstants;
+import zowe.client.sdk.rest.ZosmfRequest;
+import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.ConsoleUtils;
