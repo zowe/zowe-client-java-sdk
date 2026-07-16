@@ -121,7 +121,7 @@ public class DsnUpdate {
     }
 
     /**
-     * Migrate a dataset with wait option
+     * Migrate a dataset with a wait option
      *
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @param wait        if true, the function waits for completion of the request
@@ -239,7 +239,7 @@ public class DsnUpdate {
     }
 
     /**
-     * Recall a migrated dataset with wait option
+     * Recall a migrated dataset with a wait option
      *
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @param wait        if true, the function waits for completion of the request
