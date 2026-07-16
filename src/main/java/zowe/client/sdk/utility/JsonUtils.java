@@ -69,7 +69,8 @@ public final class JsonUtils {
      * @return the JSON array as an ArrayNode
      * @throws ZosmfRequestException if the specified field is missing or is not a JSON array
      */
-    public static ArrayNode getArrayByField(final JsonNode root, final String field) throws ZosmfRequestException {
+    public static ArrayNode getArrayByField(final JsonNode root, final String field)
+            throws ZosmfRequestException {
         JsonNode node = root.path(field);
         if (!node.isArray()) {
             throw new ZosmfRequestException("Expected JSON array field '" + field + "'");
