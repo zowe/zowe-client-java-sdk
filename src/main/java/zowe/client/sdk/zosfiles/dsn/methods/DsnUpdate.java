@@ -232,7 +232,6 @@ public class DsnUpdate {
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Shaurya2k06
      */
     public Response recallMigrated(final String datasetName) throws ZosmfRequestException {
         return recallMigratedCommon(datasetName, null);
@@ -245,7 +244,6 @@ public class DsnUpdate {
      * @param wait        if true, the function waits for completion of the request
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Shaurya2k06
      */
     public Response recallMigrated(final String datasetName, final boolean wait) throws ZosmfRequestException {
         return recallMigratedCommon(datasetName, wait);
