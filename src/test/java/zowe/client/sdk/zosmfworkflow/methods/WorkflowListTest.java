@@ -22,8 +22,12 @@ import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.zosmfworkflow.input.WorkflowListArchivedInputData;
+import zowe.client.sdk.zosmfworkflow.input.WorkflowListInputData;
 import zowe.client.sdk.zosmfworkflow.response.WorkflowArchivedResponse;
+import zowe.client.sdk.zosmfworkflow.response.WorkflowListResponse;
+import zowe.client.sdk.zosmfworkflow.types.CategoryType;
 import zowe.client.sdk.zosmfworkflow.types.OrderByType;
+import zowe.client.sdk.zosmfworkflow.types.StatusNameType;
 import zowe.client.sdk.zosmfworkflow.types.ViewType;
 
 import java.util.List;
@@ -54,6 +58,7 @@ public class WorkflowListTest {
     public void init() throws ZosmfRequestException {
         final ObjectNode archivedObj = mapper.createObjectNode();
         archivedObj.set("archivedWorkflows", mapper.createArrayNode());
+        archivedObj.set("workflows", mapper.createArrayNode());
 
         mockJsonGetRequest = Mockito.mock(GetJsonZosmfRequest.class);
         Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
@@ -123,6 +128,154 @@ public class WorkflowListTest {
                 () -> new WorkflowList(null)
         );
         assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsSuccess() throws ZosmfRequestException {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        final List<WorkflowListResponse> result = workflowList.getWorkflows();
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows", mockJsonGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsTokenSuccess() throws ZosmfRequestException {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequestToken);
+        final List<WorkflowListResponse> result = workflowList.getWorkflows();
+        assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}",
+                mockJsonGetRequestToken.getHeaders().toString());
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows", mockJsonGetRequestToken.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsByNameSuccess() throws ZosmfRequestException {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        final List<WorkflowListResponse> result = workflowList.getWorkflowsByName("AutomationExample.*");
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows?workflowName=AutomationExample.*",
+                mockJsonGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsByOwnerSuccess() throws ZosmfRequestException {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        final List<WorkflowListResponse> result = workflowList.getWorkflowsByOwner("zosmfad");
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows?owner=zosmfad",
+                mockJsonGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsBySystemSuccess() throws ZosmfRequestException {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        final List<WorkflowListResponse> result = workflowList.getWorkflowsBySystem("SY1");
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows?system=SY1",
+                mockJsonGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsByOwnerEmptyFailure() {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> workflowList.getWorkflowsByOwner("  ")
+        );
+        assertEquals("owner is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsBySystemEmptyFailure() {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> workflowList.getWorkflowsBySystem(null)
+        );
+        assertEquals("system is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsCommonSuccess() throws ZosmfRequestException {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        final WorkflowListInputData inputData = WorkflowListInputData.builder()
+                .workflowName("test")
+                .category(CategoryType.CONFIGURATION)
+                .system("SY1")
+                .statusName(StatusNameType.IN_PROGRESS)
+                .owner("zosmfad")
+                .vendor("IBM")
+                .build();
+        final List<WorkflowListResponse> result = workflowList.getWorkflowsCommon(inputData);
+        assertTrue(result.isEmpty());
+        assertEquals("https://1:443/zosmf/workflow/rest/1.0/workflows?workflowName=test&category=configuration" +
+                        "&system=SY1&statusName=in-progress&owner=zosmfad&vendor=IBM",
+                mockJsonGetRequest.getUrl());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsResponseParsingSuccess() throws ZosmfRequestException {
+        final ObjectNode workflow = mapper.createObjectNode();
+        workflow.put("workflowName", "AutomationExample|Canceled|1423679433714");
+        workflow.put("workflowKey", "d043b5f1-adab-48e7-b7c3-d41cd95fa4b0");
+        workflow.put("workflowDescription", "Sample demonstrating the use of automated steps in workflow.");
+        workflow.put("workflowID", "automationSample");
+        workflow.put("workflowVersion", "1.0");
+        workflow.put("workflowDefinitionFileMD5Value", "a8825b7497793bc620b0edffa8b97cd9");
+        workflow.put("instanceURI", "/zosmf/workflow/rest/1.0/workflows/d043b5f1-adab-48e7-b7c3-d41cd95fa4b0");
+        workflow.put("owner", "zosmfad");
+        workflow.put("vendor", "IBM");
+        workflow.put("access", "Public");
+        final ObjectNode json = mapper.createObjectNode();
+        json.set("workflows", mapper.createArrayNode().add(workflow));
+
+        final GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        Mockito.when(mockRequest.executeRequest()).thenReturn(new Response(json, 200, "success"));
+        doCallRealMethod().when(mockRequest).setUrl(any());
+
+        final List<WorkflowListResponse> result = new WorkflowList(connection, mockRequest).getWorkflows();
+        assertEquals(1, result.size());
+        final WorkflowListResponse item = result.get(0);
+        assertEquals("AutomationExample|Canceled|1423679433714", item.getWorkflowName());
+        assertEquals("d043b5f1-adab-48e7-b7c3-d41cd95fa4b0", item.getWorkflowKey());
+        assertEquals("Sample demonstrating the use of automated steps in workflow.", item.getWorkflowDescription());
+        assertEquals("automationSample", item.getWorkflowID());
+        assertEquals("1.0", item.getWorkflowVersion());
+        assertEquals("a8825b7497793bc620b0edffa8b97cd9", item.getWorkflowDefinitionFileMD5Value());
+        assertEquals("/zosmf/workflow/rest/1.0/workflows/d043b5f1-adab-48e7-b7c3-d41cd95fa4b0", item.getInstanceURI());
+        assertEquals("zosmfad", item.getOwner());
+        assertEquals("IBM", item.getVendor());
+        assertEquals("Public", item.getAccess());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsCommonNullInputFailure() {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> workflowList.getWorkflowsCommon(null)
+        );
+        assertEquals("listInputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstWorkflowListGetWorkflowsByNameEmptyFailure() {
+        final WorkflowList workflowList =
+                new WorkflowList(connection, mockJsonGetRequest);
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> workflowList.getWorkflowsByName("  ")
+        );
+        assertEquals("workflowName is either null or empty", exception.getMessage());
     }
 
     @Test
