@@ -26,7 +26,7 @@ public final class WorkflowCancelResponse {
 
     /**
      * Descriptive name of the canceled workflow. The name is appended with the
-     * canceled state and a timestamp, for example:
+     * canceled state and a timestamp, for example,
      * "AutomationExample|Canceled|1423679433714".
      */
     private final String workflowName;
