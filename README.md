@@ -91,6 +91,7 @@ zowe.client.sdk.zosmfinfo.methods
 zowe.client.sdk.zosmfworkflow.methods
 
     WrokflowArchive
+    WorkflowCancel
     WorkflowCreate  
     WorkflowDelete
     WorkflowGet
