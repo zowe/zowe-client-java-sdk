@@ -35,6 +35,8 @@ import java.util.Map;
  */
 public class DsnUpdate {
 
+    private static final String BASE_RESOURCE =
+            ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + UrlConstants.URL_PATH_DELIM;
     private final ZosConnection connection;
     private final ZosmfRequest request;
 
@@ -81,10 +83,7 @@ public class DsnUpdate {
     public Response rename(DsnRenameInputData renameInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(renameInputData, "renameInputData");
 
-        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES +
-                UrlConstants.URL_PATH_DELIM);
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + BASE_RESOURCE);
 
         final Map<String, Object> renameMap = new HashMap<>();
         final Map<String, Object> fromDatasetMap = new HashMap<>();
@@ -147,10 +146,7 @@ public class DsnUpdate {
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES +
-                UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(datasetName);
+                BASE_RESOURCE + EncodeUtils.encodeURIComponent(datasetName);
 
         final Map<String, Object> migrateMap = new HashMap<>();
         migrateMap.put("request", "hmigrate");
@@ -206,10 +202,7 @@ public class DsnUpdate {
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES +
-                UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(datasetName);
+                BASE_RESOURCE + EncodeUtils.encodeURIComponent(datasetName);
 
         final Map<String, Object> deleteMap = new HashMap<>();
         deleteMap.put("request", "hdelete");
@@ -265,10 +258,7 @@ public class DsnUpdate {
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
 
         final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES +
-                UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(datasetName);
+                BASE_RESOURCE + EncodeUtils.encodeURIComponent(datasetName);
 
         final Map<String, Object> recallMap = new HashMap<>();
         recallMap.put("request", "hrecall");
