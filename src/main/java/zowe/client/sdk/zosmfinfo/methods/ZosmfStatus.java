@@ -39,8 +39,8 @@ import java.util.Optional;
  */
 public class ZosmfStatus {
 
-    private static final String PLUGINS_FIELD = "plugins";
     private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
+    private static final String PLUGINS_FIELD = "plugins";
     private final ZosConnection connection;
     private final ZosmfRequest request;
 
