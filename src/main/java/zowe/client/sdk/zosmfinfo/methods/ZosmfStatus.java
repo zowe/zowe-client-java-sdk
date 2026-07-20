@@ -9,7 +9,8 @@
  */
 package zowe.client.sdk.zosmfinfo.methods;
 
-import kong.unirest.core.json.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -24,8 +25,9 @@ import zowe.client.sdk.zosmfinfo.ZosmfConstants;
 import zowe.client.sdk.zosmfinfo.model.ZosmfPlugin;
 import zowe.client.sdk.zosmfinfo.response.ZosmfInfoResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 /**
  * This class holds the helper functions that are used to gather z/OSMF information through the z/OSMF APIs.
@@ -37,6 +39,7 @@ import java.util.stream.IntStream;
  */
 public class ZosmfStatus {
 
+    private static final String PLUGINS_FIELD = "plugins";
     private static final Logger LOG = LoggerFactory.getLogger(ZosmfStatus.class);
     private final ZosConnection connection;
     private final ZosmfRequest request;
@@ -92,16 +95,15 @@ public class ZosmfStatus {
 
         final ZosmfInfoResponse response = JsonUtils.parseResponse(responsePhrase, ZosmfInfoResponse.class, "get");
 
-        JSONObject jsonStr = new JSONObject(responsePhrase);
-        Optional.ofNullable(jsonStr.optJSONArray("plugins"))
-                .ifPresent(plugins -> {
-                    ZosmfPlugin[] zosmfPluginsInfo = IntStream.range(0, plugins.length())
-                            .mapToObj(i -> safeParsePlugin(String.valueOf(plugins.get(i)), ZosmfPlugin.class))
-                            .filter(Optional::isPresent) // Filter out any empty Optionals (failed parses)
-                            .map(Optional::get) // Unwrap the Optionals
-                            .toArray(ZosmfPlugin[]::new);
-                    response.withZosmfPluginsInfo(zosmfPluginsInfo);
-                });
+        final JsonNode root = JsonUtils.parse(responsePhrase);
+        if (root.path(PLUGINS_FIELD).isArray()) {
+            final ArrayNode plugins = JsonUtils.getArrayByField(root, PLUGINS_FIELD);
+            final List<ZosmfPlugin> zosmfPluginsInfo = new ArrayList<>();
+            for (final JsonNode plugin : plugins) {
+                safeParsePlugin(plugin.toString(), ZosmfPlugin.class).ifPresent(zosmfPluginsInfo::add);
+            }
+            response.withZosmfPluginsInfo(zosmfPluginsInfo.toArray(new ZosmfPlugin[0]));
+        }
 
         if (response.getZosmfPluginsInfo() == null) {
             return response.withZosmfPluginsInfo(new ZosmfPlugin[0]);
