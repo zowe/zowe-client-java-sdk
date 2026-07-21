@@ -80,7 +80,7 @@ public class DsnUpdate {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response rename(DsnRenameInputData renameInputData) throws ZosmfRequestException {
+    public Response rename(final DsnRenameInputData renameInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(renameInputData, "renameInputData");
 
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + BASE_RESOURCE);
