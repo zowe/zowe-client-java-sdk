@@ -91,7 +91,7 @@ public class DsnUpdate {
         fromDatasetMap.put("dsn", renameInputData.getSourceDatasetName());
 
         if (renameInputData.getType() == RenameType.DATASET) {
-            url.append(renameInputData.getDestinationDatasetName());
+            url.append(EncodeUtils.encodeURIComponent(renameInputData.getDestinationDatasetName()));
         } else if (renameInputData.getType() == RenameType.MEMBER) {
             final String source = EncodeUtils.encodeURIComponent(renameInputData.getSourceDatasetName());
             final String destination = EncodeUtils.encodeURIComponent(renameInputData.getDestinationMemberName());
@@ -169,6 +169,20 @@ public class DsnUpdate {
      */
     public Response deleteMigrated(final String datasetName) throws ZosmfRequestException {
         return deleteMigratedCommon(datasetName, null, null);
+    }
+
+    /**
+     * Delete a migrated dataset with wait option
+     *
+     * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
+     * @param wait        if true, the function waits for completion of the request
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public Response deleteMigrated(final String datasetName, final boolean wait)
+            throws ZosmfRequestException {
+        return deleteMigratedCommon(datasetName, wait, null);
     }
 
     /**
