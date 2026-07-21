@@ -93,8 +93,9 @@ public class DsnUpdate {
         if (renameInputData.getType() == RenameType.DATASET) {
             url.append(renameInputData.getDestinationDatasetName());
         } else if (renameInputData.getType() == RenameType.MEMBER) {
-            url.append(renameInputData.getSourceDatasetName())
-                    .append("(").append(renameInputData.getDestinationMemberName()).append(")");
+            final String source = EncodeUtils.encodeURIComponent(renameInputData.getSourceDatasetName());
+            final String destination = EncodeUtils.encodeURIComponent(renameInputData.getDestinationMemberName());
+            url.append(source).append("(").append(destination).append(")");
             fromDatasetMap.put("member", renameInputData.getSourceMemberName());
         }
         renameMap.put("from-dataset", fromDatasetMap);
