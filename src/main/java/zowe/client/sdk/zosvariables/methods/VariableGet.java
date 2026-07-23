@@ -9,6 +9,9 @@
  */
 package zowe.client.sdk.zosvariables.methods;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.UrlConstants;
@@ -17,13 +20,15 @@ import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
-import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosvariables.VariableConstants;
 import zowe.client.sdk.zosvariables.input.factory.VariableGetInputData;
 import zowe.client.sdk.zosvariables.response.VariableGetResponse;
+import zowe.client.sdk.zosvariables.response.VariableResponse;
+import zowe.client.sdk.zosvariables.type.VariableType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,6 +42,7 @@ import java.util.List;
  */
 public class VariableGet {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
     private static final String GET_CONTEXT = "getVariables";
     private final ZosConnection connection;
     private final ZosmfRequest request;
@@ -115,7 +121,33 @@ public class VariableGet {
                 .orElseThrow(() -> new IllegalStateException("no get variables response phrase"))
                 .toString();
 
-        return JsonUtils.parseResponse(response, VariableGetResponse.class, GET_CONTEXT);
+        VariableResponse variable;
+        try {
+            JsonNode root = mapper.readTree(response);
+            // multiple list response
+            if (root.has("system-variable-list") || root.has("system-symbol-list")) {
+                return mapper.treeToValue(root, VariableGetResponse.class);
+            }
+
+            // single value response
+            variable = mapper.treeToValue(root, VariableResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new ZosmfRequestException(
+                    "Failed to parse JSON response for [" + GET_CONTEXT +
+                            "] into VariableGetResponse", e);
+        }
+
+        if (getInputData.getVariableType() == VariableType.VARIABLE) {
+            return new VariableGetResponse(
+                    Collections.singletonList(variable),
+                    Collections.emptyList()
+            );
+        }
+
+        return new VariableGetResponse(
+                Collections.emptyList(),
+                Collections.singletonList(variable)
+        );
     }
 
 }
