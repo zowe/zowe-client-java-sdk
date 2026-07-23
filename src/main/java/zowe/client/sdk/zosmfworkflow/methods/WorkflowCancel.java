@@ -93,6 +93,7 @@ public class WorkflowCancel {
             request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         }
         request.setUrl(url);
+        request.setBody("{}");
 
         final String responsePhrase = request.executeRequest()
                 .getResponsePhrase()
