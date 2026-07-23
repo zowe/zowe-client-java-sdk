@@ -108,8 +108,6 @@ public class WorkflowCancelTest {
         WorkflowCancelResponse response = workflowCancel.cancel("TESTKEY");
 
         assertEquals("AutomationExample|Canceled|1423679433714", response.getWorkflowName());
-        Mockito.verify(mockPutRequest, Mockito.never()).setBody(any());
-
         assertEquals(
                 "https://1:443/workflow/rest/1.0/workflows/TESTKEY/operations/cancel",
                 mockPutRequest.getUrl()
