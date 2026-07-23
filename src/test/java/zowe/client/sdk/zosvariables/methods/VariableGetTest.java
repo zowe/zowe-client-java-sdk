@@ -189,9 +189,9 @@ public class VariableGetTest {
     }
 
     @Test
-    public void tstVariableGetSystemSymbolListSuccess() throws Exception {
+    public void tstVariableGetOneItemVariableResponseSuccess() throws Exception {
         GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
-        String json = "{\"system-symbol-list\":[{\"name\":\"&SYSNAME\",\"value\":\"SYS1\",\"description\":\"System symbol\"}]}";
+        String json = "{\"name\":\"SYSNAME\",\"value\":\"SYS1\",\"description\":\"System name\"}";
         Mockito.when(mockRequest.executeRequest()).thenReturn(new Response(json, 200, "OK"));
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
@@ -199,8 +199,50 @@ public class VariableGetTest {
         VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
+        assertFalse(response.getSystemVariableList().isEmpty());
+        assertEquals(1, response.getSystemVariableList().size());
+        VariableResponse variable = response.getSystemVariableList().get(0);
+        assertEquals("SYSNAME", variable.getName());
+        assertEquals("SYS1", variable.getValue());
+        assertEquals("System name", variable.getDescription());
+    }
+
+    @Test
+    public void tstVariableGetSystemSymbolListSuccess() throws Exception {
+        GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        String json = "{\"system-symbol-list\":[{\"name\":\"&SYSNAME\",\"value\":\"SYS1\",\"description\":\"System symbol\"}]}";
+        Mockito.when(mockRequest.executeRequest()).thenReturn(new Response(json, 200, "OK"));
+        Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
+        Mockito.doCallRealMethod().when(mockRequest).getUrl();
+        VariableGet variableGet = new VariableGet(connection, mockRequest);
+        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbol("PLEX1", "SYS1");
+        VariableGetResponse response = variableGet.get(input);
+        assertNotNull(response);
         assertFalse(response.getSystemSymbolList().isEmpty());
         assertEquals(1, response.getSystemSymbolList().size());
+        VariableResponse symbol = response.getSystemSymbolList().get(0);
+        assertEquals("&SYSNAME", symbol.getName());
+        assertEquals("SYS1", symbol.getValue());
+        assertEquals("System symbol", symbol.getDescription());
+    }
+
+    @Test
+    public void tstVariableGetOneItemSystemSymbolResponseSuccess() throws Exception {
+        GetJsonZosmfRequest mockRequest = Mockito.mock(GetJsonZosmfRequest.class);
+        String json = "{\"name\":\"&SYSNAME\",\"value\":\"SYS1\",\"description\":\"System symbol\"}";
+        Mockito.when(mockRequest.executeRequest()).thenReturn(new Response(json, 200, "OK"));
+        Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
+        Mockito.doCallRealMethod().when(mockRequest).getUrl();
+        VariableGet variableGet = new VariableGet(connection, mockRequest);
+        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbol("PLEX1", "SYS1");
+        VariableGetResponse response = variableGet.get(input);
+        assertNotNull(response);
+        assertFalse(response.getSystemSymbolList().isEmpty());
+        assertEquals(1, response.getSystemSymbolList().size());
+        VariableResponse symbol = response.getSystemSymbolList().get(0);
+        assertEquals("&SYSNAME", symbol.getName());
+        assertEquals("SYS1", symbol.getValue());
+        assertEquals("System symbol", symbol.getDescription());
     }
 
 }
