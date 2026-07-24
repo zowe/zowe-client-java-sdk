@@ -16,18 +16,23 @@ import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
+import zowe.client.sdk.zosfiles.dsn.input.DsnDeleteInputData;
+import zowe.client.sdk.zosfiles.dsn.types.DeleteType;
 
 /**
- * Provides delete dataset and member functionality
+ * Provides delete dataset, member and uncataloged dataset functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-delete-sequential-partitioned-data-set">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
  * @author Frank Giordano
+ * @author Jorge Samaniego
  * @version 7.0
  */
 public class DsnDelete {
 
+    private static final String BASE_RESOURCE =
+            ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + UrlConstants.URL_PATH_DELIM;
     private final ZosConnection connection;
     private final ZosmfRequest request;
 
@@ -64,39 +69,32 @@ public class DsnDelete {
     }
 
     /**
-     * Delete a dataset member
+     * Delete a dataset, a member of a dataset, or an uncataloged dataset on a specific volume
      *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @param memberName  name of member to delete
+     * @param deleteInputData delete parameters, see DsnDeleteInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
+     * @author Jorge Samaniego
      */
-    public Response delete(final String dataSetName, final String memberName) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkIllegalParameter(memberName, "memberName");
+    public Response delete(final DsnDeleteInputData deleteInputData) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(deleteInputData, "deleteInputData");
 
-        return delete(String.format("%s(%s)", dataSetName, memberName));
-    }
+        final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + BASE_RESOURCE);
+        final String datasetName = EncodeUtils.encodeURIComponent(deleteInputData.getDatasetName());
 
-    /**
-     * Delete a dataset
-     *
-     * @param dataSetName name of a dataset (e.g. 'DATASET.LIB')
-     * @return http response object
-     * @throws ZosmfRequestException request error state
-     * @author Leonid Baranov
-     */
-    public Response delete(final String dataSetName) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        if (deleteInputData.getType() == DeleteType.DATASET) {
+            url.append(datasetName);
+        } else if (deleteInputData.getType() == DeleteType.MEMBER) {
+            final String memberName = EncodeUtils.encodeURIComponent(deleteInputData.getMemberName());
+            url.append(datasetName).append("(").append(memberName).append(")");
+        } else if (deleteInputData.getType() == DeleteType.UNCATALOGED) {
+            final String volume = EncodeUtils.encodeURIComponent(deleteInputData.getVolume());
+            url.append("-(").append(volume).append(")")
+                    .append(UrlConstants.URL_PATH_DELIM)
+                    .append(datasetName);
+        }
 
-        final String url = connection.getZosmfUrl() +
-                ZosFilesConstants.RESOURCE +
-                ZosFilesConstants.RES_DS_FILES +
-                UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(dataSetName);
-
-        request.setUrl(url);
+        request.setUrl(url.toString());
 
         return request.executeRequest();
     }
