@@ -27,7 +27,7 @@ public class VariableGetInputFactoryTest {
     @Test
     public void tstCreateSystemInputSuccess() {
         VariableGetInputData input =
-                VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
+                VariableGetInputFactory.createZosVariableInput("PLEX1", "SYS1");
         assertEquals("PLEX1", input.getSysplexName());
         assertEquals("SYS1", input.getSystemName());
         assertEquals(VariableType.VARIABLE, input.getVariableType());
@@ -36,7 +36,7 @@ public class VariableGetInputFactoryTest {
 
     @Test
     public void tstCreateSystemInputWithFiltersSuccess() {
-        VariableGetInputData input = VariableGetInputFactory.createZosVariable(
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableInput(
                 "PLEX1", "SYS1", Arrays.asList("VAR1", "VAR2"));
         assertEquals("PLEX1", input.getSysplexName());
         assertEquals("SYS1", input.getSystemName());
@@ -47,7 +47,7 @@ public class VariableGetInputFactoryTest {
 
     @Test
     public void tstCreateLocalInputSuccess() {
-        VariableGetInputData input = VariableGetInputFactory.createZosVariableLocal();
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableLocalInput();
         assertTrue(input.isLocal());
         assertNull(input.getSysplexName());
         assertNull(input.getSystemName());
@@ -57,7 +57,7 @@ public class VariableGetInputFactoryTest {
     @Test
     public void tstCreateLocalInputWithFiltersSuccess() {
         VariableGetInputData input =
-                VariableGetInputFactory.createZosVariableLocal(Arrays.asList("VAR1", "VAR2"));
+                VariableGetInputFactory.createZosVariableLocalInput(Arrays.asList("VAR1", "VAR2"));
         assertTrue(input.isLocal());
         assertEquals(Arrays.asList("VAR1", "VAR2"), input.getVariableNames().orElse(null));
         assertEquals(VariableType.VARIABLE, input.getVariableType());
@@ -66,7 +66,7 @@ public class VariableGetInputFactoryTest {
     @Test
     public void tstCreateSymbolInputSuccess() {
         VariableGetInputData input =
-                VariableGetInputFactory.createZosmfSymbol("PLEX1", "SYS1");
+                VariableGetInputFactory.createZosmfSymbolInput("PLEX1", "SYS1");
         assertEquals("PLEX1", input.getSysplexName());
         assertEquals("SYS1", input.getSystemName());
         assertEquals(VariableType.SYMBOL, input.getVariableType());
@@ -75,7 +75,7 @@ public class VariableGetInputFactoryTest {
 
     @Test
     public void tstCreateLocalSymbolInputSuccess() {
-        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbolLocal();
+        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbolLocalInput();
         assertTrue(input.isLocal());
         assertEquals(VariableType.SYMBOL, input.getVariableType());
     }

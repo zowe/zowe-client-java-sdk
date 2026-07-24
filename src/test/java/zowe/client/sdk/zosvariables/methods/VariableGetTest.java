@@ -87,28 +87,28 @@ public class VariableGetTest {
     @Test
     public void tstVariableGetNullSysplexNameFailure() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> VariableGetInputFactory.createZosVariable(null, "SYS1"));
+                () -> VariableGetInputFactory.createZosVariableInput(null, "SYS1"));
         assertEquals("sysplexName is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetEmptySysplexNameFailure() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> VariableGetInputFactory.createZosVariable("", "SYS1"));
+                () -> VariableGetInputFactory.createZosVariableInput("", "SYS1"));
         assertEquals("sysplexName is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetNullSystemNameFailure() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> VariableGetInputFactory.createZosVariable("PLEX1", null));
+                () -> VariableGetInputFactory.createZosVariableInput("PLEX1", null));
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
     @Test
     public void tstVariableGetEmptySystemNameFailure() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> VariableGetInputFactory.createZosVariable("PLEX1", ""));
+                () -> VariableGetInputFactory.createZosVariableInput("PLEX1", ""));
         assertEquals("systemName is either null or empty", exception.getMessage());
     }
 
@@ -120,7 +120,7 @@ public class VariableGetTest {
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableInput("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertTrue(response.getSystemVariableList().isEmpty());
@@ -136,7 +136,7 @@ public class VariableGetTest {
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosVariableLocal();
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableLocalInput();
         assertNotNull(variableGet.get(input));
         assertEquals("https://1:443/zosmf/variables/rest/1.0/systems/local?source=variable", mockRequest.getUrl());
     }
@@ -147,7 +147,7 @@ public class VariableGetTest {
         Mockito.when(mockRequest.executeRequest())
                 .thenReturn(new Response("{{", 200, "OK"));
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableInput("PLEX1", "SYS1");
         assertThrows(ZosmfRequestException.class, () -> variableGet.get(input));
     }
 
@@ -159,7 +159,7 @@ public class VariableGetTest {
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosVariable(
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableInput(
                 "PLEX1",
                 "SYS1",
                 Arrays.asList("VAR1", "VAR2")
@@ -177,7 +177,7 @@ public class VariableGetTest {
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableInput("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertFalse(response.getSystemVariableList().isEmpty());
@@ -196,7 +196,7 @@ public class VariableGetTest {
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosVariable("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosVariableInput("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertFalse(response.getSystemVariableList().isEmpty());
@@ -215,7 +215,7 @@ public class VariableGetTest {
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbol("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbolInput("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertFalse(response.getSystemSymbolList().isEmpty());
@@ -234,7 +234,7 @@ public class VariableGetTest {
         Mockito.doCallRealMethod().when(mockRequest).setUrl(Mockito.any());
         Mockito.doCallRealMethod().when(mockRequest).getUrl();
         VariableGet variableGet = new VariableGet(connection, mockRequest);
-        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbol("PLEX1", "SYS1");
+        VariableGetInputData input = VariableGetInputFactory.createZosmfSymbolInput("PLEX1", "SYS1");
         VariableGetResponse response = variableGet.get(input);
         assertNotNull(response);
         assertFalse(response.getSystemSymbolList().isEmpty());
