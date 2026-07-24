@@ -99,7 +99,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstDsnDeleteSecondaryConstructorWithValidRequestType() {
+    public void tstDsnDeleteSecondaryConstructorWithValidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         DsnDelete dsnDelete = new DsnDelete(connection, request);
@@ -107,7 +107,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstDsnDeleteSecondaryConstructorWithNullConnection() {
+    public void tstDsnDeleteSecondaryConstructorWithNullConnectionFailure() {
         ZosmfRequest request = Mockito.mock(DeleteJsonZosmfRequest.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -117,7 +117,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstDsnDeleteSecondaryConstructorWithNullRequest() {
+    public void tstDsnDeleteSecondaryConstructorWithNullRequestFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
@@ -127,7 +127,7 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstDsnDeleteSecondaryConstructorWithInvalidRequestType() {
+    public void tstDsnDeleteSecondaryConstructorWithInvalidRequestTypeFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         ZosmfRequest request = Mockito.mock(ZosmfRequest.class); // Not a DeleteJsonZosmfRequest
         IllegalStateException exception = assertThrows(
@@ -138,14 +138,14 @@ public class DsnDeleteTest {
     }
 
     @Test
-    public void tstDsnDeletePrimaryConstructorWithValidConnection() {
+    public void tstDsnDeletePrimaryConstructorWithValidConnectionFailure() {
         ZosConnection connection = Mockito.mock(ZosConnection.class);
         DsnDelete dsnDelete = new DsnDelete(connection);
         assertNotNull(dsnDelete);
     }
 
     @Test
-    public void tstDsnDeletePrimaryConstructorWithNullConnection() {
+    public void tstDsnDeletePrimaryConstructorWithNullConnectionFailure() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new DsnDelete(null)
@@ -225,4 +225,5 @@ public class DsnDeleteTest {
         );
         assertEquals("datasetName is either null or empty", exception.getMessage());
     }
+
 }
