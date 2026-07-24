@@ -46,7 +46,7 @@ public class TsoCmd {
     /**
      * TsoCmd constructor
      *
-     * @param connection    ZosConnection object
+     * @param connection    for connection information, see ZosConnection object
      * @param accountNumber account number for tso processing
      * @author Frank Giordano
      */

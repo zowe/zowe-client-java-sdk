@@ -77,22 +77,22 @@ public class DsnList {
     /**
      * Get a list of Dataset objects
      *
-     * @param dataSetName   name of a dataset (e.g. 'DATASET.LIB')
+     * @param datasetName   name of a dataset (e.g. 'DATASET.LIB')
      * @param listInputData list parameters, see DsnListInputData object
      * @return A String list of Dataset names
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Dataset> getDatasets(final String dataSetName, final DsnListInputData listInputData)
+    public List<Dataset> getDatasets(final String datasetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkNullParameter(listInputData, "listInputData");
 
         final Map<String, String> headers = new HashMap<>();
         final List<Dataset> datasets = new ArrayList<>();
         String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE + ZosFilesConstants.RES_DS_FILES + UrlConstants.QUERY_ID +
-                ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(dataSetName);
+                ZosFilesConstants.QUERY_DS_LEVEL + EncodeUtils.encodeURIComponent(datasetName);
 
         if (listInputData.getVolume().isPresent()) {
             url += UrlConstants.COMBO_ID + ZosFilesConstants.QUERY_VOLUME +
@@ -108,15 +108,15 @@ public class DsnList {
     /**
      * Get a list of member objects from a partition Dataset
      *
-     * @param dataSetName   name of a dataset (e.g. 'DATASET.LIB')
+     * @param datasetName   name of a dataset (e.g. 'DATASET.LIB')
      * @param listInputData list parameters, see DsnListInputData object
      * @return list of member objects
      * @throws ZosmfRequestException request error state
      * @author Nikunj Goyal
      */
-    public List<Member> getMembers(final String dataSetName, final DsnListInputData listInputData)
+    public List<Member> getMembers(final String datasetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkNullParameter(listInputData, "listInputData");
 
         final Map<String, String> headers = new HashMap<>();
@@ -125,7 +125,7 @@ public class DsnList {
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
                 UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(dataSetName) +
+                EncodeUtils.encodeURIComponent(datasetName) +
                 ZosFilesConstants.RES_DS_MEMBERS;
 
         if (listInputData.getPattern().isPresent()) {

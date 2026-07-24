@@ -17,7 +17,6 @@ import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnDeleteInputData;
-import zowe.client.sdk.zosfiles.dsn.types.DeleteType;
 
 /**
  * Provides delete sequential and partitioned data set, member and uncataloged dataset functionality
