@@ -398,6 +398,7 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.examples.TstZosConnection;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.DsnDeleteInputData;
 import zowe.client.sdk.zosfiles.dsn.methods.DsnDelete;
 
 /**
@@ -436,7 +437,7 @@ public class DsnDeleteExp extends TstZosConnection {
         Response response;
         try {
             DsnDelete zosDsn = new DsnDelete(connection);
-            response = zosDsn.delete(dataSetName);
+            response = zosDsn.delete(DsnDeleteInputData.forDataset(dataSetName));
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -459,7 +460,7 @@ public class DsnDeleteExp extends TstZosConnection {
         Response response;
         try {
             DsnDelete zosDsn = new DsnDelete(connection);
-            response = zosDsn.delete(dataSetName, member);
+            response = zosDsn.delete(DsnDeleteInputData.forMember(dataSetName, member));
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {

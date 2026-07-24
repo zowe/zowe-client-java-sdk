@@ -19,6 +19,7 @@ import zowe.client.sdk.rest.DeleteJsonZosmfRequest;
 import zowe.client.sdk.rest.Response;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.zosfiles.dsn.input.DsnDeleteInputData;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -63,7 +64,7 @@ public class DsnDeleteTest {
     @Test
     public void tstDsnDeleteDatasetSuccess() throws ZosmfRequestException {
         final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest);
-        final Response response = dsnDelete.delete("TEST.DATASET");
+        final Response response = dsnDelete.delete(DsnDeleteInputData.forDataset("TEST.DATASET"));
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
         assertEquals("success", response.getStatusText().orElse("n\\a"));
@@ -73,7 +74,7 @@ public class DsnDeleteTest {
     @Test
     public void tstDsnDeleteTokenSuccess() throws ZosmfRequestException {
         final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequestToken);
-        final Response response = dsnDelete.delete("TEST.DATASET");
+        final Response response = dsnDelete.delete(DsnDeleteInputData.forDataset("TEST.DATASET"));
         assertEquals("{X-CSRF-ZOSMF-HEADER=true, Content-Type=application/json}", mockDeleteRequestToken.getHeaders().toString());
         assertEquals("{}", response.getResponsePhrase().orElse("n\\a").toString());
         assertEquals(200, response.getStatusCode().orElse(-1));
@@ -84,7 +85,7 @@ public class DsnDeleteTest {
     @Test
     public void tstDsnDeleteWithDatasetMemberNotationSuccess() throws ZosmfRequestException {
         final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest);
-        final Response response = dsnDelete.delete("TEST.DATASET(MEMBER)");
+        final Response response = dsnDelete.delete(DsnDeleteInputData.forDataset("TEST.DATASET(MEMBER)"));
         assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET(MEMBER)", mockDeleteRequest.getUrl());
         assertEquals(200, response.getStatusCode().orElse(-1));
     }
@@ -92,7 +93,7 @@ public class DsnDeleteTest {
     @Test
     public void tstDsnDeleteWithDatasetMemberSeparateParametersSuccess() throws ZosmfRequestException {
         final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest);
-        final Response response = dsnDelete.delete("TEST.DATASET", "MEMBER");
+        final Response response = dsnDelete.delete(DsnDeleteInputData.forMember("TEST.DATASET", "MEMBER"));
         assertEquals("https://1:443/zosmf/restfiles/ds/TEST.DATASET(MEMBER)", mockDeleteRequest.getUrl());
         assertEquals(200, response.getStatusCode().orElse(-1));
     }
@@ -150,5 +151,78 @@ public class DsnDeleteTest {
                 () -> new DsnDelete(null)
         );
         assertEquals("connection is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstDsnDeleteUncatalogedSuccess() throws ZosmfRequestException {
+        final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest);
+        final Response response = dsnDelete.delete(
+                DsnDeleteInputData.forUncataloged("TEST.DATASET", "VOL001"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/-(VOL001)/TEST.DATASET", mockDeleteRequest.getUrl());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+    }
+
+    @Test
+    public void tstDsnDeleteUncatalogedTokenSuccess() throws ZosmfRequestException {
+        final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequestToken);
+        final Response response = dsnDelete.delete(
+                DsnDeleteInputData.forUncataloged("TEST.DATASET", "VOL001"));
+        assertEquals("https://1:443/zosmf/restfiles/ds/-(VOL001)/TEST.DATASET", mockDeleteRequestToken.getUrl());
+        assertEquals(200, response.getStatusCode().orElse(-1));
+    }
+
+    @Test
+    public void tstDsnDeleteWithNullInputDataFailure() {
+        final DsnDelete dsnDelete = new DsnDelete(connection, mockDeleteRequest);
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> dsnDelete.delete(null)
+        );
+        assertEquals("deleteInputData is null", exception.getMessage());
+    }
+
+    @Test
+    public void tstDsnDeleteUncatalogedWithNullVolumeFailure() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> DsnDeleteInputData.forUncataloged("TEST.DATASET", null)
+        );
+        assertEquals("volume is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstDsnDeleteUncatalogedWithEmptyVolumeFailure() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> DsnDeleteInputData.forUncataloged("TEST.DATASET", "")
+        );
+        assertEquals("volume is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstDsnDeleteUncatalogedWithNullDatasetNameFailure() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> DsnDeleteInputData.forUncataloged(null, "VOL001")
+        );
+        assertEquals("datasetName is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstDsnDeleteMemberWithNullMemberNameFailure() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> DsnDeleteInputData.forMember("TEST.DATASET", null)
+        );
+        assertEquals("memberName is either null or empty", exception.getMessage());
+    }
+
+    @Test
+    public void tstDsnDeleteDatasetWithNullDatasetNameFailure() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> DsnDeleteInputData.forDataset(null)
+        );
+        assertEquals("datasetName is either null or empty", exception.getMessage());
     }
 }
