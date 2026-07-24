@@ -138,15 +138,11 @@ public class VariableGet {
         }
 
         if (getInputData.getVariableType() == VariableType.VARIABLE) {
-            return new VariableGetResponse(
-                    Collections.singletonList(variable),
-                    Collections.emptyList()
+            return new VariableGetResponse(Collections.singletonList(variable), Collections.emptyList()
             );
         }
 
-        return new VariableGetResponse(
-                Collections.emptyList(),
-                Collections.singletonList(variable)
+        return new VariableGetResponse(Collections.emptyList(), Collections.singletonList(variable)
         );
     }
 
