@@ -15,7 +15,7 @@ import zowe.client.sdk.zosfiles.dsn.types.DeleteType;
 /**
  * Immutable input for dataset delete operations.
  * <p>
- * Supports deleting a cataloged dataset, a member within a partitioned dataset (PDS),
+ * Supports deleting a sequential and partitioned dataset (PDS), a member within a PDS,
  * or an uncataloged dataset residing on a specific volume.
  *
  * @author Jorge Samaniego
@@ -44,7 +44,7 @@ public final class DsnDeleteInputData {
     }
 
     /**
-     * Creates input for a dataset delete operation.
+     * Creates input for a sequential and partitioned dataset delete operation.
      *
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @return DsnDeleteInputData

@@ -20,7 +20,7 @@ import zowe.client.sdk.zosfiles.dsn.input.DsnDeleteInputData;
 import zowe.client.sdk.zosfiles.dsn.types.DeleteType;
 
 /**
- * Provides delete dataset, member and uncataloged dataset functionality
+ * Provides delete sequential and partitioned data set, member and uncataloged dataset functionality
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-delete-sequential-partitioned-data-set">z/OSMF REST API</a>
  *
@@ -68,12 +68,13 @@ public class DsnDelete {
     }
 
     /**
-     * Delete a dataset, a member of a dataset, or an uncataloged dataset on a specific volume.
+     * Delete a sequential and partitioned data set (PDS), a member of a PDS, or an uncataloged dataset on a specific volume.
      *
      * @param deleteInputData delete parameters, see DsnDeleteInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Jorge Samaniego
+     * @author Frank Giordano
      */
     public Response delete(final DsnDeleteInputData deleteInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(deleteInputData, "deleteInputData");
@@ -81,18 +82,23 @@ public class DsnDelete {
         final StringBuilder url = new StringBuilder(connection.getZosmfUrl() + BASE_RESOURCE);
         final String datasetName = EncodeUtils.encodeURIComponent(deleteInputData.getDatasetName());
 
-        if (deleteInputData.getType() == DeleteType.DATASET) {
-            url.append(datasetName);
-        } else if (deleteInputData.getType() == DeleteType.MEMBER) {
-            final String memberName = EncodeUtils.encodeURIComponent(deleteInputData.getMemberName());
-            url.append(datasetName).append("(").append(memberName).append(")");
-        } else if (deleteInputData.getType() == DeleteType.UNCATALOGED) {
-            final String volume = EncodeUtils.encodeURIComponent(deleteInputData.getVolume());
-            url.append("-(").append(volume).append(")").append(UrlConstants.URL_PATH_DELIM).append(datasetName);
+        switch (deleteInputData.getType()) {
+            case DATASET:
+                url.append(datasetName);
+                break;
+            case MEMBER:
+                final String memberName = EncodeUtils.encodeURIComponent(deleteInputData.getMemberName());
+                url.append(datasetName).append("(").append(memberName).append(")");
+                break;
+            case UNCATALOGED:
+                final String volume = EncodeUtils.encodeURIComponent(deleteInputData.getVolume());
+                url.append("-(").append(volume).append(")").append(UrlConstants.URL_PATH_DELIM).append(datasetName);
+                break;
+            default:
+                throw new IllegalArgumentException("unsupported delete type: " + deleteInputData.getType());
         }
 
         request.setUrl(url.toString());
-
         return request.executeRequest();
     }
 
