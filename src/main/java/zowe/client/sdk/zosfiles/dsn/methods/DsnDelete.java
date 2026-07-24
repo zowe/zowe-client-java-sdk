@@ -68,7 +68,7 @@ public class DsnDelete {
     }
 
     /**
-     * Delete a dataset, a member of a dataset, or an uncataloged dataset on a specific volume
+     * Delete a dataset, a member of a dataset, or an uncataloged dataset on a specific volume.
      *
      * @param deleteInputData delete parameters, see DsnDeleteInputData object
      * @return http response object

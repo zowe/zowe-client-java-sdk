@@ -51,7 +51,6 @@ public final class DsnDeleteInputData {
      */
     public static DsnDeleteInputData forDataset(final String datasetName) {
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
-
         return new DsnDeleteInputData(
                 DeleteType.DATASET,
                 datasetName,
@@ -69,7 +68,6 @@ public final class DsnDeleteInputData {
     public static DsnDeleteInputData forMember(final String datasetName, final String memberName) {
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkIllegalParameter(memberName, "memberName");
-
         return new DsnDeleteInputData(
                 DeleteType.MEMBER,
                 datasetName,
@@ -87,7 +85,6 @@ public final class DsnDeleteInputData {
     public static DsnDeleteInputData forUncataloged(final String datasetName, final String volume) {
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkIllegalParameter(volume, "volume");
-
         return new DsnDeleteInputData(
                 DeleteType.UNCATALOGED,
                 datasetName,
