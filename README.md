@@ -12,23 +12,36 @@ Copyright Contributors to the Zowe Project.
 [![Maven Central](https://img.shields.io/maven-central/v/org.zowe.client.java.sdk/zowe-client-java-sdk.svg?label=Maven%20Central)](https://central.sonatype.com/search?q=org.zowe.client.java.sdk&smo=true)
 [![javadoc](https://javadoc.io/badge2/org.zowe.client.java.sdk/zowe-client-java-sdk/javadoc.svg)](https://javadoc.io/doc/org.zowe.client.java.sdk/zowe-client-java-sdk)
 
-This project is a subproject of Zowe, focusing on modernizing the mainframe experience. Zowe is a project hosted by the Open Mainframe Project, a Linux Foundation project.
+This project is a subproject of **Zowe**, focused on modernizing and improving the mainframe user experience. Zowe is an open-source project hosted by the **Open Mainframe Project**, a Linux Foundation project dedicated to advancing innovation and collaboration within the mainframe community.
 
-The Java SDK lets you leverage the underlying z/OSMF REST APIs on a z/OS system to build client applications and scripts that interface with your z/OS instance seamlessly.
+The **Zowe Java SDK** enables developers to leverage the underlying **z/OSMF REST APIs** available on a z/OS system, allowing them to build Java-based client applications and automation scripts that seamlessly interact with z/OS environments.
 
-For instance, one API package provides the ability to upload and download z/OS data sets. You can leverage that package to rapidly build a client application that interacts with data sets.
+For example, one of the SDK’s API packages provides functionality for uploading and downloading z/OS data sets. Developers can use this package to quickly build client applications that manage and interact with z/OS data sets without needing to implement the underlying REST API communication themselves.
 
-The Java SDK joins an existing community of other language-specific SDKs. It provides the Java community with similar capabilities based on the Node.js SDK. 
-  
-This SDK may differ from some others with the JobMonitor class adding prebuilt functionality for automation tasks.  
-  
-Issues worked on documenting the main feature set provided can be viewed within the following MVP issues:  
-[#1](https://github.com/zowe/zowe-client-java-sdk/issues/5) [#2](https://github.com/zowe/zowe-client-java-sdk/issues/219) [#3](https://github.com/zowe/zowe-client-java-sdk/issues/281) [#4](https://github.com/zowe/zowe-client-java-sdk/issues/338)   
-  
-In addition to the MVP issues noted, see the following other milestone releases and their release notes:    
-            
-[version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363)  [version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414) 
-[version 5.1.0](https://github.com/zowe/zowe-client-java-sdk/issues/429)  [version 5.2.0](https://github.com/zowe/zowe-client-java-sdk/issues/432) [version 6.0.0](https://github.com/zowe/zowe-client-java-sdk/issues/451)
+The Java SDK is part of the broader Zowe SDK ecosystem, joining existing language-specific SDKs that provide similar capabilities across different programming languages. It brings these capabilities to the Java community while aligning closely with the functionality and design patterns established by the Node.js SDK.
+
+The SDK also provides additional functionality beyond some existing SDK implementations. For example, the **JobMonitor** class includes built-in capabilities designed to simplify and automate common job-monitoring tasks.
+
+Documentation and implementation work covering the primary feature set can be found in the following MVP issues:
+
+* [MVP Issue #1](https://github.com/zowe/zowe-client-java-sdk/issues/5)
+* [MVP Issue #2](https://github.com/zowe/zowe-client-java-sdk/issues/219)
+* [MVP Issue #3](https://github.com/zowe/zowe-client-java-sdk/issues/281)
+* [MVP Issue #4](https://github.com/zowe/zowe-client-java-sdk/issues/338)
+
+In addition to the MVP milestones, the following releases include further enhancements and detailed release notes:
+
+* [Version 4](https://github.com/zowe/zowe-client-java-sdk/pull/363)
+* [Version 5](https://github.com/zowe/zowe-client-java-sdk/issues/414)
+* [Version 5.1.0](https://github.com/zowe/zowe-client-java-sdk/issues/429)
+* [Version 5.2.0](https://github.com/zowe/zowe-client-java-sdk/issues/432)
+* [Version 6.0.0](https://github.com/zowe/zowe-client-java-sdk/issues/451)
+* [Version 6.1.1](https://github.com/zowe/zowe-client-java-sdk/issues/455)
+* [Version 6.1.2](https://github.com/zowe/zowe-client-java-sdk/issues/459) 
+* [Version 6.2.0](https://github.com/zowe/zowe-client-java-sdk/issues/464)
+* [Version 6.3.0](https://github.com/zowe/zowe-client-java-sdk/issues/487)  
+* [Version 6.3.3](https://github.com/zowe/zowe-client-java-sdk/issues/499)  
+* [Version 7.0.0](https://github.com/zowe/zowe-client-java-sdk/issues/577)  
   
 ## Prebuilt API Services     
     
