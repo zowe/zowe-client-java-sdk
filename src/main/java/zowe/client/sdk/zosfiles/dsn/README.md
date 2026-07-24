@@ -36,14 +36,14 @@ public class DsnCopyExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        String fromDataSetName = "xxx";
-        String toDataSetName = "xxx";
+        String fromDatasetName = "xxx";
+        String toDatasetName = "xxx";
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        copyDataset(connection, fromDataSetName, toDataSetName);
-        copyDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
+        copyDataset(connection, fromDatasetName, toDatasetName);
+        copyDatasetByCopyParams(connection, fromDatasetName, toDatasetName);
         fromDataSetName = "xxx";  // specify a partition dataset only no member
         toDataSetName = "xxx"; // specify a partition dataset only no member
-        copyFullPartitionDatasetByCopyParams(connection, fromDataSetName, toDataSetName);
+        copyFullPartitionDatasetByCopyParams(connection, fromDatasetName, toDatasetName);
     }
 
     /**
@@ -61,16 +61,16 @@ public class DsnCopyExp extends TstZosConnection {
      * This example sends a false value for copyAllMembers parameter in the copy method to indicate we
      * are not copying all members in a partition dataset to another.
      *
-     * @param connection      ZosConnection object
-     * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
-     * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
+     * @param connection      for connection information, see ZosConnection object
+     * @param fromDatasetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
+     * @param toDatasetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @author Frank Giordano
      */
-    public static void copyDataset(ZosConnection connection, String fromDataSetName, String toDataSetName) {
+    public static void copyDataset(ZosConnection connection, String fromDatasetName, String toDatasetName) {
         Response response;
         try {
             DsnCopy dsnCopy = new DsnCopy(connection);
-            response = dsnCopy.copy(fromDataSetName, toDataSetName, true, false);
+            response = dsnCopy.copy(fromDatasetName, toDatasetName, true, false);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -94,18 +94,18 @@ public class DsnCopyExp extends TstZosConnection {
      * - partition dataset member to partition dataset non-existing member
      * - partition dataset member to sequential dataset
      *
-     * @param connection      ZosConnection object
-     * @param fromDataSetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
-     * @param toDataSetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
+     * @param connection      for connection information, see ZosConnection object
+     * @param fromDatasetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
+     * @param toDatasetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
      * @author Frank Giordano
      */
-    public static void copyDatasetByCopyParams(ZosConnection connection, String fromDataSetName, String toDataSetName) {
+    public static void copyDatasetByCopyParams(ZosConnection connection, String fromDatasetName, String toDatasetName) {
         Response response;
         try {
             DsnCopy dsnCopy = new DsnCopy(connection);
             // 'replace' builder variable here will be true by default if not specified in builder.
             // 'copyAllMembers' builder variable here will be false by default
-            DsnCopyInputData dsnCopyInputData = new DsnCopyInputData.Builder().fromDataSet(fromDataSetName).toDataSet(toDataSetName).build();
+            DsnCopyInputData dsnCopyInputData = new DsnCopyInputData.Builder().fromDataSet(fromDatasetName).toDataSet(toDatasetName).build();
             response = dsnCopy.copyCommon(dsnCopyInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
@@ -126,20 +126,20 @@ public class DsnCopyExp extends TstZosConnection {
      * sets the copyAllMember variable true to indicate that the copy operation will be performed
      * on a partition dataset to another partition dataset copying all its members to the target.
      *
-     * @param connection      ZosConnection object
-     * @param fromDataSetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
-     * @param toDataSetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
+     * @param connection      for connection information, see ZosConnection object
+     * @param fromDatasetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
+     * @param toDatasetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
      * @author Frank Giordano
      */
-    public static void copyFullPartitionDatasetByCopyParams(ZosConnection connection, String fromDataSetName,
-                                                            String toDataSetName) {
+    public static void copyFullPartitionDatasetByCopyParams(ZosConnection connection, String fromDatasetName,
+                                                            String toDatasetName) {
         Response response;
         try {
             DsnCopy dsnCopy = new DsnCopy(connection);
             // 'replace' here will be true by default if not specified in the builder.
             DsnCopyInputData dsnCopyInputData = new DsnCopyInputData.Builder()
-                    .fromDataSet(fromDataSetName)
-                    .toDataSet(toDataSetName)
+                    .fromDataSet(fromDatasetName)
+                    .toDataSet(toDatasetName)
                     .copyAllMembers(true).build();
             response = dsnCopy.copyCommon(dsnCopyInputData);
         } catch (ZosmfRequestException e) {
@@ -188,24 +188,24 @@ public class DsnCreateExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        String dataSetName = "xxx";
+        String datasetName = "xxx";
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        createPartitionDataSet(dataSetName);
+        createPartitionDataSet(datasetName);
         dataSetName = "xxx";
-        createSequentialDataSet(dataSetName);
+        createSequentialDataSet(datasetName);
     }
 
     /**
      * Create a new sequential dataset.
      *
-     * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
+     * @param datasetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @author Frank Giordano
      */
-    public static void createSequentialDataSet(String dataSetName) {
+    public static void createSequentialDataSet(String datasetName) {
         Response response;
         try {
             DsnCreate dsnCreate = new DsnCreate(connection);
-            response = dsnCreate.create(dataSetName, sequential());
+            response = dsnCreate.create(datasetName, sequential());
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -220,14 +220,14 @@ public class DsnCreateExp extends TstZosConnection {
     /**
      * Create a new partition dataset.
      *
-     * @param dataSetName name of a dataset to create (e.g. 'DATASET.LIB')
+     * @param datasetName name of a dataset to create (e.g. 'DATASET.LIB')
      * @author Frank Giordano
      */
-    public static void createPartitionDataSet(String dataSetName) {
+    public static void createPartitionDataSet(String datasetName) {
         Response response;
         try {
             DsnCreate dsnCreate = new DsnCreate(connection);
-            response = dsnCreate.create(dataSetName, partitioned());
+            response = dsnCreate.create(datasetName, partitioned());
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -367,15 +367,15 @@ public class DsnGetInfoExp extends TstZosConnection {
     /**
      * Retrieve dataset information.
      *
-     * @param connection  ZosConnection object
-     * @param dataSetName name of a dataset
+     * @param connection  for connection information, see ZosConnection object
+     * @param datasetName name of a dataset
      * @return Dataset object
      * @author Frank Giordano
      */
-    public static Dataset getDataSetInfo(ZosConnection connection, String dataSetName) {
+    public static Dataset getDataSetInfo(ZosConnection connection, String datasetName) {
         try {
             DsnGet dsnGet = new DsnGet(connection);
-            return dsnGet.getDsnInfo(dataSetName);
+            return dsnGet.getDsnInfo(datasetName);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -420,24 +420,33 @@ public class DsnDeleteExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        String dataSetName = "xxx";
-        String member = "xxx";
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        deleteDataSet(dataSetName);
-        deleteMember(dataSetName, member);
+
+        String datasetName = "xxx";
+        deleteDataset(connection, datasetName);
+
+        datasetName = "xxx";
+        String memberName = "xx";
+        deleteMember(connection, datasetName, memberName);
+
+        datasetName = "xxx";
+        String volume = "xxx";
+        deleteUncataloged(connection, datasetName, volume);
     }
 
     /**
-     * Delete a dataset
+     * Delete a sequential or partitioned dataset (PDS).
      *
-     * @param dataSetName name of a dataset to delete (e.g. 'DATASET.LIB')
+     * @param connection  for connection information, see ZosConnection object
+     * @param datasetName name of a dataset to delete (e.g. 'DATASET.LIB')
      * @author Frank Giordano
      */
-    public static void deleteDataSet(String dataSetName) {
+    public static void deleteDataset(ZosConnection connection, String datasetName) {
         Response response;
         try {
-            DsnDelete zosDsn = new DsnDelete(connection);
-            response = zosDsn.delete(DsnDeleteInputData.forDataset(dataSetName));
+            DsnDelete dsnDelete = new DsnDelete(connection);
+            DsnDeleteInputData deleteInputData = DsnDeleteInputData.forDataset(datasetName);
+            response = dsnDelete.delete(deleteInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -450,17 +459,19 @@ public class DsnDeleteExp extends TstZosConnection {
     }
 
     /**
-     * Delete a partition dataset member
+     * Delete a member within a partitioned dataset (PDS).
      *
-     * @param dataSetName name of a dataset where the member should be located (e.g. 'DATASET.LIB')
-     * @param member      name of member to delete
+     * @param connection  for connection information, see ZosConnection object
+     * @param datasetName partitioned dataset containing the member
+     * @param memberName  name of member to delete
      * @author Frank Giordano
      */
-    public static void deleteMember(String dataSetName, String member) {
+    public static void deleteMember(ZosConnection connection, String datasetName, String memberName) {
         Response response;
         try {
-            DsnDelete zosDsn = new DsnDelete(connection);
-            response = zosDsn.delete(DsnDeleteInputData.forMember(dataSetName, member));
+            DsnDelete dsnDelete = new DsnDelete(connection);
+            DsnDeleteInputData deleteInputData = DsnDeleteInputData.forMember(datasetName, memberName);
+            response = dsnDelete.delete(deleteInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -472,6 +483,30 @@ public class DsnDeleteExp extends TstZosConnection {
         System.out.println(response.toString());
     }
 
+    /**
+     * Delete an uncataloged dataset residing on a specific volume.
+     *
+     * @param connection  for connection information, see ZosConnection object
+     * @param datasetName name of a dataset to delete (e.g. 'DATASET.LIB')
+     * @param volume      volume serial the dataset resides on (e.g. 'VOL001')
+     * @author Frank Giordano
+     */
+    public static void deleteUncataloged(ZosConnection connection, String datasetName, String volume) {
+        Response response;
+        try {
+            DsnDelete dsnDelete = new DsnDelete(connection);
+            DsnDeleteInputData deleteInputData = DsnDeleteInputData.forUncataloged(datasetName, volume);
+            response = dsnDelete.delete(deleteInputData);
+        } catch (ZosmfRequestException e) {
+            String errMsg = e.getMessage();
+            if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
+                errMsg = e.getResponse().getResponsePhraseAsString().orElse(errMsg);
+            }
+            throw new RuntimeException(errMsg, e);
+        }
+
+        System.out.println(response.toString());
+    }
 
 }
 `````
@@ -493,8 +528,6 @@ import zowe.client.sdk.zosfiles.dsn.methods.DsnUpdate;
  * Class example to showcase Update dataset and member functionality via DsnUpdate class.
  *
  * @author Frank Giordano
- * @author Charishma1707
- * @author Shaurya2k06
  * @version 7.0
  */
 public class DsnUpdateExp extends TstZosConnection {
@@ -513,25 +546,28 @@ public class DsnUpdateExp extends TstZosConnection {
         String memberName = "xxx";
         String newMemberName = "xxx";
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
-        renameDataSet(datasetName, newDatasetName);
+        renameDataset(datasetName, newDatasetName);
         renameMember(datasetName, memberName, newMemberName);
-        deleteMigratedDataSet(datasetName);
-        deleteMigratedDataSetWithOptions(datasetName);
-        recallMigratedDataSet(datasetName);
-        recallMigratedDataSetWithWait(datasetName);
+        deleteMigratedDataset(datasetName);
+        deleteMigratedDatasetWithOptions(datasetName);
+        recallMigratedDataset(datasetName);
+        recallMigratedDatasetWithWait(datasetName);
     }
 
     /**
-     * Rename a dataset
+     * Rename a dataset.
      *
-     * @param datasetName    existing dataset name
-     * @param newDatasetName new dataset name
+     * @param connection             for connection information, see ZosConnection object
+     * @param sourceDatasetName      existing dataset name
+     * @param destinationDatasetName new dataset nameo
      */
-    public static void renameDataSet(String datasetName, String newDatasetName) {
+    public static void renameDataset(ZosConnection connection, String sourceDatasetName,
+                                     String destinationDatasetName) {
         Response response;
         try {
             DsnUpdate dsnUpdate = new DsnUpdate(connection);
-            DsnRenameInputData renameInputData = DsnRenameInputData.forDataset(datasetName, newDatasetName);
+            DsnRenameInputData renameInputData = DsnRenameInputData.forDataset(
+                    sourceDatasetName, destinationDatasetName);
             response = dsnUpdate.rename(renameInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
@@ -540,21 +576,25 @@ public class DsnUpdateExp extends TstZosConnection {
             }
             throw new RuntimeException(errMsg, e);
         }
+
         System.out.println(response.toString());
     }
 
     /**
-     * Rename a member within a partitioned dataset
+     * Rename a member within a partitioned dataset (PDS).
      *
-     * @param datasetName    partitioned dataset containing the member
-     * @param memberName     existing member name
-     * @param newMemberName  new member name
+     * @param connection            for connection information, see ZosConnection object
+     * @param datasetName           partitioned dataset containing the member
+     * @param sourceMemberName      existing member name
+     * @param destinationMemberName new member name
      */
-    public static void renameMember(String datasetName, String memberName, String newMemberName) {
+    public static void renameMember(ZosConnection connection, String datasetName,
+                                    String sourceMemberName, String destinationMemberName) {
         Response response;
         try {
             DsnUpdate dsnUpdate = new DsnUpdate(connection);
-            DsnRenameInputData renameInputData = DsnRenameInputData.forMember(datasetName, memberName, newMemberName);
+            DsnRenameInputData renameInputData = DsnRenameInputData.forMember(
+                    datasetName, sourceMemberName, destinationMemberName);
             response = dsnUpdate.rename(renameInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
@@ -563,19 +603,21 @@ public class DsnUpdateExp extends TstZosConnection {
             }
             throw new RuntimeException(errMsg, e);
         }
+
         System.out.println(response.toString());
     }
+
 
     /**
      * Delete a migrated dataset
      *
-     * @param dataSetName name of a migrated dataset to delete
+     * @param datasetName name of a migrated dataset to delete
      */
-    public static void deleteMigratedDataSet(String dataSetName) {
+    public static void deleteMigratedDataset(String datasetName) {
         Response response;
         try {
             DsnUpdate dsnUpdate = new DsnUpdate(connection);
-            response = dsnUpdate.deleteMigrated(dataSetName);
+            response = dsnUpdate.deleteMigrated(datasetName);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -589,13 +631,13 @@ public class DsnUpdateExp extends TstZosConnection {
     /**
      * Delete a migrated dataset with options (wait and purge)
      *
-     * @param dataSetName name of a migrated dataset to delete
+     * @param datasetName name of a migrated dataset to delete
      */
-    public static void deleteMigratedDataSetWithOptions(String dataSetName) {
+    public static void deleteMigratedDatasetWithOptions(String datasetName) {
         Response response;
         try {
             DsnUpdate dsnUpdate = new DsnUpdate(connection);
-            response = dsnUpdate.deleteMigrated(dataSetName, true, true);
+            response = dsnUpdate.deleteMigrated(datasetName, true, true);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -609,13 +651,13 @@ public class DsnUpdateExp extends TstZosConnection {
     /**
      * Recall a migrated dataset
      *
-     * @param dataSetName name of a migrated dataset to recall
+     * @param datasetName name of a migrated dataset to recall
      */
-    public static void recallMigratedDataSet(String dataSetName) {
+    public static void recallMigratedDataset(String datasetName) {
         Response response;
         try {
             DsnUpdate dsnUpdate = new DsnUpdate(connection);
-            response = dsnUpdate.recallMigrated(dataSetName);
+            response = dsnUpdate.recallMigrated(datasetName);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -631,7 +673,7 @@ public class DsnUpdateExp extends TstZosConnection {
      *
      * @param dataSetName name of a migrated dataset to recall
      */
-    public static void recallMigratedDataSetWithWait(String dataSetName) {
+    public static void recallMigratedDatasetWithWait(String dataSetName) {
         Response response;
         try {
             DsnUpdate dsnUpdate = new DsnUpdate(connection);
@@ -696,15 +738,15 @@ public class DsnGetExp extends TstZosConnection {
     /**
      * Download a dataset member.
      *
-     * @param connection ZosConnection object
-     * @param dsName     name of a dataset
-     * @param memName    member name that exists within the specified dataset name
+     * @param connection    for connection information, see ZosConnection object
+     * @param datasetName   name of a dataset
+     * @param memberName    member name that exists within the specified dataset name
      * @param dsnDownloadInputData     download parameter object
      * @author Leonid Baranov
      */
-    public static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
+    public static void downloadDsnMember(ZosConnection connection, String datasetName, String memberName,
                                          DsnDownloadInputData dsnDownloadInputData) {
-        try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", dsName, memName), dsnDownloadInputData)) {
+        try (InputStream inputStream = new DsnGet(connection).get(String.format("%s(%s)", datasetName, memberName), dsnDownloadInputData)) {
             System.out.println(getTextStreamData(inputStream));
         } catch (ZosmfRequestException e) {
             throw new RuntimeException(getByteResponseStatus(e));
@@ -716,7 +758,7 @@ public class DsnGetExp extends TstZosConnection {
     /**
      * Download a sequential dataset.
      *
-     * @param connection ZosConnection object
+     * @param connection for connection information, see ZosConnection object
      * @param dsName     name of a sequential dataset
      * @param dsnDownloadInputData     download parameter object
      * @author Frank Giordano
@@ -806,27 +848,27 @@ public class DsnListExp extends TstZosConnection {
      */
     public static void main(String[] args) {
         String dataSetMask = "xxx";
-        String dataSetName = "xxx";
+        String datasetName = "xxx";
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         DsnListExp.listDsn(connection, dataSetMask);
         DsnListExp.listDsnVol(connection, dataSetMask);
-        DsnListExp.listMembersWithAllAttributes(connection, dataSetName);
-        DsnListExp.listMembers(connection, dataSetName);
+        DsnListExp.listMembersWithAllAttributes(connection, datasetName);
+        DsnListExp.listMembers(connection, datasetName);
     }
 
     /**
      * List out all members and its attribute values of the given data set
      *
-     * @param connection  ZosConnection object
-     * @param dataSetName name of a dataset
+     * @param connection  for connection information, see ZosConnection object
+     * @param datasetName name of a dataset
      * @author Leonid Baranov
      */
-    public static void listMembersWithAllAttributes(ZosConnection connection, String dataSetName) {
+    public static void listMembersWithAllAttributes(ZosConnection connection, String datasetName) {
         List<Member> datasets;
         try {
             DsnListInputData dsnListInputData = new DsnListInputData.Builder().attribute(AttributeType.BASE).build();
             DsnList dsnList = new DsnList(connection);
-            datasets = dsnList.getMembers(dataSetName, dsnListInputData);
+            datasets = dsnList.getMembers(datasetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -840,16 +882,16 @@ public class DsnListExp extends TstZosConnection {
     /**
      * List out all members of the given data set
      *
-     * @param connection  ZosConnection object
-     * @param dataSetName name of a dataset
+     * @param connection  for connection information, see ZosConnection object
+     * @param datasetName name of a dataset
      * @author Leonid Baranov
      */
-    public static void listMembers(ZosConnection connection, String dataSetName) {
+    public static void listMembers(ZosConnection connection, String datasetName) {
         List<Member> datasets;
         try {
             DsnListInputData dsnListInputData = new DsnListInputData.Builder().attribute(AttributeType.MEMBER).build();
             DsnList dsnList = new DsnList(connection);
-            datasets = dsnList.getMembers(dataSetName, dsnListInputData);
+            datasets = dsnList.getMembers(datasetName, dsnListInputData);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -863,7 +905,7 @@ public class DsnListExp extends TstZosConnection {
     /**
      * List out all data sets of the given data set. Each dataset returned will contain all of its properties.
      *
-     * @param connection  ZosConnection object
+     * @param connection  for connection information, see ZosConnection object
      * @param dataSetName name of a dataset
      * @author Leonid Baranov
      */
@@ -886,7 +928,7 @@ public class DsnListExp extends TstZosConnection {
     /**
      * List out all data sets of the given data set. Each dataset returned will contain its volume property.
      *
-     * @param connection  ZosConnection object
+     * @param connection  for connection information, see ZosConnection object
      * @param dataSetName name of a dataset
      * @author Frank Giordano
      */
@@ -940,28 +982,28 @@ public class DsnWriteExp extends TstZosConnection {
      * @author Leonid Baranov
      */
     public static void main(String[] args) {
-        String dataSetName = "xxx";
+        String datasetName = "xxx";
         String datasetSeqName = "xxx";
         String member = "xxx";
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
         var content = "NEW CONTENT\nTHE SECOND LINE UPDATED";
-        DsnWriteExp.writeToDsnMember(dataSetName, member, content);
+        DsnWriteExp.writeToDsnMember(datasetName, member, content);
         DsnWriteExp.writeToDsnSequential(datasetSeqName, content);
     }
 
     /**
      * Write to the given member name specified replacing its content. If it does exist, it will be created.
      *
-     * @param dataSetName name of a dataset where the member should be located (e.g. 'DATASET.LIB')
+     * @param datasetName name of a dataset where the member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to write
      * @param content     content for write
      * @author Frank Giordano
      */
-    public static void writeToDsnMember(String dataSetName, String member, String content) {
+    public static void writeToDsnMember(String datasetName, String member, String content) {
         Response response;
         try {
             DsnWrite dsnWrite = new DsnWrite(connection);
-            response = dsnWrite.write(dataSetName, member, content);
+            response = dsnWrite.write(datasetName, member, content);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
@@ -975,15 +1017,15 @@ public class DsnWriteExp extends TstZosConnection {
     /**
      * Write to the given content to sequential dataset.
      *
-     * @param dataSetName name of sequential dataset (e.g. 'DATASET.LIB')
+     * @param datasetName name of sequential dataset (e.g. 'DATASET.LIB')
      * @param content     content for write
      * @author Frank Giordano
      */
-    public static void writeToDsnSequential(String dataSetName, String content) {
+    public static void writeToDsnSequential(String datasetName, String content) {
         Response response;
         try {
             DsnWrite dsnWrite = new DsnWrite(connection);
-            response = dsnWrite.write(dataSetName, content);
+            response = dsnWrite.write(datasetName, content);
         } catch (ZosmfRequestException e) {
             String errMsg = e.getMessage();
             if (e.getResponse() != null && e.getResponse().hasTextResponsePhrase()) {
