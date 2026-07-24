@@ -26,7 +26,6 @@ import zowe.client.sdk.zosfiles.dsn.types.DeleteType;
  *
  * @author Leonid Baranov
  * @author Frank Giordano
- * @author Jorge Samaniego
  * @version 7.0
  */
 public class DsnDelete {
@@ -89,9 +88,7 @@ public class DsnDelete {
             url.append(datasetName).append("(").append(memberName).append(")");
         } else if (deleteInputData.getType() == DeleteType.UNCATALOGED) {
             final String volume = EncodeUtils.encodeURIComponent(deleteInputData.getVolume());
-            url.append("-(").append(volume).append(")")
-                    .append(UrlConstants.URL_PATH_DELIM)
-                    .append(datasetName);
+            url.append("-(").append(volume).append(")").append(UrlConstants.URL_PATH_DELIM).append(datasetName);
         }
 
         request.setUrl(url.toString());
