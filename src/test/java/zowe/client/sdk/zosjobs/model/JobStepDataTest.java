@@ -11,15 +11,12 @@ package zowe.client.sdk.zosjobs.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Class containing unit tests for JobStepData.
  *
- * @author Your Name
+ * @author Hiba Bensaid
  * @version 7.0
  */
 public class JobStepDataTest {
@@ -29,7 +26,6 @@ public class JobStepDataTest {
         final JobStepData jobStepData = new JobStepData(
                 true, "SY1", 1L, "IBMUSER", "MYPROG", "STEP1",
                 "/usr/bin/prog", "PROC1", "CC 0000");
-
         assertNotNull(jobStepData);
         assertTrue(jobStepData.isActive());
         assertEquals("SY1", jobStepData.getSmfid());
@@ -47,10 +43,9 @@ public class JobStepDataTest {
     }
 
     @Test
-    public void tstJobStepDataWithNullValuesDefaultsToEmptyString() {
+    public void tstJobStepDataWithNullValuesDefaultsToEmptyStringSuccess() {
         final JobStepData jobStepData = new JobStepData(
                 false, null, null, null, null, null, null, null, null);
-
         assertFalse(jobStepData.isActive());
         assertEquals("", jobStepData.getSmfid());
         assertEquals(0L, jobStepData.getStepNumber());
