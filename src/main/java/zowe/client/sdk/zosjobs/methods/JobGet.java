@@ -118,7 +118,7 @@ public class JobGet {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
                 UrlConstants.URL_PATH_DELIM +
-                commonInputData.getJobId().get() +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobId().get()) +
                 JobsConstants.RESOURCE_SPOOL_FILES +
                 JobsConstants.RESOURCE_JCL_CONTENT +
                 JobsConstants.RESOURCE_SPOOL_CONTENT;
