@@ -26,7 +26,7 @@ With the following team configuration:
 
 To retrieve the default profile of type "zosmf" with the credentials from the credential store, perform the following:
 
-ProfileDao profile = teamConfig.getDefaultProfile ("zosmf");
+ProfileDao profile = teamConfig.getDefaultProfile("zosmf");
 
 This should return the profile named "frank" with its attributes and credentials.
 
