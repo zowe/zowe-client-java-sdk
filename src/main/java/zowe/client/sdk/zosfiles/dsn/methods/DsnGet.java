@@ -129,7 +129,7 @@ public class DsnGet {
                 UrlConstants.URL_PATH_DELIM;
 
         if (downloadInputData.getVolume().isPresent()) {
-            url += "-(" + downloadInputData.getVolume().get() + ")/";
+            url += "-(" + EncodeUtils.encodeURIComponent(downloadInputData.getVolume().get()) + ")/";
         }
         url += EncodeUtils.encodeURIComponent(targetName);
 

@@ -78,6 +78,18 @@ public class DsnGetTest {
     }
 
     @Test
+    public void tstDsnGetWithVolumeSuccess() throws ZosmfRequestException, IOException {
+        final DsnGet dsnGet = new DsnGet(connection, mockGetRequest);
+        final DsnDownloadInputData downloadInputData = new DsnDownloadInputData.Builder()
+                .binary(true)
+                .volume("VOL001")
+                .build();
+        final InputStream inputStream = dsnGet.get("TEST.DATASET", downloadInputData);
+        assertEquals("test data", new String(inputStream.readAllBytes()));
+        assertEquals("https://1:443/zosmf/restfiles/ds/-(VOL001)/TEST.DATASET", mockGetRequest.getUrl());
+    }
+
+    @Test
     public void tstDsnGetTokenSuccess() throws ZosmfRequestException, IOException {
         final DsnGet dsnGet = new DsnGet(connection, mockGetRequestToken);
         final DsnDownloadInputData downloadInputData = new DsnDownloadInputData.Builder().binary(true).build();
