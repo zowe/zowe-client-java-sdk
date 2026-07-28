@@ -11,7 +11,6 @@ package zowe.client.sdk.rest;
 
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
-import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,11 +56,11 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
         HttpResponse<JsonNode> reply;
         try {
             if (body == null) {
-                reply = token != null ? Unirest.delete(url).cookie(token).headers(headers).asJson() :
-                        Unirest.delete(url).headers(headers).asJson();
+                reply = token != null ? unirest.delete(url).cookie(token).headers(headers).asJson() :
+                        unirest.delete(url).headers(headers).asJson();
             } else {
-                reply = token != null ? Unirest.delete(url).cookie(token).headers(headers).body(body).asJson() :
-                        Unirest.delete(url).headers(headers).body(body).asJson();
+                reply = token != null ? unirest.delete(url).cookie(token).headers(headers).body(body).asJson() :
+                        unirest.delete(url).headers(headers).body(body).asJson();
             }
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
