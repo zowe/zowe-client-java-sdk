@@ -7,10 +7,9 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.teamconfig;
+package zowe.client.sdk.teamconfig.keytar;
 
 import org.junit.jupiter.api.Test;
-import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -7,12 +7,10 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.teamconfig;
+package zowe.client.sdk.teamconfig.keytar;
 
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.teamconfig.exception.TeamConfigException;
-import zowe.client.sdk.teamconfig.keytar.KeyTarConfig;
-import zowe.client.sdk.teamconfig.keytar.KeyTarImpl;
 
 import java.util.List;
 
