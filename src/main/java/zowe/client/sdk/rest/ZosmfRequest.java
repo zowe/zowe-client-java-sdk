@@ -177,7 +177,7 @@ public abstract class ZosmfRequest {
                                                    final String certFilePath,
                                                    final String certPassword) {
         try {
-            System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
+            instance.config().disableHostNameVerification(true);
 
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             try (FileInputStream fileInputStream = new FileInputStream(certFilePath)) {
