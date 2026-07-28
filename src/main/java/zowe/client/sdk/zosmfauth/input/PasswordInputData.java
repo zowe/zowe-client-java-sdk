@@ -89,8 +89,8 @@ public class PasswordInputData {
     public String toString() {
         return "PasswordInputData{" +
                 "userId='" + userId + '\'' +
-                ", oldPwd='" + oldPwd + '\'' +
-                ", newPwd='" + newPwd + '\'' +
+                ", oldPwd='" + ((oldPwd == null || oldPwd.isEmpty()) ? "" : "*****") + '\'' +
+                ", newPwd='" + ((newPwd == null || newPwd.isEmpty()) ? "" : "*****") + '\'' +
                 '}';
     }
 
