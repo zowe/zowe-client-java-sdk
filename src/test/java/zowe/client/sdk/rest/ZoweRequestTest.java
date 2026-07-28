@@ -20,6 +20,9 @@ import zowe.client.sdk.core.ZosConnectionFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -181,6 +184,29 @@ public class ZoweRequestTest {
                 .createTokenConnection("host", 443, new Cookie("hello", "world"));
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
         assertNull(request.getHeaders().get("Authorization"));
+    }
+
+    @Test
+    public void tstZoweRequestSetHeadersClearsPreviousCustomHeadersSuccess() {
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("host", 443, "user", "password");
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+
+        final Map<String, String> firstHeaders = new HashMap<>();
+        firstHeaders.put("X-Custom-First", "one");
+        request.setHeaders(firstHeaders);
+        assertEquals("one", request.getHeaders().get("X-Custom-First"));
+        assertNotNull(request.getHeaders().get("Authorization"));
+        assertNotNull(request.getHeaders().get("Content-Type"));
+
+        final Map<String, String> secondHeaders = new HashMap<>();
+        secondHeaders.put("X-Custom-Second", "two");
+        request.setHeaders(secondHeaders);
+
+        assertNull(request.getHeaders().get("X-Custom-First"));
+        assertEquals("two", request.getHeaders().get("X-Custom-Second"));
+        assertNotNull(request.getHeaders().get("Authorization"));
+        assertEquals("application/json", request.getHeaders().get("Content-Type"));
     }
 
     @Test

@@ -84,6 +84,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private void initialize() {
+        this.headers.clear();
         if (connection == null || connection.getAuthType() == null) {
             return;
         }
@@ -312,7 +313,6 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     public void setHeaders(final Map<String, String> headers) {
-        this.headers.clear();
         this.initialize();
         this.headers.putAll(headers);
     }
