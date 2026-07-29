@@ -213,8 +213,18 @@ For a self-signed certificate, you will need to enable inSecure processing by se
 to true value.  
       
 See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
-  
-## Requirements  
+
+This same `zowe.sdk.allow.insecure.connection` system property also controls SSH host key verification for the zosuss package (see below). By default, both are verified/enforced; setting this property to `true` disables verification for both and is logged as a warning each time it happens, so only use it when the risk (a man-in-the-middle presenting a forged certificate or host key) is understood and accepted, such as in isolated test environments.
+
+BASIC and TOKEN authentication always verify the server's TLS certificate using the JVM's default trust store and have no insecure opt-out - self-signed certificates are only a concern for SSL (client-certificate) authentication, so the opt-out above only applies there and to SSH host key checking.
+
+## SSH Connections (USS Commands)
+
+The zosuss package (see [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosuss/README.md)) executes commands over SSH using SshConnection/UssCmd. By default, the target host's SSH host key is verified against the current user's `~/.ssh/known_hosts` file (StrictHostKeyChecking=yes), and unknown or changed host keys cause the connection to fail. Populate that file first, for example by connecting once with a standard ssh client or via `ssh-keyscan`.
+
+To bypass host key verification, set the `zowe.sdk.allow.insecure.connection` system property described above to `true`. This should only be done when the risk is understood, since it allows any host key, including one presented by a man-in-the-middle attacker.
+
+## Requirements
 
     Compatible with all Java versions 11 and above.
     z/OSMF installed on your backend z/OS instance.  
