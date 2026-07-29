@@ -71,22 +71,22 @@ public class DsnCreate {
     /**
      * Creates a new dataset with specified parameters
      *
-     * @param dataSetName     name of a dataset to create (e.g. 'DATASET.LIB')
+     * @param datasetName     name of a dataset to create (e.g. 'DATASET.LIB')
      * @param createInputData to create dataset parameters, see DsnCreateInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public Response create(final String dataSetName, final DsnCreateInputData createInputData)
+    public Response create(final String datasetName, final DsnCreateInputData createInputData)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkNullParameter(createInputData, "createInputData");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
                 UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(dataSetName);
+                EncodeUtils.encodeURIComponent(datasetName);
 
         final Map<String, Object> createMap = new HashMap<>();
         createInputData.getVolser().ifPresent(v -> createMap.put("volser", v));
