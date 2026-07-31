@@ -47,23 +47,25 @@ public class UssCmdTest {
 
     @Test
     public void tstIssueCommandReturnsOutputSuccess() throws Exception {
-        // Mock JSch Session and ChannelExec
         Session mockSession = mock(Session.class);
         ChannelExec mockChannel = mock(ChannelExec.class);
 
-        // Simulate channel disconnect after one loop
-        when(mockChannel.isConnected()).thenReturn(true, false);
+        when(mockChannel.isClosed()).thenReturn(false, true);
+        when(mockChannel.isConnected()).thenReturn(true);
+        when(mockChannel.getExitStatus()).thenReturn(0);
+
         when(mockSession.openChannel("exec")).thenReturn(mockChannel);
 
-        try (MockedConstruction<UssCmd.ManagedSession> ignored1 = Mockito.mockConstruction(UssCmd.ManagedSession.class,
-                (mock, context) -> when(mock.get()).thenReturn(mockSession));
-             MockedConstruction<UssCmd.ManagedChannel> ignored2 = Mockito.mockConstruction(UssCmd.ManagedChannel.class,
-                     (mock, context) -> {
-                         // Grab the real OutputStream passed in constructor
-                         OutputStream os = (OutputStream) context.arguments().get(2);
-                         os.write("mock output".getBytes());
-                         when(mock.get()).thenReturn(mockChannel);
-                     })) {
+        try (MockedConstruction<UssCmd.ManagedSession> ignored1 =
+                     Mockito.mockConstruction(UssCmd.ManagedSession.class,
+                             (mock, context) -> when(mock.get()).thenReturn(mockSession));
+             MockedConstruction<UssCmd.ManagedChannel> ignored2 =
+                     Mockito.mockConstruction(UssCmd.ManagedChannel.class,
+                             (mock, context) -> {
+                                 OutputStream os = (OutputStream) context.arguments().get(2);
+                                 os.write("mock output".getBytes());
+                                 when(mock.get()).thenReturn(mockChannel);
+                             })) {
 
             UssCmd cmd = new UssCmd(mockConnection);
             String result = cmd.issueCommand("echo test", 1000);

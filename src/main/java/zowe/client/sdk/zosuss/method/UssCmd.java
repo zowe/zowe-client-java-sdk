@@ -83,9 +83,27 @@ public class UssCmd {
              final ManagedSession session = new ManagedSession(connection, timeout);
              final ManagedChannel channel = new ManagedChannel(session.get(), command, responseStream)) {
 
-            // Wait for channel execution to complete
-            while (channel.get().isConnected()) {
-                WaitUtil.wait(1000);
+            final long startTime = System.currentTimeMillis();
+
+            // loop checks isClosed() to catch normal process completion
+            while (!channel.get().isClosed()) {
+                WaitUtil.wait(100);
+
+                // protect against network hangs or stuck processes
+                if ((System.currentTimeMillis() - startTime) > timeout) {
+                    throw new UssCmdException(
+                            "Command execution timed out after " + timeout + " ms",
+                            new java.util.concurrent.TimeoutException("SSH execution limit exceeded.")
+                    );
+                }
+            }
+
+            // verify the remote shell actually finished cleanly
+            if (channel.get().getExitStatus() == -1 && !channel.get().isConnected()) {
+                throw new UssCmdException(
+                        "Network connection lost during command execution.",
+                        new java.io.IOException("Remote SSH peer disconnected unexpectedly.")
+                );
             }
 
             return responseStream.toString();
