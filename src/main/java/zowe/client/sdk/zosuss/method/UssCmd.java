@@ -31,10 +31,12 @@ import java.util.Properties;
  * UssCmd Class provides a way to execute USS commands via ssh connection
  * <p>
  * The underlying SSH session verifies the z/OS host's SSH host key against the current user's
- * default known_hosts file ({@code ~/.ssh/known_hosts}) and rejects unknown or changed host keys
- * (StrictHostKeyChecking=yes). This means the target host's key must already be present in that
- * known_hosts file (for example, by connecting once with a standard ssh client, or via
- * {@code ssh-keyscan}) before {@link #issueCommand(String, int)} will succeed.
+ * default known_hosts file inside their home directory ({@code .ssh/known_hosts}, e.g.,
+ * {@code ~/.ssh/known_hosts} on Unix or {@code %USERPROFILE%\.ssh\known_hosts} on Windows)
+ * and rejects unknown or changed host keys (StrictHostKeyChecking=yes). This means the
+ * target host's key must already be present in that known_hosts file (for example, by
+ * connecting once with a standard ssh client, or via {@code ssh-keyscan}) before
+ * {@link #issueCommand(String, int)} will succeed.
  * <p>
  * If host key verification cannot be satisfied and the risk is understood, set the system property
  * "zowe.sdk.allow.insecure.connection" to {@code true} (the same opt-in used elsewhere in the SDK for
@@ -63,10 +65,12 @@ public class UssCmd {
     /**
      * Executes USS command(s) specified within a string value
      * <p>
-     * The SSH host key of the target system must already be present in the current user's
-     * {@code ~/.ssh/known_hosts} file, or this call fails with a JSchException wrapped in
-     * UssCmdException (host key verification is enabled by default; see the class-level javadoc for
-     * the "zowe.sdk.allow.insecure.connection" opt-out).
+     * The SSH host key of the target system must already be present in the SSH host key against
+     * the current user's default known_hosts file inside their home directory ({@code .ssh/known_hosts},
+     * e.g., {@code ~/.ssh/known_hosts} on Unix or {@code %USERPROFILE%\.ssh\known_hosts} on Windows),
+     * or this call fails with a JSchException wrapped in UssCmdException with a message like:
+     * 'reject HostKey'. The host key verification is enabled by default; see the class-level Javadoc
+     * for the "zowe.sdk.allow.insecure.connection" opt-out.
      *
      * @param command string value contains one or more USS commands
      * @param timeout int value in milliseconds for timeout duration on session connection
