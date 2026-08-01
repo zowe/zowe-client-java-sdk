@@ -108,6 +108,9 @@ public final class RestConstant {
      */
     public static final String INSECURE_PROPERTY_NAME = "zowe.sdk.allow.insecure.connection";
 
+    /**
+     * Warning message turning off TLS verification for ssl authentication type
+     */
     public static final String INSECURE_ENABLE_WARNING = INSECURE_PROPERTY_NAME +
             " is enabled; TLS certificate verification is disabled for this connection";
 
