@@ -23,6 +23,27 @@ An example for setting the system property is as follows:
 
 Alternatively, the property can be specified when launching the JVM.
 
+## SSH Exec Channel Environment Profile  
+
+The SSH exec channel used by UssCmd does not automatically load the user's shell profile. As a result,
+environment variables, aliases, and other shell configuration settings defined in files such as /etc/profile
+or ~/.profile may not be available when executing commands remotely.  
+
+If a command requires settings from the user's shell environment, the command string should source the appropriate
+profile files before execution.  
+  
+Example:  
+
+    // The SSH "exec" channel does not load the user's shell profile.
+    // Source the profile before executing the requested command.
+    command = "[ -f /etc/profile ] && . /etc/profile 2>/dev/null; " +
+    "[ -f ~/.profile ] && . ~/.profile 2>/dev/null; " +
+    command;  
+
+This ensures that required environment settings are loaded before the USS command is executed. Applications should
+only source profile files when those environment settings are required, as profile scripts may contain user-specific
+logic or commands that are not intended for non-interactive execution.  
+  
 ## API Example
 
 ````java
