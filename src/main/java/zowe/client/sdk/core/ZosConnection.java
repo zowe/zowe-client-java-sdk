@@ -128,7 +128,7 @@ public final class ZosConnection {
     /**
      * Set user value
      * <p>
-     * This method's access level is private-package
+     * Package-private. Intended for use only by ZosConnectionFactory during construction.
      *
      * @param user string value
      */
@@ -148,7 +148,7 @@ public final class ZosConnection {
     /**
      * Set the password value
      * <p>
-     * This method's access level is private-package
+     * Package-private. Intended for use only by ZosConnectionFactory during construction.
      *
      * @param password string value
      */
@@ -168,7 +168,7 @@ public final class ZosConnection {
     /**
      * Set token value
      * <p>
-     * This method's access level is private-package
+     * Package-private. Intended for use only by ZosConnectionFactory during construction.
      *
      * @param token Cookie object
      */
@@ -188,7 +188,7 @@ public final class ZosConnection {
     /**
      * Set certificate path value
      * <p>
-     * This method's access level is private-package
+     * Package-private. Intended for use only by ZosConnectionFactory during construction.
      *
      * @param certFilePath string value
      */
@@ -208,7 +208,7 @@ public final class ZosConnection {
     /**
      * Set the certificate password value
      * <p>
-     * This method's access level is private-package
+     * Package-private. Intended for use only by ZosConnectionFactory during construction.
      *
      * @param certPassword string value
      */
