@@ -42,6 +42,7 @@ In addition to the MVP milestones, the following releases include further enhanc
 * [Version 6.3.0](https://github.com/zowe/zowe-client-java-sdk/issues/487)  
 * [Version 6.3.3](https://github.com/zowe/zowe-client-java-sdk/issues/499)  
 * [Version 7.0.0](https://github.com/zowe/zowe-client-java-sdk/issues/577)  
+* [Version 7.0.1](https://github.com/zowe/zowe-client-java-sdk/pull/601)
   
 ## Prebuilt API Services     
     
