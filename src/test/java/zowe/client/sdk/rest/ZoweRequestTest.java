@@ -168,6 +168,72 @@ public class ZoweRequestTest {
     }
 
     @Test
+    public void tstZoweRequestInitializeSslSetupInsecureCertPasswordSuccess() {
+        System.setProperty(RestConstant.INSECURE_PROPERTY_NAME, "true");
+        try {
+            final ZosConnection connection = ZosConnectionFactory.createSslConnection("hostInsecure", 443,
+                    "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
+            ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        } catch (Exception e) {
+            fail(e);
+        } finally {
+            System.clearProperty(RestConstant.INSECURE_PROPERTY_NAME);
+        }
+    }
+
+    @Test
+    public void tstZoweRequestInitializeSslSetupInsecureCertPasswordFailure() {
+        System.setProperty(RestConstant.INSECURE_PROPERTY_NAME, "true");
+        try {
+            final ZosConnection connection = ZosConnectionFactory.createSslConnection("hostInsecureFail", 443,
+                    "src/test/resources/certs/badssl.com-client.p12", "dummy");
+            final String errMsg = "keystore password was incorrect";
+            try {
+                ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+            } catch (Exception e) {
+                assertTrue(e.getMessage().contains(errMsg));
+            }
+        } finally {
+            System.clearProperty(RestConstant.INSECURE_PROPERTY_NAME);
+        }
+    }
+
+    @Test
+    public void tstZoweRequestInitializeSslSetupCustomTrustStoreSuccess() {
+        System.setProperty(RestConstant.TRUSTSTORE_PATH_PROPERTY_NAME, "src/test/resources/certs/badssl.com-client.p12");
+        System.setProperty(RestConstant.TRUSTSTORE_PASSWORD_PROPERTY_NAME, "badssl.com");
+        try {
+            final ZosConnection connection = ZosConnectionFactory.createSslConnection("hostTrustStore", 443,
+                    "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
+            ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        } catch (Exception e) {
+            fail(e);
+        } finally {
+            System.clearProperty(RestConstant.TRUSTSTORE_PATH_PROPERTY_NAME);
+            System.clearProperty(RestConstant.TRUSTSTORE_PASSWORD_PROPERTY_NAME);
+        }
+    }
+
+    @Test
+    public void tstZoweRequestInitializeSslSetupCustomTrustStoreFailure() {
+        System.setProperty(RestConstant.TRUSTSTORE_PATH_PROPERTY_NAME, "src/test/resources/certs/badssl.com-client.p12");
+        System.setProperty(RestConstant.TRUSTSTORE_PASSWORD_PROPERTY_NAME, "wrongpassword");
+        try {
+            final ZosConnection connection = ZosConnectionFactory.createSslConnection("hostTrustStoreFail", 443,
+                    "src/test/resources/certs/badssl.com-client.p12", "badssl.com");
+            final String errMsg = "keystore password was incorrect";
+            try {
+                ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+            } catch (Exception e) {
+                assertTrue(e.getMessage().contains(errMsg));
+            }
+        } finally {
+            System.clearProperty(RestConstant.TRUSTSTORE_PATH_PROPERTY_NAME);
+            System.clearProperty(RestConstant.TRUSTSTORE_PASSWORD_PROPERTY_NAME);
+        }
+    }
+
+    @Test
     public void tstZoweRequestInitializeBasicSetupSuccess() {
         final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("host", 443, "user", "password");

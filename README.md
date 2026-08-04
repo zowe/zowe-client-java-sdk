@@ -178,43 +178,79 @@ With three types of authentication available, the AuthType enum class was introd
   
 This enum is used to send it to the ZosConnection constructor denoting the type of authentication to perform.  
 
-For BASIC, the following ZosConnection object is specified to perform BASIC authentication:  
-  
-    ZosConnection connection = ZosConnectionFactory.createBasicConnection("host", "zosmfPort", "user", "password");
-  
-Basic authentication means that the http request contains a BASIC header representing the username and password encrypted.   
-  
-For web TOKEN, the following ZosConnection object is specified:  
-  
-    ZosConnection connection = ZosConnectionFactory.createTokenConnection("host", "port", new Cookie("xxx", "xxx")));
-  
-With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA tokens.  
-  
-See the README.MD in the zosmfauth package for code examples on retrieving an initial token and then using it for further requests without needing user and password information.  
-  
-Web TOKEN support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web TOKEN support in the IBM z/OS Management Facility Configuration Guide.  
+For BASIC, the following ZosConnection object is specified to perform BASIC authentication:
 
-See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.     
-  
-For SSL, the following ZosConnection object is specified:  
+```java
+ZosConnection connection = ZosConnectionFactory.createBasicConnection("host", "zosmfPort", "user", "password");
+```
 
-    ZosConnection connection = ZosConnectionFactory.createSslConnection("host", "port", "c:\file.p12", "certpassword"));
+Basic authentication means that the http request contains a BASIC header representing the username and password encrypted.
+
+For web TOKEN, the following ZosConnection object is specified:
+
+```java 
+ZosConnection connection = ZosConnectionFactory.createTokenConnection("host", "port", new Cookie("xxx", "xxx"));
+```
+
+With the zosmfauth package, ZosmfAuth provides an API (zosmfLogin) to retrieve authentication tokens (a JSON Web and an LTPA TOKEN) on a BASIC authentication request. This package contains an API that can also be used to delete the current store of JSON Web and LPTA tokens.
+
+See the README.MD in the zosmfauth package for code examples on retrieving an initial token and then using it for further requests without needing user and password information.
+
+Web TOKEN support must be enabled on your z/OSMF system. For more information, see Enabling JSON Web TOKEN support in the IBM z/OS Management Facility Configuration Guide.
+
+See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.
+
+For SSL/TLS client certificate authentication (mTLS), create a `ZosConnection` object using a PKCS12 (`.p12`) key store file:
+
+```java
+ZosConnection connection = ZosConnectionFactory.createSslConnection("host", 443, "c:/file.p12", "certpassword");
+```
+
+The `.p12` file houses your client certificate and private key, which z/OSMF uses to authenticate your client application.
+
+For `certFilePath`, specify the location and file name of the `.p12` file. For `certPassword`, specify the password/passphrase for the key store.
+
+### Server Certificate Validation Modes
+
+When validating the z/OSMF server's SSL certificate during an SSL connection, the SDK supports three modes:
+
+**Default Mode (Standard Certificate Authority Validation)**
+  - **How it works**: By default (when no system properties are set), the SDK validates the z/OSMF server certificate against the JVM's standard CA truststore (`cacerts`) and enforces standard hostname verification.
+  - **When to use**: Production or standard enterprise environments where z/OSMF uses a certificate issued by a public CA or an enterprise Root CA installed in your Java runtime's `cacerts`.
+
+**Custom TrustStore (`zowe.sdk.truststore.path`)**
+  - **How it works**: To support self-signed z/OSMF servers securely without using `TRUST_ALL_CERTS`, the SDK allows users to specify a separate TrustStore file (`.p12` or `.jks`) that contains the server's certificate or CA, rather than reusing the client's mTLS `.p12` file (which contains client credentials). Set system property `zowe.sdk.truststore.path` to the path of the server TrustStore and optionally `zowe.sdk.truststore.password`. The SDK loads this TrustStore into a `TrustManagerFactory` to validate the server certificate against it while disabling hostname verification.
+  - **How to set**:    
+
+
+    System.setProperty("zowe.sdk.truststore.path", "/path/to/server-truststore.p12");
+    System.setProperty("zowe.sdk.truststore.password", "truststorePassword"); // Optional
   
-The SDK supports .p12 file format that represents a key-store that houses a certificate.  
+Or via JVM launch argument: `-Dzowe.sdk.truststore.path=/path/to/server-truststore.p12`
+
+  - **When to use**: Staging, testing, or enterprise environments where z/OSMF uses a self-signed or internal CA certificate and you want strict certificate validation without modifying global JVM `cacerts` or disabling TLS verification.
+
+**Insecure Mode (`zowe.sdk.allow.insecure.connection=true`)**
+  - **How it works**: Insecure mode is an explicit, optional developer opt-in (disabled by default) designed specifically to bypass server TLS certificate checks for self-signed test environments when users do not have the server certificate or CA in a truststore file. Setting system property `zowe.sdk.allow.insecure.connection` to `"true"` uses `TRUST_ALL_CERTS` to bypass server certificate validation (similar to `curl -k` or `git config http.sslVerify false`) and disables hostname verification. A prominent warning is logged on connection setup.
+  - **How to set**:  
   
-In the example above, for certFilePath specify a path with a file name representing the location and file name of the .p12 file.  
+
+    System.setProperty("zowe.sdk.allow.insecure.connection", "true");
   
-For certPassword, specify the paraphrase/password used for the key store.  
-  
-For a self-signed certificate, you will need to enable inSecure processing by setting the following system property:  
-  
-    zowe.sdk.allow.insecure.connection  
-  
-to true value.  
-      
-See [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosmfauth/README.md) in zosmfauth package for further details.    
-  
-## Requirements  
+Or via JVM launch argument: `-Dzowe.sdk.allow.insecure.connection=true`
+  - **When to use**: Isolated test, local sandbox, or lab environments when connecting to self-signed z/OSMF servers without a truststore file.
+
+This same `zowe.sdk.allow.insecure.connection` system property also controls SSH host key verification for the zosuss package (see below). By default, both are verified/enforced; setting this property to `true` disables verification for both and is logged as a warning each time it happens, so only use it when the risk (a man-in-the-middle presenting a forged certificate or host key) is understood and accepted, such as in isolated test environments.
+
+BASIC and TOKEN authentication always verify the server's TLS certificate using the JVM's default trust store and have no insecure opt-out - self-signed certificates are only a concern for SSL (client-certificate) authentication, so the options above apply specifically to SSL authentication and SSH host key checking.
+
+## SSH Connections (USS Commands)
+
+The zosuss package (see [README.md](https://github.com/zowe/zowe-client-java-sdk/blob/main/src/main/java/zowe/client/sdk/zosuss/README.md)) executes commands over SSH using SshConnection/UssCmd. By default, the target host's SSH host key is verified against the current user's `~/.ssh/known_hosts` file (StrictHostKeyChecking=yes), and unknown or changed host keys cause the connection to fail. Populate that file first, for example by connecting once with a standard ssh client or via `ssh-keyscan`.
+
+To bypass host key verification, set the `zowe.sdk.allow.insecure.connection` system property described above to `true`. This should only be done when the risk is understood, since it allows any host key, including one presented by a man-in-the-middle attacker.
+
+## Requirements
 
     Compatible with all Java versions 11 and above.
     z/OSMF installed on your backend z/OS instance.  
@@ -281,7 +317,7 @@ Thin JAR (recommended):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>7.0.0</version>
+          <version>7.0.1</version>
         </dependency>
   
 Fat JAR (with dependencies):
@@ -289,7 +325,7 @@ Fat JAR (with dependencies):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>7.0.0</version>
+          <version>7.0.1</version>
           <classifier>jar-with-dependencies</classifier>
         </dependency>  
   
@@ -297,11 +333,11 @@ For a Gradle project add the SDK as a dependency by updating your `build.gradle`
 
 Thin JAR (recommended):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.0'    
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.1'    
 
 Fat JAR (with dependencies):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.0', classifier: 'jar-with-dependencies'
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.1', classifier: 'jar-with-dependencies'
   
 ## Publishing to Maven Central  
   

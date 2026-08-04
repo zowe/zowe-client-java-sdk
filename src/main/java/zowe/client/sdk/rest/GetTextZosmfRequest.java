@@ -10,7 +10,6 @@
 package zowe.client.sdk.rest;
 
 import kong.unirest.core.HttpResponse;
-import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -46,8 +45,8 @@ public class GetTextZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(url, "url");
         HttpResponse<String> reply;
         try {
-            reply = token != null ? Unirest.get(url).cookie(token).headers(headers).asString() :
-                    Unirest.get(url).headers(headers).asString();
+            reply = token != null ? unirest.get(url).cookie(token).headers(headers).asString() :
+                    unirest.get(url).headers(headers).asString();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }

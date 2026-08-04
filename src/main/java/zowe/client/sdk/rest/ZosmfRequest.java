@@ -9,10 +9,7 @@
  */
 package zowe.client.sdk.rest;
 
-import kong.unirest.core.Cookie;
-import kong.unirest.core.HttpResponse;
-import kong.unirest.core.JsonNode;
-import kong.unirest.core.Unirest;
+import kong.unirest.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -22,6 +19,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -31,6 +29,7 @@ import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -51,9 +50,20 @@ public abstract class ZosmfRequest {
      */
     public static final String X_CSRF_ZOSMF_HEADER_VALUE = ZosmfHeaders.HEADERS.get(ZosmfHeaders.X_CSRF_ZOSMF_HEADER).get(1);
     /**
+     * Per-connection Unirest client instances, keyed by ZosConnection (host/port/authType/credentials).
+     * <p>
+     * A dedicated UnirestInstance is spawned and configured (TLS/auth) once per unique connection so that
+     * concurrent requests against different connections never race on JVM-global Unirest configuration.
+     */
+    private static final Map<ZosConnection, UnirestInstance> UNIREST_INSTANCES = new ConcurrentHashMap<>();
+    /**
      * ZosConnection object
      */
     protected final ZosConnection connection;
+    /**
+     * Unirest client instance dedicated to this request's connection
+     */
+    protected final UnirestInstance unirest;
     /**
      * Map of HTTP headers
      */
@@ -75,11 +85,42 @@ public abstract class ZosmfRequest {
      */
     public ZosmfRequest(final ZosConnection connection) {
         this.connection = connection;
+        this.unirest = (connection == null || connection.getAuthType() == null) ?
+                null : UNIREST_INSTANCES.computeIfAbsent(connection, ZosmfRequest::buildUnirestInstance);
         this.initialize();
     }
 
     /**
-     * Initialize the unirest http request object based on an authentication type
+     * Spawn and configure (TLS/auth) a new Unirest client instance dedicated to the given connection.
+     * <p>
+     * Invoked at most once per unique ZosConnection via {@link #UNIREST_INSTANCES}, so this mutates
+     * only the newly spawned instance's own config, never the JVM-global Unirest.config() singleton.
+     *
+     * @param connection for connection information, see ZosConnection object
+     * @return configured UnirestInstance for this connection
+     * @author Frank Giordano
+     */
+    private static UnirestInstance buildUnirestInstance(final ZosConnection connection) {
+        final UnirestInstance instance = Unirest.spawnInstance();
+        instance.config().enableCookieManagement(false);
+        switch (connection.getAuthType()) {
+            case BASIC:
+                LOG.debug("basic authentication type");
+                break;
+            case TOKEN:
+                LOG.debug("token authentication type");
+                break;
+            case SSL:
+                setupSsl(instance, connection);
+                break;
+            default:
+                throw new IllegalStateException("no authentication type found");
+        }
+        return instance;
+    }
+
+    /**
+     * Initialize the http request object's per-request state (headers/token) based on an authentication type
      *
      * @author Frank Giordano
      */
@@ -87,19 +128,17 @@ public abstract class ZosmfRequest {
         if (connection == null || connection.getAuthType() == null) {
             return;
         }
-        Unirest.config().reset();
-        Unirest.config().enableCookieManagement(false);
+        this.headers.clear();
         this.setStandardHeaders();
         this.token = null;
         switch (connection.getAuthType()) {
             case BASIC:
-                setupBasic();
+                headers.put("Authorization", "Basic " + EncodeUtils.encodeBasicAuthCredentials(connection));
                 break;
             case TOKEN:
-                setupToken();
+                this.token = connection.getToken();
                 break;
             case SSL:
-                setupSsl();
                 break;
             default:
                 throw new IllegalStateException("no authentication type found");
@@ -107,56 +146,65 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup authentication BASIC type
-     *
-     * @author Frank Giordano
-     */
-    private void setupBasic() {
-        LOG.debug("basic authentication type");
-        Unirest.config().verifySsl(false);
-        headers.put("Authorization", "Basic " + EncodeUtils.encodeBasicAuthCredentials(connection));
-    }
-
-    /**
-     * Setup authentication TOKEN type
-     *
-     * @author Frank Giordano
-     */
-    private void setupToken() {
-        LOG.debug("token authentication type");
-        Unirest.config().verifySsl(false);
-        this.token = connection.getToken();
-    }
-
-    /**
      * Setup authentication SSL type
      * <p>
-     * With the following system property set "zowe.sdk.allow.insecure.connection",
-     * insecure type for self-signed certificate processing is enabled.
+     * SSL/TLS configuration supports two options for handling server certificate validation:
+     * <ul>
+     *   <li><b>Option 1 (Custom TrustStore):</b> To support self-signed z/OSMF servers securely without
+     *       using {@link RestConstant#TRUST_ALL_CERTS}, the SDK allows specifying a separate TrustStore file
+     *       (.p12 or .jks) that contains the server's certificate/CA, rather than reusing the client's mTLS .p12 file.
+     *       Specified by setting the system property {@value RestConstant#TRUSTSTORE_PATH_PROPERTY_NAME}
+     *       ("zowe.sdk.truststore.path") and optional {@value RestConstant#TRUSTSTORE_PASSWORD_PROPERTY_NAME}
+     *       ("zowe.sdk.truststore.password"). Loads the custom TrustStore into a {@link TrustManagerFactory}
+     *       to validate the server certificate while disabling hostname verification.</li>
+     *   <li><b>Option 2 (Insecure Mode):</b> Enabled implicitly by setting the system property
+     *       {@value RestConstant#INSECURE_PROPERTY_NAME} ("zowe.sdk.allow.insecure.connection") to "true".
+     *       An explicit, optional developer opt-in (disabled by default) designed specifically to bypass
+     *       server TLS checks for self-signed test environments when users do not have the server certificate
+     *       in a truststore. Logs a prominent security warning and uses {@link RestConstant#TRUST_ALL_CERTS}
+     *       to accept any server certificate (similar to {@code curl -k}), while also disabling hostname verification.
+     *       Use only in isolated test or sandbox environments.</li>
+     *   <li><b>Default (Standard Mode):</b> When neither property is set, standard client certificate store
+     *       configuration is applied using the client .p12 certificate file for mTLS, relying on the default
+     *       JVM CA truststore and standard hostname verification for server validation.</li>
+     * </ul>
      *
+     * @param instance   UnirestInstance to configure
+     * @param connection for connection information, see ZosConnection object
      * @author Frank Giordano
      */
-    private void setupSsl() {
+    private static void setupSsl(final UnirestInstance instance, final ZosConnection connection) {
         LOG.debug("ssl authentication type");
+        String trustStorePath = System.getProperty(RestConstant.TRUSTSTORE_PATH_PROPERTY_NAME);
         boolean inSecure = Boolean.parseBoolean(System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
-        if (inSecure) {
-            LOG.debug("insecure enabled");
-            setupSelfSignedCertificate(connection.getCertFilePath(), connection.getCertPassword());
+
+        if (trustStorePath != null && !trustStorePath.isBlank()) {
+            String trustStorePassword = System.getProperty(RestConstant.TRUSTSTORE_PASSWORD_PROPERTY_NAME, "");
+            setupCustomTrustStore(instance, connection, trustStorePath, trustStorePassword);
+        } else if (inSecure) {
+            LOG.warn(RestConstant.INSECURE_ENABLE_WARNING);
+            setupSelfSignedCertificate(instance, connection.getCertFilePath(), connection.getCertPassword());
         } else {
-            Unirest.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
+            instance.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
         }
     }
 
     /**
-     * Set up authentication SSL type for a self-signed certificate
+     * Set up authentication SSL type for an insecure connection using TRUST_ALL_CERTS.
+     * <p>
+     * Disables hostname verification and bypasses server certificate validation when system property
+     * {@value RestConstant#INSECURE_PROPERTY_NAME} ("zowe.sdk.allow.insecure.connection") is set to "true".
      *
+     * @param instance     UnirestInstance to configure
      * @param certFilePath certificate file (.p12) location
      * @param certPassword certificate password for certificate file (.p12)
      * @author Frank Giordano
      */
-    private void setupSelfSignedCertificate(final String certFilePath, final String certPassword) {
+    private static void setupSelfSignedCertificate(final UnirestInstance instance,
+                                                   final String certFilePath,
+                                                   final String certPassword) {
         try {
-            System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
+            instance.config().disableHostNameVerification(true);
 
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             try (FileInputStream fileInputStream = new FileInputStream(certFilePath)) {
@@ -172,7 +220,62 @@ public abstract class ZosmfRequest {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(keyManagerFactory.getKeyManagers(),
                     RestConstant.TRUST_ALL_CERTS, new java.security.SecureRandom());
-            Unirest.config().sslContext(sslContext);
+            instance.config().sslContext(sslContext);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Set up authentication SSL type using a custom TrustStore file for server certificate validation.
+     * <p>
+     * Loads the custom TrustStore specified by {@value RestConstant#TRUSTSTORE_PATH_PROPERTY_NAME} into
+     * a {@link TrustManagerFactory} and disables hostname verification for self-signed or internal CA endpoints.
+     *
+     * @param instance           UnirestInstance to configure
+     * @param connection         ZosConnection object containing client certificate info
+     * @param trustStorePath     path to custom TrustStore file (.p12, .jks)
+     * @param trustStorePassword password for custom TrustStore file
+     * @author Frank Giordano
+     */
+    private static void setupCustomTrustStore(final UnirestInstance instance,
+                                              final ZosConnection connection,
+                                              final String trustStorePath,
+                                              final String trustStorePassword) {
+        try {
+            instance.config().disableHostNameVerification(true);
+
+            KeyStore clientKeyStore = KeyStore.getInstance("PKCS12");
+            try (FileInputStream fileInputStream = new FileInputStream(connection.getCertFilePath())) {
+                clientKeyStore.load(fileInputStream, connection.getCertPassword().toCharArray());
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+
+            KeyManagerFactory keyManagerFactory =
+                    KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            keyManagerFactory.init(clientKeyStore, connection.getCertPassword().toCharArray());
+
+            KeyStore trustStore;
+            if (trustStorePath.endsWith(".jks")) {
+                trustStore = KeyStore.getInstance("JKS");
+            } else {
+                trustStore = KeyStore.getInstance("PKCS12");
+            }
+            try (FileInputStream fileInputStream = new FileInputStream(trustStorePath)) {
+                trustStore.load(fileInputStream, trustStorePassword.toCharArray());
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+
+            TrustManagerFactory trustManagerFactory =
+                    TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(trustStore);
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagerFactory.getKeyManagers(),
+                    trustManagerFactory.getTrustManagers(), new java.security.SecureRandom());
+            instance.config().sslContext(sslContext);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -312,7 +415,6 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     public void setHeaders(final Map<String, String> headers) {
-        this.headers.clear();
         this.initialize();
         this.headers.putAll(headers);
     }

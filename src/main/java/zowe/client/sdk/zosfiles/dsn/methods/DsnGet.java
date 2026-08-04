@@ -79,16 +79,16 @@ public class DsnGet {
     /**
      * Retrieve dataset information.
      *
-     * @param dataSetName sequential or partition dataset (e.g. 'DATASET.LIB')
+     * @param datasetName sequential or partition dataset (e.g. 'DATASET.LIB')
      * @return dataset object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Dataset getDsnInfo(final String dataSetName) throws ZosmfRequestException {
-        ValidateUtils.checkNullParameter(dataSetName, "dataSetName");
-        ValidateUtils.checkIllegalParameter(dataSetName.isBlank(), "dataSetName not specified");
+    public Dataset getDsnInfo(final String datasetName) throws ZosmfRequestException {
+        ValidateUtils.checkNullParameter(datasetName, "datasetName");
+        ValidateUtils.checkIllegalParameter(datasetName.isBlank(), "datasetName not specified");
 
-        final String[] tokens = dataSetName.split("\\.");
+        final String[] tokens = datasetName.split("\\.");
         final int length = tokens.length - 1;
         if (1 >= length) {
             throw new IllegalArgumentException("invalid dataset name");
@@ -103,7 +103,7 @@ public class DsnGet {
         final DsnListInputData listInputData = new DsnListInputData.Builder().attribute(AttributeType.BASE).build();
         final List<Dataset> dsLst = dsnList.getDatasets(dataSetSearchStr, listInputData);
 
-        Predicate<Dataset> isExactMatch = d -> dataSetName.equals(d.getDsname());
+        Predicate<Dataset> isExactMatch = d -> datasetName.equals(d.getDsname());
         final Optional<Dataset> dataSet = dsLst.stream().filter(isExactMatch).findFirst();
         return dataSet.orElseThrow(() -> new ZosmfRequestException("dataset not found"));
     }

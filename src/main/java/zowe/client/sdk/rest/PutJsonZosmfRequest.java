@@ -11,7 +11,6 @@ package zowe.client.sdk.rest;
 
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
-import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,8 +58,8 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
         ValidateUtils.checkNullParameter(body, "body");
         HttpResponse<JsonNode> reply;
         try {
-            reply = token != null ? Unirest.put(url).cookie(token).headers(headers).body(body).asJson() :
-                    Unirest.put(url).headers(headers).body(body).asJson();
+            reply = token != null ? unirest.put(url).cookie(token).headers(headers).body(body).asJson() :
+                    unirest.put(url).headers(headers).body(body).asJson();
         } catch (UnirestException e) {
             throw new ZosmfRequestException(e.getMessage(), e);
         }

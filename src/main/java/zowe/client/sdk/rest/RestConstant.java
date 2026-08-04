@@ -1,3 +1,12 @@
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ */
 package zowe.client.sdk.rest;
 
 import javax.net.ssl.TrustManager;
@@ -86,8 +95,8 @@ public final class RestConstant {
             new AbstractMap.SimpleEntry<>(511, "network authentication required"));
 
     /**
-     * Trust all server certs (like --insecure)
-     * Used when "zowe.sdk.allow.insecure.connection" System property is defined
+     * Trust all server certs (like --insecure).
+     * Used when "zowe.sdk.allow.insecure.connection" System property is set to "true".
      */
     public static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[]{
             new X509TrustManager() {
@@ -104,8 +113,28 @@ public final class RestConstant {
     };
 
     /**
-     * The system property value for insecure toggling to use a self-signed certificate
+     * The system property name ("zowe.sdk.allow.insecure.connection") for enabling insecure
+     * connection processing. When set to "true", hostname verification is disabled for SSL
+     * connections and SSH host key verification is bypassed.
      */
     public static final String INSECURE_PROPERTY_NAME = "zowe.sdk.allow.insecure.connection";
+
+    /**
+     * Warning message logged when zowe.sdk.allow.insecure.connection is enabled for SSL connections.
+     */
+    public static final String INSECURE_ENABLE_WARNING = INSECURE_PROPERTY_NAME +
+            " is enabled; TLS certificate verification is disabled for this connection";
+
+    /**
+     * The system property name ("zowe.sdk.truststore.path") for specifying a custom
+     * TrustStore file path (.p12, .jks) used to validate server certificates.
+     */
+    public static final String TRUSTSTORE_PATH_PROPERTY_NAME = "zowe.sdk.truststore.path";
+
+    /**
+     * The system property name ("zowe.sdk.truststore.password") for specifying the password
+     * for the custom TrustStore file. Defaults to empty string if not provided.
+     */
+    public static final String TRUSTSTORE_PASSWORD_PROPERTY_NAME = "zowe.sdk.truststore.password";
 
 }

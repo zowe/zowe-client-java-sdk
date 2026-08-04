@@ -112,8 +112,8 @@ public class KeyTarConfig {
     public String toString() {
         return "KeyTarConfig{" +
                 "location='" + location + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
+                ", userName='" + ((userName == null) ? "" : userName) + '\'' +
+                ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
                 '}';
     }
 

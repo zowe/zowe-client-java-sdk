@@ -219,7 +219,8 @@ public class JobGet {
         List<Job> jobs = new ArrayList<>();
 
         url = connection.getZosmfUrl() +
-                JobsConstants.RESOURCE + UrlConstants.QUERY_ID;
+                JobsConstants.RESOURCE +
+                UrlConstants.QUERY_ID;
 
         if (getInputData != null) {
             if (getInputData.getOwner().isPresent()) {
@@ -478,7 +479,8 @@ public class JobGet {
         ValidateUtils.checkIllegalParameter(commonInputData.getJobName().isEmpty(), JobsConstants.JOB_NAME_ILLEGAL_MSG);
         ValidateUtils.checkIllegalParameter(commonInputData.getJobId().isEmpty(), JobsConstants.JOB_ID_ILLEGAL_MSG);
 
-        url = connection.getZosmfUrl() + JobsConstants.RESOURCE +
+        url = connection.getZosmfUrl() +
+                JobsConstants.RESOURCE +
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
                 UrlConstants.URL_PATH_DELIM +

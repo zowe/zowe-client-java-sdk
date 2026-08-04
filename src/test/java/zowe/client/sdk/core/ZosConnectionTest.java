@@ -62,7 +62,6 @@ class ZosConnectionTest {
         final ZosConnection conn = ZosConnectionFactory
                 .createBasicConnection("zos", 443, "user", "pass", "/zosmf");
         String result = conn.toString();
-        System.out.println(result);
 
         assertTrue(result.contains("password='*****'"));
         assertTrue(result.contains("certPassword=''"));
@@ -103,7 +102,6 @@ class ZosConnectionTest {
         final ZosConnection conn = ZosConnectionFactory
                 .createTokenConnection("host1", 443, cookie);
         String result = conn.toString();
-        System.out.println(result);
 
         assertTrue(result.contains("host='host1'"));
         assertTrue(result.contains("zosmfPort='443'"));
@@ -175,7 +173,6 @@ class ZosConnectionTest {
         final ZosConnection conn = ZosConnectionFactory
                 .createSslConnection("host1", 443, "/certs/certA.p12", "certpass");
         String result = conn.toString();
-        System.out.println(result);
 
         assertTrue(result.contains("host='host1'"));
         assertTrue(result.contains("zosmfPort='443'"));

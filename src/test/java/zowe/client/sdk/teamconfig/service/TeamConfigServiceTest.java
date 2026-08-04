@@ -7,14 +7,13 @@
  *
  * Copyright Contributors to the Zowe Project.
  */
-package zowe.client.sdk.teamconfig;
+package zowe.client.sdk.teamconfig.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import zowe.client.sdk.teamconfig.model.ConfigContainer;
 import zowe.client.sdk.teamconfig.model.Profile;
-import zowe.client.sdk.teamconfig.service.TeamConfigService;
 
 import java.lang.reflect.Method;
 import java.util.List;

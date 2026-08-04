@@ -116,8 +116,8 @@ public class ProfileDao {
     public String toString() {
         return "ProfileDao{" +
                 "profile=" + profile +
-                ", user='" + user + '\'' +
-                ", password='" + password + '\'' +
+                ", user='" + ((user == null) ? "" : user) + '\'' +
+                ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
                 ", host='" + host + '\'' +
                 ", port='" + port + '\'' +
                 '}';

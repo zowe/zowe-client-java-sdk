@@ -296,7 +296,7 @@ public class DsnGetTest {
     public void tstGetDsnInfoBlankDatasetNameFailure() {
         final DsnGet dsnGet = new DsnGet(connection);
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> dsnGet.getDsnInfo(" "));
-        assertEquals("dataSetName not specified", ex.getMessage());
+        assertEquals("datasetName not specified", ex.getMessage());
     }
 
 }

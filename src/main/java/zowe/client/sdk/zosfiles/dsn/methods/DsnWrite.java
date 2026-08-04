@@ -67,39 +67,39 @@ public class DsnWrite {
      * Replaces the content of a member of a partitioned data set (PDS or PDSE) with new content.
      * A new dataset member will be created if the specified dataset member does not exist.
      *
-     * @param dataSetName dataset name of where the member is located (e.g. 'DATASET.LIB')
+     * @param datasetName dataset name of where the member is located (e.g. 'DATASET.LIB')
      * @param memberName  name of member to add new content
      * @param content     new content
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    public Response write(final String dataSetName, final String memberName, final String content)
+    public Response write(final String datasetName, final String memberName, final String content)
             throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkIllegalParameter(memberName, "memberName");
 
-        return write(String.format("%s(%s)", dataSetName, memberName), content);
+        return write(String.format("%s(%s)", datasetName, memberName), content);
     }
 
     /**
      * Replaces the content of an existing sequential data set with new content.
      *
-     * @param dataSetName sequential dataset (e.g. 'DATASET.LIB')
+     * @param datasetName sequential dataset (e.g. 'DATASET.LIB')
      * @param content     new content
      * @return http response object
      * @throws ZosmfRequestException request error state
      * @author Leonid Baranov
      */
-    public Response write(final String dataSetName, final String content) throws ZosmfRequestException {
-        ValidateUtils.checkIllegalParameter(dataSetName, "dataSetName");
+    public Response write(final String datasetName, final String content) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(datasetName, "datasetName");
         ValidateUtils.checkNullParameter(content, "content");
 
         final String url = connection.getZosmfUrl() +
                 ZosFilesConstants.RESOURCE +
                 ZosFilesConstants.RES_DS_FILES +
                 UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(dataSetName);
+                EncodeUtils.encodeURIComponent(datasetName);
 
         request.setUrl(url);
         request.setBody(content);
