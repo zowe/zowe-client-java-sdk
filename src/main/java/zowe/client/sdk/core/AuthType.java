@@ -29,8 +29,8 @@ public enum AuthType {
      */
     TOKEN,
     /**
-     * Authentication ssl type. This case represents using a certificate file for
-     * authentication for the http request.
+     * Authentication SSL/TLS (mTLS) type. Represents using a PKCS12 certificate file (.p12) containing
+     * the client certificate and private key for HTTPS requests.
      */
     SSL
 

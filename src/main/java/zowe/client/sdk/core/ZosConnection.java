@@ -47,11 +47,11 @@ public final class ZosConnection {
      */
     private Cookie token;
     /**
-     * Path with filename denoting the certificate for SSL authentication usage
+     * Path with filename denoting the PKCS12 certificate file (.p12) for SSL client authentication
      */
     private String certFilePath;
     /**
-     * The certificate password for SSL authentication
+     * Password for the PKCS12 certificate file (.p12)
      */
     private String certPassword;
     /**

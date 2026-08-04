@@ -19,6 +19,7 @@ import zowe.client.sdk.utility.ValidateUtils;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -147,8 +148,10 @@ public abstract class ZosmfRequest {
     /**
      * Setup authentication SSL type
      * <p>
-     * With the following system property set "zowe.sdk.allow.insecure.connection",
-     * insecure type for self-signed certificate processing is enabled.
+     * When system property "zowe.sdk.allow.insecure.connection" is set to "true", hostname
+     * verification is disabled and self-signed certificate processing is used.
+     * Otherwise, standard SSL client certificate store configuration is applied with default
+     * JVM CA trust and hostname verification.
      *
      * @param instance   UnirestInstance to configure
      * @param connection for connection information, see ZosConnection object
@@ -166,7 +169,8 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Set up authentication SSL type for a self-signed certificate
+     * Set up authentication SSL type for a self-signed certificate.
+     * Disables hostname verification for connections where self-signed certificates or test hostnames are used.
      *
      * @param instance     UnirestInstance to configure
      * @param certFilePath certificate file (.p12) location
@@ -190,9 +194,13 @@ public abstract class ZosmfRequest {
                     KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             keyManagerFactory.init(keyStore, certPassword.toCharArray());
 
+            TrustManagerFactory trustManagerFactory =
+                    TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(keyStore);
+
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(keyManagerFactory.getKeyManagers(),
-                    RestConstant.TRUST_ALL_CERTS, new java.security.SecureRandom());
+                    trustManagerFactory.getTrustManagers(), new java.security.SecureRandom());
             instance.config().sslContext(sslContext);
         } catch (Exception e) {
             throw new IllegalStateException(e);

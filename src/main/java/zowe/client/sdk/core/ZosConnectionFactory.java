@@ -154,12 +154,12 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL certificate authentication
+     * Creates a ZosConnection with SSL/TLS (mTLS) certificate authentication using a PKCS12 file (.p12)
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
-     * @param certFilePath Path to the certificate file (.p12)
-     * @param certPassword Password for the certificate
+     * @param certFilePath Path to the PKCS12 certificate file (.p12)
+     * @param certPassword Password for the PKCS12 certificate file (.p12)
      * @return ZosConnection configured for SSL authentication
      * @author Frank Giordano
      * @author Shabaz Kowthalam
@@ -176,8 +176,8 @@ public class ZosConnectionFactory {
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
-     * @param certFilePath Path to the certificate file (.p12)
-     * @param certPassword Password for the certificate
+     * @param certFilePath Path to the PKCS12 certificate file (.p12)
+     * @param certPassword Password for the PKCS12 certificate file (.p12)
      * @param basePath     base path for z/OSMF REST endpoints
      * @return ZosConnection configured for SSL authentication
      * @author Frank Giordano
