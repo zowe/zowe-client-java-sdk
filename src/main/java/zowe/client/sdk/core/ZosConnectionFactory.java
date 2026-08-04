@@ -154,11 +154,32 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL/TLS (mTLS) certificate authentication using a PKCS12 file (.p12)
+     * Creates a ZosConnection with SSL/TLS (mTLS) certificate authentication using a PKCS12 file (.p12).
+     * <p>
+     * The specified PKCS12 file (.p12) houses the client certificate and private key used to authenticate
+     * the client application with z/OSMF.
+     * <p>
+     * Server certificate validation during HTTPS requests supports three modes:
+     * <ul>
+     *   <li><b>Default Mode (Standard CA Validation):</b> When no system properties are set (`zowe.sdk.allow.insecure.connection = false`),
+     *       the client .p12 certificate file is used solely for client authentication (mTLS). Server certificate
+     *       verification relies on the JVM's standard default truststore ({@code cacerts}) with standard
+     *       hostname verification. When the z/OSMF server presents a certificate signed by a CA trusted by Java,
+     *       server verification succeeds automatically. Recommended for production.</li>
+     *   <li><b>Option 1 (Custom TrustStore):</b> To support self-signed z/OSMF servers securely without using
+     *       {@code TRUST_ALL_CERTS}, set system property {@code "zowe.sdk.truststore.path"} (and optional
+     *       {@code "zowe.sdk.truststore.password"}) to load a separate TrustStore (.p12 or .jks) containing the
+     *       server's certificate/CA, rather than reusing the client's mTLS .p12 file. Disables hostname verification.</li>
+     *   <li><b>Option 2 (Insecure Mode):</b> Set system property {@code "zowe.sdk.allow.insecure.connection"}
+     *       to {@code "true"} as an explicit, optional developer opt-in (disabled by default) designed specifically
+     *       to bypass server TLS certificate validation using {@code TRUST_ALL_CERTS} (similar to {@code curl -k})
+     *       and disable hostname verification when users do not have the server certificate in a truststore.
+     *       Accompanied by prominent log warnings. Intended for isolated test/sandbox environments only.</li>
+     * </ul>
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
-     * @param certFilePath Path to the PKCS12 certificate file (.p12)
+     * @param certFilePath Path to the PKCS12 certificate file (.p12) containing client key and cert
      * @param certPassword Password for the PKCS12 certificate file (.p12)
      * @return ZosConnection configured for SSL authentication
      * @author Frank Giordano
@@ -172,11 +193,32 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL certificate authentication
+     * Creates a ZosConnection with SSL/TLS (mTLS) certificate authentication using a PKCS12 file (.p12).
+     * <p>
+     * The specified PKCS12 file (.p12) houses the client certificate and private key used to authenticate
+     * the client application with z/OSMF.
+     * <p>
+     * Server certificate validation during HTTPS requests supports three modes:
+     * <ul>
+     *   <li><b>Default Mode (Standard CA Validation):</b> When no system properties are set (`zowe.sdk.allow.insecure.connection = false`),
+     *       the client .p12 certificate file is used solely for client authentication (mTLS). Server certificate
+     *       verification relies on the JVM's standard default truststore ({@code cacerts}) with standard
+     *       hostname verification. When the z/OSMF server presents a certificate signed by a CA trusted by Java,
+     *       server verification succeeds automatically. Recommended for production.</li>
+     *   <li><b>Option 1 (Custom TrustStore):</b> To support self-signed z/OSMF servers securely without using
+     *       {@code TRUST_ALL_CERTS}, set system property {@code "zowe.sdk.truststore.path"} (and optional
+     *       {@code "zowe.sdk.truststore.password"}) to load a separate TrustStore (.p12 or .jks) containing the
+     *       server's certificate/CA, rather than reusing the client's mTLS .p12 file. Disables hostname verification.</li>
+     *   <li><b>Option 2 (Insecure Mode):</b> Set system property {@code "zowe.sdk.allow.insecure.connection"}
+     *       to {@code "true"} as an explicit, optional developer opt-in (disabled by default) designed specifically
+     *       to bypass server TLS certificate validation using {@code TRUST_ALL_CERTS} (similar to {@code curl -k})
+     *       and disable hostname verification when users do not have the server certificate in a truststore.
+     *       Accompanied by prominent log warnings. Intended for isolated test/sandbox environments only.</li>
+     * </ul>
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
-     * @param certFilePath Path to the PKCS12 certificate file (.p12)
+     * @param certFilePath Path to the PKCS12 certificate file (.p12) containing client key and cert
      * @param certPassword Password for the PKCS12 certificate file (.p12)
      * @param basePath     base path for z/OSMF REST endpoints
      * @return ZosConnection configured for SSL authentication

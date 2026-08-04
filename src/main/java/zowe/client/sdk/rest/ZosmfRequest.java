@@ -148,10 +148,26 @@ public abstract class ZosmfRequest {
     /**
      * Setup authentication SSL type
      * <p>
-     * When system property "zowe.sdk.allow.insecure.connection" is set to "true", hostname
-     * verification is disabled and self-signed certificate processing is used.
-     * Otherwise, standard SSL client certificate store configuration is applied with default
-     * JVM CA trust and hostname verification.
+     * SSL/TLS configuration supports two options for handling server certificate validation:
+     * <ul>
+     *   <li><b>Option 1 (Custom TrustStore):</b> To support self-signed z/OSMF servers securely without
+     *       using {@link RestConstant#TRUST_ALL_CERTS}, the SDK allows specifying a separate TrustStore file
+     *       (.p12 or .jks) that contains the server's certificate/CA, rather than reusing the client's mTLS .p12 file.
+     *       Specified by setting the system property {@value RestConstant#TRUSTSTORE_PATH_PROPERTY_NAME}
+     *       ("zowe.sdk.truststore.path") and optional {@value RestConstant#TRUSTSTORE_PASSWORD_PROPERTY_NAME}
+     *       ("zowe.sdk.truststore.password"). Loads the custom TrustStore into a {@link TrustManagerFactory}
+     *       to validate the server certificate while disabling hostname verification.</li>
+     *   <li><b>Option 2 (Insecure Mode):</b> Enabled implicitly by setting the system property
+     *       {@value RestConstant#INSECURE_PROPERTY_NAME} ("zowe.sdk.allow.insecure.connection") to "true".
+     *       An explicit, optional developer opt-in (disabled by default) designed specifically to bypass
+     *       server TLS checks for self-signed test environments when users do not have the server certificate
+     *       in a truststore. Logs a prominent security warning and uses {@link RestConstant#TRUST_ALL_CERTS}
+     *       to accept any server certificate (similar to {@code curl -k}), while also disabling hostname verification.
+     *       Use only in isolated test or sandbox environments.</li>
+     *   <li><b>Default (Standard Mode):</b> When neither property is set, standard client certificate store
+     *       configuration is applied using the client .p12 certificate file for mTLS, relying on the default
+     *       JVM CA truststore and standard hostname verification for server validation.</li>
+     * </ul>
      *
      * @param instance   UnirestInstance to configure
      * @param connection for connection information, see ZosConnection object
@@ -159,8 +175,13 @@ public abstract class ZosmfRequest {
      */
     private static void setupSsl(final UnirestInstance instance, final ZosConnection connection) {
         LOG.debug("ssl authentication type");
+        String trustStorePath = System.getProperty(RestConstant.TRUSTSTORE_PATH_PROPERTY_NAME);
         boolean inSecure = Boolean.parseBoolean(System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
-        if (inSecure) {
+
+        if (trustStorePath != null && !trustStorePath.isBlank()) {
+            String trustStorePassword = System.getProperty(RestConstant.TRUSTSTORE_PASSWORD_PROPERTY_NAME, "");
+            setupCustomTrustStore(instance, connection, trustStorePath, trustStorePassword);
+        } else if (inSecure) {
             LOG.warn(RestConstant.INSECURE_ENABLE_WARNING);
             setupSelfSignedCertificate(instance, connection.getCertFilePath(), connection.getCertPassword());
         } else {
@@ -169,8 +190,10 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Set up authentication SSL type for a self-signed certificate.
-     * Disables hostname verification for connections where self-signed certificates or test hostnames are used.
+     * Set up authentication SSL type for an insecure connection using TRUST_ALL_CERTS.
+     * <p>
+     * Disables hostname verification and bypasses server certificate validation when system property
+     * {@value RestConstant#INSECURE_PROPERTY_NAME} ("zowe.sdk.allow.insecure.connection") is set to "true".
      *
      * @param instance     UnirestInstance to configure
      * @param certFilePath certificate file (.p12) location
@@ -194,9 +217,60 @@ public abstract class ZosmfRequest {
                     KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             keyManagerFactory.init(keyStore, certPassword.toCharArray());
 
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagerFactory.getKeyManagers(),
+                    RestConstant.TRUST_ALL_CERTS, new java.security.SecureRandom());
+            instance.config().sslContext(sslContext);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * Set up authentication SSL type using a custom TrustStore file for server certificate validation.
+     * <p>
+     * Loads the custom TrustStore specified by {@value RestConstant#TRUSTSTORE_PATH_PROPERTY_NAME} into
+     * a {@link TrustManagerFactory} and disables hostname verification for self-signed or internal CA endpoints.
+     *
+     * @param instance           UnirestInstance to configure
+     * @param connection         ZosConnection object containing client certificate info
+     * @param trustStorePath     path to custom TrustStore file (.p12, .jks)
+     * @param trustStorePassword password for custom TrustStore file
+     * @author Frank Giordano
+     */
+    private static void setupCustomTrustStore(final UnirestInstance instance,
+                                              final ZosConnection connection,
+                                              final String trustStorePath,
+                                              final String trustStorePassword) {
+        try {
+            instance.config().disableHostNameVerification(true);
+
+            KeyStore clientKeyStore = KeyStore.getInstance("PKCS12");
+            try (FileInputStream fileInputStream = new FileInputStream(connection.getCertFilePath())) {
+                clientKeyStore.load(fileInputStream, connection.getCertPassword().toCharArray());
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+
+            KeyManagerFactory keyManagerFactory =
+                    KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            keyManagerFactory.init(clientKeyStore, connection.getCertPassword().toCharArray());
+
+            KeyStore trustStore;
+            if (trustStorePath.endsWith(".jks")) {
+                trustStore = KeyStore.getInstance("JKS");
+            } else {
+                trustStore = KeyStore.getInstance("PKCS12");
+            }
+            try (FileInputStream fileInputStream = new FileInputStream(trustStorePath)) {
+                trustStore.load(fileInputStream, trustStorePassword.toCharArray());
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
+
             TrustManagerFactory trustManagerFactory =
                     TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            trustManagerFactory.init(keyStore);
+            trustManagerFactory.init(trustStore);
 
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(keyManagerFactory.getKeyManagers(),
