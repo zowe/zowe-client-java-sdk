@@ -106,9 +106,11 @@ public abstract class ZosmfRequest {
         switch (connection.getAuthType()) {
             case BASIC:
                 LOG.debug("basic authentication type");
+                setupSsl(instance, connection);
                 break;
             case TOKEN:
                 LOG.debug("token authentication type");
+                setupSsl(instance, connection);
                 break;
             case SSL:
                 setupSsl(instance, connection);
@@ -174,7 +176,7 @@ public abstract class ZosmfRequest {
      * @author Frank Giordano
      */
     private static void setupSsl(final UnirestInstance instance, final ZosConnection connection) {
-        LOG.debug("ssl authentication type");
+        LOG.debug("ssl configuration check");
         String trustStorePath = System.getProperty(RestConstant.TRUSTSTORE_PATH_PROPERTY_NAME);
         boolean inSecure = Boolean.parseBoolean(System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
 
@@ -184,7 +186,7 @@ public abstract class ZosmfRequest {
         } else if (inSecure) {
             LOG.warn(RestConstant.INSECURE_ENABLE_WARNING);
             setupSelfSignedCertificate(instance, connection.getCertFilePath(), connection.getCertPassword());
-        } else {
+        } else if (connection.getCertFilePath() != null && !connection.getCertFilePath().isBlank()) {
             instance.config().clientCertificateStore(connection.getCertFilePath(), connection.getCertPassword());
         }
     }
@@ -245,16 +247,22 @@ public abstract class ZosmfRequest {
         try {
             instance.config().disableHostNameVerification(true);
 
-            KeyStore clientKeyStore = KeyStore.getInstance("PKCS12");
-            try (FileInputStream fileInputStream = new FileInputStream(connection.getCertFilePath())) {
-                clientKeyStore.load(fileInputStream, connection.getCertPassword().toCharArray());
-            } catch (Exception e) {
-                throw new IllegalStateException(e);
-            }
+            javax.net.ssl.KeyManager[] keyManagers = null;
+            if (connection.getCertFilePath() != null && !connection.getCertFilePath().isBlank()) {
+                KeyStore clientKeyStore = KeyStore.getInstance("PKCS12");
+                try (FileInputStream fileInputStream = new FileInputStream(connection.getCertFilePath())) {
+                    clientKeyStore.load(fileInputStream, connection.getCertPassword() != null ?
+                            connection.getCertPassword().toCharArray() : new char[0]);
+                } catch (Exception e) {
+                    throw new IllegalStateException(e);
+                }
 
-            KeyManagerFactory keyManagerFactory =
-                    KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            keyManagerFactory.init(clientKeyStore, connection.getCertPassword().toCharArray());
+                KeyManagerFactory keyManagerFactory =
+                        KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+                keyManagerFactory.init(clientKeyStore, connection.getCertPassword() != null ?
+                        connection.getCertPassword().toCharArray() : new char[0]);
+                keyManagers = keyManagerFactory.getKeyManagers();
+            }
 
             KeyStore trustStore;
             if (trustStorePath.endsWith(".jks")) {
@@ -263,7 +271,8 @@ public abstract class ZosmfRequest {
                 trustStore = KeyStore.getInstance("PKCS12");
             }
             try (FileInputStream fileInputStream = new FileInputStream(trustStorePath)) {
-                trustStore.load(fileInputStream, trustStorePassword.toCharArray());
+                trustStore.load(fileInputStream, trustStorePassword != null ?
+                        trustStorePassword.toCharArray() : new char[0]);
             } catch (Exception e) {
                 throw new IllegalStateException(e);
             }
@@ -273,8 +282,7 @@ public abstract class ZosmfRequest {
             trustManagerFactory.init(trustStore);
 
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(),
-                    trustManagerFactory.getTrustManagers(), new java.security.SecureRandom());
+            sslContext.init(keyManagers, trustManagerFactory.getTrustManagers(), new java.security.SecureRandom());
             instance.config().sslContext(sslContext);
         } catch (Exception e) {
             throw new IllegalStateException(e);
