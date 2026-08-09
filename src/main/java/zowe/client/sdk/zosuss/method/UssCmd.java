@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.SocketTimeoutException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -109,8 +110,37 @@ public class UssCmd {
 
             return responseStream.toString();
         } catch (IOException | JSchException e) {
+            if (isSocketTimeout(e)) {
+                throw new UssCmdException(
+                        "SSH operation timed out after " + timeout
+                                + " ms. Consider increasing the timeout value if "
+                                + "the operation requires more time to complete.",
+                        e
+                );
+            }
+
             throw new UssCmdException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Determines whether the specified throwable or any of its causes is a {@link SocketTimeoutException}.
+     *
+     * @param throwable throwable to inspect
+     * @return true if the throwable or any of its causes is a {@link SocketTimeoutException};
+     *         false otherwise
+     */
+    private static boolean isSocketTimeout(final Throwable throwable) {
+        Throwable cause = throwable;
+
+        while (cause != null) {
+            if (cause instanceof SocketTimeoutException) {
+                return true;
+            }
+            cause = cause.getCause();
+        }
+
+        return false;
     }
 
     /**
