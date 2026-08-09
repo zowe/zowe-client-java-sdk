@@ -201,7 +201,7 @@ The `.p12` file houses your client certificate and private key, which z/OSMF use
 
 ### Server Certificate Validation Modes
 
-During the HTTPS TLS handshake, Java validates the z/OSMF **server's SSL certificate**. Server certificate validation applies across all authentication types (`BASIC`, `TOKEN`, and `SSL`). The SDK supports three server certificate validation modes:
+During the HTTPS TLS handshake, Java validates the z/OSMF **server's SSL certificate**. Server certificate validation applies across all authentication types (`BASIC`, `TOKEN`, and `SSL`). The SDK supports three server certificate validation modes. For detailed step-by-step instructions on exporting server certificates from your browser and importing them, see the [core package README](src/main/java/zowe/client/sdk/core/README.md#server-certificate-validation--trust-options).
 
 **Default Mode (Standard Certificate Authority Validation)**
 - **How it works**: By default (when no system properties are set), the SDK validates the z/OSMF server certificate against the JVM's standard CA truststore (`cacerts`) and enforces standard hostname verification. In many enterprise-managed environments, corporate CAs or public CAs are already pre-installed in Java's `cacerts` out-of-the-box, so no additional configuration is needed. If your corporate CA is installed only in the Windows Certificate Store and not in Java's `cacerts`, setting `-Djavax.net.ssl.trustStoreType=WINDOWS-ROOT` is an optional fallback to instruct Java to read the OS truststore.
