@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * UssCmd Class provides a way to execute USS commands via ssh connection
@@ -65,45 +66,45 @@ public class UssCmd {
     /**
      * Executes USS command(s) specified within a string value
      * <p>
-     * The SSH host key of the target system must already be present in the SSH host key against
-     * the current user's default known_hosts file inside their home directory ({@code .ssh/known_hosts},
+     * The SSH host key of the target system must already be present in the current
+     * user's default known_hosts file inside their home directory ({@code .ssh/known_hosts},
      * e.g., {@code ~/.ssh/known_hosts} on Unix or {@code %USERPROFILE%\.ssh\known_hosts} on Windows),
      * or this call fails with a JSchException wrapped in UssCmdException with a message like:
      * 'reject HostKey'. The host key verification is enabled by default; see the class-level Javadoc
      * for the "zowe.sdk.allow.insecure.connection" opt-out.
      *
-     * @param command string value contains one or more USS commands
-     * @param timeout int value in milliseconds for timeout duration on session connection
-     * @return string output value
-     * @throws UssCmdException ssh Unix System Services error request
+     * @param command string value containing one or more USS commands
+     * @param timeout int value in milliseconds used independently as the timeout for
+     *                the SSH session connection, SSH channel connection, and remote
+     *                command execution. The timeout is not cumulative across these
+     *                operations.
+     * @return string output value from the USS command
+     * @throws UssCmdException if an SSH connection, channel connection, or command
+     *                         execution fails or times out
      * @author Frank Giordano
      */
     public String issueCommand(final String command, final int timeout) throws UssCmdException {
+        if (timeout <= 0) {
+            throw new IllegalArgumentException("Timeout must be greater than zero");
+        }
+
         try (final ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
              final ManagedSession session = new ManagedSession(connection, timeout);
-             final ManagedChannel channel = new ManagedChannel(session.get(), command, responseStream)) {
+             final ManagedChannel channel = new ManagedChannel(session.get(), command, responseStream, timeout)) {
 
-            final long startTime = System.currentTimeMillis();
+            final long startTime = System.nanoTime();
 
             // loop checks isClosed() to catch normal process completion
             while (!channel.get().isClosed()) {
                 WaitUtil.wait(100);
 
                 // protect against network hangs or stuck processes
-                if ((System.currentTimeMillis() - startTime) > timeout) {
+                if ((System.nanoTime() - startTime) > TimeUnit.MILLISECONDS.toNanos(timeout)) {
                     throw new UssCmdException(
                             "Command execution timed out after " + timeout + " ms",
                             new java.util.concurrent.TimeoutException("SSH execution limit exceeded.")
                     );
                 }
-            }
-
-            // verify the remote shell actually finished cleanly
-            if (channel.get().getExitStatus() == -1 && !channel.get().isConnected()) {
-                throw new UssCmdException(
-                        "Network connection lost during command execution.",
-                        new java.io.IOException("Remote SSH peer disconnected unexpectedly.")
-                );
             }
 
             return responseStream.toString();
@@ -130,7 +131,6 @@ public class UssCmd {
 
         ManagedSession(final SshConnection connection, final int timeout) throws JSchException {
             final JSch jsch = new JSch();
-            jsch.setKnownHosts(DEFAULT_KNOWN_HOSTS_PATH);
             this.session = jsch.getSession(connection.getUser(), connection.getHost(), connection.getPort());
             session.setPassword(connection.getPassword());
             final Properties config = new Properties();
@@ -138,10 +138,13 @@ public class UssCmd {
             final boolean inSecure = Boolean.parseBoolean(
                     System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
             if (inSecure) {
+                // Insecure mode
                 LOG.warn("{} is enabled; SSH host key verification is disabled for this connection",
                         RestConstant.INSECURE_PROPERTY_NAME);
                 config.put("StrictHostKeyChecking", "no");
             } else {
+                // Secure mode
+                jsch.setKnownHosts(DEFAULT_KNOWN_HOSTS_PATH);
                 config.put("StrictHostKeyChecking", "yes");
             }
             session.setConfig(config);
@@ -166,12 +169,15 @@ public class UssCmd {
     static class ManagedChannel implements AutoCloseable {
         private final ChannelExec channel;
 
-        ManagedChannel(final Session session, final String command, final OutputStream responseStream)
+        ManagedChannel(final Session session,
+                       final String command,
+                       final OutputStream responseStream,
+                       final int timeout)
                 throws JSchException {
             this.channel = (ChannelExec) session.openChannel("exec");
             channel.setCommand(command);
             channel.setOutputStream(responseStream);
-            channel.connect();
+            channel.connect(timeout);
         }
 
         ChannelExec get() {
