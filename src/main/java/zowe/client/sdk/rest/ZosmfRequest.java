@@ -208,20 +208,23 @@ public abstract class ZosmfRequest {
         try {
             instance.config().disableHostNameVerification(true);
 
-            KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            try (FileInputStream fileInputStream = new FileInputStream(certFilePath)) {
-                keyStore.load(fileInputStream, certPassword.toCharArray());
-            } catch (Exception e) {
-                throw new IllegalStateException(e);
+            javax.net.ssl.KeyManager[] keyManagers = null;
+            if (certFilePath != null && !certFilePath.isBlank()) {
+                KeyStore keyStore = KeyStore.getInstance("PKCS12");
+                try (FileInputStream fileInputStream = new FileInputStream(certFilePath)) {
+                    keyStore.load(fileInputStream, certPassword != null ? certPassword.toCharArray() : new char[0]);
+                } catch (Exception e) {
+                    throw new IllegalStateException(e);
+                }
+
+                KeyManagerFactory keyManagerFactory =
+                        KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+                keyManagerFactory.init(keyStore, certPassword != null ? certPassword.toCharArray() : new char[0]);
+                keyManagers = keyManagerFactory.getKeyManagers();
             }
 
-            KeyManagerFactory keyManagerFactory =
-                    KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            keyManagerFactory.init(keyStore, certPassword.toCharArray());
-
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(),
-                    RestConstant.TRUST_ALL_CERTS, new java.security.SecureRandom());
+            sslContext.init(keyManagers, RestConstant.TRUST_ALL_CERTS, new java.security.SecureRandom());
             instance.config().sslContext(sslContext);
         } catch (Exception e) {
             throw new IllegalStateException(e);
