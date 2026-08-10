@@ -100,7 +100,7 @@ public class TeamConfigService {
         } catch (IOException e) {
             throw new TeamConfigException("Error writing zowe global team configuration file", e);
         }
-        LOG.debug("updateTeamConfig profile {} updated with {}", profileName, updatedProperties);
+        LOG.debug("updateTeamConfig profile {} updated with updatedProperties ******", profileName);
     }
 
     /**
