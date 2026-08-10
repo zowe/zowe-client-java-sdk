@@ -246,7 +246,7 @@ public class JobGet {
                 if (url.contains(UrlConstants.QUERY_ID)) {
                     url += UrlConstants.COMBO_ID;
                 }
-                url += JobsConstants.QUERY_JOBID + getInputData.getJobId().get();
+                url += JobsConstants.QUERY_JOBID + EncodeUtils.encodeURIComponent(getInputData.getJobId().get());
             }
         } else {
             // if no user defined in ZosConnection, then query jobs by the z/OS user ID
@@ -321,7 +321,7 @@ public class JobGet {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(jobFile.getJobName()) +
                 UrlConstants.URL_PATH_DELIM +
-                jobFile.getJobId() +
+                EncodeUtils.encodeURIComponent(jobFile.getJobId()) +
                 JobsConstants.RESOURCE_SPOOL_FILES +
                 UrlConstants.URL_PATH_DELIM +
                 jobFile.getId() +
@@ -385,7 +385,7 @@ public class JobGet {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
                 UrlConstants.URL_PATH_DELIM +
-                commonInputData.getJobId().get() +
+                EncodeUtils.encodeURIComponent(commonInputData.getJobId().get()) +
                 "/files";
 
         if (request == null || !(request instanceof GetJsonZosmfRequest)) {
@@ -484,7 +484,7 @@ public class JobGet {
                 UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(commonInputData.getJobName().get()) +
                 UrlConstants.URL_PATH_DELIM +
-                commonInputData.getJobId().get();
+                EncodeUtils.encodeURIComponent(commonInputData.getJobId().get());
 
         if (commonInputData.isStepData()) {
             url += JobsConstants.QUERY_ID + JobsConstants.STEP_DATA;

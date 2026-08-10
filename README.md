@@ -318,11 +318,11 @@ For a Gradle project add the SDK as a dependency by updating your `build.gradle`
 
 Thin JAR (recommended):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.2'    
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.3'    
 
 Fat JAR (with dependencies):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.2', classifier: 'jar-with-dependencies'
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.3', classifier: 'jar-with-dependencies'
   
 ## Publishing to Maven Central  
   
