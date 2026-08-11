@@ -143,7 +143,7 @@ public class DsnCopy {
                 UrlConstants.URL_PATH_DELIM;
 
         if (copyInputData.getToVolser().isPresent()) {
-            url += "-(" + copyInputData.getToVolser().get() + ")/";
+            url += "-(" + EncodeUtils.encodeURIComponent(copyInputData.getToVolser().get()) + ")/";
         }
         url += EncodeUtils.encodeURIComponent(toDataSet);
         return url;

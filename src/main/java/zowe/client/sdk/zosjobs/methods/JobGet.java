@@ -224,7 +224,7 @@ public class JobGet {
 
         if (getInputData != null) {
             if (getInputData.getOwner().isPresent()) {
-                url += JobsConstants.QUERY_OWNER + getInputData.getOwner().get();
+                url += JobsConstants.QUERY_OWNER + EncodeUtils.encodeURIComponent(getInputData.getOwner().get());
             }
             if (getInputData.getPrefix().isPresent()) {
                 if (!JobsConstants.DEFAULT_PREFIX.equals(getInputData.getPrefix().get())) {
@@ -251,7 +251,7 @@ public class JobGet {
         } else {
             // if no user defined in ZosConnection, then query jobs by the z/OS user ID
             if (connection.getUser() != null && !connection.getUser().isEmpty()) {
-                url += JobsConstants.QUERY_OWNER + connection.getUser();
+                url += JobsConstants.QUERY_OWNER + EncodeUtils.encodeURIComponent(connection.getUser());
             }
         }
 

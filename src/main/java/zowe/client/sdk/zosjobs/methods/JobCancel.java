@@ -15,6 +15,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -126,9 +127,9 @@ public class JobCancel {
         final String url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
                 UrlConstants.URL_PATH_DELIM +
-                modifyInputData.getJobName().get() +
+                EncodeUtils.encodeURIComponent(modifyInputData.getJobName().get()) +
                 UrlConstants.URL_PATH_DELIM +
-                modifyInputData.getJobId().get();
+                EncodeUtils.encodeURIComponent(modifyInputData.getJobId().get());
 
         // set version to default value if none given
         final String version = modifyInputData.getVersion().orElse(JobsConstants.DEFAULT_VERSION);

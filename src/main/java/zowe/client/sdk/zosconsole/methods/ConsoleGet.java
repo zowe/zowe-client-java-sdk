@@ -109,7 +109,7 @@ public class ConsoleGet {
 
         final String url = connection.getZosmfUrl() + ConsoleConstants.RESOURCE + UrlConstants.URL_PATH_DELIM +
                 EncodeUtils.encodeURIComponent(consoleName.isBlank() ? ConsoleConstants.RES_DEF_CN : consoleName) +
-                "/solmsgs/" + responseKey;
+                "/solmsgs/" + EncodeUtils.encodeURIComponent(responseKey);
 
         request.setUrl(url);
 
