@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.teamconfig.model;
 
+import zowe.client.sdk.utility.TeamConfigUtils;
+
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +88,7 @@ public class Partition {
     public String toString() {
         return "Partition{" +
                 "name='" + name + '\'' +
-                ", properties=" + properties +
+                ", properties=" + TeamConfigUtils.getMaskedProperties(properties) +
                 ", profiles=" + profiles +
                 '}';
     }

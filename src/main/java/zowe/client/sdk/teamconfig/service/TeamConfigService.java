@@ -147,7 +147,7 @@ public class TeamConfigService {
      * @author Frank Giordano
      */
     private Partition getPartition(final String name, final JsonNode node) {
-        LOG.debug("partition found name {} containing: {}", name, node);
+        LOG.debug("partition found name {}", name);
         final Map<String, String> properties = parseProperties(node.path("properties"));
         final List<Profile> nestedProfiles = new ArrayList<>();
         final JsonNode nestedProfilesNode = node.path("profiles");

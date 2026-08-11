@@ -118,11 +118,7 @@ public class KeyTarImpl implements IKeyTar {
             JsonNode storeNode = entry.getValue();
 
             if (!storeNode.isObject()) {
-                LOG.debug(
-                        "Unexpected KeyTar store node type for store '{}': {}",
-                        storeName,
-                        storeNode
-                );
+                LOG.debug("Unexpected KeyTar store node type for store '{}'", storeName);
                 continue;
             }
 
