@@ -9,6 +9,8 @@
  */
 package zowe.client.sdk.teamconfig.model;
 
+import zowe.client.sdk.utility.TeamConfigUtils;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +109,7 @@ public class Profile {
                 "name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", secure=" + secure +
-                ", properties=" + properties +
+                ", properties=" + TeamConfigUtils.getMaskedProperties(properties, secure) +
                 '}';
     }
 
