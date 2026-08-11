@@ -18,6 +18,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
@@ -295,9 +296,9 @@ public class JobChange {
         return zosmfUrl +
                 JobsConstants.RESOURCE +
                 UrlConstants.URL_PATH_DELIM +
-                modifyInputData.getJobName().get() +
+                EncodeUtils.encodeURIComponent(modifyInputData.getJobName().get()) +
                 UrlConstants.URL_PATH_DELIM +
-                modifyInputData.getJobId().get();
+                EncodeUtils.encodeURIComponent(modifyInputData.getJobId().get());
     }
 
     private static String getVersion(final JobModifyInputData modifyInputData) {
