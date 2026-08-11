@@ -18,6 +18,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
@@ -85,7 +86,7 @@ public class TsoStop {
                 UrlConstants.URL_PATH_DELIM +
                 TsoConstants.RES_START_TSO +
                 UrlConstants.URL_PATH_DELIM +
-                sessionId;
+                EncodeUtils.encodeURIComponent(sessionId);
 
         request.setUrl(url);
 
