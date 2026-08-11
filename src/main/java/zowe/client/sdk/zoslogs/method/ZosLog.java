@@ -17,6 +17,7 @@ import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zoslogs.input.ZosLogInputData;
@@ -187,11 +188,11 @@ public class ZosLog {
             queryParams.add("timestamp=" + nextTimestamp);
         } else {
             logInputData.getStartTime()
-                    .ifPresent(startTime -> queryParams.add("time=" + startTime));
+                    .ifPresent(startTime -> queryParams.add("time=" + EncodeUtils.encodeURIComponent(startTime)));
         }
 
         logInputData.getTimeRange()
-                .ifPresent(timeRange -> queryParams.add("timeRange=" + timeRange));
+                .ifPresent(timeRange -> queryParams.add("timeRange=" + EncodeUtils.encodeURIComponent(timeRange)));
 
         logInputData.getDirection()
                 .ifPresent(direction -> queryParams.add("direction=" + direction.getValue()));
