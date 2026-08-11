@@ -15,6 +15,7 @@ import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
+import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosjobs.JobsConstants;
 import zowe.client.sdk.zosjobs.input.JobModifyInputData;
@@ -113,9 +114,9 @@ public class JobDelete {
         final String url = connection.getZosmfUrl() +
                 JobsConstants.RESOURCE +
                 UrlConstants.URL_PATH_DELIM +
-                modifyInputData.getJobName().get() +
+                EncodeUtils.encodeURIComponent(modifyInputData.getJobName().get()) +
                 UrlConstants.URL_PATH_DELIM +
-                modifyInputData.getJobId().get();
+                EncodeUtils.encodeURIComponent(modifyInputData.getJobId().get());
 
         final Map<String, String> headers = new HashMap<>();
 
