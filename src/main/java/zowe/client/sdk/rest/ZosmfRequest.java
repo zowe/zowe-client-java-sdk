@@ -12,6 +12,7 @@ package zowe.client.sdk.rest;
 import kong.unirest.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zowe.client.sdk.core.AuthType;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -33,7 +34,122 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Base abstract class that conforms to http CRUD operations
+ * Base abstract class that conforms to HTTP CRUD operations against z/OSMF endpoints.
+ *
+ * <p>
+ * <b>Authentication Processing:</b>
+ * <br>
+ * Requests are initialized according to the {@link AuthType} specified in the {@link ZosConnection}:
+ * <ul>
+ *   <li>
+ *     <b>Basic Authentication ({@link AuthType#BASIC}):</b>
+ *     Authenticates the client using a Base64-encoded username and password sent in the
+ *     HTTP {@code Authorization: Basic} header over HTTPS.
+ *   </li>
+ *   <li>
+ *     <b>Token Authentication ({@link AuthType#TOKEN}):</b>
+ *     Authenticates the client using an authentication token or cookie (for example,
+ *     an APIM token or z/OSMF LTPA cookie) attached to each HTTP request over HTTPS.
+ *   </li>
+ *   <li>
+ *     <b>Client Certificate Authentication ({@link AuthType#SSL}):</b>
+ *     Authenticates the client at the TLS transport layer using Mutual TLS (mTLS).
+ *     A PKCS12 ({@code .p12}) keystore containing a client certificate and private key
+ *     is required. Username, password, or token authentication is not used.
+ *   </li>
+ * </ul>
+ *
+ * <p>
+ * <b>SSL/TLS Transport and Server Certificate Validation:</b>
+ * <br>
+ * All REST calls to z/OSMF are transmitted over HTTPS/TLS. Consequently, SSL/TLS setup
+ * and server certificate validation apply to all authentication types
+ * ({@link AuthType#BASIC}, {@link AuthType#TOKEN}, and {@link AuthType#SSL}).
+ *
+ * <p>
+ * Client certificate configuration is independent of server certificate validation.
+ * If a client certificate file ({@code .p12}) is configured on a {@link ZosConnection},
+ * it is loaded for client certificate authentication regardless of the authentication
+ * type. A client certificate is not required for {@link AuthType#BASIC} or
+ * {@link AuthType#TOKEN} authentication.
+ *
+ * <p>
+ * Server certificate validation supports three modes:
+ * <ul>
+ *   <li>
+ *     <b>Default (Standard CA Validation):</b>
+ *     When no custom TrustStore or insecure mode is configured, the SDK validates the
+ *     z/OSMF server certificate against Java's default JVM CA truststore
+ *     ({@code cacerts}) and enforces standard hostname verification.
+ *
+ *     <p>
+ *     For self-signed or internal-CA z/OSMF servers used with
+ *     {@link AuthType#BASIC} or {@link AuthType#TOKEN}, users can export or download
+ *     the server certificate from their web browser and import it into Java's global
+ *     {@code cacerts} file using the JDK {@code keytool} utility. For example:
+ *
+ *     <pre>{@code
+ * keytool -importcert -alias zosmf -file zosmf.crt -keystore cacerts
+ *     }</pre>
+ *
+ *     Once imported, Java validates the server certificate automatically without
+ *     requiring SDK system properties or code changes.
+ *   </li>
+ *
+ *   <li>
+ *     <b>Option 1 (Custom TrustStore):</b>
+ *     Provides secure server certificate validation without modifying the global JVM
+ *     {@code cacerts} file and without using {@link RestConstant#TRUST_ALL_CERTS}.
+ *
+ *     <p>
+ *     Users can import the z/OSMF server certificate or its CA certificate into a
+ *     separate TrustStore file ({@code .p12} or {@code .jks}) using the JDK
+ *     {@code keytool} utility. The TrustStore is configured using the system property
+ *     {@value RestConstant#TRUSTSTORE_PATH_PROPERTY_NAME}
+ *     ({@code zowe.sdk.truststore.path}) and the optional system property
+ *     {@value RestConstant#TRUSTSTORE_PASSWORD_PROPERTY_NAME}
+ *     ({@code zowe.sdk.truststore.password}).
+ *
+ *     <p>
+ *     The custom TrustStore is used to validate the z/OSMF server certificate and can
+ *     be used independently of the authentication type. Therefore, a custom TrustStore
+ *     can be used with {@link AuthType#BASIC}, {@link AuthType#TOKEN}, or
+ *     {@link AuthType#SSL}.
+ *
+ *     <p>
+ *     When {@link AuthType#SSL} is used, the client certificate and private key from
+ *     the connection's PKCS12 file are used for mTLS client authentication while the
+ *     separate custom TrustStore is used to validate the z/OSMF server certificate.
+ *
+ *     <p>
+ *     Hostname verification is disabled when the custom TrustStore mode is enabled.
+ *   </li>
+ *
+ *   <li>
+ *     <b>Option 2 (Insecure Mode):</b>
+ *     Enabled by setting the system property
+ *     {@value RestConstant#INSECURE_PROPERTY_NAME}
+ *     ({@code zowe.sdk.allow.insecure.connection}) to {@code true}.
+ *
+ *     <p>
+ *     This is an explicit, optional developer opt-in and is disabled by default.
+ *     It is designed to bypass server TLS certificate validation when users do not
+ *     have the z/OSMF server certificate available in a TrustStore.
+ *
+ *     <p>
+ *     Insecure mode uses {@link RestConstant#TRUST_ALL_CERTS} to accept any server
+ *     certificate, similar to {@code curl -k}, and disables hostname verification.
+ *     A prominent security warning is logged when this mode is enabled.
+ *
+ *     <p>
+ *     When a client certificate is configured, it is still loaded and used for
+ *     client authentication. Therefore, insecure mode can still perform mTLS while
+ *     bypassing validation of the z/OSMF server certificate.
+ *
+ *     <p>
+ *     Insecure mode should only be used in isolated test or sandbox environments.
+ *   </li>
+ * </ul>
  *
  * @author Frank Giordano
  * @version 7.0
@@ -148,32 +264,18 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Setup authentication SSL type
+     * Configures SSL/TLS for the given connection.
+     *
      * <p>
-     * SSL/TLS configuration supports two options for handling server certificate validation:
-     * <ul>
-     *   <li><b>Option 1 (Custom TrustStore):</b> To support self-signed z/OSMF servers securely without
-     *       using {@link RestConstant#TRUST_ALL_CERTS}, the SDK allows specifying a separate TrustStore file
-     *       (.p12 or .jks) that contains the server's certificate/CA, rather than reusing the client's mTLS .p12 file.
-     *       Specified by setting the system property {@value RestConstant#TRUSTSTORE_PATH_PROPERTY_NAME}
-     *       ("zowe.sdk.truststore.path") and optional {@value RestConstant#TRUSTSTORE_PASSWORD_PROPERTY_NAME}
-     *       ("zowe.sdk.truststore.password"). Loads the custom TrustStore into a {@link TrustManagerFactory}
-     *       to validate the server certificate while disabling hostname verification.</li>
-     *   <li><b>Option 2 (Insecure Mode):</b> Enabled implicitly by setting the system property
-     *       {@value RestConstant#INSECURE_PROPERTY_NAME} ("zowe.sdk.allow.insecure.connection") to "true".
-     *       An explicit, optional developer opt-in (disabled by default) designed specifically to bypass
-     *       server TLS checks for self-signed test environments when users do not have the server certificate
-     *       in a truststore. Logs a prominent security warning and uses {@link RestConstant#TRUST_ALL_CERTS}
-     *       to accept any server certificate (similar to {@code curl -k}), while also disabling hostname verification.
-     *       Use only in isolated test or sandbox environments.</li>
-     *   <li><b>Default (Standard Mode):</b> When neither property is set, standard client certificate store
-     *       configuration is applied using the client .p12 certificate file for mTLS, relying on the default
-     *       JVM CA truststore and standard hostname verification for server validation.</li>
-     * </ul>
+     * Selects the appropriate server certificate validation configuration based on the
+     * configured custom TrustStore, insecure mode, and client certificate settings.
+     *
+     * <p>
+     * SSL/TLS configuration is applied to all authentication types. A client certificate
+     * is loaded only when one is configured on the connection.
      *
      * @param instance   UnirestInstance to configure
-     * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
+     * @param connection ZosConnection containing authentication and SSL configuration
      */
     private static void setupSsl(final UnirestInstance instance, final ZosConnection connection) {
         LOG.debug("ssl configuration check");
