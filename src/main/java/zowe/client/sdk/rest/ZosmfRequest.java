@@ -35,7 +35,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Base abstract class that conforms to HTTP CRUD operations against z/OSMF endpoints.
- *
  * <p>
  * <b>Authentication Processing:</b>
  * <br>
@@ -58,21 +57,18 @@ import java.util.concurrent.atomic.AtomicReference;
  *     is required. Username, password, or token authentication is not used.
  *   </li>
  * </ul>
- *
  * <p>
  * <b>SSL/TLS Transport and Server Certificate Validation:</b>
  * <br>
  * All REST calls to z/OSMF are transmitted over HTTPS/TLS. Consequently, SSL/TLS setup
  * and server certificate validation apply to all authentication types
  * ({@link AuthType#BASIC}, {@link AuthType#TOKEN}, and {@link AuthType#SSL}).
- *
  * <p>
  * Client certificate configuration is independent of server certificate validation.
  * If a client certificate file ({@code .p12}) is configured on a {@link ZosConnection},
  * it is loaded for client certificate authentication regardless of the authentication
  * type. A client certificate is not required for {@link AuthType#BASIC} or
  * {@link AuthType#TOKEN} authentication.
- *
  * <p>
  * Server certificate validation supports three modes:
  * <ul>
@@ -81,7 +77,6 @@ import java.util.concurrent.atomic.AtomicReference;
  *     When no custom TrustStore or insecure mode is configured, the SDK validates the
  *     z/OSMF server certificate against Java's default JVM CA truststore
  *     ({@code cacerts}) and enforces standard hostname verification.
- *
  *     <p>
  *     For self-signed or internal-CA z/OSMF servers used with
  *     {@link AuthType#BASIC} or {@link AuthType#TOKEN}, users can export or download
@@ -100,7 +95,6 @@ import java.util.concurrent.atomic.AtomicReference;
  *     <b>Option 1 (Custom TrustStore):</b>
  *     Provides secure server certificate validation without modifying the global JVM
  *     {@code cacerts} file and without using {@link RestConstant#TRUST_ALL_CERTS}.
- *
  *     <p>
  *     Users can import the z/OSMF server certificate or its CA certificate into a
  *     separate TrustStore file ({@code .p12} or {@code .jks}) using the JDK
@@ -109,18 +103,15 @@ import java.util.concurrent.atomic.AtomicReference;
  *     ({@code zowe.sdk.truststore.path}) and the optional system property
  *     {@value RestConstant#TRUSTSTORE_PASSWORD_PROPERTY_NAME}
  *     ({@code zowe.sdk.truststore.password}).
- *
  *     <p>
  *     The custom TrustStore is used to validate the z/OSMF server certificate and can
  *     be used independently of the authentication type. Therefore, a custom TrustStore
  *     can be used with {@link AuthType#BASIC}, {@link AuthType#TOKEN}, or
  *     {@link AuthType#SSL}.
- *
  *     <p>
  *     When {@link AuthType#SSL} is used, the client certificate and private key from
  *     the connection's PKCS12 file are used for mTLS client authentication while the
  *     separate custom TrustStore is used to validate the z/OSMF server certificate.
- *
  *     <p>
  *     Hostname verification is disabled when the custom TrustStore mode is enabled.
  *   </li>
@@ -130,22 +121,18 @@ import java.util.concurrent.atomic.AtomicReference;
  *     Enabled by setting the system property
  *     {@value RestConstant#INSECURE_PROPERTY_NAME}
  *     ({@code zowe.sdk.allow.insecure.connection}) to {@code true}.
- *
  *     <p>
  *     This is an explicit, optional developer opt-in and is disabled by default.
  *     It is designed to bypass server TLS certificate validation when users do not
  *     have the z/OSMF server certificate available in a TrustStore.
- *
  *     <p>
  *     Insecure mode uses {@link RestConstant#TRUST_ALL_CERTS} to accept any server
  *     certificate, similar to {@code curl -k}, and disables hostname verification.
  *     A prominent security warning is logged when this mode is enabled.
- *
  *     <p>
  *     When a client certificate is configured, it is still loaded and used for
  *     client authentication. Therefore, insecure mode can still perform mTLS while
  *     bypassing validation of the z/OSMF server certificate.
- *
  *     <p>
  *     Insecure mode should only be used in isolated test or sandbox environments.
  *   </li>
