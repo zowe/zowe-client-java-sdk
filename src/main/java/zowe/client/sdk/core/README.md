@@ -29,6 +29,10 @@ authentication types (`AuthType`) to prove client identity over that encrypted c
 3. **SSL (`AuthType.SSL`)**: Authenticates client identity via **Mutual TLS (mTLS)** using a PKCS12 (`.p12`) key store
    file containing a client certificate and private key. No username or password is required.
 
+The client certificate is required only for `AuthType.SSL`. BASIC and TOKEN authentication do not require a client
+certificate. A custom TrustStore can be used independently with any of the three authentication types to validate the
+z/OSMF server certificate.
+
 ### Code Examples
 
 **Basic Authentication**
@@ -136,9 +140,7 @@ keytool -importcert -alias zosmf-server -file "C:\Users\youruser\Downloads\zosmf
 
 ```java
 System.setProperty("zowe.sdk.truststore.path","C:/certs/zosmf-truststore.p12");
-System.
-
-setProperty("zowe.sdk.truststore.password","mypassword"); // Optional
+System.etProperty("zowe.sdk.truststore.password","mypassword"); // Optional
 ```
 
 Or via JVM launch argument: `-Dzowe.sdk.truststore.path=C:/certs/zosmf-truststore.p12`
@@ -146,12 +148,15 @@ Or via JVM launch argument: `-Dzowe.sdk.truststore.path=C:/certs/zosmf-truststor
 *Result*: The SDK validates the z/OSMF server against your custom truststore file without altering Java's global
 `cacerts`.
 
+The SDK uses the custom TrustStore to validate the z/OSMF server certificate. The TrustStore is independent of the
+client certificate used for mTLS. Therefore, this configuration can be used with BASIC, TOKEN, or SSL authentication.
+  
 ---
 
-### Method 3: Use Windows OS Certificate Store (Windows Enterprise CAs)
+### Method 3: Use the Java/Windows OS Certificate Store
 
-If your z/OSMF server's certificate is issued by a corporate CA that is already installed in your Windows Certificate
-Store (`certmgr.msc`), instruct Java to read the OS truststore:
+If your z/OSMF server's certificate is issued by a corporate CA that is already trusted by the Windows certificate
+store, Java can be configured to use the Windows root certificate store:
 
 ```bash
 -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT
@@ -165,6 +170,9 @@ System.setProperty("javax.net.ssl.trustStoreType","WINDOWS-ROOT");
 
 *Result*: Java inherits trusted certificates directly from the Windows Certificate Store.
 
+When Custom TrustStore mode is enabled, hostname verification is disabled by the SDK. The TrustStore therefore controls
+certificate trust, but the hostname is not independently verified against the certificate.
+
 ---
 
 ### Insecure Mode (`zowe.sdk.allow.insecure.connection=true`)
@@ -177,5 +185,11 @@ System.setProperty("zowe.sdk.allow.insecure.connection","true");
 
 Or via JVM launch argument: `-Dzowe.sdk.allow.insecure.connection=true`
 
-*Result*: Disables server certificate and hostname verification for all REST requests (acts like `curl -k`). A warning
-is logged on connection setup.is logged on connection setup.
+*Result*: Disables server certificate validation and hostname verification for REST requests made through the SDK. This
+acts similarly to `curl -k`. A security warning is logged when insecure mode is enabled.
+
+A client certificate is optional in insecure mode. If a client certificate is configured, it continues to be used for
+client authentication while server certificate validation is bypassed.
+
+**Warning:** Insecure mode should only be used in isolated test or sandbox environments and should not be used in
+production.

@@ -13,7 +13,38 @@ import kong.unirest.core.Cookie;
 import zowe.client.sdk.utility.ValidateUtils;
 
 /**
- * Factory class for creating ZosConnection objects with different authentication types
+ * Factory class for creating {@link ZosConnection} objects with different authentication types.
+ *
+ * <p>
+ * Supported authentication types are:
+ * <ul>
+ *   <li>
+ *     <b>Basic Authentication:</b> Uses a username and password to authenticate
+ *     requests to z/OSMF.
+ *   </li>
+ *   <li>
+ *     <b>Token Authentication:</b> Uses an authentication token or cookie to
+ *     authenticate requests to z/OSMF.
+ *   </li>
+ *   <li>
+ *     <b>SSL/TLS Client Certificate Authentication:</b> Uses a PKCS12 ({@code .p12})
+ *     client certificate and private key to authenticate the client using Mutual TLS (mTLS).
+ *   </li>
+ * </ul>
+ *
+ * <p>
+ * SSL/TLS server certificate validation is configured independently of the authentication
+ * type. All connections use HTTPS/TLS and can validate the z/OSMF server certificate using
+ * Java's default JVM CA truststore, a custom TrustStore, or the explicitly enabled insecure mode.
+ *
+ * <p>
+ * A custom TrustStore can therefore be used with Basic Authentication, Token Authentication,
+ * or SSL/TLS client certificate authentication. The custom TrustStore is used to validate the
+ * z/OSMF server certificate and is separate from the client PKCS12 file used for mTLS.
+ *
+ * <p>
+ * The {@link #createSslConnection(String, int, String, String)} methods specifically create
+ * {@link AuthType#SSL} connections and therefore require a PKCS12 client certificate file.
  *
  * @author Frank Giordano
  * @version 7.0
@@ -21,14 +52,14 @@ import zowe.client.sdk.utility.ValidateUtils;
 public class ZosConnectionFactory {
 
     /**
-     * Private constructor defined to avoid instantiation of a static factory class
+     * Private constructor defined to avoid instantiation of a static factory class.
      */
     private ZosConnectionFactory() {
         throw new IllegalStateException("Factory class");
     }
 
     /**
-     * Creates a ZosConnection with basic authentication
+     * Creates a ZosConnection with basic authentication.
      *
      * @param host     Host address of the z/OSMF server
      * @param port     Port number of the z/OSMF server
@@ -46,7 +77,7 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with basic authentication
+     * Creates a ZosConnection with basic authentication.
      *
      * @param host     Host address of the z/OSMF server
      * @param port     Port number of the z/OSMF server
@@ -67,18 +98,6 @@ public class ZosConnectionFactory {
         return createBasicZosConnection(host, port, user, password, basePath);
     }
 
-    /**
-     * Private wrapper method for createBasicZosConnection
-     *
-     * @param host     Host address of the z/OSMF server
-     * @param port     Port number of the z/OSMF server
-     * @param user     Username for authentication
-     * @param password Password for authentication
-     * @param basePath base path for z/OSMF REST endpoints
-     * @return ZosConnection configured for token authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
-     */
     private static ZosConnection createBasicZosConnection(final String host,
                                                           final int port,
                                                           final String user,
@@ -95,7 +114,7 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with token authentication
+     * Creates a ZosConnection with token authentication.
      *
      * @param host  Host address of the z/OSMF server
      * @param port  Port number of the z/OSMF server
@@ -111,7 +130,7 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with token authentication
+     * Creates a ZosConnection with token authentication.
      *
      * @param host     Host address of the z/OSMF server
      * @param port     Port number of the z/OSMF server
@@ -130,17 +149,6 @@ public class ZosConnectionFactory {
         return createTokenZosConnection(host, port, token, basePath);
     }
 
-    /**
-     * Private wrapper method for createTokenZosConnection
-     *
-     * @param host     Host address of the z/OSMF server
-     * @param port     Port number of the z/OSMF server
-     * @param token    Authentication token cookie
-     * @param basePath base path for z/OSMF REST endpoints
-     * @return ZosConnection configured for token authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
-     */
     private static ZosConnection createTokenZosConnection(final String host,
                                                           final int port,
                                                           final Cookie token,
@@ -154,34 +162,47 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL/TLS (mTLS) certificate authentication using a PKCS12 file (.p12).
+     * Creates a {@link ZosConnection} with SSL/TLS (mTLS) client certificate authentication
+     * using a PKCS12 file ({@code .p12}).
+     *
      * <p>
-     * The specified PKCS12 file (.p12) houses the client certificate and private key used to authenticate
-     * the client application with z/OSMF.
+     * The specified PKCS12 file contains the client certificate and private key used to
+     * authenticate the client application with z/OSMF using Mutual TLS (mTLS).
+     *
      * <p>
-     * Server certificate validation during HTTPS requests supports three modes:
+     * Server certificate validation is configured independently of client certificate
+     * authentication and supports the following modes:
      * <ul>
-     *   <li><b>Default Mode (Standard CA Validation):</b> When no system properties are set (`zowe.sdk.allow.insecure.connection = false`),
-     *       the client .p12 certificate file is used solely for client authentication (mTLS). Server certificate
-     *       verification relies on the JVM's standard default truststore ({@code cacerts}) with standard
-     *       hostname verification. When the z/OSMF server presents a certificate signed by a CA trusted by Java,
-     *       server verification succeeds automatically. Recommended for production.</li>
-     *   <li><b>Option 1 (Custom TrustStore):</b> To support self-signed z/OSMF servers securely without using
-     *       {@code TRUST_ALL_CERTS}, set system property {@code "zowe.sdk.truststore.path"} (and optional
-     *       {@code "zowe.sdk.truststore.password"}) to load a separate TrustStore (.p12 or .jks) containing the
-     *       server's certificate/CA, rather than reusing the client's mTLS .p12 file. Disables hostname verification.</li>
-     *   <li><b>Option 2 (Insecure Mode):</b> Set system property {@code "zowe.sdk.allow.insecure.connection"}
-     *       to {@code "true"} as an explicit, optional developer opt-in (disabled by default) designed specifically
-     *       to bypass server TLS certificate validation using {@code TRUST_ALL_CERTS} (similar to {@code curl -k})
-     *       and disable hostname verification when users do not have the server certificate in a truststore.
-     *       Accompanied by prominent log warnings. Intended for isolated test/sandbox environments only.</li>
+     *   <li>
+     *     <b>Default:</b> The z/OSMF server certificate is validated against Java's
+     *     default JVM CA truststore ({@code cacerts}) with standard hostname verification.
+     *   </li>
+     *   <li>
+     *     <b>Custom TrustStore:</b> A separate {@code .p12} or {@code .jks} TrustStore
+     *     can be configured using
+     *     {@code zowe.sdk.truststore.path} and the optional
+     *     {@code zowe.sdk.truststore.password} system properties. The TrustStore is used
+     *     to validate the z/OSMF server certificate and is separate from the client
+     *     certificate PKCS12 file.
+     *   </li>
+     *   <li>
+     *     <b>Insecure Mode:</b> Setting
+     *     {@code zowe.sdk.allow.insecure.connection} to {@code true} explicitly disables
+     *     server certificate validation and hostname verification. This mode is intended
+     *     only for isolated test or sandbox environments.
+     *   </li>
      * </ul>
+     *
+     * <p>
+     * The client PKCS12 file is required for this method because the connection uses
+     * {@link AuthType#SSL} client certificate authentication.
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
-     * @param certFilePath Path to the PKCS12 certificate file (.p12) containing client key and cert
-     * @param certPassword Password for the PKCS12 certificate file (.p12)
-     * @return ZosConnection configured for SSL authentication
+     * @param certFilePath Path to the PKCS12 certificate file ({@code .p12}) containing
+     *                     the client certificate and private key
+     * @param certPassword Password for the PKCS12 certificate file ({@code .p12})
+     * @return ZosConnection configured for SSL/TLS client certificate authentication
      * @author Frank Giordano
      * @author Shabaz Kowthalam
      */
@@ -193,35 +214,20 @@ public class ZosConnectionFactory {
     }
 
     /**
-     * Creates a ZosConnection with SSL/TLS (mTLS) certificate authentication using a PKCS12 file (.p12).
+     * Creates a {@link ZosConnection} with SSL/TLS (mTLS) client certificate authentication
+     * using a PKCS12 file ({@code .p12}), with a specified base path for z/OSMF REST endpoints.
+     *
      * <p>
-     * The specified PKCS12 file (.p12) houses the client certificate and private key used to authenticate
-     * the client application with z/OSMF.
-     * <p>
-     * Server certificate validation during HTTPS requests supports three modes:
-     * <ul>
-     *   <li><b>Default Mode (Standard CA Validation):</b> When no system properties are set (`zowe.sdk.allow.insecure.connection = false`),
-     *       the client .p12 certificate file is used solely for client authentication (mTLS). Server certificate
-     *       verification relies on the JVM's standard default truststore ({@code cacerts}) with standard
-     *       hostname verification. When the z/OSMF server presents a certificate signed by a CA trusted by Java,
-     *       server verification succeeds automatically. Recommended for production.</li>
-     *   <li><b>Option 1 (Custom TrustStore):</b> To support self-signed z/OSMF servers securely without using
-     *       {@code TRUST_ALL_CERTS}, set system property {@code "zowe.sdk.truststore.path"} (and optional
-     *       {@code "zowe.sdk.truststore.password"}) to load a separate TrustStore (.p12 or .jks) containing the
-     *       server's certificate/CA, rather than reusing the client's mTLS .p12 file. Disables hostname verification.</li>
-     *   <li><b>Option 2 (Insecure Mode):</b> Set system property {@code "zowe.sdk.allow.insecure.connection"}
-     *       to {@code "true"} as an explicit, optional developer opt-in (disabled by default) designed specifically
-     *       to bypass server TLS certificate validation using {@code TRUST_ALL_CERTS} (similar to {@code curl -k})
-     *       and disable hostname verification when users do not have the server certificate in a truststore.
-     *       Accompanied by prominent log warnings. Intended for isolated test/sandbox environments only.</li>
-     * </ul>
+     * The SSL/TLS server certificate validation behavior is the same as the
+     * {@link #createSslConnection(String, int, String, String)} overload.
      *
      * @param host         Host address of the z/OSMF server
      * @param port         Port number of the z/OSMF server
-     * @param certFilePath Path to the PKCS12 certificate file (.p12) containing client key and cert
-     * @param certPassword Password for the PKCS12 certificate file (.p12)
-     * @param basePath     base path for z/OSMF REST endpoints
-     * @return ZosConnection configured for SSL authentication
+     * @param certFilePath Path to the PKCS12 certificate file ({@code .p12}) containing
+     *                     the client certificate and private key
+     * @param certPassword Password for the PKCS12 certificate file ({@code .p12})
+     * @param basePath     Base path for z/OSMF REST endpoints
+     * @return ZosConnection configured for SSL/TLS client certificate authentication
      * @author Frank Giordano
      * @author Shabaz Kowthalam
      */
@@ -235,18 +241,6 @@ public class ZosConnectionFactory {
         return createSslZosConnection(host, port, certFilePath, certPassword, basePath);
     }
 
-    /**
-     * Private wrapper method for createSslConnection
-     *
-     * @param host         Host address of the z/OSMF server
-     * @param port         Port number of the z/OSMF server
-     * @param certFilePath Path to the certificate file (.p12)
-     * @param certPassword Password for the certificate
-     * @param basePath     base path for z/OSMF REST endpoints
-     * @return ZosConnection configured for SSL authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
-     */
     private static ZosConnection createSslZosConnection(final String host,
                                                         final int port,
                                                         final String certFilePath,
