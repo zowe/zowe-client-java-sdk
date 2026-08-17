@@ -140,7 +140,7 @@ keytool -importcert -alias zosmf-server -file "C:\Users\youruser\Downloads\zosmf
 
 ```java
 System.setProperty("zowe.sdk.truststore.path","C:/certs/zosmf-truststore.p12");
-System.etProperty("zowe.sdk.truststore.password","mypassword"); // Optional
+System.setProperty("zowe.sdk.truststore.password","mypassword"); // Optional
 ```
 
 Or via JVM launch argument: `-Dzowe.sdk.truststore.path=C:/certs/zosmf-truststore.p12`
