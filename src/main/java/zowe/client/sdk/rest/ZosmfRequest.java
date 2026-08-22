@@ -252,11 +252,9 @@ public abstract class ZosmfRequest {
 
     /**
      * Configures SSL/TLS for the given connection.
-     *
      * <p>
      * Selects the appropriate server certificate validation configuration based on the
      * configured custom TrustStore, insecure mode, and client certificate settings.
-     *
      * <p>
      * SSL/TLS configuration is applied to all authentication types. A client certificate
      * is loaded only when one is configured on the connection.

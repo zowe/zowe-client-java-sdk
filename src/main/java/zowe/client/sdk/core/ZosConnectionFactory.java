@@ -14,7 +14,6 @@ import zowe.client.sdk.utility.ValidateUtils;
 
 /**
  * Factory class for creating {@link ZosConnection} objects with different authentication types.
- *
  * <p>
  * Supported authentication types are:
  * <ul>
@@ -31,17 +30,14 @@ import zowe.client.sdk.utility.ValidateUtils;
  *     client certificate and private key to authenticate the client using Mutual TLS (mTLS).
  *   </li>
  * </ul>
- *
  * <p>
  * SSL/TLS server certificate validation is configured independently of the authentication
  * type. All connections use HTTPS/TLS and can validate the z/OSMF server certificate using
  * Java's default JVM CA truststore, a custom TrustStore, or the explicitly enabled insecure mode.
- *
  * <p>
  * A custom TrustStore can therefore be used with Basic Authentication, Token Authentication,
  * or SSL/TLS client certificate authentication. The custom TrustStore is used to validate the
  * z/OSMF server certificate and is separate from the client PKCS12 file used for mTLS.
- *
  * <p>
  * The {@link #createSslConnection(String, int, String, String)} methods specifically create
  * {@link AuthType#SSL} connections and therefore require a PKCS12 client certificate file.
@@ -164,11 +160,9 @@ public class ZosConnectionFactory {
     /**
      * Creates a {@link ZosConnection} with SSL/TLS (mTLS) client certificate authentication
      * using a PKCS12 file ({@code .p12}).
-     *
      * <p>
      * The specified PKCS12 file contains the client certificate and private key used to
      * authenticate the client application with z/OSMF using Mutual TLS (mTLS).
-     *
      * <p>
      * Server certificate validation is configured independently of client certificate
      * authentication and supports the following modes:
@@ -192,7 +186,6 @@ public class ZosConnectionFactory {
      *     only for isolated test or sandbox environments.
      *   </li>
      * </ul>
-     *
      * <p>
      * The client PKCS12 file is required for this method because the connection uses
      * {@link AuthType#SSL} client certificate authentication.
@@ -216,7 +209,6 @@ public class ZosConnectionFactory {
     /**
      * Creates a {@link ZosConnection} with SSL/TLS (mTLS) client certificate authentication
      * using a PKCS12 file ({@code .p12}), with a specified base path for z/OSMF REST endpoints.
-     *
      * <p>
      * The SSL/TLS server certificate validation behavior is the same as the
      * {@link #createSslConnection(String, int, String, String)} overload.
