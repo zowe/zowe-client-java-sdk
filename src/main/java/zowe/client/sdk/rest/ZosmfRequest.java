@@ -288,7 +288,7 @@ public abstract class ZosmfRequest {
      *
      * @param instance     UnirestInstance to configure
      * @param certFilePath certificate file (.p12) location
-     * @param certPassword certificate password for certificate file (.p12)
+     * @param certPassword certificate password for a certificate file (.p12)
      * @author Frank Giordano
      */
     private static void setupSelfSignedCertificate(final UnirestInstance instance,

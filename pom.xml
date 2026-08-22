@@ -6,7 +6,7 @@
 
     <groupId>org.zowe.client.java.sdk</groupId>
     <artifactId>zowe-client-java-sdk</artifactId>
-    <version>7.0.4</version>
+    <version>7.0.5</version>
 
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -36,13 +36,6 @@
         <developerConnection>scm:git:ssh://github.com:zowe/zowe-client-java-sdk.git</developerConnection>
         <url>https://github.com/zowe/zowe-client-java-sdk/tree/master</url>
     </scm>
-
-    <distributionManagement>
-        <repository>
-            <id>central</id>
-            <url>https://central.sonatype.com/artifact/org.zowe.client.java.sdk/zowe-client-java-sdk</url>
-        </repository>
-    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -121,7 +114,6 @@
             <version>5.12.0</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -201,7 +193,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- For ci-cd publishing task -->
+            <!-- Maven Central publishing -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
@@ -209,6 +201,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>central</publishingServerId>
+                    <autoPublish>false</autoPublish>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -245,7 +238,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -255,16 +248,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-                    <!-- Central publishing -->
-                    <plugin>
-                        <groupId>org.sonatype.central</groupId>
-                        <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.8.0</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <publishingServerId>central</publishingServerId>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
