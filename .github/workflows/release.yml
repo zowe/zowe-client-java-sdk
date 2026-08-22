@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Release version (e.g., 7.0.0). Leave empty to use the current pom.xml version.'
+        description: 'Release version (e.g., 7.0.5). Leave empty to use the current pom.xml version.'
         required: false
         type: string
       skip-tests:
@@ -13,16 +13,19 @@ on:
         type: boolean
         default: false
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # 2. Fail fast if required secrets are not configured
       - name: Verify required secrets are configured
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
@@ -32,75 +35,112 @@ jobs:
           GPG_KEYID: ${{ secrets.GPG_KEYID }}
         run: |
           missing=()
+
           [ -z "$SONATYPE_USERNAME" ] && missing+=("SONATYPE_USERNAME")
           [ -z "$SONATYPE_PASSWORD" ] && missing+=("SONATYPE_PASSWORD")
           [ -z "$GPG_PRIVATE_KEY" ] && missing+=("GPG_PRIVATE_KEY")
           [ -z "$GPG_PASSPHRASE" ] && missing+=("GPG_PASSPHRASE")
           [ -z "$GPG_KEYID" ] && missing+=("GPG_KEYID")
+
           if [ ${#missing[@]} -ne 0 ]; then
-            echo "::error::Missing required secrets: ${missing[*]}. See CONTRIBUTING.md for setup instructions."
+            echo "::error::Missing required secrets: ${missing[*]}"
             exit 1
           fi
+
           echo "All required secrets are configured."
 
-      # 3. Set up JDK 11 and register Maven Central / GPG credentials
       - name: Set up JDK 11
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '11'
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: GPG_PASSPHRASE
+          gpg-passphrase-env-var: GPG_PASSPHRASE
 
-      # 4. Grant execute permission to Maven Wrapper
       - name: Grant execute permission to mvnw
         run: chmod +x ./mvnw
 
-      # 5. Cache Maven dependencies
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-release-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-release-
 
-      # 6. Bump version in pom.xml (only if a version was provided)
       - name: Set release version
         if: ${{ inputs.version != '' }}
-        run: ./mvnw versions:set -DnewVersion=${{ inputs.version }} -DgenerateBackupPoms=false
+        run: |
+          ./mvnw versions:set \
+            -DnewVersion="${{ inputs.version }}" \
+            -DgenerateBackupPoms=false
 
-      # 7. Run test suite (unless skipped)
+      - name: Determine release version
+        id: release_version
+        run: |
+          VERSION=$(./mvnw help:evaluate \
+            -Dexpression=project.version \
+            -q \
+            -DforceStdout)
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Releasing version: $VERSION"
+
+      - name: Check release tag does not already exist
+        env:
+          VERSION: ${{ steps.release_version.outputs.version }}
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null 2>&1; then
+            echo "::error::Git tag v$VERSION already exists."
+            exit 1
+          fi
+
       - name: Build and test
         if: ${{ !inputs.skip-tests }}
-        run: ./mvnw clean package
+        run: ./mvnw clean verify -Pci-cd
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_KEYID: ${{ secrets.GPG_KEYID }}
 
-      # 8. Deploy to Maven Central
       - name: Deploy to Maven Central
         run: ./mvnw clean deploy -Pci-cd -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          MAVEN_OPTS: -Dgpg.keyname=${{ secrets.GPG_KEYID }}
+          GPG_KEYID: ${{ secrets.GPG_KEYID }}
 
-      # 9. Determine the released version
-      - name: Determine release version
-        id: release_version
-        run: echo "version=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_OUTPUT"
-
-      # 10. Tag the release commit
-      - name: Create git tag
+      - name: Commit release version
+        if: ${{ inputs.version != '' }}
+        env:
+          VERSION: ${{ steps.release_version.outputs.version }}
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a "v${{ steps.release_version.outputs.version }}" -m "Release v${{ steps.release_version.outputs.version }}"
-          git push origin "v${{ steps.release_version.outputs.version }}"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      # 11. Create the GitHub Release
+          git add pom.xml
+
+          if git diff --cached --quiet; then
+            echo "No pom.xml changes to commit."
+          else
+            git commit -m "Release v$VERSION"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Create git tag
+        env:
+          VERSION: ${{ steps.release_version.outputs.version }}
+        run: |
+          git fetch --tags
+
+          git tag -a "v$VERSION" \
+            -m "Release v$VERSION"
+
+          git push origin "v$VERSION"
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
