@@ -9,133 +9,117 @@
  */
 package zowe.client.sdk.core;
 
+import zowe.client.sdk.utility.ValidateUtils;
+
 import java.util.Objects;
+import java.util.Optional;
 
 /**
- * SSH Connection information placeholder
+ * Holds connection parameters required to connect to z/OS native services over SSH (e.g. zowex).
  *
- * @author Frank Giordano
+ * @author Chaitanya Katore
  * @version 7.0
  */
-public final class SshConnection {
+public class SshConnection {
 
-    /**
-     * Host name pointing to the backend z / OS instance
-     */
     private final String host;
-
-    /**
-     * Host port number pointing to the backend z / OS instance
-     */
     private final int port;
-
-    /**
-     * Host username with access to a backend z / OS instance
-     */
     private final String user;
-
-    /**
-     * Host username's password with access to backend z/OS instance
-     */
     private final String password;
+    private final String privateKeyPath;
 
     /**
-     * SshConnection constructor
+     * SshConnection constructor using password authentication.
      *
-     * @param host     machine host pointing to backend z/OS instance
-     * @param port     machine host port number pointing to backend z/OS instance
-     * @param user     machine host username with access to backend z/OS instance
-     * @param password machine host username's password with access to backend z/OS instance
-     * @author Frank Giordano
+     * @param host     target hostname or IP address
+     * @param port     SSH port (e.g., 22)
+     * @param user     SSH username
+     * @param password SSH password
      */
     public SshConnection(final String host, final int port, final String user, final String password) {
-        this.host = host;
-        if (port < 1 || port > 65535) {
+        ValidateUtils.checkIllegalParameter(host, "host");
+        ValidateUtils.checkIllegalParameter(user, "user");
+        ValidateUtils.checkIllegalParameter(password, "password");
+        if (port <= 0 || port > 65535) {
             throw new IllegalArgumentException("invalid port number: " + port);
         }
+        this.host = host;
         this.port = port;
         this.user = user;
         this.password = password;
+        this.privateKeyPath = null;
     }
 
     /**
-     * Retrieve host specified
+     * SshConnection constructor using SSH key authentication.
      *
-     * @return host value
+     * @param host           target hostname or IP address
+     * @param port           SSH port (e.g., 22)
+     * @param user           SSH username
+     * @param password       SSH password/passphrase or null if unencrypted key
+     * @param privateKeyPath path to SSH private key file
      */
+    public SshConnection(final String host, final int port, final String user,
+                         final String password, final String privateKeyPath) {
+        ValidateUtils.checkIllegalParameter(host, "host");
+        ValidateUtils.checkIllegalParameter(user, "user");
+        ValidateUtils.checkIllegalParameter(privateKeyPath, "privateKeyPath");
+        if (port <= 0 || port > 65535) {
+            throw new IllegalArgumentException("invalid port number: " + port);
+        }
+        this.host = host;
+        this.port = port;
+        this.user = user;
+        this.password = password;
+        this.privateKeyPath = privateKeyPath;
+    }
+
     public String getHost() {
         return host;
     }
 
-    /**
-     * Retrieve port number specified
-     *
-     * @return port value
-     */
     public int getPort() {
         return port;
     }
 
-    /**
-     * Retrieve username specified
-     *
-     * @return user value
-     */
     public String getUser() {
         return user;
     }
 
-    /**
-     * Retrieve password specified
-     *
-     * @return password value
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * Return string value representing SshConnection object
-     *
-     * @return string representation of SshConnection
-     */
+    public Optional<String> getPrivateKeyPath() {
+        return Optional.ofNullable(privateKeyPath);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SshConnection that = (SshConnection) o;
+        return port == that.port &&
+                Objects.equals(host, that.host) &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(privateKeyPath, that.privateKeyPath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(host, port, user, password, privateKeyPath);
+    }
+
     @Override
     public String toString() {
         return "SshConnection{" +
                 "host='" + ((host == null) ? "" : host) + '\'' +
-                ", port='" + port + '\'' +
+                ", port=" + port +
                 ", user='" + ((user == null) ? "" : user) + '\'' +
                 ", password='" + ((password == null || password.isEmpty()) ? "" : "*****") + '\'' +
+                ", privateKeyPath='" + ((privateKeyPath == null) ? "" : privateKeyPath) + '\'' +
                 '}';
-    }
-
-    /**
-     * Equals method. Use all members for equality.
-     *
-     * @param obj object
-     * @return true or false
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        SshConnection other = (SshConnection) obj;
-        return Objects.equals(host, other.host) && port == other.port &&
-                Objects.equals(user, other.user) && Objects.equals(password, other.password);
-    }
-
-    /**
-     * Hashcode method. Use all members for hashing.
-     *
-     * @return int value
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(host, port, user, password);
     }
 
 }
