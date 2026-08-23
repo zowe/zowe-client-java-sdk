@@ -46,6 +46,7 @@ In addition to the MVP milestones, the following releases include further enhanc
 * [Version 7.0.2](https://github.com/zowe/zowe-client-java-sdk/issues/614)
 * [Version 7.0.3](https://github.com/zowe/zowe-client-java-sdk/pull/617)
 * [Version 7.0.4](https://github.com/zowe/zowe-client-java-sdk/issues/622)
+* [Version 7.0.5](https://github.com/zowe/zowe-client-java-sdk/issues/626)
   
 ## Prebuilt API Services     
     
@@ -327,7 +328,7 @@ Fat JAR (with dependencies):
   
     implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.5', classifier: 'jar-with-dependencies'
   
-## Publishing to Maven Central  
+## Publishing to Maven Central The Manual Way 
   
 The following documents the steps taken to publish a new release of this project to maven central:
   
@@ -364,5 +365,40 @@ See the settings.xml example described in the next section.
   
 This project contains maven plugins within the pom.xml. Some of these require the maven2 repository. As such, the settings.xml file for your maven setup needs to have a maven2 repository specified.  
   
-Within the project's root directory, a settings_example.xml is available as a template for this project usage within your local development environment.  
+Within the project's root directory, a settings_example.xml is available as a template for this project usage within your local development environment.
+  
+## Publishing Releases with GitHub Actions
+
+Releases are published to Maven Central using the GitHub Actions workflow at `.github/workflows/release.yml`.
+
+### Required GitHub Secrets
+
+Configure the following repository secrets under **Settings → Secrets and variables → Actions**:
+
+* `SONATYPE_USERNAME`
+* `SONATYPE_PASSWORD`
+* `GPG_PRIVATE_KEY`
+* `GPG_PASSPHRASE`
+* `GPG_KEYID`
+
+### Starting a Release
+
+1. Go to **GitHub → Actions**.
+2. Select the **Release** workflow.
+3. Click **Run workflow**.
+4. Enter the release version (for example, `7.0.5`), or leave it empty to use the version currently in `pom.xml`.
+5. Choose whether to skip tests.
+6. Click **Run workflow**.
+
+The workflow will automatically:
+
+* Set the release version if one was provided.
+* Build and test the project.
+* Deploy the artifacts to Maven Central.
+* Commit the release version to the repository.
+* Create and push the `v<version>` Git tag.
+* Create the GitHub Release with automatically generated release notes.
+
+No manual Git tag or GitHub Release creation is required.
+
   
