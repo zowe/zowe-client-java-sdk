@@ -93,7 +93,7 @@ jobs:
             -DnewVersion="${{ inputs.version }}" \
             -DgenerateBackupPoms=false
 
-      # 8. Determine release version
+      # 8. Determine a release version
       - name: Determine release version
         id: release_version
         run: |

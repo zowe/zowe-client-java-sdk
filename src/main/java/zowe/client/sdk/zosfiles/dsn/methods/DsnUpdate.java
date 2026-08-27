@@ -172,7 +172,7 @@ public class DsnUpdate {
     }
 
     /**
-     * Delete a migrated dataset with wait option
+     * Delete a migrated dataset with a wait option
      *
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @param wait        if true, the function waits for completion of the request
