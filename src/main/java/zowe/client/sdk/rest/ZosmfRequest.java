@@ -279,7 +279,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Set up authentication SSL type for an insecure connection using TRUST_ALL_CERTS.
+     * Set up an authentication SSL type for an insecure connection using TRUST_ALL_CERTS.
      * <p>
      * Disables hostname verification and bypasses server certificate validation when system property
      * {@value RestConstant#INSECURE_PROPERTY_NAME} ("zowe.sdk.allow.insecure.connection") is set to "true".
@@ -319,7 +319,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Set up authentication SSL type using a custom TrustStore file for server certificate validation.
+     * Set up the authentication SSL type using a custom TrustStore file for server certificate validation.
      * <p>
      * Loads the custom TrustStore specified by {@value RestConstant#TRUSTSTORE_PATH_PROPERTY_NAME} into
      * a {@link TrustManagerFactory} and disables hostname verification for self-signed or internal CA endpoints.
@@ -327,7 +327,7 @@ public abstract class ZosmfRequest {
      * @param instance           UnirestInstance to configure
      * @param connection         ZosConnection object containing client certificate info
      * @param trustStorePath     path to custom TrustStore file (.p12, .jks)
-     * @param trustStorePassword password for custom TrustStore file
+     * @param trustStorePassword password for a custom TrustStore file
      * @author Frank Giordano
      */
     private static void setupCustomTrustStore(final UnirestInstance instance,
