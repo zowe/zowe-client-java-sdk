@@ -127,8 +127,7 @@ public class UssCmd {
      * Determines whether the specified throwable or any of its causes is a {@link SocketTimeoutException}.
      *
      * @param throwable throwable to inspect
-     * @return true if the throwable or any of its causes is a {@link SocketTimeoutException};
-     *         false otherwise
+     * @return true if the throwable or any of its causes is a {@link SocketTimeoutException}; false otherwise
      */
     private static boolean isSocketTimeout(final Throwable throwable) {
         Throwable cause = throwable;
