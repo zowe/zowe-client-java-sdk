@@ -188,7 +188,7 @@ public class UssCmd {
 
         @Override
         public void close() {
-            if (session != null && session.isConnected()) {
+            if (session.isConnected()) {
                 session.disconnect();
             }
         }
@@ -217,7 +217,7 @@ public class UssCmd {
 
         @Override
         public void close() {
-            if (channel != null && channel.isConnected()) {
+            if (channel.isConnected()) {
                 channel.disconnect();
             }
         }
