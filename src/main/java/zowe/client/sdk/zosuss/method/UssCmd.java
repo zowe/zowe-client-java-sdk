@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.net.SocketTimeoutException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * UssCmd Class provides a way to execute USS commands via ssh connection
@@ -103,7 +104,7 @@ public class UssCmd {
                 if ((System.nanoTime() - startTime) > TimeUnit.MILLISECONDS.toNanos(timeout)) {
                     throw new UssCmdException(
                             "Command execution timed out after " + timeout + " ms",
-                            new java.util.concurrent.TimeoutException("SSH execution limit exceeded.")
+                            new TimeoutException("SSH execution limit exceeded.")
                     );
                 }
             }
