@@ -164,9 +164,9 @@ public class UssCmd {
             session.setPassword(connection.getPassword());
             final Properties config = new Properties();
             config.put("PreferredAuthentications", "password");
-            final boolean inSecure = Boolean.parseBoolean(
+            final boolean insecure = Boolean.parseBoolean(
                     System.getProperty(RestConstant.INSECURE_PROPERTY_NAME, "false"));
-            if (inSecure) {
+            if (insecure) {
                 // Insecure mode
                 LOG.warn("{} is enabled; SSH host key verification is disabled for this connection",
                         RestConstant.INSECURE_PROPERTY_NAME);
