@@ -96,7 +96,7 @@ public class UssCmd {
 
             final long startTime = System.nanoTime();
 
-            // loop checks isClosed() to catch normal process completion
+            // Check isClosed() to detect normal process completion.
             final ChannelExec execChannel = channel.get();
             while (!execChannel.isClosed()) {
                 WaitUtil.wait(100);
