@@ -77,8 +77,8 @@ public class UssCmd {
      * @param command string value containing one or more USS commands
      * @param timeout int value in milliseconds used independently as the timeout for
      *                the SSH session connection, SSH channel connection, and remote
-     *                command execution. The timeout is not cumulative across these
-     *                operations.
+     *                command execution. The timeout is not a single cumulative timeout
+     *                for the entire operation, so the total elapsed time may exceed the specified timeout.
      * @return string output value from the USS command
      * @throws UssCmdException if an SSH connection, channel connection, or command
      *                         execution fails or times out
