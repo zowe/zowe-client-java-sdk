@@ -127,7 +127,7 @@ public class TsoCmd {
         JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
         this.processTsoData(tsoData);
 
-        // Check if the first response already gave us the end prompt
+        // check if the first response already gave us the end prompt
         boolean tsoMessagesReceived = !promptLst.isEmpty();
 
         while (!tsoMessagesReceived) {
@@ -230,8 +230,9 @@ public class TsoCmd {
             }
             // extract prompt hidden text if present (signals the end of conversation)
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
-            if (promptNode != null && promptNode.hasNonNull("HIDDEN")) {
-                this.promptLst.add(promptNode.get("HIDDEN").asText());
+            // only flag completion if message data was actually collected first when tso prompt seen
+            if (promptNode != null && !this.msgLst.isEmpty()) {
+                this.promptLst.add("TSO_PROMPT_RECEIVED");
             }
         });
     }
