@@ -127,7 +127,9 @@ public class TsoCmd {
         JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
         this.processTsoData(tsoData);
 
-        boolean tsoMessagesReceived = false;
+        // Check if the first response already gave us the end prompt
+        boolean tsoMessagesReceived = !promptLst.isEmpty();
+
         while (!tsoMessagesReceived) {
             // retrieve additional tso messages for the command
             responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
