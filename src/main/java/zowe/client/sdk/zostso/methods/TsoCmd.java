@@ -228,7 +228,6 @@ public class TsoCmd {
             if (messageNode != null && messageNode.hasNonNull("DATA")) {
                 this.msgLst.add(messageNode.get("DATA").asText());
             }
-            // extract prompt hidden text if present (signals the end of conversation)
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
             // only flag completion if message data was actually collected first when tso prompt seen
             if (promptNode != null && !this.msgLst.isEmpty()) {
