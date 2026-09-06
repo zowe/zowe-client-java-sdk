@@ -314,7 +314,7 @@ Thin JAR (recommended):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>7.0.5</version>
+          <version>7.0.6</version>
         </dependency>
   
 Fat JAR (with dependencies):
@@ -322,7 +322,7 @@ Fat JAR (with dependencies):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>7.0.5</version>
+          <version>7.0.6</version>
           <classifier>jar-with-dependencies</classifier>
         </dependency>  
   
@@ -330,11 +330,11 @@ For a Gradle project add the SDK as a dependency by updating your `build.gradle`
 
 Thin JAR (recommended):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.5'    
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.6'    
 
 Fat JAR (with dependencies):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.5', classifier: 'jar-with-dependencies'
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.6', classifier: 'jar-with-dependencies'
   
 ## Publishing to Maven Central The Manual Way 
   
@@ -394,7 +394,7 @@ Configure the following repository secrets under **Settings → Secrets and vari
 1. Go to **GitHub → Actions**.
 2. Select the **Release** workflow.
 3. Click **Run workflow**.
-4. Enter the release version (for example, `7.0.5`), or leave it empty to use the version currently in `pom.xml`.
+4. Enter the release version (for example, `7.0.7`), or leave it empty to use the version currently in `pom.xml`.
 5. Choose whether to skip tests.
 6. Click **Run workflow**.
 

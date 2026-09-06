@@ -12,6 +12,8 @@ package zowe.client.sdk.zostso.methods;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
@@ -31,6 +33,8 @@ import java.util.List;
  * @version 7.0
  */
 public class TsoCmd {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TsoCmd.class);
 
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
@@ -119,31 +123,33 @@ public class TsoCmd {
         if (!tsoStartResponse.isSuccess()) {
             final JsonNode tsoData = this.getJsonNode(tsoStartResponse.getResponse()).get("tsoData");
             this.processTsoData(tsoData);
-            return msgLst;
+            return this.msgLst;
         }
-
-        // send tso command to execute with session id
-        String responseStr = this.sendTsoCommand(tsoStartResponse.getSessionId(), command);
-        JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
-        this.processTsoData(tsoData);
-
-        // Check if the first response already gave us the end prompt
-        boolean tsoMessagesReceived = !promptLst.isEmpty();
-
-        while (!tsoMessagesReceived) {
-            // retrieve additional tso messages for the command
-            responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
-            tsoData = this.getJsonNode(responseStr).get("tsoData");
+        try {
+            // send tso command to execute with session id
+            String responseStr = this.sendTsoCommand(tsoStartResponse.getSessionId(), command);
+            JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
             this.processTsoData(tsoData);
 
-            // check for tso prompt message - indicates the end of the command
-            if (!promptLst.isEmpty()) {
-                tsoMessagesReceived = true;
+            // check if the first response already gave us the end prompt
+            boolean tsoMessagesReceived = !this.promptLst.isEmpty();
+
+            while (!tsoMessagesReceived) {
+                // retrieve additional tso messages for the command
+                responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
+                tsoData = this.getJsonNode(responseStr).get("tsoData");
+                this.processTsoData(tsoData);
+
+                // check for tso prompt message - indicates the end of the command
+                if (!this.promptLst.isEmpty()) {
+                    tsoMessagesReceived = true;
+                }
             }
+        } finally {
+            // stop the tso session
+            this.stopTso(tsoStartResponse.getSessionId());
         }
 
-        // stop the tso session
-        this.stopTso(tsoStartResponse.getSessionId());
         return msgLst;
     }
 
@@ -156,8 +162,8 @@ public class TsoCmd {
      * @author Frank Giordano
      */
     private TsoStartResponse startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
-        if (tsoStart == null) {
-            tsoStart = new TsoStart(connection);
+        if (this.tsoStart == null) {
+            this.tsoStart = new TsoStart(this.connection);
         }
         this.inputData = inputData;
         if (this.inputData == null) {
@@ -177,10 +183,10 @@ public class TsoCmd {
      * @author Frank Giordano
      */
     private String sendTsoCommand(final String sessionId, final String command) throws ZosmfRequestException {
-        if (tsoSend == null) {
-            tsoSend = new TsoSend(connection);
+        if (this.tsoSend == null) {
+            this.tsoSend = new TsoSend(this.connection);
         }
-        return tsoSend.sendCommand(sessionId, command);
+        return this.tsoSend.sendCommand(sessionId, command);
     }
 
     /**
@@ -192,10 +198,10 @@ public class TsoCmd {
      * @author Frank Giordano
      */
     private String sendTsoForReply(final String sessionId) throws ZosmfRequestException {
-        if (tsoReply == null) {
-            tsoReply = new TsoReply(connection);
+        if (this.tsoReply == null) {
+            this.tsoReply = new TsoReply(this.connection);
         }
-        return tsoReply.reply(sessionId);
+        return this.tsoReply.reply(sessionId);
     }
 
     /**
@@ -206,10 +212,10 @@ public class TsoCmd {
      * @author Frank Giordano
      */
     private void stopTso(final String sessionId) throws ZosmfRequestException {
-        if (tsoStop == null) {
-            tsoStop = new TsoStop(connection);
+        if (this.tsoStop == null) {
+            this.tsoStop = new TsoStop(this.connection);
         }
-        tsoStop.stop(sessionId);
+        this.tsoStop.stop(sessionId);
     }
 
     /**
@@ -228,10 +234,11 @@ public class TsoCmd {
             if (messageNode != null && messageNode.hasNonNull("DATA")) {
                 this.msgLst.add(messageNode.get("DATA").asText());
             }
-            // extract prompt hidden text if present (signals the end of conversation)
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
-            if (promptNode != null && promptNode.hasNonNull("HIDDEN")) {
-                this.promptLst.add(promptNode.get("HIDDEN").asText());
+            // only flag completion if message data was actually collected first when tso prompt seen
+            if (promptNode != null && !this.msgLst.isEmpty()) {
+                this.promptLst.add(promptNode.toString());
+                LOG.debug("TSO prompt received: {}", promptNode);
             }
         });
     }
@@ -248,7 +255,7 @@ public class TsoCmd {
     private JsonNode getJsonNode(final String responseStr) throws ZosmfRequestException {
         final JsonNode rootNode;
         try {
-            rootNode = objectMapper.readTree(responseStr);
+            rootNode = this.objectMapper.readTree(responseStr);
         } catch (JsonProcessingException e) {
             throw new ZosmfRequestException("Response: " + e.getMessage());
         }
@@ -263,7 +270,7 @@ public class TsoCmd {
      * @return StartTsoInputData object
      */
     StartTsoInputData getInputData() {
-        return inputData;
+        return this.inputData;
     }
 
 }
