@@ -149,7 +149,7 @@ public class TsoCmdTest {
      * @throws Exception if a mocked service call fails unexpectedly
      */
     @Test
-    public void tstIssueCommandIgnoresPrematurePromptOnlyPayload() throws Exception {
+    public void tstIssueCommandIgnoresPrematurePromptOnlyPayloadSuccess() throws Exception {
         // First packet contains a prompt only (e.g. initialization/handshake state)
         String promptOnlyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
 
