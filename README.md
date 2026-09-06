@@ -394,7 +394,7 @@ Configure the following repository secrets under **Settings → Secrets and vari
 1. Go to **GitHub → Actions**.
 2. Select the **Release** workflow.
 3. Click **Run workflow**.
-4. Enter the release version (for example, `7.0.6`), or leave it empty to use the version currently in `pom.xml`.
+4. Enter the release version (for example, `7.0.7`), or leave it empty to use the version currently in `pom.xml`.
 5. Choose whether to skip tests.
 6. Click **Run workflow**.
 
