@@ -12,8 +12,11 @@ package zowe.client.sdk.zostso.methods;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.teamconfig.TeamConfig;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
@@ -31,6 +34,8 @@ import java.util.List;
  * @version 7.0
  */
 public class TsoCmd {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TsoCmd.class);
 
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
@@ -231,7 +236,8 @@ public class TsoCmd {
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
             // only flag completion if message data was actually collected first when tso prompt seen
             if (promptNode != null && !this.msgLst.isEmpty()) {
-                this.promptLst.add("TSO_PROMPT_RECEIVED");
+                this.promptLst.add(promptNode.toString());
+                LOG.debug("TSO prompt received: {}", promptNode);
             }
         });
     }
