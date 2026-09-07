@@ -22,7 +22,9 @@ import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Issue tso command via z/OSMF restful api
@@ -151,6 +153,64 @@ public class TsoCmd {
         }
 
         return msgLst;
+    }
+
+    /**
+     * Reuses a persistent, long-running TSO session ID across rapid loops.
+     * Hardened by injecting a "Connection: close" header to isolate the socket stream.
+     *
+     * @param sessionId existing TSO session ID
+     * @param command   tso command string
+     * @return list of all tso returned messages
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public List<String> issueCommandByTsoSessionId(final String sessionId, final String command)
+            throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
+        ValidateUtils.checkIllegalParameter(command, "command");
+
+        this.msgLst.clear();
+        this.promptLst.clear();
+
+        // initialize the components if they don't exist yet
+        if (this.tsoSend == null) this.tsoSend = new TsoSend(this.connection);
+        if (this.tsoReply == null) this.tsoReply = new TsoReply(this.connection);
+
+        // set the isolation header
+        Map<String, String> connectionCloseHeader = new HashMap<>();
+        connectionCloseHeader.put("Connection", "close");
+
+        this.tsoSend.setHeaders(connectionCloseHeader);
+        this.tsoReply.setHeaders(connectionCloseHeader);
+
+        try {
+            // send command over the isolated socket pipeline
+            String responseStr = this.tsoSend.sendCommand(sessionId, command);
+            JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
+            this.processTsoData(tsoData);
+
+            boolean tsoMessagesReceived = !this.promptLst.isEmpty();
+
+            // poll responses cleanly
+            while (!tsoMessagesReceived) {
+                responseStr = this.tsoReply.reply(sessionId);
+                tsoData = this.getJsonNode(responseStr).get("tsoData");
+                this.processTsoData(tsoData);
+
+                if (!this.promptLst.isEmpty()) {
+                    tsoMessagesReceived = true;
+                }
+            }
+        } finally {
+            // Pass an empty map back to setHeaders to wipe the "Connection: close" property.
+            // This ensures the next standard API method call can leverage full socket pooling again!
+            this.tsoSend.setHeaders(new HashMap<>());
+            this.tsoReply.setHeaders(new HashMap<>());
+        }
+
+        // NOTICE: We omit stopTso() completely so the host context stays alive for the next command!
+        return this.msgLst;
     }
 
     /**

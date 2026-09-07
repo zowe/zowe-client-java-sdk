@@ -17,6 +17,7 @@ import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -331,6 +332,135 @@ public class TsoCmdTest {
         }
 
         verify(mockTsoStop, never()).stop(anyString());
+    }
+
+    /**
+     * Tests issuing a TSO command by reusing an existing session ID.
+     * <p>
+     * Verifies that the command response is collected cleanly, the reply loop handles
+     * the payload milestones, and crucially, neither startTso nor stopTso are invoked.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandByTsoSessionIdSuccess() throws Exception {
+        String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"DATA CHUNK 1\"}}]}";
+        String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
+        when(mockTsoReply.reply(sessionId)).thenReturn(secondResponse);
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply
+        );
+
+        List<String> result = issueTso.issueCommandByTsoSessionId(sessionId, command);
+
+        assertEquals(1, result.size());
+        assertEquals("DATA CHUNK 1", result.get(0));
+
+        // CRITICAL CONTEXT VALIDATION:
+        // Lifecycle management must be completely bypassed to allow continuous state reuse
+        verify(mockTsoStart, never()).start(any());
+        verify(mockTsoStop, never()).stop(anyString());
+
+        verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoReply, times(1)).reply(sessionId);
+    }
+
+    /**
+     * Tests that the "Connection: close" isolation header is successfully wiped from
+     * both underlying execution components during the finally block cleanup step.
+     * <p>
+     * This ensures that subsequent standard operations are not starved of connection pooling.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandByTsoSessionIdClearsHeadersOnFinally() throws Exception {
+        String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"FAST LINE\"}},"
+                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply
+        );
+
+        issueTso.issueCommandByTsoSessionId(sessionId, command);
+
+        // Verify that the isolation header was injected before execution
+        Map<String, String> expectedIsolationHeader = Map.of("Connection", "close");
+        verify(mockTsoSend).setHeaders(expectedIsolationHeader);
+        verify(mockTsoReply).setHeaders(expectedIsolationHeader);
+
+        // CRITICAL POOL CLEANUP CHECK:
+        // Verify that an empty map was passed to scrub the headers clean in the finally block
+        Map<String, String> expectedCleanupHeader = Map.of();
+        verify(mockTsoSend).setHeaders(expectedCleanupHeader);
+        verify(mockTsoReply).setHeaders(expectedCleanupHeader);
+    }
+
+    /**
+     * Tests that the "Connection: close" header cleanup occurs even if the transaction
+     * throws a ZosmfRequestException mid-execution.
+     * <p>
+     * Verifies that network isolation logic does not break the instance states on failures.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandByTsoSessionIdClearsHeadersOnExceptionFailure() throws Exception {
+        when(mockTsoSend.sendCommand(sessionId, command)).thenThrow(new ZosmfRequestException("Network dropped"));
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply
+        );
+
+        assertThrows(ZosmfRequestException.class, () ->
+                issueTso.issueCommandByTsoSessionId(sessionId, command)
+        );
+
+        // Verify that despite the exception breaking the try block, the finally block still wiped the map
+        Map<String, String> expectedCleanupHeader = Map.of();
+        verify(mockTsoSend).setHeaders(expectedCleanupHeader);
+        verify(mockTsoReply).setHeaders(expectedCleanupHeader);
+    }
+
+    /**
+     * Verifies that issueCommandByTsoSessionId throws an IllegalArgumentException when
+     * the passed sessionId parameter is empty or null.
+     */
+    @Test
+    public void tstIssueCommandByTsoSessionIdNullIdFailure() {
+        TsoCmd issueTso = new TsoCmd(mockConnection, account);
+
+        IllegalArgumentException exNull = assertThrows(
+                IllegalArgumentException.class,
+                () -> issueTso.issueCommandByTsoSessionId(null, command)
+        );
+        assertEquals("sessionId is either null or empty", exNull.getMessage());
+
+        IllegalArgumentException exEmpty = assertThrows(
+                IllegalArgumentException.class,
+                () -> issueTso.issueCommandByTsoSessionId("", command)
+        );
+        assertEquals("sessionId is either null or empty", exEmpty.getMessage());
     }
 
     /**
