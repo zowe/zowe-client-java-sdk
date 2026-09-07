@@ -77,7 +77,7 @@ jobs:
 
       # 6. Cache Maven dependencies
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-release-${{ hashFiles('**/pom.xml') }}
@@ -125,7 +125,7 @@ jobs:
 
       # 11. Deploy to Maven Central
       - name: Deploy to Maven Central
-        run: ./mvnw clean deploy -Pci-cd -DskipTests
+        run: ./mvnw deploy -Pci-cd -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
