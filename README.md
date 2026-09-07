@@ -47,9 +47,10 @@ In addition to the MVP milestones, the following releases include further enhanc
 * [Version 7.0.3](https://github.com/zowe/zowe-client-java-sdk/pull/617)
 * [Version 7.0.4](https://github.com/zowe/zowe-client-java-sdk/issues/622)
 * [Version 7.0.5](https://github.com/zowe/zowe-client-java-sdk/issues/626)
-
+* [Version 7.0.6](https://github.com/zowe/zowe-client-java-sdk/releases/tag/v7.0.6)
+  
 ## DISCORD
-
+  
 Join the project’s Discord community to connect directly with maintainers, contributors, and users. Discord provides a great place to discuss the project, ask questions, share ideas, and stay up to date on ongoing development.
 
 You can also get a preview of upcoming work and discussions before issues are formally opened, giving you an opportunity to follow the project’s direction and participate in conversations with other members of the community.
