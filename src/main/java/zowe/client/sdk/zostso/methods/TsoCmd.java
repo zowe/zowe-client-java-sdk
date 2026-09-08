@@ -157,7 +157,8 @@ public class TsoCmd {
 
     /**
      * Reuses a persistent, long-running TSO session ID across rapid loops.
-     * Hardened by injecting a "Connection: close" header to isolate the socket stream.
+     * Hardened by injecting a "Connection: close" prevents the HTTP connection
+     * used for this request from being kept alive for subsequent request reuse.
      *
      * @param sessionId existing TSO session ID
      * @param command   tso command string
