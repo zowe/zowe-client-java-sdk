@@ -39,7 +39,7 @@ public class TsoCmd {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsoCmd.class);
 
-    private static final int DEFAULT_TIMEOUT_MINUTES = 30;
+    private static final int DEFAULT_PROMPT_TIMEOUT = 30;
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -126,26 +126,26 @@ public class TsoCmd {
         final TsoStartResponse tsoStartResponse = this.startTso(inputData);
         if (!tsoStartResponse.isSuccess()) {
             final JsonNode tsoData = this.getJsonNode(tsoStartResponse.getResponse()).get("tsoData");
-            this.processTsoData(tsoData);
+            this.processTsoResponse(tsoData);
             return this.msgLst;
         }
         try {
             // send tso command to execute with session id
             String responseStr = this.sendTsoCommand(tsoStartResponse.getSessionId(), command);
             JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
-            this.processTsoData(tsoData);
+            this.processTsoResponse(tsoData);
 
             // check if the first response already gave us the end prompt
             boolean tsoMessagesReceived = !this.promptLst.isEmpty();
 
             long startTime = System.nanoTime();
-            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_TIMEOUT_MINUTES);
+            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
 
             while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
                 // retrieve additional tso messages for the command
                 responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
                 tsoData = this.getJsonNode(responseStr).get("tsoData");
-                this.processTsoData(tsoData);
+                this.processTsoResponse(tsoData);
 
                 // check for tso prompt message - indicates the end of the command
                 if (!this.promptLst.isEmpty()) {
@@ -198,18 +198,18 @@ public class TsoCmd {
             // send command over the isolated socket pipeline
             String responseStr = this.tsoSend.sendCommand(sessionId, command);
             JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
-            this.processTsoData(tsoData);
+            this.processTsoResponse(tsoData);
 
             boolean tsoMessagesReceived = !this.promptLst.isEmpty();
 
             long startTime = System.nanoTime();
-            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_TIMEOUT_MINUTES);
+            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
 
             // poll responses cleanly
             while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
                 responseStr = this.tsoReply.reply(sessionId);
                 tsoData = this.getJsonNode(responseStr).get("tsoData");
-                this.processTsoData(tsoData);
+                this.processTsoResponse(tsoData);
 
                 if (!this.promptLst.isEmpty()) {
                     tsoMessagesReceived = true;
@@ -301,7 +301,7 @@ public class TsoCmd {
      * @param tsoData JsonNode object
      * @author Frank Giordano
      */
-    private void processTsoData(final JsonNode tsoData) {
+    private void processTsoResponse(final JsonNode tsoData) {
         if (tsoData == null || !tsoData.isArray()) {
             return;
         }
