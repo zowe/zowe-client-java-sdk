@@ -13,10 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import zowe.client.sdk.core.ZosConnection;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
-import zowe.client.sdk.rest.UrlConstants;
-import zowe.client.sdk.rest.ZosmfRequest;
-import zowe.client.sdk.rest.ZosmfRequestFactory;
+import zowe.client.sdk.rest.*;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.rest.type.ZosmfRequestType;
 import zowe.client.sdk.utility.EncodeUtils;
@@ -49,7 +46,7 @@ public class TsoReply {
     public TsoReply(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
-        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+        this.request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.GET_JSON);
     }
 
     /**
@@ -59,15 +56,15 @@ public class TsoReply {
      * This constructor is package-private visibility.
      *
      * @param connection for connection information, see ZosConnection object
-     * @param request    a {@link PutJsonZosmfRequest} implementation object
+     * @param request    a {@link GetJsonZosmfRequest} implementation object
      * @author Frank Giordano
      */
     TsoReply(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
         ValidateUtils.checkNullParameter(request, "request");
         this.connection = connection;
-        if (!(request instanceof PutJsonZosmfRequest)) {
-            throw new IllegalStateException("PUT_JSON request type required");
+        if (!(request instanceof GetJsonZosmfRequest)) {
+            throw new IllegalStateException("GET_JSON request type required");
         }
         this.request = request;
     }
@@ -90,7 +87,6 @@ public class TsoReply {
                 EncodeUtils.encodeURIComponent(sessionId);
 
         request.setUrl(url);
-        request.setBody("");
 
         final String responseStr = TsoUtils.getResponseStr(request);
         if (containsMsgData(responseStr)) {
