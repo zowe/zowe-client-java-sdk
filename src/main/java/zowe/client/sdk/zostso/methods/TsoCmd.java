@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Issue tso command via z/OSMF restful api
@@ -38,6 +39,7 @@ public class TsoCmd {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsoCmd.class);
 
+    private static final int DEFAULT_TIMEOUT_MINUTES = 30;
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -136,7 +138,10 @@ public class TsoCmd {
             // check if the first response already gave us the end prompt
             boolean tsoMessagesReceived = !this.promptLst.isEmpty();
 
-            while (!tsoMessagesReceived) {
+            long startTime = System.nanoTime();
+            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_TIMEOUT_MINUTES);
+
+            while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
                 // retrieve additional tso messages for the command
                 responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
                 tsoData = this.getJsonNode(responseStr).get("tsoData");
@@ -146,6 +151,10 @@ public class TsoCmd {
                 if (!this.promptLst.isEmpty()) {
                     tsoMessagesReceived = true;
                 }
+            }
+
+            if (!tsoMessagesReceived) {
+                throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
             }
         } finally {
             // stop the tso session
@@ -193,8 +202,11 @@ public class TsoCmd {
 
             boolean tsoMessagesReceived = !this.promptLst.isEmpty();
 
+            long startTime = System.nanoTime();
+            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_TIMEOUT_MINUTES);
+
             // poll responses cleanly
-            while (!tsoMessagesReceived) {
+            while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
                 responseStr = this.tsoReply.reply(sessionId);
                 tsoData = this.getJsonNode(responseStr).get("tsoData");
                 this.processTsoData(tsoData);
@@ -202,6 +214,10 @@ public class TsoCmd {
                 if (!this.promptLst.isEmpty()) {
                     tsoMessagesReceived = true;
                 }
+            }
+
+            if (!tsoMessagesReceived) {
+                throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
             }
         } finally {
             // Pass an empty map back to setHeaders to wipe the "Connection: close" property.
@@ -326,7 +342,7 @@ public class TsoCmd {
     /**
      * Returns the input data for the start TSO session call
      * <p>
-     * This is private-package
+     * This is a private-package
      *
      * @return StartTsoInputData object
      */
