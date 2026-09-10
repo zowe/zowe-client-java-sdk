@@ -130,32 +130,7 @@ public class TsoCmd {
             return this.msgLst;
         }
         try {
-            // send tso command to execute with session id
-            String responseStr = this.sendTsoCommand(tsoStartResponse.getSessionId(), command);
-            JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
-            this.processTsoResponse(tsoData);
-
-            // check if the first response already gave us the end prompt
-            boolean tsoMessagesReceived = !this.promptLst.isEmpty();
-
-            long startTime = System.nanoTime();
-            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
-
-            while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
-                // retrieve additional tso messages for the command
-                responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
-                tsoData = this.getJsonNode(responseStr).get("tsoData");
-                this.processTsoResponse(tsoData);
-
-                // check for tso prompt message - indicates the end of the command
-                if (!this.promptLst.isEmpty()) {
-                    tsoMessagesReceived = true;
-                }
-            }
-
-            if (!tsoMessagesReceived) {
-                throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
-            }
+            this.executeCommand(tsoStartResponse.getSessionId(), command);
         } finally {
             // stop the tso session
             this.stopTso(tsoStartResponse.getSessionId());
@@ -195,30 +170,7 @@ public class TsoCmd {
         this.tsoReply.setHeaders(connectionCloseHeader);
 
         try {
-            // send command over the isolated socket pipeline
-            String responseStr = this.tsoSend.sendCommand(sessionId, command);
-            JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
-            this.processTsoResponse(tsoData);
-
-            boolean tsoMessagesReceived = !this.promptLst.isEmpty();
-
-            long startTime = System.nanoTime();
-            long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
-
-            // poll responses cleanly
-            while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
-                responseStr = this.tsoReply.reply(sessionId);
-                tsoData = this.getJsonNode(responseStr).get("tsoData");
-                this.processTsoResponse(tsoData);
-
-                if (!this.promptLst.isEmpty()) {
-                    tsoMessagesReceived = true;
-                }
-            }
-
-            if (!tsoMessagesReceived) {
-                throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
-            }
+            this.executeCommand(sessionId, command);
         } finally {
             // Pass an empty map back to setHeaders to wipe the "Connection: close" property.
             // This ensures the next standard API method call can leverage full socket pooling again!
@@ -228,6 +180,42 @@ public class TsoCmd {
 
         // NOTICE: We omit stopTso() completely so the host context stays alive for the next command!
         return this.msgLst;
+    }
+
+    /**
+     * Helper method to send a TSO command to an active TSO session ID and poll for response messages.
+     *
+     * @param sessionId active TSO session ID
+     * @param command   tso command string
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    private void executeCommand(final String sessionId, final String command) throws ZosmfRequestException {
+        // send tso command to execute with session id
+        String responseStr = this.sendTsoCommand(sessionId, command);
+        JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
+        this.processTsoResponse(tsoData);
+
+        // check if sendTsoCommand already returned a completion prompt
+        boolean tsoMessagesReceived = !this.promptLst.isEmpty();
+
+        long startTime = System.nanoTime();
+        long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
+
+        while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
+            // retrieve additional tso messages for the command
+            responseStr = this.sendTsoForReply(sessionId);
+            tsoData = this.getJsonNode(responseStr).get("tsoData");
+            this.processTsoResponse(tsoData);
+
+            if (!this.promptLst.isEmpty()) {
+                tsoMessagesReceived = true;
+            }
+        }
+
+        if (!tsoMessagesReceived) {
+            throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
+        }
     }
 
     /**
@@ -312,8 +300,7 @@ public class TsoCmd {
                 this.msgLst.add(messageNode.get("DATA").asText());
             }
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
-            // only flag completion if message data was actually collected first when tso prompt seen
-            if (promptNode != null && !this.msgLst.isEmpty()) {
+            if (promptNode != null && promptNode.hasNonNull("HIDDEN")) {
                 this.promptLst.add(promptNode.toString());
                 LOG.debug("TSO prompt received: {}", promptNode);
             }

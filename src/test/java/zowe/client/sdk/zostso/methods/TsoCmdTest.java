@@ -73,9 +73,8 @@ public class TsoCmdTest {
     public void tstIssueCommandWithStandardTextPromptMissingHiddenSuccess() throws Exception {
         String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"LISTDS PROCESSING COMPLETE\"}}]}";
 
-        // This payload mimics a standard z/OSMF text milestone completely lacking a "HIDDEN" key.
-        // The old code would hang indefinitely here; the new code must exit the loop cleanly.
-        String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+        // This payload mimics a standard z/OSMF text milestone.
+        String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
 
         when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
                 new TsoStartResponse(true, sessionId, ""));
@@ -114,7 +113,7 @@ public class TsoCmdTest {
         // Single response containing everything
         String instantResponse = "{\"tsoData\":["
                 + "{\"TSO MESSAGE\":{\"DATA\":\"FAST OUTPUT\"}},"
-                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}"
+                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}"
                 + "]}";
 
         when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
@@ -143,31 +142,52 @@ public class TsoCmdTest {
     }
 
     /**
-     * Tests that a premature or prompt-only payload (lacking any previous message text)
-     * is safely ignored by the guard logic, ensuring the reply loop continues polling
-     * until actual command results are produced.
+     * Tests that a prompt-only payload returned by sendCommand (e.g. silent TSO command with no message output)
+     * completes cleanly and short-circuits without calling reply.
      *
      * @throws Exception if a mocked service call fails unexpectedly
      */
     @Test
-    public void tstIssueCommandIgnoresPrematurePromptOnlyPayloadSuccess() throws Exception {
-        // First packet contains a prompt only (e.g. initialization/handshake state)
-        String promptOnlyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
-
-        // Second packet contains the actual message data
-        String messageResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"VOLUME LISTING\"}}]}";
-
-        // Third packet contains the legitimate final completion prompt
-        String closingResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+    public void tstIssueCommandCompletesOnPromptOnlyPayloadSuccess() throws Exception {
+        String promptOnlyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
 
         when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
                 new TsoStartResponse(true, sessionId, ""));
-
-        // Command execution returns the prompt-only block first
         when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(promptOnlyResponse);
 
-        // Subsequent replies fetch the text, then finally hit the safe closing prompt
-        when(mockTsoReply.reply(sessionId)).thenReturn(messageResponse, closingResponse);
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply
+        );
+        issueTso.issueCommand(command);
+
+        verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
+        verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoReply, never()).reply(anyString());
+        verify(mockTsoStop, times(1)).stop(sessionId);
+    }
+
+    /**
+     * Tests that a payload containing a READY message alongside a TSO prompt
+     * (e.g. silent commands like ALLOCATE, FREE, or DELETE) completes immediately
+     * without making redundant reply calls.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandCompletesOnFirstPayloadWithReadyMessageAndPromptSuccess() throws Exception {
+        String response = "{\"tsoData\":["
+                + "{\"TSO MESSAGE\":{\"DATA\":\"READY \"}},"
+                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}"
+                + "]}";
+
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, ""));
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(response);
 
         TsoCmd issueTso = new TsoCmd(
                 mockConnection,
@@ -179,13 +199,12 @@ public class TsoCmdTest {
         );
         List<String> result = issueTso.issueCommand(command);
 
-        // Verify that the code kept looping until the message block was populated and legally completed
         assertEquals(1, result.size());
-        assertEquals("VOLUME LISTING", result.get(0));
+        assertEquals("READY ", result.get(0));
 
         verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
         verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
-        verify(mockTsoReply, times(2)).reply(sessionId); // Must loop twice to bypass the early prompt and fetch data
+        verify(mockTsoReply, never()).reply(anyString());
         verify(mockTsoStop, times(1)).stop(sessionId);
     }
 
@@ -345,7 +364,7 @@ public class TsoCmdTest {
     @Test
     public void tstIssueCommandByTsoSessionIdSuccess() throws Exception {
         String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"DATA CHUNK 1\"}}]}";
-        String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+        String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
 
         when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
         when(mockTsoReply.reply(sessionId)).thenReturn(secondResponse);
@@ -384,7 +403,7 @@ public class TsoCmdTest {
     @Test
     public void tstIssueCommandByTsoSessionIdClearsHeadersOnFinally() throws Exception {
         String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"FAST LINE\"}},"
-                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
 
         when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
 
