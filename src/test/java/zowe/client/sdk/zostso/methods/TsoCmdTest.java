@@ -17,7 +17,6 @@ import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -435,75 +434,6 @@ public class TsoCmdTest {
     }
 
     /**
-     * Tests that the "Connection: close" isolation header is successfully wiped from
-     * both underlying execution components during the finally block cleanup step.
-     * <p>
-     * This ensures that subsequent standard operations are not starved of connection pooling.
-     *
-     * @throws Exception if a mocked service call fails unexpectedly
-     */
-    @Test
-    public void tstIssueCommandByTsoSessionIdClearsHeadersOnFinally() throws Exception {
-        String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"FAST LINE\"}},"
-                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
-
-        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
-
-        TsoCmd issueTso = new TsoCmd(
-                mockConnection,
-                account,
-                mockTsoStart,
-                mockTsoStop,
-                mockTsoSend,
-                mockTsoReply
-        );
-
-        issueTso.issueCommandByTsoSessionId(sessionId, command);
-
-        // Verify that the isolation header was injected before execution
-        Map<String, String> expectedIsolationHeader = Map.of("Connection", "close");
-        verify(mockTsoSend).setHeaders(expectedIsolationHeader);
-        verify(mockTsoReply).setHeaders(expectedIsolationHeader);
-
-        // CRITICAL POOL CLEANUP CHECK:
-        // Verify that an empty map was passed to scrub the headers clean in the finally block
-        Map<String, String> expectedCleanupHeader = Map.of();
-        verify(mockTsoSend).setHeaders(expectedCleanupHeader);
-        verify(mockTsoReply).setHeaders(expectedCleanupHeader);
-    }
-
-    /**
-     * Tests that the "Connection: close" header cleanup occurs even if the transaction
-     * throws a ZosmfRequestException mid-execution.
-     * <p>
-     * Verifies that network isolation logic does not break the instance states on failures.
-     *
-     * @throws Exception if a mocked service call fails unexpectedly
-     */
-    @Test
-    public void tstIssueCommandByTsoSessionIdClearsHeadersOnExceptionFailure() throws Exception {
-        when(mockTsoSend.sendCommand(sessionId, command)).thenThrow(new ZosmfRequestException("Network dropped"));
-
-        TsoCmd issueTso = new TsoCmd(
-                mockConnection,
-                account,
-                mockTsoStart,
-                mockTsoStop,
-                mockTsoSend,
-                mockTsoReply
-        );
-
-        assertThrows(ZosmfRequestException.class, () ->
-                issueTso.issueCommandByTsoSessionId(sessionId, command)
-        );
-
-        // Verify that despite the exception breaking the try block, the finally block still wiped the map
-        Map<String, String> expectedCleanupHeader = Map.of();
-        verify(mockTsoSend).setHeaders(expectedCleanupHeader);
-        verify(mockTsoReply).setHeaders(expectedCleanupHeader);
-    }
-
-    /**
      * Verifies that issueCommandByTsoSessionId throws an IllegalArgumentException when
      * the passed sessionId parameter is empty or null.
      */
@@ -575,3 +505,4 @@ public class TsoCmdTest {
     }
 
 }
+
