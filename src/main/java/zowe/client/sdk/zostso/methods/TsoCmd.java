@@ -17,14 +17,13 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.WaitUtil;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,6 +39,7 @@ public class TsoCmd {
     private static final Logger LOG = LoggerFactory.getLogger(TsoCmd.class);
 
     private static final int DEFAULT_PROMPT_TIMEOUT = 30;
+    private static final int DEFAULT_POLL_INTERVAL = 100;
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -142,8 +142,6 @@ public class TsoCmd {
 
     /**
      * Reuses a persistent, long-running TSO session ID across rapid loops.
-     * Hardened by injecting a "Connection: close" prevents the HTTP connection
-     * used for this request from being kept alive for subsequent request reuse.
      *
      * @param sessionId existing TSO session ID
      * @param command   tso command string
@@ -163,21 +161,7 @@ public class TsoCmd {
         if (this.tsoSend == null) this.tsoSend = new TsoSend(this.connection);
         if (this.tsoReply == null) this.tsoReply = new TsoReply(this.connection);
 
-        // set the isolation header
-        Map<String, String> connectionCloseHeader = new HashMap<>();
-        connectionCloseHeader.put("Connection", "close");
-
-        this.tsoSend.setHeaders(connectionCloseHeader);
-        this.tsoReply.setHeaders(connectionCloseHeader);
-
-        try {
-            this.executeCommand(sessionId, command);
-        } finally {
-            // Pass an empty map back to setHeaders to wipe the "Connection: close" property.
-            // This ensures the next standard API method call can leverage full socket pooling again!
-            this.tsoSend.setHeaders(new HashMap<>());
-            this.tsoReply.setHeaders(new HashMap<>());
-        }
+        this.executeCommand(sessionId, command);
 
         // NOTICE: We omit stopTso() completely so the host context stays alive for the next command!
         return this.msgLst;
@@ -216,17 +200,23 @@ public class TsoCmd {
             responseStr = this.sendTsoForReply(sessionId);
             LOG.debug("sendTsoForReply response #{}: {}", pollCount, responseStr);
             rootNode = this.getJsonNode(responseStr);
-            this.processTsoResponse(this.getTsoDataNode(rootNode));
+            JsonNode tsoDataNode = this.getTsoDataNode(rootNode);
+            this.processTsoResponse(tsoDataNode);
 
-            // check for zosmf request timeout if any - rare case
+            // check for zosmf request timeout if any
+            // acts as a safeguard against future code changes or z/OSMF prompt variations
             final boolean isTimeout = rootNode != null && rootNode.has("timeout") && rootNode.get("timeout").asBoolean();
             if (isTimeout) {
                 LOG.debug("z/OSMF session timeout flag detected in response #{}", pollCount);
+                this.msgLst.add("z/OSMF session timeout flag detected");
             }
 
             if (!this.promptLst.isEmpty() || isTimeout) {
                 tsoMessagesReceived = true;
                 LOG.debug("Command execution completed after poll #{}", pollCount);
+            } else if (tsoDataNode == null || tsoDataNode.isEmpty()) {
+                // Debounce only when no data was returned in this poll (matches Zowe CLI SendTso.ts)
+                WaitUtil.wait(DEFAULT_POLL_INTERVAL);
             }
         }
 
@@ -325,7 +315,7 @@ public class TsoCmd {
      * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private void drainLogonPrompt(final TsoStartResponse startResponse) throws ZosmfRequestException {
+    public void drainLogonPrompt(final TsoStartResponse startResponse) throws ZosmfRequestException {
         if (startResponse == null ||
                 startResponse.getResponse() == null ||
                 startResponse.getResponse().trim().isEmpty()) {
@@ -336,9 +326,7 @@ public class TsoCmd {
                 startResponse.getSessionId(), startResponse.getResponse());
 
         final JsonNode rootNode = this.getJsonNode(startResponse.getResponse());
-        if (rootNode != null) {
-            this.processTsoResponse(this.getTsoDataNode(rootNode));
-        }
+        this.processTsoResponse(this.getTsoDataNode(rootNode));
 
         // setup variable for reply loop
         long startTime = System.nanoTime();
@@ -352,8 +340,11 @@ public class TsoCmd {
             final String responseStr = this.sendTsoForReply(startResponse.getSessionId());
             LOG.debug("sendTsoForReply response during logon drain iteration #{}: {}", drainCount, responseStr);
             final JsonNode replyNode = this.getJsonNode(responseStr);
-            if (replyNode != null) {
-                this.processTsoResponse(this.getTsoDataNode(replyNode));
+            final JsonNode tsoDataNode = this.getTsoDataNode(replyNode);
+            this.processTsoResponse(tsoDataNode);
+            if (this.promptLst.isEmpty() && (tsoDataNode == null || tsoDataNode.isEmpty())) {
+                // Debounce only when no data was returned in this poll (matches Zowe CLI SendTso.ts)
+                WaitUtil.wait(DEFAULT_POLL_INTERVAL);
             }
         }
 
