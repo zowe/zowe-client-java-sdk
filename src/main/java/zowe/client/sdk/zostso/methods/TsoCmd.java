@@ -125,11 +125,12 @@ public class TsoCmd {
         // send tso start call and return the session id
         final TsoStartResponse tsoStartResponse = this.startTso(inputData);
         if (!tsoStartResponse.isSuccess()) {
-            final JsonNode tsoData = this.getJsonNode(tsoStartResponse.getResponse()).get("tsoData");
-            this.processTsoResponse(tsoData);
+            final JsonNode rootNode = this.getJsonNode(tsoStartResponse.getResponse());
+            this.processTsoResponse(this.getTsoDataNode(rootNode));
             return this.msgLst;
         }
         try {
+            this.drainLogonPrompt(tsoStartResponse);
             this.executeCommand(tsoStartResponse.getSessionId(), command);
         } finally {
             // stop the tso session
@@ -192,30 +193,61 @@ public class TsoCmd {
      */
     private void executeCommand(final String sessionId, final String command) throws ZosmfRequestException {
         // send tso command to execute with session id
+        LOG.debug("Executing TSO command '{}' for session ID {}", command, sessionId);
         String responseStr = this.sendTsoCommand(sessionId, command);
-        JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
-        this.processTsoResponse(tsoData);
+        LOG.debug("sendCommand response: {}", responseStr);
+        JsonNode rootNode = this.getJsonNode(responseStr);
+        this.processTsoResponse(this.getTsoDataNode(rootNode));
 
         // check if sendTsoCommand already returned a completion prompt
         boolean tsoMessagesReceived = !this.promptLst.isEmpty();
+        LOG.debug("After sendCommand: promptLst empty? {}, msgLst size = {}",
+                this.promptLst.isEmpty(), this.msgLst.size());
 
+        // setup variable for reply loop
         long startTime = System.nanoTime();
         long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
+        int pollCount = 0;
 
         while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
+            pollCount++;
+            LOG.debug("Entering reply poll iteration #{} for session ID {}", pollCount, sessionId);
             // retrieve additional tso messages for the command
             responseStr = this.sendTsoForReply(sessionId);
-            tsoData = this.getJsonNode(responseStr).get("tsoData");
-            this.processTsoResponse(tsoData);
+            LOG.debug("sendTsoForReply response #{}: {}", pollCount, responseStr);
+            rootNode = this.getJsonNode(responseStr);
+            this.processTsoResponse(this.getTsoDataNode(rootNode));
 
-            if (!this.promptLst.isEmpty()) {
+            // check for zosmf request timeout if any - rare case
+            final boolean isTimeout = rootNode != null && rootNode.has("timeout") && rootNode.get("timeout").asBoolean();
+            if (isTimeout) {
+                LOG.debug("z/OSMF session timeout flag detected in response #{}", pollCount);
+            }
+
+            if (!this.promptLst.isEmpty() || isTimeout) {
                 tsoMessagesReceived = true;
+                LOG.debug("Command execution completed after poll #{}", pollCount);
             }
         }
 
+        // is DEFAULT_PROMPT_TIMEOUT (in minutes) reached
         if (!tsoMessagesReceived) {
+            LOG.error("Timeout waiting for TSO command '{}' to complete on session ID {}", command, sessionId);
             throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
         }
+    }
+
+    /**
+     * Extracts the tsoData array node from a JSON root node payload.
+     *
+     * @param rootNode root JsonNode
+     * @return tsoData JsonNode or null
+     */
+    private JsonNode getTsoDataNode(final JsonNode rootNode) {
+        if (rootNode != null && rootNode.has("tsoData")) {
+            return rootNode.get("tsoData");
+        }
+        return null;
     }
 
     /**
@@ -235,7 +267,9 @@ public class TsoCmd {
             this.inputData = new StartTsoInputData();
         }
         this.inputData.setAccount(accountNumber);
-        return tsoStart.start(this.inputData);
+        final TsoStartResponse response = tsoStart.start(this.inputData);
+        LOG.debug("startTso response: {}", response.getResponse());
+        return response;
     }
 
     /**
@@ -284,9 +318,58 @@ public class TsoCmd {
     }
 
     /**
-     * Transform the JSON response payload for its TSO message types
+     * Drains any remaining TSO logon messages and prompt from a newly started TSO session.
+     * Wipes startup noise so the session is clean before executing the command.
      *
-     * @param tsoData JsonNode object
+     * @param startResponse TsoStartResponse object
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    private void drainLogonPrompt(final TsoStartResponse startResponse) throws ZosmfRequestException {
+        if (startResponse == null ||
+                startResponse.getResponse() == null ||
+                startResponse.getResponse().trim().isEmpty()) {
+            return;
+        }
+
+        LOG.debug("Processing initial startTso response for session ID {}: {}",
+                startResponse.getSessionId(), startResponse.getResponse());
+
+        final JsonNode rootNode = this.getJsonNode(startResponse.getResponse());
+        if (rootNode != null) {
+            this.processTsoResponse(this.getTsoDataNode(rootNode));
+        }
+
+        // setup variable for reply loop
+        long startTime = System.nanoTime();
+        long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
+        int drainCount = 0;
+
+        LOG.debug("Draining startup TSO logon prompt");
+        while (this.promptLst.isEmpty() && System.nanoTime() - startTime < timeoutNanos) {
+            drainCount++;
+            LOG.debug("Drain reply poll iteration #{} for session ID {}", drainCount, startResponse.getSessionId());
+            final String responseStr = this.sendTsoForReply(startResponse.getSessionId());
+            LOG.debug("sendTsoForReply response during logon drain iteration #{}: {}", drainCount, responseStr);
+            final JsonNode replyNode = this.getJsonNode(responseStr);
+            if (replyNode != null) {
+                this.processTsoResponse(this.getTsoDataNode(replyNode));
+            }
+        }
+
+        if (!this.promptLst.isEmpty() || !this.msgLst.isEmpty()) {
+            LOG.debug("TSO logon prompt drained for session ID {}. Clearing startup msgLst (size {}) and promptLst",
+                    startResponse.getSessionId(), this.msgLst.size());
+            this.msgLst.clear();
+            this.promptLst.clear();
+        }
+    }
+
+    /**
+     * Processes a tsoData JsonNode array returned from a z/OSMF TSO request.
+     * Extracts TSO message text into msgLst and TSO prompt entries into promptLst.
+     *
+     * @param tsoData tsoData JsonNode array object containing TSO_MESSAGE and TSO_PROMPT items
      * @author Frank Giordano
      */
     private void processTsoResponse(final JsonNode tsoData) {
@@ -298,11 +381,12 @@ public class TsoCmd {
             final JsonNode messageNode = tsoDataItem.get(TsoConstants.TSO_MESSAGE);
             if (messageNode != null && messageNode.hasNonNull("DATA")) {
                 this.msgLst.add(messageNode.get("DATA").asText());
+                LOG.debug("TSO message received: {}", messageNode);
             }
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
-            if (promptNode != null && promptNode.hasNonNull("HIDDEN")) {
+            if (promptNode != null) {
                 this.promptLst.add(promptNode.toString());
-                LOG.debug("TSO prompt received: {}", promptNode);
+                LOG.debug("Valid completion TSO prompt received: {}", promptNode);
             }
         });
     }

@@ -85,8 +85,7 @@ public class TsoSend {
                 UrlConstants.URL_PATH_DELIM +
                 TsoConstants.RES_START_TSO +
                 UrlConstants.URL_PATH_DELIM +
-                EncodeUtils.encodeURIComponent(sessionId) +
-                TsoConstants.RES_DONT_READ_REPLY;
+                EncodeUtils.encodeURIComponent(sessionId);
         final String body = "{\"TSO RESPONSE\":{\"VERSION\":\"0100\",\"DATA\":\"" + command + "\"}}";
 
         request.setUrl(url);
