@@ -349,12 +349,16 @@ public class TsoCmd {
             }
         }
 
-        if (!this.promptLst.isEmpty() || !this.msgLst.isEmpty()) {
+        if (!this.promptLst.isEmpty()) {
             LOG.debug("TSO logon prompt drained for session ID {}. Clearing startup msgLst (size {}) and promptLst",
                     startResponse.getSessionId(), this.msgLst.size());
             this.msgLst.clear();
             this.promptLst.clear();
+            return;
         }
+
+        throw new ZosmfRequestException("Timeout waiting for TSO Start Logon prompt on session ID " +
+                startResponse.getSessionId());
     }
 
     /**
