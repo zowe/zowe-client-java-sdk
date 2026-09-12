@@ -215,6 +215,7 @@ public class TsoCmd {
                 tsoMessagesReceived = true;
                 LOG.debug("Command execution completed after poll #{}", pollCount);
             } else if (tsoDataNode == null || tsoDataNode.isEmpty()) {
+                LOG.debug("No TSO data returned after poll #{}", pollCount);
                 // Debounce only when no data was returned in this poll (matches Zowe CLI SendTso.ts)
                 WaitUtil.wait(DEFAULT_POLL_INTERVAL);
             }
