@@ -188,7 +188,7 @@ public class TsoCmd {
         LOG.debug("After sendCommand: promptLst empty? {}, msgLst size = {}",
                 this.promptLst.isEmpty(), this.msgLst.size());
 
-        // setup variables for reply loop
+        // preparation variables for reply loop
         long startTime = System.nanoTime();
         long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
         int pollCount = 0;
@@ -205,7 +205,8 @@ public class TsoCmd {
 
             // check for zosmf request timeout if any
             // acts as a safeguard against future code changes or z/OSMF prompt variations
-            final boolean isTimeout = rootNode != null && rootNode.has("timeout") && rootNode.get("timeout").asBoolean();
+            final boolean isTimeout = rootNode != null &&
+                    rootNode.has("timeout") && rootNode.get("timeout").asBoolean();
             if (isTimeout) {
                 LOG.debug("z/OSMF session timeout flag detected in response #{}", pollCount);
                 this.msgLst.add("z/OSMF session timeout flag detected");
@@ -329,7 +330,7 @@ public class TsoCmd {
         final JsonNode rootNode = this.getJsonNode(startResponse.getResponse());
         this.processTsoResponse(this.getTsoDataNode(rootNode));
 
-        // setup variables for reply loop
+        // preparation variables for reply loop
         long startTime = System.nanoTime();
         long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
         int drainCount = 0;
