@@ -188,7 +188,7 @@ public class TsoCmd {
         LOG.debug("After sendCommand: promptLst empty? {}, msgLst size = {}",
                 this.promptLst.isEmpty(), this.msgLst.size());
 
-        // setup variable for reply loop
+        // setup variables for reply loop
         long startTime = System.nanoTime();
         long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
         int pollCount = 0;
@@ -329,7 +329,7 @@ public class TsoCmd {
         final JsonNode rootNode = this.getJsonNode(startResponse.getResponse());
         this.processTsoResponse(this.getTsoDataNode(rootNode));
 
-        // setup variable for reply loop
+        // setup variables for reply loop
         long startTime = System.nanoTime();
         long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
         int drainCount = 0;
