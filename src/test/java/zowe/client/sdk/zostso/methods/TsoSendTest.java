@@ -100,7 +100,7 @@ public class TsoSendTest {
 
             final String actualUrl = mockPutRequest.getUrl();
 
-            assertEquals("https://zosmf:1443/tsoApp/tso/SERVKEY123", actualUrl);
+            assertEquals("https://zosmf:1443/tsoApp/tso/SERVKEY123?readReply=false", actualUrl);
         }
     }
 
