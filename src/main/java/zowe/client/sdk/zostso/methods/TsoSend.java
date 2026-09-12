@@ -21,6 +21,8 @@ import zowe.client.sdk.utility.TsoUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zostso.TsoConstants;
 
+import java.util.Map;
+
 /**
  * This class handles sending the TSO command to be performed via z/OSMF
  * <p>
@@ -91,6 +93,15 @@ public class TsoSend {
         request.setBody(body);
 
         return TsoUtils.getResponseStr(request);
+    }
+
+    /**
+     * Set incoming map values to http request headers
+     *
+     * @param headers map of http headers
+     */
+    public void setHeaders(final Map<String, String> headers) {
+        this.request.setHeaders(headers);
     }
 
 }

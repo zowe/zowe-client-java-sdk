@@ -17,12 +17,14 @@ import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.utility.WaitUtil;
 import zowe.client.sdk.zostso.TsoConstants;
 import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Issue tso command via z/OSMF restful api
@@ -36,6 +38,8 @@ public class TsoCmd {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsoCmd.class);
 
+    private static final int DEFAULT_PROMPT_TIMEOUT = 30;
+    private static final int DEFAULT_POLL_INTERVAL = 100;
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -121,36 +125,120 @@ public class TsoCmd {
         // send tso start call and return the session id
         final TsoStartResponse tsoStartResponse = this.startTso(inputData);
         if (!tsoStartResponse.isSuccess()) {
-            final JsonNode tsoData = this.getJsonNode(tsoStartResponse.getResponse()).get("tsoData");
-            this.processTsoData(tsoData);
+            final JsonNode rootNode = this.getJsonNode(tsoStartResponse.getResponse());
+            this.processTsoResponse(this.getTsoDataNode(rootNode));
             return this.msgLst;
         }
         try {
-            // send tso command to execute with session id
-            String responseStr = this.sendTsoCommand(tsoStartResponse.getSessionId(), command);
-            JsonNode tsoData = this.getJsonNode(responseStr).get("tsoData");
-            this.processTsoData(tsoData);
-
-            // check if the first response already gave us the end prompt
-            boolean tsoMessagesReceived = !this.promptLst.isEmpty();
-
-            while (!tsoMessagesReceived) {
-                // retrieve additional tso messages for the command
-                responseStr = this.sendTsoForReply(tsoStartResponse.getSessionId());
-                tsoData = this.getJsonNode(responseStr).get("tsoData");
-                this.processTsoData(tsoData);
-
-                // check for tso prompt message - indicates the end of the command
-                if (!this.promptLst.isEmpty()) {
-                    tsoMessagesReceived = true;
-                }
-            }
+            this.drainLogonPrompt(tsoStartResponse);
+            this.executeCommand(tsoStartResponse.getSessionId(), command);
         } finally {
             // stop the tso session
             this.stopTso(tsoStartResponse.getSessionId());
         }
 
         return msgLst;
+    }
+
+    /**
+     * Reuses a persistent, long-running TSO session ID across rapid loops.
+     *
+     * @param sessionId existing TSO session ID
+     * @param command   tso command string
+     * @return list of all tso returned messages
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    public List<String> issueCommandByTsoSessionId(final String sessionId, final String command)
+            throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(sessionId, "sessionId");
+        ValidateUtils.checkIllegalParameter(command, "command");
+
+        this.msgLst.clear();
+        this.promptLst.clear();
+
+        // initialize the components if they don't exist yet
+        if (this.tsoSend == null) this.tsoSend = new TsoSend(this.connection);
+        if (this.tsoReply == null) this.tsoReply = new TsoReply(this.connection);
+
+        this.executeCommand(sessionId, command);
+
+        // NOTICE: We omit stopTso() completely so the host context stays alive for the next command!
+        return this.msgLst;
+    }
+
+    /**
+     * Helper method to send a TSO command to an active TSO session ID and poll for response messages.
+     *
+     * @param sessionId active TSO session ID
+     * @param command   tso command string
+     * @throws ZosmfRequestException request error state
+     * @author Frank Giordano
+     */
+    private void executeCommand(final String sessionId, final String command) throws ZosmfRequestException {
+        // send tso command to execute with session id
+        LOG.debug("Executing TSO command '{}' for session ID {}", command, sessionId);
+        String responseStr = this.sendTsoCommand(sessionId, command);
+        LOG.debug("sendCommand response: {}", responseStr);
+        JsonNode rootNode = this.getJsonNode(responseStr);
+        this.processTsoResponse(this.getTsoDataNode(rootNode));
+
+        // check if sendTsoCommand already returned a completion prompt
+        boolean tsoMessagesReceived = !this.promptLst.isEmpty();
+        LOG.debug("After sendCommand: promptLst empty? {}, msgLst size = {}",
+                this.promptLst.isEmpty(), this.msgLst.size());
+
+        // setup variables for reply loop
+        long startTime = System.nanoTime();
+        long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
+        int pollCount = 0;
+
+        while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
+            pollCount++;
+            LOG.debug("Entering reply poll iteration #{} for session ID {}", pollCount, sessionId);
+            // retrieve additional tso messages for the command
+            responseStr = this.sendTsoForReply(sessionId);
+            LOG.debug("sendTsoForReply response #{}: {}", pollCount, responseStr);
+            rootNode = this.getJsonNode(responseStr);
+            JsonNode tsoDataNode = this.getTsoDataNode(rootNode);
+            this.processTsoResponse(tsoDataNode);
+
+            // check for zosmf request timeout if any
+            // acts as a safeguard against future code changes or z/OSMF prompt variations
+            final boolean isTimeout = rootNode != null && rootNode.has("timeout") && rootNode.get("timeout").asBoolean();
+            if (isTimeout) {
+                LOG.debug("z/OSMF session timeout flag detected in response #{}", pollCount);
+                this.msgLst.add("z/OSMF session timeout flag detected");
+            }
+
+            if (!this.promptLst.isEmpty() || isTimeout) {
+                tsoMessagesReceived = true;
+                LOG.debug("Command execution completed after poll #{}", pollCount);
+            } else if (tsoDataNode == null || tsoDataNode.isEmpty()) {
+                LOG.debug("No TSO data returned after poll #{}", pollCount);
+                // Debounce only when no data was returned in this poll (matches Zowe CLI SendTso.ts)
+                WaitUtil.wait(DEFAULT_POLL_INTERVAL);
+            }
+        }
+
+        // is DEFAULT_PROMPT_TIMEOUT (in minutes) reached
+        if (!tsoMessagesReceived) {
+            LOG.error("Timeout waiting for TSO command '{}' to complete on session ID {}", command, sessionId);
+            throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
+        }
+    }
+
+    /**
+     * Extracts the tsoData array node from a JSON root node payload.
+     *
+     * @param rootNode root JsonNode
+     * @return tsoData JsonNode or null
+     */
+    private JsonNode getTsoDataNode(final JsonNode rootNode) {
+        if (rootNode != null && rootNode.has("tsoData")) {
+            return rootNode.get("tsoData");
+        }
+        return null;
     }
 
     /**
@@ -170,7 +258,9 @@ public class TsoCmd {
             this.inputData = new StartTsoInputData();
         }
         this.inputData.setAccount(accountNumber);
-        return tsoStart.start(this.inputData);
+        final TsoStartResponse response = tsoStart.start(this.inputData);
+        LOG.debug("startTso response: {}", response.getResponse());
+        return response;
     }
 
     /**
@@ -219,12 +309,66 @@ public class TsoCmd {
     }
 
     /**
-     * Transform the JSON response payload for its TSO message types
+     * Drains any remaining TSO logon messages and prompt from a newly started TSO session.
+     * Wipes startup noise so the session is clean before executing the command.
      *
-     * @param tsoData JsonNode object
+     * @param startResponse TsoStartResponse object
+     * @throws ZosmfRequestException request error state
      * @author Frank Giordano
      */
-    private void processTsoData(final JsonNode tsoData) {
+    public void drainLogonPrompt(final TsoStartResponse startResponse) throws ZosmfRequestException {
+        if (startResponse == null ||
+                startResponse.getResponse() == null ||
+                startResponse.getResponse().trim().isEmpty()) {
+            return;
+        }
+
+        LOG.debug("Processing initial startTso response for session ID {}: {}",
+                startResponse.getSessionId(), startResponse.getResponse());
+
+        final JsonNode rootNode = this.getJsonNode(startResponse.getResponse());
+        this.processTsoResponse(this.getTsoDataNode(rootNode));
+
+        // setup variables for reply loop
+        long startTime = System.nanoTime();
+        long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
+        int drainCount = 0;
+
+        LOG.debug("Draining startup TSO logon prompt");
+        while (this.promptLst.isEmpty() && System.nanoTime() - startTime < timeoutNanos) {
+            drainCount++;
+            LOG.debug("Drain reply poll iteration #{} for session ID {}", drainCount, startResponse.getSessionId());
+            final String responseStr = this.sendTsoForReply(startResponse.getSessionId());
+            LOG.debug("sendTsoForReply response during logon drain iteration #{}: {}", drainCount, responseStr);
+            final JsonNode replyNode = this.getJsonNode(responseStr);
+            final JsonNode tsoDataNode = this.getTsoDataNode(replyNode);
+            this.processTsoResponse(tsoDataNode);
+            if (this.promptLst.isEmpty() && (tsoDataNode == null || tsoDataNode.isEmpty())) {
+                // Debounce only when no data was returned in this poll (matches Zowe CLI SendTso.ts)
+                WaitUtil.wait(DEFAULT_POLL_INTERVAL);
+            }
+        }
+
+        if (!this.promptLst.isEmpty()) {
+            LOG.debug("TSO logon prompt drained for session ID {}. Clearing startup msgLst (size {}) and promptLst",
+                    startResponse.getSessionId(), this.msgLst.size());
+            this.msgLst.clear();
+            this.promptLst.clear();
+            return;
+        }
+
+        throw new ZosmfRequestException("Timeout waiting for TSO Start Logon prompt on session ID " +
+                startResponse.getSessionId());
+    }
+
+    /**
+     * Processes a tsoData JsonNode array returned from a z/OSMF TSO request.
+     * Extracts TSO message text into msgLst and TSO prompt entries into promptLst.
+     *
+     * @param tsoData tsoData JsonNode array object containing TSO_MESSAGE and TSO_PROMPT items
+     * @author Frank Giordano
+     */
+    private void processTsoResponse(final JsonNode tsoData) {
         if (tsoData == null || !tsoData.isArray()) {
             return;
         }
@@ -233,12 +377,12 @@ public class TsoCmd {
             final JsonNode messageNode = tsoDataItem.get(TsoConstants.TSO_MESSAGE);
             if (messageNode != null && messageNode.hasNonNull("DATA")) {
                 this.msgLst.add(messageNode.get("DATA").asText());
+                LOG.debug("TSO message received: {}", messageNode);
             }
             final JsonNode promptNode = tsoDataItem.get(TsoConstants.TSO_PROMPT);
-            // only flag completion if message data was actually collected first when tso prompt seen
-            if (promptNode != null && !this.msgLst.isEmpty()) {
+            if (promptNode != null) {
                 this.promptLst.add(promptNode.toString());
-                LOG.debug("TSO prompt received: {}", promptNode);
+                LOG.debug("Valid completion TSO prompt received: {}", promptNode);
             }
         });
     }
@@ -265,7 +409,7 @@ public class TsoCmd {
     /**
      * Returns the input data for the start TSO session call
      * <p>
-     * This is private-package
+     * This is a private-package
      *
      * @return StartTsoInputData object
      */

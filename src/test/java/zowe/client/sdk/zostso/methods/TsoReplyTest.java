@@ -15,7 +15,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
-import zowe.client.sdk.rest.PutJsonZosmfRequest;
+import zowe.client.sdk.rest.GetJsonZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequest;
 import zowe.client.sdk.rest.ZosmfRequestFactory;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 public class TsoReplyTest {
 
     private final ZosConnection mockConnection = mock(ZosConnection.class);
-    private final PutJsonZosmfRequest mockPutRequest = mock(PutJsonZosmfRequest.class);
+    private final GetJsonZosmfRequest mockGetRequest = mock(GetJsonZosmfRequest.class);
 
     public TsoReplyTest() {
         when(mockConnection.getZosmfUrl()).thenReturn("https://zosmf:1443");
@@ -54,17 +54,17 @@ public class TsoReplyTest {
      */
     @Test
     public void tstTsoReplySetsCorrectUrlSuccess() throws Exception {
-        doCallRealMethod().when(mockPutRequest).setUrl(any());
-        doCallRealMethod().when(mockPutRequest).getUrl();
+        doCallRealMethod().when(mockGetRequest).setUrl(any());
+        doCallRealMethod().when(mockGetRequest).getUrl();
 
         try (MockedStatic<TsoUtils> mockResponseUtil = mockStatic(TsoUtils.class)) {
             mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn("{}");
 
-            final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+            final TsoReply tsoReply = new TsoReply(mockConnection, mockGetRequest);
             tsoReply.reply("SESSION123");
 
-            final String actualUrl = mockPutRequest.getUrl();
+            final String actualUrl = mockGetRequest.getUrl();
             assertEquals("https://zosmf:1443/tsoApp/tso/SESSION123", actualUrl);
         }
     }
@@ -74,22 +74,22 @@ public class TsoReplyTest {
      */
     @Test
     public void tstTsoReplySetsCorrectHeadersSuccess() throws Exception {
-        PutJsonZosmfRequest putJsonZosmfRequest = Mockito.mock(PutJsonZosmfRequest.class,
+        GetJsonZosmfRequest getJsonZosmfRequest = Mockito.mock(GetJsonZosmfRequest.class,
                 withSettings().useConstructor(ZosConnectionFactory
                         .createBasicConnection("1", 443, "1", "1")));
 
-        doCallRealMethod().when(putJsonZosmfRequest).setStandardHeaders();
-        doCallRealMethod().when(putJsonZosmfRequest).setHeaders(anyMap());
-        doCallRealMethod().when(putJsonZosmfRequest).getHeaders();
+        doCallRealMethod().when(getJsonZosmfRequest).setStandardHeaders();
+        doCallRealMethod().when(getJsonZosmfRequest).setHeaders(anyMap());
+        doCallRealMethod().when(getJsonZosmfRequest).getHeaders();
 
         try (MockedStatic<TsoUtils> mockResponseUtil = mockStatic(TsoUtils.class)) {
             mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn("{}");
 
-            final TsoReply tsoReply = new TsoReply(mockConnection, putJsonZosmfRequest);
+            final TsoReply tsoReply = new TsoReply(mockConnection, getJsonZosmfRequest);
             tsoReply.reply("SESSION123");
 
-            Map<String, String> headers = putJsonZosmfRequest.getHeaders();
+            Map<String, String> headers = getJsonZosmfRequest.getHeaders();
 
             assertEquals("application/json", headers.get("Content-Type"));
             assertEquals("true", headers.get("X-CSRF-ZOSMF-HEADER"));
@@ -107,7 +107,7 @@ public class TsoReplyTest {
             mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenThrow(new ZosmfRequestException("Reply failed"));
 
-            final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+            final TsoReply tsoReply = new TsoReply(mockConnection, mockGetRequest);
 
             ZosmfRequestException ex = assertThrows(
                     ZosmfRequestException.class,
@@ -127,7 +127,7 @@ public class TsoReplyTest {
             mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn("{\"status\":\"ok\"}");
 
-            final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+            final TsoReply tsoReply = new TsoReply(mockConnection, mockGetRequest);
             assertDoesNotThrow(() -> tsoReply.reply("SESSION123"));
         }
     }
@@ -143,7 +143,7 @@ public class TsoReplyTest {
             mockResponseUtil.when(() -> TsoUtils.getResponseStr(any()))
                     .thenReturn(responseJson);
 
-            final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+            final TsoReply tsoReply = new TsoReply(mockConnection, mockGetRequest);
             assertDoesNotThrow(() -> tsoReply.reply("SESSION123"));
         }
     }
@@ -161,7 +161,7 @@ public class TsoReplyTest {
             mockResponseUtil.when(() -> TsoUtils.getMsgDataText(any()))
                     .thenCallRealMethod();
 
-            final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+            final TsoReply tsoReply = new TsoReply(mockConnection, mockGetRequest);
             ZosmfRequestException ex = assertThrows(
                     ZosmfRequestException.class,
                     () -> tsoReply.reply("SESSION123")
@@ -177,7 +177,7 @@ public class TsoReplyTest {
     public void tstAlternativeConstructorNullConnectionFailure() {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
-                () -> new TsoReply(null, mockPutRequest)
+                () -> new TsoReply(null, mockGetRequest)
         );
         assertEquals("connection is null", ex.getMessage());
     }
@@ -204,7 +204,7 @@ public class TsoReplyTest {
                 IllegalStateException.class,
                 () -> new TsoReply(mockConnection, wrongRequest)
         );
-        assertEquals("PUT_JSON request type required", ex.getMessage());
+        assertEquals("GET_JSON request type required", ex.getMessage());
     }
 
     /**
@@ -221,9 +221,9 @@ public class TsoReplyTest {
         try (MockedStatic<ZosmfRequestFactory> factoryMock = mockStatic(ZosmfRequestFactory.class);
              MockedStatic<TsoUtils> responseMock = mockStatic(TsoUtils.class)) {
 
-            factoryMock.when(() -> ZosmfRequestFactory.buildRequest(mockConnection, ZosmfRequestType.PUT_JSON))
-                    .thenReturn(mockPutRequest);
-            responseMock.when(() -> TsoUtils.getResponseStr(mockPutRequest))
+            factoryMock.when(() -> ZosmfRequestFactory.buildRequest(mockConnection, ZosmfRequestType.GET_JSON))
+                    .thenReturn(mockGetRequest);
+            responseMock.when(() -> TsoUtils.getResponseStr(mockGetRequest))
                     .thenReturn("{\"status\":\"ok\"}");
 
             final TsoReply tsoReply = new TsoReply(mockConnection);
@@ -238,7 +238,7 @@ public class TsoReplyTest {
      */
     @Test
     public void tstTsoReplyNullSessionIdFailure() {
-        final TsoReply tsoReply = new TsoReply(mockConnection, mockPutRequest);
+        final TsoReply tsoReply = new TsoReply(mockConnection, mockGetRequest);
         IllegalArgumentException ex = assertThrows(
                 IllegalArgumentException.class,
                 () -> tsoReply.reply(null)
@@ -247,7 +247,7 @@ public class TsoReplyTest {
     }
 
     /**
-     * Test that the public constructor throws when connection is null.
+     * Test that the public constructor throws when the connection is null.
      */
     @Test
     public void tstPublicConstructorNullConnectionFailure() {

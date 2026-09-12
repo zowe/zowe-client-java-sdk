@@ -135,38 +135,29 @@ public class TsoCmdTest {
 
         verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
         verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
-
-        // CRITICAL CHECK: Ensure the reply method is NEVER called because the first payload was sufficient
         verify(mockTsoReply, never()).reply(anyString());
         verify(mockTsoStop, times(1)).stop(sessionId);
     }
 
     /**
-     * Tests that a premature or prompt-only payload (lacking any previous message text)
-     * is safely ignored by the guard logic, ensuring the reply loop continues polling
-     * until actual command results are produced.
+     * Tests that when sendCommand returns a prompt-only payload (0 messages, e.g. early startup prompt),
+     * the reply loop executes and polls sendTsoForReply until the final prompt is retrieved.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    /**
+     * Tests that when sendCommand returns a prompt-only payload, the command completes immediately
+     * without unnecessary GET polling.
      *
      * @throws Exception if a mocked service call fails unexpectedly
      */
     @Test
-    public void tstIssueCommandIgnoresPrematurePromptOnlyPayloadSuccess() throws Exception {
-        // First packet contains a prompt only (e.g. initialization/handshake state)
-        String promptOnlyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
-
-        // Second packet contains the actual message data
-        String messageResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"VOLUME LISTING\"}}]}";
-
-        // Third packet contains the legitimate final completion prompt
-        String closingResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+    public void tstIssueCommandCompletesWhenSendCommandReturnsPromptOnlySuccess() throws Exception {
+        String promptOnlyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
 
         when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
                 new TsoStartResponse(true, sessionId, ""));
-
-        // Command execution returns the prompt-only block first
         when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(promptOnlyResponse);
-
-        // Subsequent replies fetch the text, then finally hit the safe closing prompt
-        when(mockTsoReply.reply(sessionId)).thenReturn(messageResponse, closingResponse);
 
         TsoCmd issueTso = new TsoCmd(
                 mockConnection,
@@ -178,13 +169,83 @@ public class TsoCmdTest {
         );
         List<String> result = issueTso.issueCommand(command);
 
-        // Verify that the code kept looping until the message block was populated and legally completed
+        verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
+        verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoReply, never()).reply(anyString());
+        verify(mockTsoStop, times(1)).stop(sessionId);
+    }
+
+    /**
+     * Tests that when startTso returns a startup payload missing the logon prompt,
+     * drainLogonPrompt polls reply until the logon prompt is drained, clearing startup noise,
+     * before sendCommand executes cleanly.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandDrainsLogonPromptOnStartSuccess() throws Exception {
+        String startResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"IKJ56455I LOGON IN PROGRESS\"}}]}";
+        String logonPromptResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"READY \"}},{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
+        String commandResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"COMMAND OUTPUT\"}},{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
+
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, startResponse));
+        when(mockTsoReply.reply(sessionId)).thenReturn(logonPromptResponse);
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(commandResponse);
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply
+        );
+        List<String> result = issueTso.issueCommand(command);
+
         assertEquals(1, result.size());
-        assertEquals("VOLUME LISTING", result.get(0));
+        assertEquals("COMMAND OUTPUT", result.get(0));
+
+        verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
+        verify(mockTsoReply, times(1)).reply(sessionId); // Drained logon prompt
+        verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoStop, times(1)).stop(sessionId);
+    }
+
+    /**
+     * Tests that a payload containing a READY message alongside a TSO prompt
+     * (e.g. silent commands like ALLOCATE, FREE, or DELETE) polls reply and returns READY cleanly.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandCompletesOnFirstPayloadWithReadyMessageAndPromptSuccess() throws Exception {
+        String response = "{\"tsoData\":["
+                + "{\"TSO MESSAGE\":{\"DATA\":\"READY \"}},"
+                + "{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}"
+                + "]}";
+
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, ""));
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(response);
+        when(mockTsoReply.reply(sessionId)).thenReturn(response);
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply
+        );
+        List<String> result = issueTso.issueCommand(command);
+
+        assertEquals(1, result.size());
+        assertEquals("READY ", result.get(0));
 
         verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
         verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
-        verify(mockTsoReply, times(2)).reply(sessionId); // Must loop twice to bypass the early prompt and fetch data
+        verify(mockTsoReply, never()).reply(anyString());
         verify(mockTsoStop, times(1)).stop(sessionId);
     }
 
@@ -334,6 +395,66 @@ public class TsoCmdTest {
     }
 
     /**
+     * Tests issuing a TSO command by reusing an existing session ID.
+     * <p>
+     * Verifies that the command response is collected cleanly, the reply loop handles
+     * the payload milestones, and crucially, neither startTso nor stopTso are invoked.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandByTsoSessionIdSuccess() throws Exception {
+        String firstResponse = "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"DATA CHUNK 1\"}}]}";
+        String secondResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"DATA\":\"READY\"}}]}";
+
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
+        when(mockTsoReply.reply(sessionId)).thenReturn(secondResponse);
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply
+        );
+
+        List<String> result = issueTso.issueCommandByTsoSessionId(sessionId, command);
+
+        assertEquals(1, result.size());
+        assertEquals("DATA CHUNK 1", result.get(0));
+
+        // CRITICAL CONTEXT VALIDATION:
+        // Lifecycle management must be completely bypassed to allow continuous state reuse
+        verify(mockTsoStart, never()).start(any());
+        verify(mockTsoStop, never()).stop(anyString());
+
+        verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoReply, times(1)).reply(sessionId);
+    }
+
+    /**
+     * Verifies that issueCommandByTsoSessionId throws an IllegalArgumentException when
+     * the passed sessionId parameter is empty or null.
+     */
+    @Test
+    public void tstIssueCommandByTsoSessionIdNullIdFailure() {
+        TsoCmd issueTso = new TsoCmd(mockConnection, account);
+
+        IllegalArgumentException exNull = assertThrows(
+                IllegalArgumentException.class,
+                () -> issueTso.issueCommandByTsoSessionId(null, command)
+        );
+        assertEquals("sessionId is either null or empty", exNull.getMessage());
+
+        IllegalArgumentException exEmpty = assertThrows(
+                IllegalArgumentException.class,
+                () -> issueTso.issueCommandByTsoSessionId("", command)
+        );
+        assertEquals("sessionId is either null or empty", exEmpty.getMessage());
+    }
+
+    /**
      * Verifies that the constructor throws a NullPointerException when the connection is null.
      */
     @Test
@@ -384,3 +505,4 @@ public class TsoCmdTest {
     }
 
 }
+

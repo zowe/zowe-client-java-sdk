@@ -237,4 +237,5 @@ public class TsoSendTest {
         );
         assertEquals("connection is null", ex.getMessage());
     }
+
 }
