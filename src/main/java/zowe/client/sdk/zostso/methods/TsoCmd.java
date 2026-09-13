@@ -222,7 +222,7 @@ public class TsoCmd {
             }
         }
 
-        // is DEFAULT_PROMPT_TIMEOUT (in minutes) reached
+        // is DEFAULT_PROMPT_TIMEOUT (in minutes) reached?
         if (!tsoMessagesReceived) {
             LOG.error("Timeout waiting for TSO command '{}' to complete on session ID {}", command, sessionId);
             throw new ZosmfRequestException("Timeout waiting for TSO command to complete");
