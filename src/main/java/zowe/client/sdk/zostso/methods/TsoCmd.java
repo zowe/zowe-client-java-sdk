@@ -9,13 +9,13 @@
  */
 package zowe.client.sdk.zostso.methods;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.rest.exception.ZosmfRequestException;
+import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.utility.WaitUtil;
 import zowe.client.sdk.zostso.TsoConstants;
@@ -125,7 +125,7 @@ public class TsoCmd {
         // send tso start call and return the session id
         final TsoStartResponse tsoStartResponse = this.startTso(inputData);
         if (!tsoStartResponse.isSuccess()) {
-            final JsonNode rootNode = this.getJsonNode(tsoStartResponse.getResponse());
+            final JsonNode rootNode = JsonUtils.parse(tsoStartResponse.getResponse());
             this.processTsoResponse(this.getTsoDataNode(rootNode));
             return this.msgLst;
         }
@@ -180,7 +180,7 @@ public class TsoCmd {
         LOG.debug("Executing TSO command '{}' for session ID {}", command, sessionId);
         String responseStr = this.sendTsoCommand(sessionId, command);
         LOG.debug("sendCommand response: {}", responseStr);
-        JsonNode rootNode = this.getJsonNode(responseStr);
+        JsonNode rootNode = JsonUtils.parse(responseStr);
         this.processTsoResponse(this.getTsoDataNode(rootNode));
 
         // check if sendTsoCommand already returned a completion prompt
@@ -199,7 +199,7 @@ public class TsoCmd {
             // retrieve additional tso messages for the command
             responseStr = this.sendTsoForReply(sessionId);
             LOG.debug("sendTsoForReply response #{}: {}", pollCount, responseStr);
-            rootNode = this.getJsonNode(responseStr);
+            rootNode = JsonUtils.parse(responseStr);
             JsonNode tsoDataNode = this.getTsoDataNode(rootNode);
             this.processTsoResponse(tsoDataNode);
 
@@ -327,7 +327,7 @@ public class TsoCmd {
         LOG.debug("Processing initial startTso response for session ID {}: {}",
                 startResponse.getSessionId(), startResponse.getResponse());
 
-        final JsonNode rootNode = this.getJsonNode(startResponse.getResponse());
+        final JsonNode rootNode = JsonUtils.parse(startResponse.getResponse());
         this.processTsoResponse(this.getTsoDataNode(rootNode));
 
         // preparation variables for reply loop
@@ -341,7 +341,7 @@ public class TsoCmd {
             LOG.debug("Drain reply poll iteration #{} for session ID {}", drainCount, startResponse.getSessionId());
             final String responseStr = this.sendTsoForReply(startResponse.getSessionId());
             LOG.debug("sendTsoForReply response during logon drain iteration #{}: {}", drainCount, responseStr);
-            final JsonNode replyNode = this.getJsonNode(responseStr);
+            final JsonNode replyNode = JsonUtils.parse(responseStr);
             final JsonNode tsoDataNode = this.getTsoDataNode(replyNode);
             this.processTsoResponse(tsoDataNode);
             if (this.promptLst.isEmpty() && (tsoDataNode == null || tsoDataNode.isEmpty())) {
@@ -386,25 +386,6 @@ public class TsoCmd {
                 LOG.debug("Valid completion TSO prompt received: {}", promptNode);
             }
         });
-    }
-
-    /**
-     * Transform a response string representing a JSON returned payload from a tso call into a JsonNode to
-     * be used for parsing the response.
-     *
-     * @param responseStr response string
-     * @return JsonNode object
-     * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     */
-    private JsonNode getJsonNode(final String responseStr) throws ZosmfRequestException {
-        final JsonNode rootNode;
-        try {
-            rootNode = this.objectMapper.readTree(responseStr);
-        } catch (JsonProcessingException e) {
-            throw new ZosmfRequestException("Response: " + e.getMessage());
-        }
-        return rootNode;
     }
 
     /**
