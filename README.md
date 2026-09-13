@@ -229,7 +229,7 @@ During the HTTPS TLS handshake, Java validates the z/OSMF **server's SSL certifi
 
 Or via JVM launch argument: `-Dzowe.sdk.truststore.path=/path/to/server-truststore.p12`
 
-- **When to use**: Staging, testing, or enterprise environments where z/OSMF uses a self-signed or internal CA certificate and you want strict certificate validation without modifying global JVM `cacerts` or disabling TLS verification.
+- **When to use**: Staging, testing, or enterprise environments where z/OSMF uses a self-signed or internal CA certificate, and you want strict certificate validation without modifying global JVM `cacerts` or disabling TLS verification.
 
 **Insecure Mode (`zowe.sdk.allow.insecure.connection=true`)**
 - **How it works**: Insecure mode is an explicit, optional developer opt-in (disabled by default) designed specifically to bypass server TLS certificate checks for self-signed test environments when users do not have the server certificate or CA in a truststore file. Setting system property `zowe.sdk.allow.insecure.connection` to `"true"` uses `TRUST_ALL_CERTS` to bypass server certificate validation (similar to `curl -k` or `git config http.sslVerify false`) and disables hostname verification. A prominent warning is logged on connection setup.

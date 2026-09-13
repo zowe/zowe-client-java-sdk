@@ -125,7 +125,7 @@ public final class ZosLogResponse {
     }
 
     /**
-     * Return string value representing ZosLogResponse object.
+     * Return a string value representing a ZosLogResponse object.
      *
      * @return string representation of ZosLogResponse
      */

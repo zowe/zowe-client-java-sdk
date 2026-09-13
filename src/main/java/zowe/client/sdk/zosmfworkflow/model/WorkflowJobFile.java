@@ -35,7 +35,7 @@ public final class WorkflowJobFile {
     private final String ddname;
 
     /**
-     * Number of bytes on spool that is consumed by the spool file.
+     * Number of bytes on a spool that is consumed by the spool file.
      */
     private final Integer byteCount;
 

@@ -80,7 +80,7 @@ public final class JobsConstants {
     public static final String QUERY_PREFIX = "prefix=";
 
     /**
-     * Cancel request constant
+     * Cancel request
      */
     public static final String REQUEST_CANCEL = "cancel";
 

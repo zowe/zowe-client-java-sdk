@@ -220,7 +220,7 @@ public class ZosLogItem {
     }
 
     /**
-     * Return string value representing ZosLogItem object.
+     * Return a string value representing a ZosLogItem object.
      *
      * @return string representation of ZosLogItem
      */
