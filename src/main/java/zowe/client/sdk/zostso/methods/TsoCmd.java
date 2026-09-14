@@ -10,7 +10,6 @@
 package zowe.client.sdk.zostso.methods;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import zowe.client.sdk.core.ZosConnection;
@@ -42,7 +41,6 @@ public class TsoCmd {
     private static final int DEFAULT_POLL_INTERVAL = 100;
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final ZosConnection connection;
     private final String accountNumber;
     private TsoStart tsoStart;
