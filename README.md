@@ -48,6 +48,7 @@ In addition to the MVP milestones, the following releases include further enhanc
 * [Version 7.0.4](https://github.com/zowe/zowe-client-java-sdk/issues/622)
 * [Version 7.0.5](https://github.com/zowe/zowe-client-java-sdk/issues/626)
 * [Version 7.0.6](https://github.com/zowe/zowe-client-java-sdk/releases/tag/v7.0.6)
+* [Version 7.0.7](https://github.com/zowe/zowe-client-java-sdk/releases/tag/v7.0.7)
   
 ## DISCORD
   
