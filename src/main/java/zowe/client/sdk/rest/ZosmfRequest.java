@@ -555,7 +555,7 @@ public abstract class ZosmfRequest {
     }
 
     /**
-     * Get current http header value(s) for request
+     * Get the current http header value (s) for the request
      *
      * @return map of header value(s)
      * @author Frank Giordano
