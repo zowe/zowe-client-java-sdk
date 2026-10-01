@@ -156,8 +156,12 @@ public class TsoCmd {
         this.promptLst.clear();
 
         // initialize the components if they don't exist yet
-        if (this.tsoSend == null) this.tsoSend = new TsoSend(this.connection);
-        if (this.tsoReply == null) this.tsoReply = new TsoReply(this.connection);
+        if (this.tsoSend == null) {
+            this.tsoSend = new TsoSend(this.connection);
+        }
+        if (this.tsoReply == null) {
+            this.tsoReply = new TsoReply(this.connection);
+        }
 
         this.executeCommand(sessionId, command);
 
