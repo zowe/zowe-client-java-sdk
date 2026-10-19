@@ -56,16 +56,15 @@ public class UssCmdTest {
 
         when(mockSession.openChannel("exec")).thenReturn(mockChannel);
 
-        try (MockedConstruction<UssCmd.ManagedSession> ignored1 =
-                     Mockito.mockConstruction(UssCmd.ManagedSession.class,
-                             (mock, context) -> when(mock.get()).thenReturn(mockSession));
-             MockedConstruction<UssCmd.ManagedChannel> ignored2 =
-                     Mockito.mockConstruction(UssCmd.ManagedChannel.class,
-                             (mock, context) -> {
-                                 OutputStream os = (OutputStream) context.arguments().get(2);
-                                 os.write("mock output".getBytes());
-                                 when(mock.get()).thenReturn(mockChannel);
-                             })) {
+        try (MockedConstruction<UssCmd.ManagedSession> ignored1
+                = Mockito.mockConstruction(UssCmd.ManagedSession.class,
+                        (mock, context) -> when(mock.get()).thenReturn(mockSession)); MockedConstruction<UssCmd.ManagedChannel> ignored2
+                = Mockito.mockConstruction(UssCmd.ManagedChannel.class,
+                        (mock, context) -> {
+                            OutputStream os = (OutputStream) context.arguments().get(2);
+                            os.write("mock output".getBytes());
+                            when(mock.get()).thenReturn(mockChannel);
+                        })) {
 
             UssCmd cmd = new UssCmd(mockConnection);
             String result = cmd.issueCommand("echo test", 1000);
@@ -85,6 +84,37 @@ public class UssCmdTest {
             UssCmd cmd = new UssCmd(mockConnection);
 
             assertThrows(UssCmdException.class, () -> cmd.issueCommand("bad cmd", 1000));
+        }
+    }
+
+    @Test
+    public void tstIssueCommandWithOutputReturnsStdoutAndStderr() throws Exception {
+        Session mockSession = mock(Session.class);
+        ChannelExec mockChannel = mock(ChannelExec.class);
+
+        when(mockChannel.isClosed()).thenReturn(false, true);
+        when(mockChannel.isConnected()).thenReturn(true);
+        when(mockSession.openChannel("exec")).thenReturn(mockChannel);
+
+        try (MockedConstruction<UssCmd.ManagedSession> ignored1
+                = Mockito.mockConstruction(UssCmd.ManagedSession.class,
+                        (mock, context) -> when(mock.get()).thenReturn(mockSession)); MockedConstruction<UssCmd.ManagedChannel> ignored2
+                = Mockito.mockConstruction(UssCmd.ManagedChannel.class,
+                        (mock, context) -> {
+                            OutputStream stdout = (OutputStream) context.arguments().get(2);
+                            OutputStream stderr = (OutputStream) context.arguments().get(3);
+
+                            stdout.write("mock output".getBytes());
+                            stderr.write("mock error".getBytes());
+
+                            when(mock.get()).thenReturn(mockChannel);
+                        })) {
+
+            UssCmd cmd = new UssCmd(mockConnection);
+            UssCmdResponse result = cmd.issueCommandWithOutput("echo test", 1000);
+
+            assertEquals("mock output", result.getStdout());
+            assertEquals("mock error", result.getStderr());
         }
     }
 
