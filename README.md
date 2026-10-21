@@ -316,7 +316,7 @@ Thin JAR (recommended):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>7.0.7</version>
+          <version>7.0.8</version>
         </dependency>
   
 Fat JAR (with dependencies):
@@ -324,7 +324,7 @@ Fat JAR (with dependencies):
         <dependency>
           <groupId>org.zowe.client.java.sdk</groupId>
           <artifactId>zowe-client-java-sdk</artifactId>
-          <version>7.0.7</version>
+          <version>7.0.8</version>
           <classifier>jar-with-dependencies</classifier>
         </dependency>  
   
@@ -332,11 +332,11 @@ For a Gradle project add the SDK as a dependency by updating your `build.gradle`
 
 Thin JAR (recommended):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.7'    
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.8'    
 
 Fat JAR (with dependencies):  
   
-    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.7', classifier: 'jar-with-dependencies'
+    implementation group: 'org.zowe.client.java.sdk', name: 'zowe-client-java-sdk', version: '7.0.8', classifier: 'jar-with-dependencies'
   
 ## Publishing to Maven Central The Manual Way 
   
