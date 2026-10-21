@@ -14,13 +14,13 @@ import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
 import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
 
 /**
- * Strategy interface defining z/OS Console operations independent of transport protocol
- * (e.g., z/OSMF REST API or zowex SSH native services).
+ * Provider interface defining z/OS Console command operations independent of transport protocol
+ * (e.g., z/OSMF REST API or Zowe Remote SSH native services).
  *
  * @author Chaitanya Katore
  * @version 7.0
  */
-public interface ConsoleService {
+public interface ConsoleCmdProvider {
 
     /**
      * Issue an MVS console command on the default console.
