@@ -41,6 +41,7 @@ public class TsoCmdExp extends TstZosConnection {
         List<String> result = TsoCmdExp.issueCommand(accountNumber, command);
         result.forEach(System.out::println);
         pingWorkflow(accountNumber);
+        issueCommandByTsoSessionId(accountNumber, command);
     }
 
     /**
@@ -83,6 +84,39 @@ public class TsoCmdExp extends TstZosConnection {
         // stop the tso session
         tsoCommonResponse = tsoStop.stop(tsoStartResponse.getSessionId());
         System.out.println(tsoCommonResponse);
+    }
+
+    /**
+     * Issue issueCommandByTsoSessionId method from the TsoCmd class which will execute the given tso command
+     * against an existing TSO session. The session is kept alive after each command, so it can be reused for
+     * multiple commands and must be stopped by the caller when finished.
+     *
+     * @param accountNumber user's z/OSMF permission account number
+     * @param command       tso command to execute
+     * @throws ZosmfRequestException exception thrown when a TSO request fails
+     * @author Frank Giordano
+     */
+    public static void issueCommandByTsoSessionId(String accountNumber, String command)
+            throws ZosmfRequestException {
+        StartTsoInputData inputData = new StartTsoInputData();
+        inputData.setAccount(accountNumber);
+        TsoStart tsoStart = new TsoStart(connection);
+        // start a tso session and keep its session id for reuse
+        final TsoStartResponse tsoStartResponse = tsoStart.start(inputData);
+        final String sessionId = tsoStartResponse.getSessionId();
+
+        try {
+            TsoCmd tsoCmd = new TsoCmd(connection, accountNumber);
+            // issue the same session for multiple commands without starting a new tso session each time
+            List<String> result = tsoCmd.issueCommandByTsoSessionId(sessionId, command);
+            result.forEach(System.out::println);
+            result = tsoCmd.issueCommandByTsoSessionId(sessionId, command);
+            result.forEach(System.out::println);
+        } finally {
+            // the session is not stopped by issueCommandByTsoSessionId, so stop it here
+            TsoStop tsoStop = new TsoStop(connection);
+            tsoStop.stop(sessionId);
+        }
     }
 
 }
