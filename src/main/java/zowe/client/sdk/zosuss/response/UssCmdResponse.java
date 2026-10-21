@@ -76,4 +76,19 @@ public final class UssCmdResponse {
         return exitCode == 0;
     }
 
+    /**
+     * Returns a string representation of this USS command response.
+     *
+     * @return string representation containing standard output, standard error,
+     *         and the remote command exit code
+     */
+    @Override
+    public String toString() {
+        return "UssCmdResponse{" +
+                "stdout='" + stdout + '\'' +
+                ", stderr='" + stderr + '\'' +
+                ", exitCode=" + exitCode +
+                '}';
+    }
+
 }
