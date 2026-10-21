@@ -75,7 +75,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandUsesOrderedOutputRedirection() throws Exception {
+    public void tstIssueCommandUsesOrderedOutputRedirectionSuccess() throws Exception {
         final Session mockSession = mock(Session.class);
         final ChannelExec mockChannel = mock(ChannelExec.class);
         final AtomicReference<String> capturedCommand = new AtomicReference<>();
@@ -105,7 +105,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandTrimsCommandBeforeWrapping() throws Exception {
+    public void tstIssueCommandTrimsCommandBeforeWrappingSuccess() throws Exception {
         final Session mockSession = mock(Session.class);
         final ChannelExec mockChannel = mock(ChannelExec.class);
         final AtomicReference<String> capturedCommand = new AtomicReference<>();
@@ -138,7 +138,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandResponseReturnsStdoutStderrAndExitCode() throws Exception {
+    public void tstIssueCommandResponseReturnsStdoutStderrAndExitCodeFailure() throws Exception {
         final Session mockSession = mock(Session.class);
         final ChannelExec mockChannel = mock(ChannelExec.class);
 
@@ -202,7 +202,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandResponseDoesNotModifyCommand() throws Exception {
+    public void tstIssueCommandResponseDoesNotModifyCommandSuccess() throws Exception {
         final Session mockSession = mock(Session.class);
         final ChannelExec mockChannel = mock(ChannelExec.class);
         final AtomicReference<String> capturedCommand = new AtomicReference<>();
@@ -236,7 +236,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandThrowsExceptionOnZeroTimeout() {
+    public void tstIssueCommandThrowsExceptionOnZeroTimeoutFailure() {
         final UssCmd cmd = new UssCmd(mockConnection);
 
         assertThrows(
@@ -246,7 +246,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandThrowsExceptionOnNegativeTimeout() {
+    public void tstIssueCommandThrowsExceptionOnNegativeTimeoutFailure() {
         final UssCmd cmd = new UssCmd(mockConnection);
 
         assertThrows(
@@ -256,7 +256,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandResponseThrowsExceptionOnZeroTimeout() {
+    public void tstIssueCommandResponseThrowsExceptionOnZeroTimeoutFailure() {
         final UssCmd cmd = new UssCmd(mockConnection);
 
         assertThrows(
@@ -266,7 +266,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandResponseThrowsExceptionOnNegativeTimeout() {
+    public void tstIssueCommandResponseThrowsExceptionOnNegativeTimeoutFailure() {
         final UssCmd cmd = new UssCmd(mockConnection);
 
         assertThrows(
@@ -276,7 +276,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandThrowsExceptionOnJSchError() throws Exception {
+    public void tstIssueCommandThrowsExceptionOnJSchErrorFailure() throws Exception {
         final Session mockSession = mock(Session.class);
 
         when(mockSession.openChannel("exec"))
@@ -300,7 +300,7 @@ public class UssCmdTest {
     }
 
     @Test
-    public void tstIssueCommandResponseThrowsExceptionOnJSchError() throws Exception {
+    public void tstIssueCommandResponseThrowsExceptionOnJSchErrorFailure() throws Exception {
         final Session mockSession = mock(Session.class);
 
         when(mockSession.openChannel("exec"))
