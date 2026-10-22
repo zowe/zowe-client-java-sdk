@@ -26,7 +26,6 @@ public class IssueConsoleExp extends TstZosConnection {
      * The main method defines z/OSMF host and user connection, and mvs command used for the example tests.
      *
      * @param args for main isn't used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String command = "D IPLINFO";
@@ -41,7 +40,6 @@ public class IssueConsoleExp extends TstZosConnection {
      *
      * @param connection for connection information, see ZosConnection object
      * @param cmd        mvs command to execute
-     * @author Frank Giordano
      */
     public static void issueCommand(ZosConnection connection, String cmd) {
         ConsoleCmdResponse response;
@@ -64,7 +62,6 @@ public class IssueConsoleExp extends TstZosConnection {
      *
      * @param connection for connection information, see ZosConnection object
      * @param cmd        mvs command to execute
-     * @author Frank Giordano
      */
     public static void issueCommandCommon(ZosConnection connection, String cmd) {
         ConsoleCmdResponse response;

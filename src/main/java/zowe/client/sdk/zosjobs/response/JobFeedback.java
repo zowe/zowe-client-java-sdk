@@ -108,7 +108,6 @@ public final class JobFeedback {
      * @param status        job status
      * @param internalCode  internal code
      * @param message       message
-     * @author Frank Giordano
      */
     @JsonCreator
     public JobFeedback(

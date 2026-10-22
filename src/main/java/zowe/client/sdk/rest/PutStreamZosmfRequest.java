@@ -33,7 +33,6 @@ public class PutStreamZosmfRequest extends ZosmfRequest {
      * PutStreamZosmfRequest constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public PutStreamZosmfRequest(final ZosConnection connection) {
         super(connection);
@@ -44,7 +43,6 @@ public class PutStreamZosmfRequest extends ZosmfRequest {
      *
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     @Override
@@ -65,7 +63,6 @@ public class PutStreamZosmfRequest extends ZosmfRequest {
      * Set the body byte array value for request
      *
      * @param body byte array value
-     * @author Frank Giordano
      */
     @Override
     public void setBody(final Object body) {
@@ -74,8 +71,6 @@ public class PutStreamZosmfRequest extends ZosmfRequest {
 
     /**
      * Set the standard headers for the http request
-     *
-     * @author Frank Giordano
      */
     @Override
     public void setStandardHeaders() {

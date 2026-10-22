@@ -58,7 +58,6 @@ public class JobSubmitJclInputData {
      * @param jcl                 syntactically correct JCL
      * @param internalReaderRecfm internal reader RECFM
      * @param internalReaderLrecl internal reader LRECL
-     * @author Frank Giordano
      */
     public JobSubmitJclInputData(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl) {
         this.jcl = jcl;
@@ -73,7 +72,6 @@ public class JobSubmitJclInputData {
      * @param internalReaderRecfm internal reader RECFM
      * @param internalReaderLrecl internal reader LRECL
      * @param jclSymbols          Map of JCL symbolic substitution
-     * @author Frank Giordano
      */
     public JobSubmitJclInputData(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl,
                                  final Map<String, String> jclSymbols) {

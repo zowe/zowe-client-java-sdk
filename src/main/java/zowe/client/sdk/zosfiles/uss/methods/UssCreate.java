@@ -43,7 +43,6 @@ public class UssCreate {
      * UssCreate Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -59,8 +58,6 @@ public class UssCreate {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PostJsonZosmfRequest} implementation object
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     UssCreate(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -79,8 +76,6 @@ public class UssCreate {
      * @param createInputData input create parameters, see UssCreateInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     public Response create(final String targetPath, final UssCreateInputData createInputData)
             throws ZosmfRequestException {
@@ -109,7 +104,6 @@ public class UssCreate {
      * @param fileSystemName ZFS file system name
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response createZfs(final String fileSystemName) throws ZosmfRequestException {
         return createZfsCommon(fileSystemName, new UssCreateZfsInputData.Builder(10).cylsSec(2).timeout(20).build());
@@ -122,7 +116,6 @@ public class UssCreate {
      * @param createZfsInputData ZFS create input parameters, see UssCreateZfsInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response createZfsCommon(final String fileSystemName, final UssCreateZfsInputData createZfsInputData)
             throws ZosmfRequestException {

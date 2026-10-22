@@ -46,7 +46,6 @@ public class ZosLog {
      * ZosLog constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public ZosLog(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -62,7 +61,6 @@ public class ZosLog {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     ZosLog(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -82,7 +80,6 @@ public class ZosLog {
      * @param logInputData ZosLogInputData object containing optional log query parameters
      * @return ZosLogResponse object with log messages/items
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ZosLogResponse issueCommand(final ZosLogInputData logInputData) throws ZosmfRequestException {
         final String url = getUrl(logInputData, 0);
@@ -110,7 +107,6 @@ public class ZosLog {
      * @param totalItemThreshold pagination stop threshold across requests
      * @return list of ZosLogResponse objects returned by each z/OSMF request
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<ZosLogResponse> issueCommand(final ZosLogInputData logInputData,
                                              final int totalItemThreshold) throws ZosmfRequestException {
@@ -175,7 +171,6 @@ public class ZosLog {
      * @param logInputData  ZosLogInputData object containing optional log query parameters
      * @param nextTimestamp timestamp value from a previous z/OSMF log response, or zero for the initial request
      * @return z/OSMF log REST API request URL
-     * @author Frank Giordano
      */
     private @NonNull String getUrl(final ZosLogInputData logInputData, final long nextTimestamp) {
         ValidateUtils.checkNullParameter(logInputData, "logInputData");
@@ -210,7 +205,6 @@ public class ZosLog {
      * Sets the request URL on the z/OSMF request object.
      *
      * @param url z/OSMF log REST API request URL
-     * @author Frank Giordano
      */
     private void setUrl(final String url) {
 

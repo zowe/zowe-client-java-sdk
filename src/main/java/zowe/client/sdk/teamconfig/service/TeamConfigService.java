@@ -52,7 +52,6 @@ public class TeamConfigService {
      * @param config KeyTarConfig object
      * @return ConfigContainer object
      * @throws TeamConfigException error processing team configuration
-     * @author Frank Giordano
      */
     public ConfigContainer getTeamConfig(final KeyTarConfig config) throws TeamConfigException {
         ValidateUtils.checkNullParameter(config, "config");
@@ -74,7 +73,6 @@ public class TeamConfigService {
      * @param profileName       name of the profile to update
      * @param updatedProperties map of property key/value pairs to set on the profile
      * @throws TeamConfigException error reading or writing the team configuration file
-     * @author Frank Giordano
      */
     public void updateTeamConfig(final KeyTarConfig config, final String profileName,
                                  final Map<String, String> updatedProperties) throws TeamConfigException {
@@ -108,7 +106,6 @@ public class TeamConfigService {
      *
      * @param root root JsonNode of the configuration file
      * @return ConfigContainer object
-     * @author Frank Giordano
      */
     private ConfigContainer parseJson(final JsonNode root) {
         final String schema = root.path("$schema").asText(null);
@@ -144,7 +141,6 @@ public class TeamConfigService {
      * @param name partition name
      * @param node JsonNode representing the partition
      * @return Partition object
-     * @author Frank Giordano
      */
     private Partition getPartition(final String name, final JsonNode node) {
         LOG.debug("partition found name {}", name);
@@ -164,7 +160,6 @@ public class TeamConfigService {
      * @param name profile name
      * @param node JsonNode representing the profile
      * @return Profile object
-     * @author Frank Giordano
      */
     private Profile buildProfile(final String name, final JsonNode node) {
         final String type = node.path("type").asText(null);
@@ -178,7 +173,6 @@ public class TeamConfigService {
      *
      * @param propertiesNode JsonNode representing the properties section
      * @return map of property key/value pairs
-     * @author Frank Giordano
      */
     private Map<String, String> parseProperties(final JsonNode propertiesNode) {
         final Map<String, String> map = new HashMap<>();
@@ -193,7 +187,6 @@ public class TeamConfigService {
      *
      * @param secureNode JsonNode representing the secure array
      * @return list of secure field names
-     * @author Frank Giordano
      */
     private List<String> parseSecure(final JsonNode secureNode) {
         final List<String> list = new ArrayList<>();

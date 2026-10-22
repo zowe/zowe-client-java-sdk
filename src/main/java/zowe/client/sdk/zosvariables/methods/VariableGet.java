@@ -51,7 +51,6 @@ public class VariableGet {
      * VariableGet Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Adithe Das
      */
     public VariableGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -68,7 +67,6 @@ public class VariableGet {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Adithe Das
      */
     VariableGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -89,8 +87,6 @@ public class VariableGet {
      * @param getInputData input parameters for retrieving system variables
      * @return VariableGetResponse object
      * @throws ZosmfRequestException request error state
-     * @author Adithe Das
-     * @author Frank Giordano
      */
     public VariableGetResponse get(final VariableGetInputData getInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(getInputData, "getInputData");

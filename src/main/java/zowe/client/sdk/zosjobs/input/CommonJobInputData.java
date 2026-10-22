@@ -44,7 +44,6 @@ public class CommonJobInputData {
      *
      * @param jobId   job id value
      * @param jobName job name value
-     * @author Frank Giordano
      */
     public CommonJobInputData(final String jobId, final String jobName) {
         this.jobId = jobId;
@@ -58,7 +57,6 @@ public class CommonJobInputData {
      * @param jobId    job id value
      * @param jobName  job name value
      * @param stepData determines whether step data is included in the rest call
-     * @author Frank Giordano
      */
     public CommonJobInputData(final String jobId, final String jobName, final boolean stepData) {
         this.jobId = jobId;

@@ -78,7 +78,6 @@ public class StartTsoInputData {
      * @param columns        number of columns
      * @param accountNumber  user's z/OS permission account number
      * @param regionSize     region size for tso address space
-     * @author Frank Giordano
      */
     public StartTsoInputData(final String logonProcedure,
                              final String characterSet,

@@ -42,7 +42,6 @@ public class TsoStop {
      * TsoStop constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public TsoStop(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -58,7 +57,6 @@ public class TsoStop {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link DeleteJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     TsoStop(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -76,7 +74,6 @@ public class TsoStop {
      * @param sessionId servletKey id retrieved from start TSO request
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     public TsoCommonResponse stop(final String sessionId) throws ZosmfRequestException {

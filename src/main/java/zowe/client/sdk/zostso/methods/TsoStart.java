@@ -44,7 +44,6 @@ public class TsoStart {
      * TsoStart constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public TsoStart(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -60,7 +59,6 @@ public class TsoStart {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PostJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     TsoStart(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,7 +76,6 @@ public class TsoStart {
      * @param inputData parameters for start tso call, see StartTsoInputData
      * @return string value representing the session id (servletKey)
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public TsoStartResponse start(final StartTsoInputData inputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(inputData, "inputData");

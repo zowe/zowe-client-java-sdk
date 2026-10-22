@@ -64,7 +64,6 @@ public class JobMonitor {
      * MonitorJobs constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -76,7 +75,6 @@ public class JobMonitor {
      *
      * @param connection for connection information, see ZosConnection object
      * @param attempts   number of attempts to get status
-     * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -90,7 +88,6 @@ public class JobMonitor {
      * @param connection for connection information, see ZosConnection object
      * @param attempts   number of attempts to get status
      * @param watchDelay delay time in milliseconds to wait each time requesting status
-     * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -106,7 +103,6 @@ public class JobMonitor {
      * @param attempts   number of attempts to get status
      * @param watchDelay delay time in milliseconds to wait each time requesting status
      * @param lineLimit  number of lines to inspect job output
-     * @author Frank Giordano
      */
     public JobMonitor(final ZosConnection connection, final int attempts, final int watchDelay, final int lineLimit) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -123,7 +119,6 @@ public class JobMonitor {
      * @param message          message string
      * @return boolean message found status
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private boolean checkMessage(final JobMonitorInputData monitorInputData, final String message)
             throws ZosmfRequestException {
@@ -164,7 +159,6 @@ public class JobMonitor {
      * @param monitorInputData monitor jobs parameters, see JobMonitorInputData
      * @return boolean true when the job status is obtained
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private CheckStatusResponse checkStatus(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
         return checkStatus(monitorInputData, false);
@@ -176,7 +170,6 @@ public class JobMonitor {
      * @param monitorInputData monitor jobs parameters, see JobMonitorInputData
      * @return boolean true when the job status is obtained
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private CheckStatusResponse checkStatus(final JobMonitorInputData monitorInputData, final boolean isStepData)
             throws ZosmfRequestException {
@@ -213,7 +206,6 @@ public class JobMonitor {
      *
      * @param statusName status name
      * @return int index of status order or -1 if none found
-     * @author Frank Giordano
      */
     private int getOrderIndexOfStatus(final String statusName) {
         for (int i = 0; i < JobStatus.Order.length; i++) {
@@ -230,7 +222,6 @@ public class JobMonitor {
      * @param monitorInputData monitor jobs parameters, see JobMonitorInputData
      * @return true if in a running state
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public boolean isRunning(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(monitorInputData, "monitorInputData");
@@ -248,7 +239,6 @@ public class JobMonitor {
      * @param message          message string
      * @return boolean message found status
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private boolean pollByMessage(final JobMonitorInputData monitorInputData, final String message)
             throws ZosmfRequestException {
@@ -284,7 +274,6 @@ public class JobMonitor {
      * @param monitorInputData monitor jobs parameters, see JobMonitorInputData
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private Job pollByStatus(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
         final int timeoutVal = monitorInputData.getWatchDelay().orElse(DEFAULT_WATCH_DELAY);
@@ -334,7 +323,6 @@ public class JobMonitor {
      * @param message message string
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public boolean waitByMessage(final Job job, final String message) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -357,7 +345,6 @@ public class JobMonitor {
      * @param message message string
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public boolean waitByMessage(final String jobName, final String jobId, final String message)
             throws ZosmfRequestException {
@@ -381,7 +368,6 @@ public class JobMonitor {
      * @param job document of the z/OS job to wait for (see z/OSMF Jobs APIs for details)
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job waitByOutputStatus(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -403,7 +389,6 @@ public class JobMonitor {
      * @param jobId   the z/OS jobid of the job to wait for output status (see z/OSMF Jobs APIS for details)
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job waitByOutputStatus(final String jobName, final String jobId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobName, "jobName");
@@ -426,7 +411,6 @@ public class JobMonitor {
      * @param statusType status type, see JobStatus.Type object
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job waitByStatus(final Job job, final JobStatus.Type statusType) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -450,7 +434,6 @@ public class JobMonitor {
      * @param statusType status type, see JobStatus.Type object
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job waitByStatus(final String jobName, final String jobId, final JobStatus.Type statusType)
             throws ZosmfRequestException {
@@ -469,7 +452,6 @@ public class JobMonitor {
      * @param message          message string
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public boolean waitMessageCommon(final JobMonitorInputData monitorInputData, final String message)
             throws ZosmfRequestException {
@@ -500,7 +482,6 @@ public class JobMonitor {
      * @param monitorInputData to monitor jobs parameters, see JobMonitorInputData object
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job waitStatusCommon(final JobMonitorInputData monitorInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(monitorInputData, "monitorInputData");

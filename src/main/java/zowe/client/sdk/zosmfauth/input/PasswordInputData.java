@@ -42,7 +42,6 @@ public class PasswordInputData {
      * @param userId user ID value
      * @param oldPwd old password value
      * @param newPwd new password value
-     * @author Esteban Sandoval
      */
     public PasswordInputData(final String userId, final String oldPwd, final String newPwd) {
         ValidateUtils.checkIllegalParameter(userId, "userId");

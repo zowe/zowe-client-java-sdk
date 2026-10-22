@@ -40,7 +40,6 @@ public class DsnCreate {
      * DsnCreate Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Leonid Baranov
      */
     public DsnCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -56,7 +55,6 @@ public class DsnCreate {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PostJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     DsnCreate(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -75,7 +73,6 @@ public class DsnCreate {
      * @param createInputData to create dataset parameters, see DsnCreateInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Leonid Baranov
      */
     public Response create(final String datasetName, final DsnCreateInputData createInputData)
             throws ZosmfRequestException {

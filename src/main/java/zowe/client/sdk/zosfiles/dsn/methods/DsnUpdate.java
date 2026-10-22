@@ -31,6 +31,9 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-data-set-member-utilities">z/OSMF REST API</a>
  *
  * @author Frank Giordano
+ * @author Ashish-Kumar-Dash
+ * @author Charishma Alam
+ * @author Shantanu Danej
  * @version 7.0
  */
 public class DsnUpdate {
@@ -44,7 +47,6 @@ public class DsnUpdate {
      * DsnUpdate Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public DsnUpdate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -60,7 +62,6 @@ public class DsnUpdate {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     DsnUpdate(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,7 +79,6 @@ public class DsnUpdate {
      * @param renameInputData rename parameters, see DsnRenameInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response rename(final DsnRenameInputData renameInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(renameInputData, "renameInputData");
@@ -112,7 +112,6 @@ public class DsnUpdate {
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Ashish-Kumar-Dash
      */
     public Response migrate(final String datasetName) throws ZosmfRequestException {
         return migrateCommon(datasetName, null);
@@ -125,7 +124,6 @@ public class DsnUpdate {
      * @param wait        if true, the function waits for completion of the request
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Ashish-Kumar-Dash
      */
     public Response migrate(final String datasetName, final boolean wait) throws ZosmfRequestException {
         return migrateCommon(datasetName, wait);
@@ -138,7 +136,6 @@ public class DsnUpdate {
      * @param wait        optional wait parameter
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Ashish-Kumar-Dash
      */
     private Response migrateCommon(final String datasetName, final Boolean wait)
             throws ZosmfRequestException {
@@ -165,7 +162,6 @@ public class DsnUpdate {
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Charishma Alam
      */
     public Response deleteMigrated(final String datasetName) throws ZosmfRequestException {
         return deleteMigratedCommon(datasetName, null, null);
@@ -178,7 +174,6 @@ public class DsnUpdate {
      * @param wait        if true, the function waits for completion of the request
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response deleteMigrated(final String datasetName, final boolean wait)
             throws ZosmfRequestException {
@@ -193,7 +188,6 @@ public class DsnUpdate {
      * @param purge       if true, the function uses PURGE=YES on ARCHDEL request
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Charishma Alam
      */
     public Response deleteMigrated(final String datasetName, final boolean wait, final boolean purge)
             throws ZosmfRequestException {
@@ -208,7 +202,6 @@ public class DsnUpdate {
      * @param purge       optional purge parameter
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Charishma Alam
      */
     private Response deleteMigratedCommon(final String datasetName, final Boolean wait, final Boolean purge)
             throws ZosmfRequestException {
@@ -238,7 +231,6 @@ public class DsnUpdate {
      * @param datasetName name of a dataset (e.g. 'DATASET.LIB')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Shantanu Danej
      */
     public Response recallMigrated(final String datasetName) throws ZosmfRequestException {
         return recallMigratedCommon(datasetName, null);
@@ -251,7 +243,6 @@ public class DsnUpdate {
      * @param wait        if true, the function waits for completion of the request
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Shantanu Danej
      */
     public Response recallMigrated(final String datasetName, final boolean wait) throws ZosmfRequestException {
         return recallMigratedCommon(datasetName, wait);
@@ -264,7 +255,6 @@ public class DsnUpdate {
      * @param wait        optional wait parameter
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Shantanu Danej
      */
     private Response recallMigratedCommon(final String datasetName, final Boolean wait)
             throws ZosmfRequestException {

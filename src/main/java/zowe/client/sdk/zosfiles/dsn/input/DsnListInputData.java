@@ -20,6 +20,8 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-zos-data-sets-system">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
+ * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 7.0
  */
 public class DsnListInputData {
@@ -63,7 +65,6 @@ public class DsnListInputData {
      * DsnListInputData constructor
      *
      * @param builder DsnListInputData.Builder object
-     * @author Nikunj Goyal
      */
     private DsnListInputData(final DsnListInputData.Builder builder) {
         this.volume = builder.volume;

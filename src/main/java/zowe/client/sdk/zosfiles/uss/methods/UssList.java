@@ -48,7 +48,6 @@ public class UssList {
      * UssList Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public UssList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -64,7 +63,6 @@ public class UssList {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     UssList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -82,7 +80,6 @@ public class UssList {
      * @param listInputData UssListInputData object
      * @return list of UssItem objects
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     public List<UnixFile> getFiles(final UssListInputData listInputData) throws ZosmfRequestException {
@@ -142,7 +139,6 @@ public class UssList {
      * @param listZfsInputData UssListZfsInputData parameter object
      * @return list of UssZfs objects
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     public List<UnixZfs> getZfsSystems(final UssListZfsInputData listZfsInputData) throws ZosmfRequestException {

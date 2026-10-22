@@ -32,6 +32,7 @@ import java.util.*;
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-list-zos-data-sets-system">z/OSMF REST API</a>
  *
+ * @author Nikunj Goyal
  * @author Frank Giordano
  * @version 7.0
  */
@@ -46,7 +47,6 @@ public class DsnList {
      * DsnList constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public DsnList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -62,7 +62,6 @@ public class DsnList {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     DsnList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -81,7 +80,6 @@ public class DsnList {
      * @param listInputData list parameters, see DsnListInputData object
      * @return A String list of Dataset names
      * @throws ZosmfRequestException request error state
-     * @author Nikunj Goyal
      */
     public List<Dataset> getDatasets(final String datasetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
@@ -112,7 +110,6 @@ public class DsnList {
      * @param listInputData list parameters, see DsnListInputData object
      * @return list of member objects
      * @throws ZosmfRequestException request error state
-     * @author Nikunj Goyal
      */
     public List<Member> getMembers(final String datasetName, final DsnListInputData listInputData)
             throws ZosmfRequestException {
@@ -145,7 +142,6 @@ public class DsnList {
      * @param memberLst  member arraylist object container
      * @param <T>        DataSet or Member object
      * @return one of the container filled with either member or datasets
-     * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
     private <T> List<T> getResult(final Response response, final List<T> datasetLst,
@@ -220,7 +216,6 @@ public class DsnList {
      * @param url           url for http request
      * @return response object with http response info
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private Response getResponse(final DsnListInputData listInputData, final Map<String, String> headers, final String url)
             throws ZosmfRequestException {
@@ -237,7 +232,6 @@ public class DsnList {
      *
      * @param listInputData list parameters
      * @param headers       list of headers for http request
-     * @author Nikunj Goyal
      */
     private void setHeaders(final DsnListInputData listInputData, final Map<String, String> headers) {
         String key = ZosmfHeaders.HEADERS.get("ACCEPT_ENCODING").get(0);

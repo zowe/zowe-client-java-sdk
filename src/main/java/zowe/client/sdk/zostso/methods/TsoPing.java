@@ -42,7 +42,6 @@ public class TsoPing {
      * TsoPing constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public TsoPing(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -58,7 +57,6 @@ public class TsoPing {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     TsoPing(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -76,7 +74,6 @@ public class TsoPing {
      * @param sessionId servletKey id retrieved from start TSO request
      * @return TsoCommonResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     public TsoCommonResponse ping(final String sessionId) throws ZosmfRequestException {

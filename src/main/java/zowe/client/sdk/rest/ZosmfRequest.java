@@ -184,7 +184,6 @@ public abstract class ZosmfRequest {
      * ZosmfRequest constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public ZosmfRequest(final ZosConnection connection) {
         this.connection = connection;
@@ -201,7 +200,6 @@ public abstract class ZosmfRequest {
      *
      * @param connection for connection information, see ZosConnection object
      * @return configured UnirestInstance for this connection
-     * @author Frank Giordano
      */
     private static UnirestInstance buildUnirestInstance(final ZosConnection connection) {
         final UnirestInstance instance = Unirest.spawnInstance();
@@ -226,8 +224,6 @@ public abstract class ZosmfRequest {
 
     /**
      * Initialize the http request object's per-request state (headers/token) based on an authentication type
-     *
-     * @author Frank Giordano
      */
     private void initialize() {
         if (connection == null || connection.getAuthType() == null) {
@@ -287,7 +283,6 @@ public abstract class ZosmfRequest {
      * @param instance     UnirestInstance to configure
      * @param certFilePath certificate file (.p12) location
      * @param certPassword certificate password for a certificate file (.p12)
-     * @author Frank Giordano
      */
     private static void setupSelfSignedCertificate(final UnirestInstance instance,
                                                    final String certFilePath,
@@ -328,7 +323,6 @@ public abstract class ZosmfRequest {
      * @param connection         ZosConnection object containing client certificate info
      * @param trustStorePath     path to custom TrustStore file (.p12, .jks)
      * @param trustStorePassword password for a custom TrustStore file
-     * @author Frank Giordano
      */
     private static void setupCustomTrustStore(final UnirestInstance instance,
                                               final ZosConnection connection,
@@ -386,7 +380,6 @@ public abstract class ZosmfRequest {
      * @param <T>   either JsonNode, String, or byte[] type
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @SuppressWarnings("unchecked")
     public <T> Response buildResponse(HttpResponse<T> reply) throws ZosmfRequestException {
@@ -459,7 +452,6 @@ public abstract class ZosmfRequest {
      * @param response   Response object
      * @param statusCode http status code
      * @return String error message
-     * @author Frank Giordano
      */
     private String httpErrorMsg(final Response response, final int statusCode) {
         final AtomicReference<Object> responsePhrase = new AtomicReference<>();
@@ -494,7 +486,6 @@ public abstract class ZosmfRequest {
      *
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public abstract Response executeRequest() throws ZosmfRequestException;
 
@@ -502,7 +493,6 @@ public abstract class ZosmfRequest {
      * Set the body information for the http request
      *
      * @param body object value
-     * @author Frank Giordano
      */
     public abstract void setBody(final Object body);
 
@@ -510,7 +500,6 @@ public abstract class ZosmfRequest {
      * Set any headers needed for the http request
      *
      * @param headers headers to add to the request
-     * @author Frank Giordano
      */
     public void setHeaders(final Map<String, String> headers) {
         this.initialize();
@@ -519,8 +508,6 @@ public abstract class ZosmfRequest {
 
     /**
      * Set the standard headers for the http request
-     *
-     * @author Frank Giordano
      */
     public abstract void setStandardHeaders();
 
@@ -529,7 +516,6 @@ public abstract class ZosmfRequest {
      *
      * @param url rest url end point
      * @throws IllegalArgumentException error setting valid url string
-     * @author Frank Giordano
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void setUrl(final String url) {
@@ -558,7 +544,6 @@ public abstract class ZosmfRequest {
      * Get the current http header value (s) for the request
      *
      * @return map of header value(s)
-     * @author Frank Giordano
      */
     public Map<String, String> getHeaders() {
         return headers;

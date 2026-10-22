@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Represents a z/OS data set
  *
  * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 7.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -141,7 +142,6 @@ public class Dataset {
      * @param spacu  space units
      * @param used   used percentage
      * @param vol    volume name
-     * @author Nikunj Goyal
      */
     @JsonCreator
     public Dataset(

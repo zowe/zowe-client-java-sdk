@@ -39,7 +39,6 @@ public final class FileUtils {
      *
      * @param permission permission string
      * @return same value string back to caller if valid
-     * @author Frank Giordano
      */
     public static String validatePermission(final String permission) {
         ValidateUtils.checkNullParameter(permission, "permission value");
@@ -57,7 +56,6 @@ public final class FileUtils {
      *
      * @param path path string
      * @return same value string back to caller if valid
-     * @author Frank Giordano
      */
     public static String validatePath(final String path) {
         ValidateUtils.checkNullParameter(path, "path value");

@@ -99,7 +99,6 @@ public class KeyTarImpl implements IKeyTar {
      *
      * @return list of KeyTarConfig objects
      * @throws TeamConfigException error processing team configuration
-     * @author Frank Giordano
      */
     private List<KeyTarConfig> parseJson() throws TeamConfigException {
         final JsonNode rootNode;
@@ -145,7 +144,6 @@ public class KeyTarImpl implements IKeyTar {
      * Assign the value to keyString.
      *
      * @throws TeamConfigException error processing team configuration
-     * @author Frank Giordano
      */
     @Override
     public void processKey() throws TeamConfigException {
@@ -179,7 +177,6 @@ public class KeyTarImpl implements IKeyTar {
      * Set the account name.
      *
      * @param accountName string value used for OS credential store querying
-     * @author Frank Giordano
      */
     @Override
     public void setAccountName(final String accountName) {
@@ -190,7 +187,6 @@ public class KeyTarImpl implements IKeyTar {
      * Set the service name.
      *
      * @param serviceName string value used for OS credential store querying
-     * @author Frank Giordano
      */
     @Override
     public void setServiceName(final String serviceName) {

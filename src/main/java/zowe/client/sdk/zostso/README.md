@@ -51,7 +51,6 @@ public class TsoCmdExp extends TstZosConnection {
      * @param command       tso command to execute
      * @return list of messages result
      * @throws ZosmfRequestException exception thrown when issueCommand fails
-     * @author Frank Giordano
      */
     public static List<String> issueCommand(String accountNumber, String command) throws ZosmfRequestException {
         TsoCmd tsoCmd = new TsoCmd(connection, accountNumber);
@@ -63,7 +62,6 @@ public class TsoCmdExp extends TstZosConnection {
      *
      * @param accountNumber user's z/OSMF permission account number
      * @throws ZosmfRequestException exception thrown when ping fails
-     * @author Frank Giordano
      */
     public static void pingWorkflow(String accountNumber) throws ZosmfRequestException {
         StartTsoInputData inputData = new StartTsoInputData();
@@ -94,7 +92,6 @@ public class TsoCmdExp extends TstZosConnection {
      * @param accountNumber user's z/OSMF permission account number
      * @param command       tso command to execute
      * @throws ZosmfRequestException exception thrown when a TSO request fails
-     * @author Frank Giordano
      */
     public static void issueCommandByTsoSessionId(String accountNumber, String command)
             throws ZosmfRequestException {

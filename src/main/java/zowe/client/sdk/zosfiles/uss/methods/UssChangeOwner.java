@@ -30,6 +30,7 @@ import java.util.Map;
  * Parameter container class for Unix System Services (USS) chown operation
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssChangeOwner {
@@ -41,7 +42,6 @@ public class UssChangeOwner {
      * UssChangeOwner constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssChangeOwner(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -57,7 +57,6 @@ public class UssChangeOwner {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     UssChangeOwner(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -76,7 +75,6 @@ public class UssChangeOwner {
      * @param owner      new owner of the file or directory
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response change(final String targetPath, final String owner) throws ZosmfRequestException {
         return changeCommon(targetPath, new UssChangeOwnerInputData.Builder().owner(owner).build());
@@ -89,8 +87,6 @@ public class UssChangeOwner {
      * @param changeOwnerInputData change owner response parameters, see UssChangeOwnerInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     public Response changeCommon(final String targetPath, final UssChangeOwnerInputData changeOwnerInputData)
             throws ZosmfRequestException {

@@ -24,7 +24,6 @@ public class ZosFilesConstants {
         throw new IllegalStateException("Constants class");
     }
 
-
     /**
      * Maximum value for primary and secondary allocation
      */

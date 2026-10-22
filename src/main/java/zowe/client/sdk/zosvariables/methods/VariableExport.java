@@ -38,7 +38,6 @@ public class VariableExport {
      * VariableExport Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Chaitanya Katore
      */
     public VariableExport(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -55,7 +54,6 @@ public class VariableExport {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PostJsonZosmfRequest} implementation object
-     * @author Chaitanya Katore
      */
     VariableExport(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -75,7 +73,6 @@ public class VariableExport {
      * @param targetFile  UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Chaitanya Katore
      */
     public Response export(final String sysplexName,
                            final String systemName,
@@ -92,7 +89,6 @@ public class VariableExport {
      * @param overwrite   boolean to indicate if the file should be overwritten if it already exists
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Chaitanya Katore
      */
     public Response export(final String sysplexName,
                            final String systemName,
@@ -110,7 +106,6 @@ public class VariableExport {
      * @param overwrite   boolean value to indicate if the file should be overwritten
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Chaitanya Katore
      */
     private Response exportCommon(final String sysplexName,
                                   final String systemName,

@@ -35,7 +35,6 @@ public class CheckStatusResponse {
      *
      * @param statusFound holds if job status was found or not
      * @param job         job used for status checking
-     * @author Frank Giordano
      */
     public CheckStatusResponse(final boolean statusFound, final Job job) {
         this.statusFound = statusFound;

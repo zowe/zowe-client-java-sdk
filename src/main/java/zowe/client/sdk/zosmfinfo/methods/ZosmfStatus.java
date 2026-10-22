@@ -48,7 +48,6 @@ public class ZosmfStatus {
      * CheckStatus Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public ZosmfStatus(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -64,7 +63,6 @@ public class ZosmfStatus {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     ZosmfStatus(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -81,7 +79,6 @@ public class ZosmfStatus {
      *
      * @return ZosmfInfoResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ZosmfInfoResponse get() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + ZosmfConstants.INFO;

@@ -43,7 +43,6 @@ public class WorkflowGetPropertiesInputData {
      * WorkflowGetPropertiesInputData constructor.
      *
      * @param builder builder instance
-     * @author Ashish Kumar Dash
      */
     private WorkflowGetPropertiesInputData(final Builder builder) {
         ValidateUtils.checkIllegalParameter(builder.workflowKey, "workflowKey");

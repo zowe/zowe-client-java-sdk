@@ -43,7 +43,6 @@ public class UssChangeMode {
      * UssChangeMode Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssChangeMode(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -59,7 +58,6 @@ public class UssChangeMode {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author James Kostrewski
      */
     UssChangeMode(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,8 +76,6 @@ public class UssChangeMode {
      * @param changeModeInputData change mode response parameters, see UssChangeModeInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewsk
-     * @author Frank Giordano
      */
     public Response change(final String targetPath, final UssChangeModeInputData changeModeInputData)
             throws ZosmfRequestException {

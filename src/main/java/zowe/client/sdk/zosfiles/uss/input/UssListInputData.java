@@ -115,7 +115,6 @@ public class UssListInputData {
      * UssListInputData constructor
      *
      * @param builder UssListInputData.Builder builder
-     * @author Frank Giordano
      */
     public UssListInputData(final UssListInputData.Builder builder) {
         this.path = builder.path;

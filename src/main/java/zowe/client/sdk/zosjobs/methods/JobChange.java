@@ -50,7 +50,6 @@ public class JobChange {
      * JobChange constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public JobChange(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -66,7 +65,6 @@ public class JobChange {
      *
      * @param connection for connection information
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     JobChange(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -87,7 +85,6 @@ public class JobChange {
      * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback changeClass(final String jobName, final String jobId,
                                    final String jobClass, final String version) throws ZosmfRequestException {
@@ -107,7 +104,6 @@ public class JobChange {
      * @param version  version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback changeClassByJob(final Job job, final String jobClass, final String version)
             throws ZosmfRequestException {
@@ -127,7 +123,6 @@ public class JobChange {
      * @param modifyInputData job modify parameters
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback changeClassCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
@@ -160,7 +155,6 @@ public class JobChange {
      * @param version version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback hold(final String jobName, final String jobId, final String version)
             throws ZosmfRequestException {
@@ -178,7 +172,6 @@ public class JobChange {
      * @param version version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback holdByJob(final Job job, final String version)
             throws ZosmfRequestException {
@@ -197,7 +190,6 @@ public class JobChange {
      * @param modifyInputData job modify parameters
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback holdCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");
@@ -229,7 +221,6 @@ public class JobChange {
      * @param version version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback release(final String jobName, final String jobId, final String version)
             throws ZosmfRequestException {
@@ -247,7 +238,6 @@ public class JobChange {
      * @param version version number - 1.0 or 2.0
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback releaseByJob(final Job job, final String version)
             throws ZosmfRequestException {
@@ -266,7 +256,6 @@ public class JobChange {
      * @param modifyInputData job modify parameters
      * @return JobFeedback object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public JobFeedback releaseCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(modifyInputData, "modifyInputData");

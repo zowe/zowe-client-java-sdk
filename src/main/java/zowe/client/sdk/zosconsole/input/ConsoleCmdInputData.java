@@ -51,7 +51,6 @@ public class ConsoleCmdInputData {
      * IssueConsoleInputData constructor, command value is required
      *
      * @param command console command to issue
-     * @author Frank Giordano
      */
     public ConsoleCmdInputData(final String command) {
         ValidateUtils.checkIllegalParameter(command, "command");

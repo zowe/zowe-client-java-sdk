@@ -40,7 +40,6 @@ public class TsoSend {
      * TsoSend constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public TsoSend(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -56,7 +55,6 @@ public class TsoSend {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     TsoSend(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -75,7 +73,6 @@ public class TsoSend {
      * @param command   tso command
      * @return response string representing the returned request payload
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String sendCommand(final String sessionId, final String command) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");

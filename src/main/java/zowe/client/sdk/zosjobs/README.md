@@ -38,7 +38,6 @@ public class JobCancelExp extends TstZosConnection {
      * JobCancel functionality.
      *
      * @param args for main not used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
@@ -56,7 +55,6 @@ public class JobCancelExp extends TstZosConnection {
      *
      * @param version version value
      * @return response object
-     * @author Frank Giordano
      */
     public static Response cancelCommonWithVersion(String version) {
         jobId = "xxx";
@@ -79,7 +77,6 @@ public class JobCancelExp extends TstZosConnection {
      * to cancel a given job.
      *
      * @return response object
-     * @author Frank Giordano
      */
     public static Response cancelCommon() {
         jobId = "xxx";
@@ -101,7 +98,6 @@ public class JobCancelExp extends TstZosConnection {
      * The cancelByJob method accepts a jobName and jobId values which will be used to cancel its job.
      *
      * @return response object
-     * @author Frank Giordano
      */
     public static Response cancelByJob() {
         jobId = "xxx";
@@ -123,7 +119,6 @@ public class JobCancelExp extends TstZosConnection {
      * The cancel method accepts a jobName and jobId values which will be used to cancel its job.
      *
      * @return response object
-     * @author Frank Giordano
      */
     public static Response cancel() {
         jobId = "xxx";
@@ -174,7 +169,6 @@ public class JobDeleteExp extends TstZosConnection {
      * JobDelete functionality.
      *
      * @param args for main not used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
@@ -192,7 +186,6 @@ public class JobDeleteExp extends TstZosConnection {
      *
      * @param version value to indicate sync or async request processing
      * @return response object
-     * @author Frank Giordano
      */
     public static Response deleteCommonWithVersion(String version) {
         jobId = "xxx";
@@ -215,7 +208,6 @@ public class JobDeleteExp extends TstZosConnection {
      * filled needed to delete a given job.
      *
      * @return response object
-     * @author Frank Giordano
      */
     public static Response deleteCommon() {
         jobId = "xxx";
@@ -237,7 +229,6 @@ public class JobDeleteExp extends TstZosConnection {
      * The deleteByJob method accepts a jobName and jobId values which will be used to delete its job.
      *
      * @return response object
-     * @author Frank Giordano
      */
     public static Response deleteByJob() {
         jobId = "xxx";
@@ -259,7 +250,6 @@ public class JobDeleteExp extends TstZosConnection {
      * The delete method accepts a jobName and jobId values which will be used to delete its job.
      *
      * @return response object
-     * @author Frank Giordano
      */
     public static Response deleteJob() {
         jobId = "xxx";
@@ -311,7 +301,6 @@ public class JobGetExp extends TstZosConnection {
      * JobGet class functionality.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String prefix = "xxx";
@@ -345,7 +334,6 @@ public class JobGetExp extends TstZosConnection {
      * use for retrieval of its JCL content.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getJclCommon(String prefix) {
         try {
@@ -369,7 +357,6 @@ public class JobGetExp extends TstZosConnection {
      * The getJclByJob method is given a job object to use for retrieval of its JCL content.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getJclByJob(String prefix) {
         try {
@@ -389,7 +376,6 @@ public class JobGetExp extends TstZosConnection {
      * The getJcl method is given a jobName and jobId values to use for retrieval of its JCL content.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getJcl(String prefix) {
         try {
@@ -411,7 +397,6 @@ public class JobGetExp extends TstZosConnection {
      * The getStatusByJob method is given a job object to use for retrieval of its status.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getStatusByJob(String prefix) {
         try {
@@ -433,7 +418,6 @@ public class JobGetExp extends TstZosConnection {
      * of its status with the StepData flag set to true.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getStatusCommon(String prefix) {
         try {
@@ -458,7 +442,6 @@ public class JobGetExp extends TstZosConnection {
      * The getStatus method is given a jobName and jobId value to use for retrieval of its status.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getStatus(String prefix) {
         try {
@@ -481,7 +464,6 @@ public class JobGetExp extends TstZosConnection {
      * The getById method is given a jobId value for a non-existing job which will return an exception.
      *
      * @param jobId jobId value
-     * @author Frank Giordano
      */
     public static void nonExistentGetJob(String jobId) {
         try {
@@ -500,7 +482,6 @@ public class JobGetExp extends TstZosConnection {
      * The getById method is given a jobId value which will return a job document/object.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getById(String prefix) {
         try {
@@ -524,7 +505,6 @@ public class JobGetExp extends TstZosConnection {
      *
      * @param owner  owner value
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getByOwnerAndPrefix(String owner, String prefix) {
         List<Job> jobs;
@@ -545,7 +525,6 @@ public class JobGetExp extends TstZosConnection {
      * The getByPrefix method is given a prefix value which will return a list of common job document/object.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getByPrefix(String prefix) {
         List<Job> jobs;
@@ -564,8 +543,6 @@ public class JobGetExp extends TstZosConnection {
     /**
      * Example on how to call JobGet getAll method.
      * The getAll method returns a list of all jobs available for the logged-in user.
-     *
-     * @author Frank Giordano
      */
     public static void getAll() {
         // get any jobs out there for the logged-in user or the user specified within connection
@@ -587,7 +564,6 @@ public class JobGetExp extends TstZosConnection {
      * The getSpoolContent method is given a job spool file name to retrieve its content.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getSpoolContent(String prefix) {
         JobGetInputData getInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
@@ -614,7 +590,6 @@ public class JobGetExp extends TstZosConnection {
      * The getByOwner method is given an owner value to use to retrieve a list of its available jobs.
      *
      * @param owner owner value
-     * @author Frank Giordano
      */
     public static void getByOwner(String owner) {
         List<Job> jobs;
@@ -635,7 +610,6 @@ public class JobGetExp extends TstZosConnection {
      * The getSpoolFilesByJob method is given a job document/object retrieve a list of all its spool names.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getSpoolFilesForJob(String prefix) {
         JobGetInputData jobGetInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
@@ -658,7 +632,6 @@ public class JobGetExp extends TstZosConnection {
      * The getSpoolFiles method is given a jobName and jobId values to retrieve a list of all its spool file names.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getSpoolFiles(String prefix) {
         JobGetInputData jobGetInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
@@ -684,7 +657,6 @@ public class JobGetExp extends TstZosConnection {
      * retrieve a list of all jobs.
      *
      * @param prefix partial or full job name to use for searching
-     * @author Frank Giordano
      */
     public static void getCommon(String prefix) {
         JobGetInputData jobGetInputData = new JobGetInputData.Builder("*").prefix(prefix).build();
@@ -732,7 +704,6 @@ public class JobMonitorExp extends TstZosConnection {
      * JobMonitor functionality.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
@@ -748,8 +719,6 @@ public class JobMonitorExp extends TstZosConnection {
     /**
      * Example on how to call JobMonitor isJobRunning method.
      * The isJobRunning method accepts a JobMonitorInputData object.
-     *
-     * @author Frank Giordano
      */
     public static void monitorIsJobRunning() {
         JobMonitor jobMonitor = new JobMonitor(connection);
@@ -769,8 +738,6 @@ public class JobMonitorExp extends TstZosConnection {
      * Example on how to call JobMonitor waitByOutputStatus method.
      * The waitByOutputStatus method accepts a job object which will monitor the job status
      * until it reaches OUTPUT status or times out if not reached.
-     *
-     * @author Frank Giordano
      */
     public static void monitorJobForOutputStatusByJobObject() {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
@@ -793,8 +760,6 @@ public class JobMonitorExp extends TstZosConnection {
      * Example on how to call JobMonitor waitByOutputStatus method.
      * The waitByOutputStatus method accepts a jobName and jobId values which will
      * monitor the job status until it reaches OUTPUT status or times out if not reached.
-     *
-     * @author Frank Giordano
      */
     public static void monitorJobForOutputStatusByJobNameAndId() {
         String jclString = "//TESTJOBX JOB (),MSGCLASS=H\r // EXEC PGM=IEFBR14";
@@ -821,7 +786,6 @@ public class JobMonitorExp extends TstZosConnection {
      * job status until it reaches the given status value or times out if not reached.
      *
      * @param statusType given status type to use for monitoring
-     * @author Frank Giordano
      */
     public static void monitorJobForStatusByJobObject(JobStatus.Type statusType) {
         // define an existing job in your system that is in execute queue
@@ -845,7 +809,6 @@ public class JobMonitorExp extends TstZosConnection {
      * job status until it reaches the given status value or times out if not reached.
      *
      * @param statusType given status type to use for monitoring
-     * @author Frank Giordano
      */
     public static void monitorJobForStatusByJobNameAndId(JobStatus.Type statusType) {
         // define an existing job in your system that is in execute queue
@@ -871,7 +834,6 @@ public class JobMonitorExp extends TstZosConnection {
      * the message is seen or times out if not seen.
      *
      * @param message given a message text to monitor job output
-     * @author Frank Giordano
      */
     public static void monitorWaitForJobMessage(String message) {
         // define an existing job in your system that is in execute queue
@@ -921,7 +883,6 @@ public class JobSubmitExp extends TstZosConnection {
      * The main method defines z/OSMF connection and showcases the JobSubmit class functionality.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
@@ -965,7 +926,6 @@ public class JobSubmitExp extends TstZosConnection {
      * @param jclString  jcl formatted string
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public static Job submitJclJob(ZosConnection connection, String jclString) throws ZosmfRequestException {
         JobSubmit jobSubmit = new JobSubmit(connection);
@@ -980,7 +940,6 @@ public class JobSubmitExp extends TstZosConnection {
      * @param dsMember   dataset member value
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public static Job submitJob(ZosConnection connection, String dsMember) throws ZosmfRequestException {
         JobSubmit jobSubmit = new JobSubmit(connection);
@@ -994,7 +953,6 @@ public class JobSubmitExp extends TstZosConnection {
      * @param filePath   path to the local file where the JCL is located
      * @return job document
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public static Job submitByLocalFile(ZosConnection connection, String filePath) throws ZosmfRequestException {
         JobSubmit jobSubmit = new JobSubmit(connection);
@@ -1026,7 +984,6 @@ public class JobChangeExp extends TstZosConnection {
      * The main method defines z/OSMF connection and showcases the JobSubmit class functionality.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);

@@ -39,7 +39,6 @@ public class JobSubmitInputData {
      * JobSubmitInputData constructor
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
-     * @author Frank Giordano
      */
     public JobSubmitInputData(final String jobDataSet) {
         this.jobDataSet = jobDataSet;
@@ -50,7 +49,6 @@ public class JobSubmitInputData {
      *
      * @param jobDataSet z/OS data set which should contain syntactically correct JCL
      * @param jclSymbols Map for JCL symbolic substitution
-     * @author Frank Giordano
      */
     public JobSubmitInputData(final String jobDataSet, final Map<String, String> jclSymbols) {
         this.jobDataSet = jobDataSet;

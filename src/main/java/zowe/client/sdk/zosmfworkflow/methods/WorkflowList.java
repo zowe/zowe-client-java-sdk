@@ -56,7 +56,6 @@ public class WorkflowList {
      * WorkflowList constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Muhammad Imran
      */
     public WorkflowList(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -73,7 +72,6 @@ public class WorkflowList {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Muhammad Imran
      */
     WorkflowList(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -90,7 +88,6 @@ public class WorkflowList {
      *
      * @return list of WorkflowListResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Ashish Kumar Dash
      */
     public List<WorkflowListResponse> getWorkflows() throws ZosmfRequestException {
         return getWorkflowsCommon(WorkflowListInputData.builder().build());
@@ -102,7 +99,6 @@ public class WorkflowList {
      * @param workflowName workflow name; a regular expression can be specified to match desired workflow names
      * @return list of WorkflowListResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Ashish Kumar Dash
      */
     public List<WorkflowListResponse> getWorkflowsByName(final String workflowName) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowName, "workflowName");
@@ -115,7 +111,6 @@ public class WorkflowList {
      * @param owner workflow owner, a valid z/OS user ID
      * @return list of WorkflowListResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Ashish Kumar Dash
      */
     public List<WorkflowListResponse> getWorkflowsByOwner(final String owner) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(owner, "owner");
@@ -128,7 +123,6 @@ public class WorkflowList {
      * @param system nickname of the system on which the workflow is to be performed
      * @return list of WorkflowListResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Ashish Kumar Dash
      */
     public List<WorkflowListResponse> getWorkflowsBySystem(final String system) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(system, "system");
@@ -141,7 +135,6 @@ public class WorkflowList {
      * @param listInputData workflow list input parameters
      * @return list of WorkflowListResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Ashish Kumar Dash
      */
     public List<WorkflowListResponse> getWorkflowsCommon(final WorkflowListInputData listInputData)
             throws ZosmfRequestException {
@@ -194,7 +187,6 @@ public class WorkflowList {
      *
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchived() throws ZosmfRequestException {
         return getArchivedCommon(WorkflowListArchivedInputData.builder().build());
@@ -206,7 +198,6 @@ public class WorkflowList {
      * @param orderByType order type for sorting archived workflow instances
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchivedByOrderBy(final OrderByType orderByType)
             throws ZosmfRequestException {
@@ -220,7 +211,6 @@ public class WorkflowList {
      * @param viewType view type for filtering archived workflow instances
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchivedByView(final ViewType viewType) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(viewType, "viewType");
@@ -233,7 +223,6 @@ public class WorkflowList {
      * @param listInputData workflow list archived input parameters
      * @return list of WorkflowArchivedResponse objects
      * @throws ZosmfRequestException request error state
-     * @author Muhammad Imran
      */
     public List<WorkflowArchivedResponse> getArchivedCommon(final WorkflowListArchivedInputData listInputData)
             throws ZosmfRequestException {
@@ -272,7 +261,6 @@ public class WorkflowList {
      *
      * @param str String value
      * @return string value
-     * @author Frank Giordano
      */
     private static String getEncodeURIComponent(final String str) {
         return EncodeUtils.encodeURIComponent(str);

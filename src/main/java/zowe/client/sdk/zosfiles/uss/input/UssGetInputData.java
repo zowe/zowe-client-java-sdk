@@ -82,7 +82,6 @@ public class UssGetInputData {
      * UssGetInputData constructor
      *
      * @param builder UssGetInputData.Builder builder
-     * @author James Kostrewski
      */
     public UssGetInputData(final UssGetInputData.Builder builder) {
         this.search = builder.search;

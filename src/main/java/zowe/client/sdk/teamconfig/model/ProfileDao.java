@@ -51,7 +51,6 @@ public class ProfileDao {
      * @param password password from Keytar keyValue
      * @param host     host value from Zowe Global Team Configuration
      * @param port     port value from Zowe Global Team Configuration
-     * @author Frank Giordano
      */
     public ProfileDao(final Profile profile, final String user, final String password,
                       final String host, final String port) {

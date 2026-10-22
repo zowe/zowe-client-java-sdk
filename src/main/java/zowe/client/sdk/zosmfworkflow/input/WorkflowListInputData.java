@@ -60,7 +60,6 @@ public class WorkflowListInputData {
      * WorkflowListInputData constructor.
      *
      * @param builder builder instance
-     * @author Ashish Kumar Dash
      */
     private WorkflowListInputData(final Builder builder) {
         this.workflowName = builder.workflowName;

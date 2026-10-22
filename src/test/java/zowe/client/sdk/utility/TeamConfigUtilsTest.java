@@ -31,7 +31,7 @@ public class TeamConfigUtilsTest {
     }
 
     @Test
-    void tstGetMaskedPropertiesSensitiveKeySuccesss() {
+    void tstGetMaskedPropertiesSensitiveKeySuccess() {
         Map<String, String> props = Map.of(
                 "host", "myhost.com",
                 "port", "443",

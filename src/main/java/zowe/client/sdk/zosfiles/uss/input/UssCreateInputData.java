@@ -54,7 +54,6 @@ public class UssCreateInputData {
      *
      * @param type CreateType enum value
      * @param mode permission string value
-     * @author James Kostrewski
      */
     public UssCreateInputData(final CreateType type, final String mode) {
         ValidateUtils.checkNullParameter(type, "type");

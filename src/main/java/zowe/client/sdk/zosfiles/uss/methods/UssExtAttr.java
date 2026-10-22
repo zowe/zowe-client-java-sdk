@@ -44,7 +44,6 @@ public class UssExtAttr {
      * UssCopy Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssExtAttr(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -60,7 +59,6 @@ public class UssExtAttr {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author James Kostrewski
      */
     UssExtAttr(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -80,7 +78,6 @@ public class UssExtAttr {
      *                   is returned instead
      * @return list of attribute strings
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     @SuppressWarnings("DuplicatedCode")
     public List<String> get(final String targetPath) throws ZosmfRequestException {
@@ -104,7 +101,6 @@ public class UssExtAttr {
      * @param value      one or more of the following characters: a,l,p,s
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response set(final String targetPath, final String value) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(isNotValidAttributes(value),
@@ -122,7 +118,6 @@ public class UssExtAttr {
      * @param value      one or more of the following characters: a,l,p,s
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response reset(final String targetPath, final String value) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(isNotValidAttributes(value),
@@ -140,7 +135,6 @@ public class UssExtAttr {
      * @param jsonMap    map representing request body
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     private Response executeRequest(final String targetPath, final Map<String, String> jsonMap)
             throws ZosmfRequestException {
@@ -162,7 +156,6 @@ public class UssExtAttr {
      *
      * @param value string
      * @return boolean value
-     * @author Frank Giordano
      */
     private boolean isNotValidAttributes(final String value) {
         return !Pattern.compile("^(?!.*(.).*\\1)[apls]+$").matcher(value).matches();

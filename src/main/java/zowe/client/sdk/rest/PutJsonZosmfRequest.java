@@ -37,7 +37,6 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
      * PutJsonZosmfRequest constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public PutJsonZosmfRequest(final ZosConnection connection) {
         super(connection);
@@ -49,7 +48,6 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
      *
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     @Override
@@ -70,7 +68,6 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
      * Set the body information for the http request
      *
      * @param body String value
-     * @author Frank Giordano
      */
     @Override
     public void setBody(final Object body) {
@@ -80,8 +77,6 @@ public class PutJsonZosmfRequest extends ZosmfRequest {
 
     /**
      * Set the standard headers for the http request
-     *
-     * @author Frank Giordano
      */
     @Override
     public void setStandardHeaders() {

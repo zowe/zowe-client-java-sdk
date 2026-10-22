@@ -50,7 +50,6 @@ public class JobGetInputData {
      * JobGetInputData constructor
      *
      * @param builder JobGetInputData.Builder object
-     * @author Frank Giordano
      */
     private JobGetInputData(final JobGetInputData.Builder builder) {
         this.owner = builder.owner;

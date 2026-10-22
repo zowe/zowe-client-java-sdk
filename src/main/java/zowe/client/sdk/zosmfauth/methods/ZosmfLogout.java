@@ -38,7 +38,6 @@ public class ZosmfLogout {
      * ZosmfLogout constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Esteban Sandoval
      */
     public ZosmfLogout(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -54,7 +53,6 @@ public class ZosmfLogout {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link DeleteJsonZosmfRequest} implementation object
-     * @author Esteban Sandoval
      */
     ZosmfLogout(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -72,8 +70,6 @@ public class ZosmfLogout {
      * @param token Cookie Object
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Esteban Sandoval
-     * @author Frank Giordano
      */
     public Response logout(Cookie token) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(token, "token");

@@ -46,7 +46,6 @@ public class UssChangeTag {
      * UssChangeTag Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssChangeTag(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -62,7 +61,6 @@ public class UssChangeTag {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author James Kostrewski
      */
     UssChangeTag(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -80,7 +78,6 @@ public class UssChangeTag {
      * @param fileNamePath UNIX path that resolves to the target file
      * @return Response Object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response binary(final String fileNamePath) throws ZosmfRequestException {
         return changeCommon(fileNamePath, new UssChangeTagInputData.Builder()
@@ -94,7 +91,6 @@ public class UssChangeTag {
      * @param codeSet      code set name. i.e., IBM-1047
      * @return Response Object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response text(final String fileNamePath, final String codeSet) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");
@@ -110,7 +106,6 @@ public class UssChangeTag {
      * @param fileNamePath UNIX path that resolves to the target file
      * @return Response Object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response remove(final String fileNamePath) throws ZosmfRequestException {
         return changeCommon(fileNamePath, new UssChangeTagInputData.Builder().action(ChangeTagAction.REMOVE).build());
@@ -122,7 +117,6 @@ public class UssChangeTag {
      * @param fileNamePath UNIX path that resolves to the target file
      * @return Response Object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response get(final String fileNamePath) throws ZosmfRequestException {
         return changeCommon(fileNamePath, new UssChangeTagInputData.Builder().action(ChangeTagAction.LIST).build());
@@ -135,7 +129,6 @@ public class UssChangeTag {
      * @param changeTagInputData for parameters for the change tag request, see UssChangeTagInputData object
      * @return Response Object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response changeCommon(final String fileNamePath, final UssChangeTagInputData changeTagInputData)
             throws ZosmfRequestException {

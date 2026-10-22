@@ -62,7 +62,6 @@ public class ConsoleCmd {
      * ConsoleCmd constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public ConsoleCmd(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,7 +77,6 @@ public class ConsoleCmd {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     ConsoleCmd(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -99,7 +97,6 @@ public class ConsoleCmd {
      * @param command string value that represents command to issue
      * @return IssueCommandResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ConsoleCmdResponse issueCommand(final String command) throws ZosmfRequestException {
         return issueCommandCommon(ConsoleConstants.RES_DEF_CN, new ConsoleCmdInputData(command));
@@ -115,7 +112,6 @@ public class ConsoleCmd {
      * @param consoleName name of the console that is used to issue the command
      * @return IssueCommandResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ConsoleCmdResponse issueCommand(final String command, final String consoleName) throws ZosmfRequestException {
         return issueCommandCommon(consoleName, new ConsoleCmdInputData(command));
@@ -128,7 +124,6 @@ public class ConsoleCmd {
      * @param consoleInputData for synchronous console issue parameters, see ConsoleCmdInputData object
      * @return IssueCommandResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ConsoleCmdResponse issueCommandCommon(final String consoleName, final ConsoleCmdInputData consoleInputData)
             throws ZosmfRequestException {
@@ -163,7 +158,6 @@ public class ConsoleCmd {
      *
      * @param consoleInputData ConsoleCmdInputData object
      * @return Map for JSON body
-     * @author Shabaz Kowthalam
      */
     private Map<String, String> getIssueMap(ConsoleCmdInputData consoleInputData) {
         final Map<String, String> issueMap = new HashMap<>();

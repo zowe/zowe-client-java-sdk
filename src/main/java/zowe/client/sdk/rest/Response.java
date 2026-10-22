@@ -48,7 +48,6 @@ public class Response {
      * @param responsePhrase http response information
      * @param statusCode     http response status code
      * @param statusText     http response status text
-     * @author Frank Giordano
      */
     public Response(final Object responsePhrase,
                     final Integer statusCode,
@@ -66,7 +65,6 @@ public class Response {
      * @param statusCode     http response status code
      * @param statusText     http response status text
      * @param tokens         http response Cookies object representing TOKENS
-     * @author Frank Giordano
      */
     public Response(final Object responsePhrase,
                     final Integer statusCode,

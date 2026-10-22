@@ -52,7 +52,6 @@ public class UssWriteInputData {
      * UssWriteInputData constructor
      *
      * @param builder UssWriteInputData.Builder builder
-     * @author Frank Giordano
      */
     public UssWriteInputData(final UssWriteInputData.Builder builder) {
         this.textContent = builder.textContent;

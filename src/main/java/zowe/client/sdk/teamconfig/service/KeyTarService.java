@@ -54,7 +54,6 @@ public class KeyTarService {
      * KeyTarService constructor
      *
      * @param keyTar IKeyTar implementation Object
-     * @author Frank Giordano
      */
     public KeyTarService(final IKeyTar keyTar) {
         this.keyTar = keyTar;
@@ -65,7 +64,6 @@ public class KeyTarService {
      *
      * @return KeyTarConfig object
      * @throws TeamConfigException error processing team configuration
-     * @author Frank Giordano
      */
     public KeyTarConfig getKeyTarConfig() throws TeamConfigException {
         keyTar.setAccountName(ACCOUNT_NAME);

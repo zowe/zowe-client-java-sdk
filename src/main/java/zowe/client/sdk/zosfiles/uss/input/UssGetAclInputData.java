@@ -59,7 +59,6 @@ public class UssGetAclInputData {
      * UssGetAclInputData constructor
      *
      * @param builder UssGetAclInputData.Builder builder
-     * @author James Kostrewski
      */
     public UssGetAclInputData(final UssGetAclInputData.Builder builder) {
         this.type = builder.type;

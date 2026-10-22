@@ -35,7 +35,6 @@ public class VariableGetExp extends TstZosConnection {
      * VariableGet functionality.
      *
      * @param args for main not used
-     * @author Ashish Kumar Dash
      */
     public static void main(String[] args) {
         String sysplexName = "PLEX1";
@@ -51,7 +50,6 @@ public class VariableGetExp extends TstZosConnection {
      * Retrieve z/OS system variables from the local system.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Ashish Kumar Dash
      */
     public static void getLocalVariables(ZosConnection connection) {
         VariableGetResponse response;
@@ -77,7 +75,6 @@ public class VariableGetExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param sysplexName name of the target sysplex
      * @param systemName  name of the target z/OS system
-     * @author Ashish Kumar Dash
      */
     public static void getVariables(ZosConnection connection, String sysplexName, String systemName) {
         VariableGetResponse response;
@@ -103,7 +100,6 @@ public class VariableGetExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param sysplexName name of the target sysplex
      * @param systemName  name of the target z/OS system
-     * @author Ashish Kumar Dash
      */
     public static void getVariablesByNames(ZosConnection connection, String sysplexName, String systemName) {
         VariableGetResponse response;
@@ -130,7 +126,6 @@ public class VariableGetExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param sysplexName name of the target sysplex (local sysplex only)
      * @param systemName  name of the target z/OS system
-     * @author Ashish Kumar Dash
      */
     public static void getSymbols(ZosConnection connection, String sysplexName, String systemName) {
         VariableGetResponse response;
@@ -181,7 +176,6 @@ public class VariableCreateExp extends TstZosConnection {
      * VariableCreate functionality.
      *
      * @param args for main not used
-     * @author Ashish Kumar Dash
      */
     public static void main(String[] args) {
         String sysplexName = "PLEX1";
@@ -196,7 +190,6 @@ public class VariableCreateExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param sysplexName name of the target sysplex
      * @param systemName  name of the target z/OS system
-     * @author Ashish Kumar Dash
      */
     public static void createVariables(ZosConnection connection, String sysplexName, String systemName) {
         Response response;
@@ -247,7 +240,6 @@ public class VariableDeleteExp extends TstZosConnection {
      * VariableDelete functionality.
      *
      * @param args for main not used
-     * @author Ashish Kumar Dash
      */
     public static void main(String[] args) {
         String sysplexName = "PLEX1";
@@ -263,7 +255,6 @@ public class VariableDeleteExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param sysplexName name of the target sysplex
      * @param systemName  name of the target z/OS system
-     * @author Ashish Kumar Dash
      */
     public static void deleteVariables(ZosConnection connection, String sysplexName, String systemName) {
         Response response;
@@ -287,7 +278,6 @@ public class VariableDeleteExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param sysplexName name of the target sysplex
      * @param systemName  name of the target z/OS system
-     * @author Ashish Kumar Dash
      */
     public static void deleteAllVariables(ZosConnection connection, String sysplexName, String systemName) {
         Response response;
@@ -333,7 +323,6 @@ public class VariableExportExp extends TstZosConnection {
      * VariableExport functionality.
      *
      * @param args for main not used
-     * @author Ashish Kumar Dash
      */
     public static void main(String[] args) {
         String sysplexName = "PLEX1";
@@ -350,7 +339,6 @@ public class VariableExportExp extends TstZosConnection {
      * @param sysplexName name of the target sysplex
      * @param systemName  name of the target z/OS system
      * @param targetFile  UNIX path to variables export file on USS
-     * @author Ashish Kumar Dash
      */
     public static void exportVariables(ZosConnection connection, String sysplexName,
                                        String systemName, String targetFile) {
@@ -397,7 +385,6 @@ public class VariableImportExp extends TstZosConnection {
      * VariableImport functionality.
      *
      * @param args for main not used
-     * @author Ashish Kumar Dash
      */
     public static void main(String[] args) {
         String sysplexName = "PLEX1";
@@ -414,7 +401,6 @@ public class VariableImportExp extends TstZosConnection {
      * @param sysplexName name of the target sysplex
      * @param systemName  name of the target z/OS system
      * @param targetFile  UNIX path to variables import file on USS
-     * @author Ashish Kumar Dash
      */
     public static void importVariables(ZosConnection connection, String sysplexName,
                                        String systemName, String targetFile) {

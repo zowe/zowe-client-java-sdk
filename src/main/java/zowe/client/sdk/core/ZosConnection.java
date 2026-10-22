@@ -70,7 +70,6 @@ public final class ZosConnection {
      * @param zosmfPort int value
      * @param basePath  string value
      * @param authType  AuthType enum value
-     * @author Frank Giordano
      */
     ZosConnection(final String host, final int zosmfPort, final String basePath, final AuthType authType) {
         this.host = host;
@@ -229,7 +228,6 @@ public final class ZosConnection {
      * Retrieve the z/OSMF url
      *
      * @return string value
-     * @author Shabaz Kowthalam
      */
     public String getZosmfUrl() {
         return "https://" + host + ":" + zosmfPort + (basePath != null ? basePath : "") + "/zosmf";

@@ -47,7 +47,6 @@ public class UssListZfsInputData {
      * UssListZfsInputData constructor
      *
      * @param builder UssListZfsInputData.Builder builder
-     * @author Frank Giordano
      */
     public UssListZfsInputData(final UssListZfsInputData.Builder builder) {
         this.maxLength = builder.maxLength;

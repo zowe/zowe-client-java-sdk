@@ -48,7 +48,6 @@ public class DsnGet {
      * DsnGet Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Nikunj Goyal
      */
     public DsnGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -64,7 +63,6 @@ public class DsnGet {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetStreamZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     DsnGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -82,7 +80,6 @@ public class DsnGet {
      * @param datasetName sequential or partition dataset (e.g. 'DATASET.LIB')
      * @return dataset object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Dataset getDsnInfo(final String datasetName) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(datasetName, "datasetName");
@@ -116,7 +113,6 @@ public class DsnGet {
      * @param downloadInputData to download parameters, see DsnDownloadInputData object
      * @return a content stream
      * @throws ZosmfRequestException request error state
-     * @author Nikunj Goyal
      */
     public InputStream get(final String targetName, final DsnDownloadInputData downloadInputData)
             throws ZosmfRequestException {

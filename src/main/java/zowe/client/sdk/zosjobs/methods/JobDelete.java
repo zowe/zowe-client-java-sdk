@@ -28,6 +28,7 @@ import java.util.Map;
  * DeleteJobs class to handle Job delete
  *
  * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 7.0
  */
 public class JobDelete {
@@ -40,7 +41,6 @@ public class JobDelete {
      * DeleteJobs constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Nikunj Goyal
      */
     public JobDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -56,7 +56,6 @@ public class JobDelete {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link DeleteJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     JobDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -76,7 +75,6 @@ public class JobDelete {
      * @param version version number, see JobModifyInputData object for version options
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Nikunj goyal
      */
     public Response delete(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         return deleteCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
@@ -89,7 +87,6 @@ public class JobDelete {
      * @param version version number, see JobModifyInputData object for version options
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response deleteByJob(final Job job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -102,8 +99,6 @@ public class JobDelete {
      * @param modifyInputData delete job parameters, see JobModifyInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Nikunj Goyal
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     public Response deleteCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {

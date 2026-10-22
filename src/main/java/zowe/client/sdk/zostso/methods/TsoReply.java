@@ -44,7 +44,6 @@ public class TsoReply {
      * TsoReply constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public TsoReply(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -60,7 +59,6 @@ public class TsoReply {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     TsoReply(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,7 +76,6 @@ public class TsoReply {
      * @param sessionId servletKey id retrieved from start TSO request
      * @return response string representing the returned request payload
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String reply(final String sessionId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(sessionId, "sessionId");

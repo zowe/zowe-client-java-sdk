@@ -101,7 +101,6 @@ public class JobFile {
      * @param jobName Name of the job
      * @param jobId   Job ID
      * @param spoolId Unique identifier for this spool file
-     * @author Frank Giordano
      */
     public JobFile(final String jobName, final String jobId, final Long spoolId) {
         this.jobId = jobId;
@@ -137,7 +136,6 @@ public class JobFile {
      * @param subSystem     JES subsystem
      * @param stepName      Job step name
      * @param procStep      Procedure step name
-     * @author Frank Giordano
      */
     @JsonCreator
     public JobFile(

@@ -14,6 +14,7 @@ import java.util.Optional;
 /**
  * Parameters for delete (JobDelete) and cancel (JobCancel) job operations
  *
+ * @author Nikunj Goyal
  * @author Frank Giordano
  * @version 7.0
  */
@@ -48,7 +49,6 @@ public class JobModifyInputData {
      * JobModifyInputData constructor
      *
      * @param builder JobModifyInputData.Builder object
-     * @author Nikunj Goyal
      */
     private JobModifyInputData(final JobModifyInputData.Builder builder) {
         this.jobName = builder.jobName;

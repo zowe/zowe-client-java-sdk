@@ -43,7 +43,6 @@ public class UssWrite {
      * UssWrite Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public UssWrite(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -58,7 +57,6 @@ public class UssWrite {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutStreamZosmfRequest} or {@link PutTextZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     UssWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -75,8 +73,6 @@ public class UssWrite {
      * @param content      string content to write to file
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     * @author James Kostrewski
      */
     public Response writeText(final String fileNamePath, final String content) throws ZosmfRequestException {
         return writeCommon(fileNamePath, new UssWriteInputData.Builder().textContent(content).build());
@@ -89,8 +85,6 @@ public class UssWrite {
      * @param content      binary content to write to file
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     * @author James Kostrewski
      */
     public Response writeBinary(final String fileNamePath, final byte[] content) throws ZosmfRequestException {
         return writeCommon(fileNamePath, new UssWriteInputData.Builder().binaryContent(content).binary(true).build());
@@ -103,8 +97,6 @@ public class UssWrite {
      * @param writeInputData parameters within a UssWriteInputData object that drives the write action request
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     public Response writeCommon(final String fileNamePath, final UssWriteInputData writeInputData)
             throws ZosmfRequestException {

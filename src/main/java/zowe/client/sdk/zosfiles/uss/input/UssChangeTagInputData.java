@@ -64,7 +64,6 @@ public class UssChangeTagInputData {
      * UssChangeTagInputData constructor
      *
      * @param builder UssChangeTagInputData.Builder builder
-     * @author James Kostrewski
      */
     public UssChangeTagInputData(final UssChangeTagInputData.Builder builder) {
         this.action = builder.action;

@@ -46,7 +46,6 @@ public final class SshConnection {
      * @param port     machine host port number pointing to backend z/OS instance
      * @param user     machine host username with access to backend z/OS instance
      * @param password machine host username's password with access to backend z/OS instance
-     * @author Frank Giordano
      */
     public SshConnection(final String host, final int port, final String user, final String password) {
         this.host = host;

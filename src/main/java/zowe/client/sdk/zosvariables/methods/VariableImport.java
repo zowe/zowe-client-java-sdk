@@ -38,7 +38,6 @@ public class VariableImport {
      * VariableImport Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Chaitanya Katore
      */
     public VariableImport(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -55,7 +54,6 @@ public class VariableImport {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PostJsonZosmfRequest} implementation object
-     * @author Chaitanya Katore
      */
     VariableImport(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -75,7 +73,6 @@ public class VariableImport {
      * @param targetFile  UNIX path to variables export file on USS (e.g. '/u/user1/vars.csv')
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Chaitanya Katore
      */
     public Response load(final String sysplexName,
                          final String systemName,

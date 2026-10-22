@@ -52,7 +52,6 @@ public class UssMountInputData {
      * UssMountInputData constructor
      *
      * @param builder UssMountInputData.Builder builder
-     * @author Frank Giordano
      */
     public UssMountInputData(final UssMountInputData.Builder builder) {
         this.action = builder.action;

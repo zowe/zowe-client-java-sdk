@@ -20,6 +20,7 @@ import java.util.OptionalLong;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-retrieve-contents-zos-data-set-member">z/OSMF REST API</a>
  *
  * @author Nikunj Goyal
+ * @author Frank Giordano
  * @version 7.0
  */
 public class DsnDownloadInputData {
@@ -112,7 +113,6 @@ public class DsnDownloadInputData {
      * DsnDownloadInputData constructor
      *
      * @param builder DsnDownloadInputData.Builder object
-     * @author Nikunj Goyal
      */
     private DsnDownloadInputData(final DsnDownloadInputData.Builder builder) {
         this.file = builder.file;

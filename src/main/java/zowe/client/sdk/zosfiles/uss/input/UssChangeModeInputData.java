@@ -46,7 +46,6 @@ public class UssChangeModeInputData {
      * UssChangeModeInputData constructor
      *
      * @param builder UssChangeModeInputData.Builder builder
-     * @author James Kostrewski
      */
     public UssChangeModeInputData(final UssChangeModeInputData.Builder builder) {
         this.mode = builder.mode;

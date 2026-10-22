@@ -31,6 +31,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssMove {
@@ -42,7 +43,6 @@ public class UssMove {
      * UssMove Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssMove(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -58,7 +58,6 @@ public class UssMove {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author James Kostrewski
      */
     UssMove(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -77,8 +76,6 @@ public class UssMove {
      * @param targetPath UNIX path to the target file or directory will be moved too
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     public Response move(final String fromPath, final String targetPath) throws ZosmfRequestException {
         return moveCommon(fromPath, targetPath, true);
@@ -92,7 +89,6 @@ public class UssMove {
      * @param overwrite  true if you want to override existing data at a target path or false to not override
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response move(final String fromPath, final String targetPath, final boolean overwrite)
             throws ZosmfRequestException {
@@ -107,8 +103,6 @@ public class UssMove {
      * @param overwrite  true if you want to override existing data at a target path or false to not override
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     private Response moveCommon(final String fromPath, final String targetPath, final boolean overwrite)
             throws ZosmfRequestException {

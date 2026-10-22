@@ -28,7 +28,6 @@ public final class WaitUtil {
      * Wait by time specified.
      *
      * @param time in milliseconds
-     * @author Frank Giordano
      */
     public static void wait(final int time) {
         try {

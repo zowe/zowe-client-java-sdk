@@ -58,7 +58,6 @@ public final class EncodeUtils {
      *
      * @param connection for connection information, see ZosConnection object
      * @return encoded String
-     * @author Frank Giordano
      */
     public static String encodeBasicAuthCredentials(final ZosConnection connection) {
         final String user = connection.getUser() != null && !connection.getUser().isEmpty() ? connection.getUser() : "";

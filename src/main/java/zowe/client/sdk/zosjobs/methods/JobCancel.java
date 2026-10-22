@@ -44,7 +44,6 @@ public class JobCancel {
      * CancelJobs constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Nikunj Goyal
      */
     public JobCancel(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -60,7 +59,6 @@ public class JobCancel {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     JobCancel(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -84,7 +82,6 @@ public class JobCancel {
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @author Nikunj goyal
      */
     public Response cancel(final String jobName, final String jobId, final String version) throws ZosmfRequestException {
         return this.cancelCommon(new JobModifyInputData.Builder(jobName, jobId).version(version).build());
@@ -101,7 +98,6 @@ public class JobCancel {
      *                the target JES2 subsystem.
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response cancelByJob(final Job job, final String version) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -114,8 +110,6 @@ public class JobCancel {
      * @param modifyInputData cancel job parameters, see JobModifyInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @author Nikunj Goyal
-     * @author Frank Giordano
      */
     @SuppressWarnings("DuplicatedCode")
     public Response cancelCommon(final JobModifyInputData modifyInputData) throws ZosmfRequestException {

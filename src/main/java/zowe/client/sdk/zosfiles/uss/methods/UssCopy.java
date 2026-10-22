@@ -32,6 +32,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssCopy {
@@ -43,7 +44,6 @@ public class UssCopy {
      * UssCopy Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssCopy(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -59,7 +59,6 @@ public class UssCopy {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author James Kostrewski
      */
     UssCopy(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,8 +77,6 @@ public class UssCopy {
      * @param targetPath UNIX path to the target file or directory will be copied too
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     public Response copy(final String fromPath, final String targetPath) throws ZosmfRequestException {
         return copyCommon(targetPath, new UssCopyInputData.Builder().from(fromPath).build());
@@ -92,8 +89,6 @@ public class UssCopy {
      * @param copyInputData UssCopyInputData parameters that specify copy action request
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     public Response copyCommon(final String targetPath, final UssCopyInputData copyInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");

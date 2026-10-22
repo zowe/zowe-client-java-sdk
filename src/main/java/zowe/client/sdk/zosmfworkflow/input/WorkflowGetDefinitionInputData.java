@@ -48,7 +48,6 @@ public class WorkflowGetDefinitionInputData {
      * WorkflowGetInputData constructor.
      *
      * @param builder builder instance
-     * @author Ashish Kumar Dash
      */
     private WorkflowGetDefinitionInputData(final Builder builder) {
         ValidateUtils.checkIllegalParameter(builder.definitionFilePath, "definitionFilePath");

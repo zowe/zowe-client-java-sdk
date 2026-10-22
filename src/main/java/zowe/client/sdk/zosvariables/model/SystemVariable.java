@@ -48,7 +48,6 @@ public final class SystemVariable {
      * @param name        variable name (required)
      * @param value       variable value (required)
      * @param description variable description (optional)
-     * @author Muhammad Imran
      */
     @JsonCreator
     public SystemVariable(
@@ -67,7 +66,6 @@ public final class SystemVariable {
      *
      * @param name  variable name (required)
      * @param value variable value (required)
-     * @author Muhammad Imran
      */
     public SystemVariable(final String name, final String value) {
         this(name, value, null);
@@ -77,7 +75,6 @@ public final class SystemVariable {
      * Retrieve name specified.
      *
      * @return name value
-     * @author Muhammad Imran
      */
     public String getName() {
         return name;
@@ -87,7 +84,6 @@ public final class SystemVariable {
      * Retrieve value specified.
      *
      * @return String value
-     * @author Muhammad Imran
      */
     public String getValue() {
         return value;
@@ -97,7 +93,6 @@ public final class SystemVariable {
      * Retrieve description specified.
      *
      * @return description value
-     * @author Muhammad Imran
      */
     public String getDescription() {
         return description;
@@ -107,7 +102,6 @@ public final class SystemVariable {
      * Return a string value representing a SystemVariable object.
      *
      * @return string representation of SystemVariable
-     * @author Muhammad Imran
      */
     @Override
     public String toString() {

@@ -28,7 +28,6 @@ public class GetJsonZosmfRequest extends ZosmfRequest {
      * GetJsonZosmfRequest constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public GetJsonZosmfRequest(final ZosConnection connection) {
         super(connection);
@@ -39,7 +38,6 @@ public class GetJsonZosmfRequest extends ZosmfRequest {
      *
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @Override
     public Response executeRequest() throws ZosmfRequestException {
@@ -58,7 +56,6 @@ public class GetJsonZosmfRequest extends ZosmfRequest {
      * Method to set the body information for the http request which is not used for this request.
      *
      * @param body object value
-     * @author Frank Giordano
      */
     @Override
     public void setBody(Object body) {
@@ -67,8 +64,6 @@ public class GetJsonZosmfRequest extends ZosmfRequest {
 
     /**
      * Set the standard headers for the http request
-     *
-     * @author Frank Giordano
      */
     @Override
     public void setStandardHeaders() {

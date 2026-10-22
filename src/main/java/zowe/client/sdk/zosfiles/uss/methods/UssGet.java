@@ -40,8 +40,6 @@ public class UssGet {
      * UssGet Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
-     * @author James Kostrewski
      */
     public UssGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -56,8 +54,6 @@ public class UssGet {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetStreamZosmfRequest} or {@link GetTextZosmfRequest} implementation object
-     * @author Frank Giordano
-     * @author James Kostrewski
      */
     UssGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -73,8 +69,6 @@ public class UssGet {
      * @param fileNamePath UNIX path that resolves to the target file
      * @return the byte array contents of the file
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     * @author James Kostrewski
      */
     public byte[] getBinary(final String fileNamePath) throws ZosmfRequestException {
         UssGetInputData getInputData = new UssGetInputData.Builder().binary(true).build();
@@ -88,8 +82,6 @@ public class UssGet {
      * @param fileNamePath UNIX path that resolves to the target file
      * @return the text contents of a file
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     * @author James Kostrewski
      */
     public String getText(final String fileNamePath) throws ZosmfRequestException {
         UssGetInputData getInputData = new UssGetInputData.Builder().build();
@@ -104,8 +96,6 @@ public class UssGet {
      * @param getInputData UssGetInputData object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
-     * @author James Kostrewski
      */
     public Response getCommon(final String fileNamePath, final UssGetInputData getInputData) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileNamePath, "fileNamePath");

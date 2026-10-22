@@ -49,7 +49,6 @@ public class JobSubmit {
      * SubmitJobs Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public JobSubmit(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -64,7 +63,6 @@ public class JobSubmit {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} or {@link PutTextZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     JobSubmit(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -83,7 +81,6 @@ public class JobSubmit {
      * @param jclPath path to the local file where the JCL is located
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state from z/OSMF
-     * @author Frank Giordano
      */
     public Job submitByLocalFile(final String jclPath) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jclPath, "jclPath");
@@ -110,7 +107,6 @@ public class JobSubmit {
      * @param internalReaderLrecl logical record length of the jcl you want to submit
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job submitByJcl(final String jcl, final String internalReaderRecfm, final String internalReaderLrecl)
             throws ZosmfRequestException {
@@ -123,7 +119,6 @@ public class JobSubmit {
      * @param submitJclInputData submit jcl parameters, see JobSubmitJclInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job submitJclCommon(final JobSubmitJclInputData submitJclInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(submitJclInputData, "submitJclInputData");
@@ -186,7 +181,6 @@ public class JobSubmit {
      * @param jobDataSet job dataset to be translated into JobSubmitInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job submit(final String jobDataSet) throws ZosmfRequestException {
         return this.submitCommon(new JobSubmitInputData(jobDataSet));
@@ -198,7 +192,6 @@ public class JobSubmit {
      * @param submitInputData submit job parameters, see JobSubmitInputData object
      * @return job document with details about the submitted job
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job submitCommon(final JobSubmitInputData submitInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(submitInputData, "submitInputData");
@@ -233,7 +226,6 @@ public class JobSubmit {
      *
      * @param keyValues Map containing JCL substitution symbols e.g.: {"SYMBOL","SYM"},{"SYMBOL2","SYM2"}
      * @return String Map containing all keys and values
-     * @author Corinne DeStefano
      */
     private Map<String, String> getSubstitutionHeaders(final Map<String, String> keyValues) {
         final Map<String, String> symbolMap = new HashMap<>();

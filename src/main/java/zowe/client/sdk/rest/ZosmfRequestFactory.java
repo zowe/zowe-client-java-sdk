@@ -37,7 +37,6 @@ public final class ZosmfRequestFactory {
      * @param connection for connection information, see ZosConnection object
      * @param type       request http type, see ZosmfRequestType object
      * @return ZosmfRequest abstract object of ZosmfRequestType value
-     * @author Frank Giordano
      */
     public static ZosmfRequest buildRequest(final ZosConnection connection, final ZosmfRequestType type) {
         LOG.debug(type.name());

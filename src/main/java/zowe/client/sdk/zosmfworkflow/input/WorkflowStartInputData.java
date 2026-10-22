@@ -65,7 +65,6 @@ public class WorkflowStartInputData {
      * WorkflowStartInputData constructor.
      *
      * @param builder builder instance
-     * @author Eshaan Gupta
      */
     private WorkflowStartInputData(final Builder builder) {
         ValidateUtils.checkIllegalParameter(builder.workflowKey, "workflowKey");

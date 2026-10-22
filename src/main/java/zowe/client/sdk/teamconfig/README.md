@@ -71,7 +71,6 @@ public class TeamConfigExp {
      *
      * @param args for main isn't used
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException, TeamConfigException {
         TeamConfig teamConfig;
@@ -102,7 +101,6 @@ public class TeamConfigExp {
      * @param connection  ZosConnection object
      * @param dataSetName data set name
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public static void listMembers(ZosConnection connection, String dataSetName) throws ZosmfRequestException {
         DsnListInputData listInputData = new DsnListInputData.Builder().build();

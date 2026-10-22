@@ -33,7 +33,6 @@ public class DsnCopyExp extends TstZosConnection {
      * DsnCopy functionality.
      *
      * @param args for main isn't used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         String fromDatasetName = "xxx";
@@ -64,7 +63,6 @@ public class DsnCopyExp extends TstZosConnection {
      * @param connection      for connection information, see ZosConnection object
      * @param fromDatasetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDatasetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
-     * @author Frank Giordano
      */
     public static void copyDataset(ZosConnection connection, String fromDatasetName, String toDatasetName) {
         Response response;
@@ -97,7 +95,6 @@ public class DsnCopyExp extends TstZosConnection {
      * @param connection      for connection information, see ZosConnection object
      * @param fromDatasetName source dataset (e.g. 'SOURCE.DATASET' or 'SOURCE.DATASET(MEMBER)')
      * @param toDatasetName   destination dataset (e.g. 'TARGET.DATASET' or 'TARGET.DATASET(MEMBER)')
-     * @author Frank Giordano
      */
     public static void copyDatasetByCopyParams(ZosConnection connection, String fromDatasetName, String toDatasetName) {
         Response response;
@@ -129,7 +126,6 @@ public class DsnCopyExp extends TstZosConnection {
      * @param connection      for connection information, see ZosConnection object
      * @param fromDatasetName source dataset (e.g. 'SOURCE.PARTITION.DATASET')
      * @param toDatasetName   destination dataset (e.g. 'TARGET.PARTITION.DATASET')
-     * @author Frank Giordano
      */
     public static void copyFullPartitionDatasetByCopyParams(ZosConnection connection, String fromDatasetName,
                                                             String toDatasetName) {
@@ -185,7 +181,6 @@ public class DsnCreateExp extends TstZosConnection {
      * DsnCreate functionality.
      *
      * @param args for main isn't used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         String datasetName = "xxx";
@@ -199,7 +194,6 @@ public class DsnCreateExp extends TstZosConnection {
      * Create a new sequential dataset.
      *
      * @param datasetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @author Frank Giordano
      */
     public static void createSequentialDataSet(String datasetName) {
         Response response;
@@ -221,7 +215,6 @@ public class DsnCreateExp extends TstZosConnection {
      * Create a new partition dataset.
      *
      * @param datasetName name of a dataset to create (e.g. 'DATASET.LIB')
-     * @author Frank Giordano
      */
     public static void createPartitionDataSet(String datasetName) {
         Response response;
@@ -356,7 +349,6 @@ public class DsnGetInfoExp extends TstZosConnection {
      * DsnGet functionality.
      *
      * @param args for main isn't used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String dataSetName = "xxx";
@@ -370,7 +362,6 @@ public class DsnGetInfoExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param datasetName name of a dataset
      * @return Dataset object
-     * @author Frank Giordano
      */
     public static Dataset getDataSetInfo(ZosConnection connection, String datasetName) {
         try {
@@ -417,7 +408,6 @@ public class DsnDeleteExp extends TstZosConnection {
      * DeleteDataset functionality. Calls DeleteDataset example methods.
      *
      * @param args for main isn't used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
@@ -439,7 +429,6 @@ public class DsnDeleteExp extends TstZosConnection {
      *
      * @param connection  for connection information, see ZosConnection object
      * @param datasetName name of a dataset to delete (e.g. 'DATASET.LIB')
-     * @author Frank Giordano
      */
     public static void deleteDataset(ZosConnection connection, String datasetName) {
         Response response;
@@ -464,7 +453,6 @@ public class DsnDeleteExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param datasetName partitioned dataset containing the member
      * @param memberName  name of member to delete
-     * @author Frank Giordano
      */
     public static void deleteMember(ZosConnection connection, String datasetName, String memberName) {
         Response response;
@@ -489,7 +477,6 @@ public class DsnDeleteExp extends TstZosConnection {
      * @param connection  for connection information, see ZosConnection object
      * @param datasetName name of a dataset to delete (e.g. 'DATASET.LIB')
      * @param volume      volume serial the dataset resides on (e.g. 'VOL001')
-     * @author Frank Giordano
      */
     public static void deleteUncataloged(ZosConnection connection, String datasetName, String volume) {
         Response response;
@@ -723,7 +710,6 @@ public class DsnGetExp extends TstZosConnection {
      * DsnGet class functionality.
      *
      * @param args for main isn't used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         String datasetName = "xxx";
@@ -742,7 +728,6 @@ public class DsnGetExp extends TstZosConnection {
      * @param datasetName   name of a dataset
      * @param memberName    member name that exists within the specified dataset name
      * @param dsnDownloadInputData     download parameter object
-     * @author Leonid Baranov
      */
     public static void downloadDsnMember(ZosConnection connection, String datasetName, String memberName,
                                          DsnDownloadInputData dsnDownloadInputData) {
@@ -761,7 +746,6 @@ public class DsnGetExp extends TstZosConnection {
      * @param connection for connection information, see ZosConnection object
      * @param dsName     name of a sequential dataset
      * @param dsnDownloadInputData     download parameter object
-     * @author Frank Giordano
      */
     public static void downloadDsnSequential(ZosConnection connection, String dsName, DsnDownloadInputData dsnDownloadInputData) {
         try (InputStream inputStream = new DsnGet(connection).get(dsName, dsnDownloadInputData)) {
@@ -778,7 +762,6 @@ public class DsnGetExp extends TstZosConnection {
      *
      * @param e ZosmfRequestException object
      * @return string value
-     * @author Frank Giordano
      */
     public static String getByteResponseStatus(ZosmfRequestException e) {
         byte[] byteMsg = (byte[]) e.getResponse().getResponsePhrase().orElse(new byte[0]);
@@ -798,7 +781,6 @@ public class DsnGetExp extends TstZosConnection {
      * @param inputStream byte stream of data
      * @return string value
      * @throws IOException error processing byte stream
-     * @author Frank Giordano
      */
     public static String getTextStreamData(final InputStream inputStream) throws IOException {
         if (inputStream != null) {
@@ -844,7 +826,6 @@ public class DsnListExp extends TstZosConnection {
      * DsnList functionality.
      *
      * @param args for main isn't used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         String dataSetMask = "xxx";
@@ -861,7 +842,6 @@ public class DsnListExp extends TstZosConnection {
      *
      * @param connection  for connection information, see ZosConnection object
      * @param datasetName name of a dataset
-     * @author Leonid Baranov
      */
     public static void listMembersWithAllAttributes(ZosConnection connection, String datasetName) {
         List<Member> datasets;
@@ -884,7 +864,6 @@ public class DsnListExp extends TstZosConnection {
      *
      * @param connection  for connection information, see ZosConnection object
      * @param datasetName name of a dataset
-     * @author Leonid Baranov
      */
     public static void listMembers(ZosConnection connection, String datasetName) {
         List<Member> datasets;
@@ -907,7 +886,6 @@ public class DsnListExp extends TstZosConnection {
      *
      * @param connection  for connection information, see ZosConnection object
      * @param dataSetName name of a dataset
-     * @author Leonid Baranov
      */
     public static void listDsn(ZosConnection connection, String dataSetName) {
         List<Dataset> datasets;
@@ -930,7 +908,6 @@ public class DsnListExp extends TstZosConnection {
      *
      * @param connection  for connection information, see ZosConnection object
      * @param dataSetName name of a dataset
-     * @author Frank Giordano
      */
     public static void listDsnVol(ZosConnection connection, String dataSetName) {
         List<Dataset> datasets;
@@ -979,7 +956,6 @@ public class DsnWriteExp extends TstZosConnection {
      * DsnWrite functionality.
      *
      * @param args for main isn't used
-     * @author Leonid Baranov
      */
     public static void main(String[] args) {
         String datasetName = "xxx";
@@ -997,7 +973,6 @@ public class DsnWriteExp extends TstZosConnection {
      * @param datasetName name of a dataset where the member should be located (e.g. 'DATASET.LIB')
      * @param member      name of member to write
      * @param content     content for write
-     * @author Frank Giordano
      */
     public static void writeToDsnMember(String datasetName, String member, String content) {
         Response response;
@@ -1019,7 +994,6 @@ public class DsnWriteExp extends TstZosConnection {
      *
      * @param datasetName name of sequential dataset (e.g. 'DATASET.LIB')
      * @param content     content for write
-     * @author Frank Giordano
      */
     public static void writeToDsnSequential(String datasetName, String content) {
         Response response;

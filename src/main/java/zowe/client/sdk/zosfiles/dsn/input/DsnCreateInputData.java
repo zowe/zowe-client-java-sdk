@@ -18,6 +18,7 @@ import java.util.OptionalInt;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-create-sequential-partitioned-data-set">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
+ * @author Frank Giordano
  * @version 7.0
  */
 public class DsnCreateInputData {
@@ -118,7 +119,6 @@ public class DsnCreateInputData {
      * DsnCreateInputData constructor
      *
      * @param builder DsnCreateInputData.Builder object
-     * @author Leonid Baranov
      */
     private DsnCreateInputData(final DsnCreateInputData.Builder builder) {
         this.volser = builder.volser;

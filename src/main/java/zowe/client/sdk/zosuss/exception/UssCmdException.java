@@ -22,7 +22,6 @@ public class UssCmdException extends Exception {
      *
      * @param message error message
      * @param err     original throwable exception
-     * @author Frank Giordano
      */
     public UssCmdException(final String message, Throwable err) {
         super(message, err);

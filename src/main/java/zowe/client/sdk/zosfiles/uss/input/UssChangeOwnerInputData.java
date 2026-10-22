@@ -20,6 +20,7 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssChangeOwnerInputData {
@@ -49,7 +50,6 @@ public class UssChangeOwnerInputData {
      * UssChangeOwnerInputData constructor
      *
      * @param builder UssChangeOwnerInputData.Builder builder
-     * @author James Kostrewski
      */
     public UssChangeOwnerInputData(final UssChangeOwnerInputData.Builder builder) {
         this.owner = builder.owner;

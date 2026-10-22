@@ -54,7 +54,6 @@ public class ConfigContainer {
      * @param profiles   list of parsed profiles from Zowe Global Team Configuration
      * @param defaults   hashmap of defaults values parsed from Zowe Global Team Configuration
      * @param autoStore  autoStore value from Zowe Global Team Configuration
-     * @author Frank Giordano
      */
     public ConfigContainer(final List<Partition> partitions, final String schema, final List<Profile> profiles,
                            final Map<String, String> defaults, final Boolean autoStore) {

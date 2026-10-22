@@ -37,7 +37,6 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
      * DeleteJsonZosmfRequest constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public DeleteJsonZosmfRequest(final ZosConnection connection) {
         super(connection);
@@ -48,7 +47,6 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
      *
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @Override
     public Response executeRequest() throws ZosmfRequestException {
@@ -72,7 +70,6 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
      * Set the body information for the http request. The body is optional for a delete request.
      *
      * @param body String value
-     * @author Frank Giordano
      */
     @Override
     public void setBody(final Object body) {
@@ -82,8 +79,6 @@ public class DeleteJsonZosmfRequest extends ZosmfRequest {
 
     /**
      * Set the standard headers for the http request
-     *
-     * @author Frank Giordano
      */
     @Override
     public void setStandardHeaders() {

@@ -21,7 +21,6 @@ public class TeamConfigException extends Exception {
      * TeamConfigException constructor for message value
      *
      * @param message error message
-     * @author Frank Giordano
      */
     public TeamConfigException(final String message) {
         super(message);
@@ -32,7 +31,6 @@ public class TeamConfigException extends Exception {
      *
      * @param message error message
      * @param err     original throwable exception
-     * @author Frank Giordano
      */
     public TeamConfigException(final String message, Throwable err) {
         super(message, err);

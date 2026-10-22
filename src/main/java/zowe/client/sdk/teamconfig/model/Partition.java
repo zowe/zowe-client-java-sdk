@@ -44,7 +44,6 @@ public class Partition {
      * @param name       partition name
      * @param properties hashmap of property values
      * @param profiles   list of Profiles
-     * @author Frank Giordano
      */
     public Partition(final String name, final Map<String, String> properties, final List<Profile> profiles) {
         this.name = name;

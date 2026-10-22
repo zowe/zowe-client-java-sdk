@@ -45,7 +45,6 @@ public class JobGet {
      * GetJobs Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public JobGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -60,7 +59,6 @@ public class JobGet {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} or {@link GetTextZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     JobGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -79,7 +77,6 @@ public class JobGet {
      * @param jobId   job ID for the job for which you want to retrieve JCL
      * @return job document on resolve
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getJcl(final String jobName, final String jobId) throws ZosmfRequestException {
         return getJclCommon(new CommonJobInputData(jobId, jobName));
@@ -93,7 +90,6 @@ public class JobGet {
      * @param job job for which you would like to retrieve JCL
      * @return JCL content
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getJclByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -106,7 +102,6 @@ public class JobGet {
      * @param commonInputData for common job parameters, see CommonJobInputData object
      * @return JCL content
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getJclCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commonInputData, "commonInputData");
@@ -138,7 +133,6 @@ public class JobGet {
      * @param jobId job ID for the job for which you want to get status
      * @return one job object, matching the given job ID, without step-data
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job getById(final String jobId) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(jobId, "jobId");
@@ -157,7 +151,6 @@ public class JobGet {
      *
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<Job> getAll() throws ZosmfRequestException {
         return getCommon(null);
@@ -170,7 +163,6 @@ public class JobGet {
      *              IBMU* returns jobs owned by all users whose ID beings with "IBMU"
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<Job> getByOwner(final String owner) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(owner, "owner");
@@ -186,7 +178,6 @@ public class JobGet {
      *               JOBNM* returns jobs with names starting with "JOBNM"
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<Job> getByOwnerAndPrefix(final String owner, final String prefix) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(owner, "owner");
@@ -200,7 +191,6 @@ public class JobGet {
      * @param prefix job name prefix for which to list jobs. Supports wildcard e.g., JOBNM*
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<Job> getByPrefix(final String prefix) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(prefix, "prefix");
@@ -213,7 +203,6 @@ public class JobGet {
      * @param getInputData to get job parameters, see JobGetInputData object
      * @return list of job objects (matching jobs), without step-data
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<Job> getCommon(final JobGetInputData getInputData) throws ZosmfRequestException {
         List<Job> jobs = new ArrayList<>();
@@ -280,7 +269,6 @@ public class JobGet {
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getSpoolContent(final JobFile jobFile) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(jobFile, "jobFile");
@@ -295,7 +283,6 @@ public class JobGet {
      * @param spoolId id number assigned by z/OSMF that identifies the particular job spool file (DD)
      * @return spool content
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getSpoolContent(final String jobName, final String jobId, final Long spoolId)
             throws ZosmfRequestException {
@@ -309,7 +296,6 @@ public class JobGet {
      * @param jobFile spool file for which you want to retrieve the content
      * @return spool content
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getSpoolContentCommon(final JobFile jobFile) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(jobFile, "jobFile");
@@ -346,7 +332,6 @@ public class JobGet {
      * @param jobId   job ID for the job for which you want to get a list of spool files
      * @return list of JobFile objects
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<JobFile> getSpoolFiles(final String jobName, final String jobId) throws ZosmfRequestException {
         return getSpoolFilesCommon(new CommonJobInputData(jobId, jobName));
@@ -360,7 +345,6 @@ public class JobGet {
      * @param job job for which you would like to get a list of job spool files
      * @return list of JobFile objects
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -373,7 +357,6 @@ public class JobGet {
      * @param commonInputData for common job parameters, see CommonJobInputData object
      * @return list of JobFile objects
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<JobFile> getSpoolFilesCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commonInputData, "commonInputData");
@@ -416,7 +399,6 @@ public class JobGet {
      * @param jobId   job ID for the job for which you want to get status
      * @return job document (matching job)
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job getStatus(final String jobName, final String jobId) throws ZosmfRequestException {
         return getStatusCommon(new CommonJobInputData(jobId, jobName, true));
@@ -431,7 +413,6 @@ public class JobGet {
      * @param job job document
      * @return job document (matching job)
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job getStatusByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -445,7 +426,6 @@ public class JobGet {
      * @param jobId   job ID for the job for which you want to get status
      * @return status value
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getStatusValue(final String jobName, final String jobId) throws ZosmfRequestException {
         final Job job = getStatusCommon(new CommonJobInputData(jobId, jobName));
@@ -458,7 +438,6 @@ public class JobGet {
      * @param job job document
      * @return status value
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public String getStatusValueByJob(final Job job) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(job, "job");
@@ -472,7 +451,6 @@ public class JobGet {
      * @param commonInputData for common job parameters, see CommonJobInputData object
      * @return job document (matching job)
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Job getStatusCommon(final CommonJobInputData commonInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(commonInputData, "commonInputData");
@@ -508,7 +486,6 @@ public class JobGet {
      * Get url specified for rest processing.
      *
      * @return url
-     * @author Frank Giordano
      */
     public String getUrl() {
         return url;

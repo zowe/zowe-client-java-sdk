@@ -42,7 +42,6 @@ public class ZosmfPassword {
      * ZosmfPassword constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Esteban Sandoval
      */
     public ZosmfPassword(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -58,7 +57,6 @@ public class ZosmfPassword {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Esteban Sandoval
      */
     ZosmfPassword(ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -76,8 +74,6 @@ public class ZosmfPassword {
      * @param pwdInputData Password response parameters, see PasswordInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Esteban Sandoval
-     * @author Frank Giordano
      */
     public Response changePassword(final PasswordInputData pwdInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(pwdInputData, "pwdInputData");

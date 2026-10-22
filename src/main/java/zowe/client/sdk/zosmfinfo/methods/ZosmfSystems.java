@@ -37,7 +37,6 @@ public class ZosmfSystems {
      * ListDefinedSystems Constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public ZosmfSystems(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -54,7 +53,6 @@ public class ZosmfSystems {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     ZosmfSystems(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -71,7 +69,6 @@ public class ZosmfSystems {
      *
      * @return ZosmfListDefinedSystemsResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ZosmfSystemsResponse get() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() +

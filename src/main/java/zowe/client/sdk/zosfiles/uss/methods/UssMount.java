@@ -42,7 +42,6 @@ public class UssMount {
      * UssMount Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public UssMount(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -58,7 +57,6 @@ public class UssMount {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     UssMount(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,7 +76,6 @@ public class UssMount {
      * @param fsType         the type of file system to be mounted.
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response mount(final String fileSystemName, final String mountPoint, final String fsType)
             throws ZosmfRequestException {
@@ -97,7 +94,6 @@ public class UssMount {
      * @param fileSystemName the file system name
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response unmount(final String fileSystemName) throws ZosmfRequestException {
         return mountCommon(fileSystemName, new UssMountInputData.Builder().action(MountActionType.UNMOUNT).build());
@@ -110,7 +106,6 @@ public class UssMount {
      * @param mountInputData UssMountInputData object
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response mountCommon(final String fileSystemName, final UssMountInputData mountInputData)
             throws ZosmfRequestException {

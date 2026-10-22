@@ -40,7 +40,6 @@ public final class TsoUtils {
      * @param request request object for performing http call
      * @return response object as a string value of the http call
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public static String getResponseStr(final ZosmfRequest request) throws ZosmfRequestException {
         final Response response = request.executeRequest();
@@ -63,7 +62,6 @@ public final class TsoUtils {
      *
      * @param responseStr response string value
      * @return error message text
-     * @author Frank Giordano
      */
     public static String getMsgDataText(String responseStr) {
         String errMsg = "";

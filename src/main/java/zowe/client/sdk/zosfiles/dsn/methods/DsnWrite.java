@@ -35,7 +35,6 @@ public class DsnWrite {
      * DsnWrite Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Leonid Baranov
      */
     public DsnWrite(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -51,7 +50,6 @@ public class DsnWrite {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutTextZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     DsnWrite(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -72,7 +70,6 @@ public class DsnWrite {
      * @param content     new content
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response write(final String datasetName, final String memberName, final String content)
             throws ZosmfRequestException {
@@ -89,7 +86,6 @@ public class DsnWrite {
      * @param content     new content
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Leonid Baranov
      */
     public Response write(final String datasetName, final String content) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(datasetName, "datasetName");

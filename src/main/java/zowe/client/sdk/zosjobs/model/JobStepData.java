@@ -93,7 +93,6 @@ public class JobStepData {
      * @param pathName     path name
      * @param procStepName procedure step name
      * @param completion   completion
-     * @author Frank Giordano
      */
     @JsonCreator
     public JobStepData(

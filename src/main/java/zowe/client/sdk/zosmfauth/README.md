@@ -54,7 +54,6 @@ public class ZosmfLoginExp extends TstZosConnection {
      * basic authentication.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) throws ZosmfRequestException {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
@@ -116,7 +115,6 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @param dsName     name of a dataset
      * @param memName    member name that exists within the specified dataset name
      * @param downloadInputData  download parameter object
-     * @author Leonid Baranov
      */
     private static void downloadDsnMember(ZosConnection connection, String dsName, String memName,
                                           DsnDownloadInputData downloadInputData) {
@@ -134,7 +132,6 @@ public class ZosmfLoginExp extends TstZosConnection {
      *
      * @param e ZosmfRequestException object
      * @return string value
-     * @author Frank Giordano
      */
     private static String getByteResponseStatus(ZosmfRequestException e) {
         byte[] byteMsg = (byte[]) e.getResponse().getResponsePhrase().orElse(new byte[0]);
@@ -157,7 +154,6 @@ public class ZosmfLoginExp extends TstZosConnection {
      * @param inputStream byte stream od data
      * @return string value
      * @throws IOException error processing byte stream
-     * @author Frank Giordano
      */
     private static String getTextStreamData(final InputStream inputStream) throws IOException {
         if (inputStream != null) {

@@ -38,7 +38,6 @@ public class DsnDelete {
      * DsnDelete Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Leonid Baranov
      */
     public DsnDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -54,7 +53,6 @@ public class DsnDelete {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link DeleteJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     DsnDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -72,8 +70,6 @@ public class DsnDelete {
      * @param deleteInputData delete parameters, see DsnDeleteInputData object
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Jorge Samaniego
-     * @author Frank Giordano
      */
     public Response delete(final DsnDeleteInputData deleteInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(deleteInputData, "deleteInputData");

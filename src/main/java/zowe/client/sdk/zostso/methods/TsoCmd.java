@@ -54,7 +54,6 @@ public class TsoCmd {
      *
      * @param connection    for connection information, see ZosConnection object
      * @param accountNumber account number for tso processing
-     * @author Frank Giordano
      */
     public TsoCmd(final ZosConnection connection, final String accountNumber) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -75,7 +74,6 @@ public class TsoCmd {
      * @param tsoStop       TsoStop for mocking
      * @param tsoSend       TsoSend for mocking
      * @param tsoReply      TsoReply for mocking
-     * @author Frank Giordano
      */
     TsoCmd(final ZosConnection connection,
            final String accountNumber,
@@ -98,7 +96,6 @@ public class TsoCmd {
      * @param command tso command string
      * @return list of all tso returned messages
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<String> issueCommand(final String command) throws ZosmfRequestException {
         return this.issueCommand(command, null);
@@ -112,7 +109,6 @@ public class TsoCmd {
      * @param inputData start TSO request inputs parameters, see StartTsoInputData
      * @return list of all tso returned messages
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<String> issueCommand(final String command, final StartTsoInputData inputData)
             throws ZosmfRequestException {
@@ -145,7 +141,6 @@ public class TsoCmd {
      * @param command   tso command string
      * @return list of all tso returned messages
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public List<String> issueCommandByTsoSessionId(final String sessionId, final String command)
             throws ZosmfRequestException {
@@ -175,7 +170,6 @@ public class TsoCmd {
      * @param sessionId active TSO session ID
      * @param command   tso command string
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private void executeCommand(final String sessionId, final String command) throws ZosmfRequestException {
         // send tso command to execute with session id
@@ -250,7 +244,6 @@ public class TsoCmd {
      * @param inputData start TSO request inputs parameters, see StartTsoInputData
      * @return TsoStartResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private TsoStartResponse startTso(final StartTsoInputData inputData) throws ZosmfRequestException {
         if (this.tsoStart == null) {
@@ -273,7 +266,6 @@ public class TsoCmd {
      * @param command   tso command
      * @return response string representing the returned request payload
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private String sendTsoCommand(final String sessionId, final String command) throws ZosmfRequestException {
         if (this.tsoSend == null) {
@@ -288,7 +280,6 @@ public class TsoCmd {
      * @param sessionId servletKey id retrieve from start TSO request
      * @return response string representing the returned request payload
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private String sendTsoForReply(final String sessionId) throws ZosmfRequestException {
         if (this.tsoReply == null) {
@@ -302,7 +293,6 @@ public class TsoCmd {
      *
      * @param sessionId servletKey id retrieve from start TSO request
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     private void stopTso(final String sessionId) throws ZosmfRequestException {
         if (this.tsoStop == null) {
@@ -317,7 +307,6 @@ public class TsoCmd {
      *
      * @param startResponse TsoStartResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public void drainLogonPrompt(final TsoStartResponse startResponse) throws ZosmfRequestException {
         if (startResponse == null ||
@@ -369,7 +358,6 @@ public class TsoCmd {
      * Extracts TSO message text into msgLst and TSO prompt entries into promptLst.
      *
      * @param tsoData tsoData JsonNode array object containing TSO_MESSAGE and TSO_PROMPT items
-     * @author Frank Giordano
      */
     private void processTsoResponse(final JsonNode tsoData) {
         if (tsoData == null || !tsoData.isArray()) {

@@ -37,7 +37,6 @@ public class ConsoleGet {
      * ConsoleGet constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public ConsoleGet(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -53,7 +52,6 @@ public class ConsoleGet {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link GetJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     ConsoleGet(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -71,7 +69,6 @@ public class ConsoleGet {
      * @param responseKey response key from the issue console command request
      * @return ConsoleResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ConsoleGetResponse getResponse(final String responseKey) throws ZosmfRequestException {
         return getResponseCommon(responseKey, "", true);
@@ -85,7 +82,6 @@ public class ConsoleGet {
      * @param consoleName name of the console that is used to issue the command
      * @return ConsoleResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ConsoleGetResponse getResponse(final String responseKey, final String consoleName)
             throws ZosmfRequestException {
@@ -101,7 +97,6 @@ public class ConsoleGet {
      * @param processResponse process console command response
      * @return ConsoleResponse object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public ConsoleGetResponse getResponseCommon(final String responseKey, final String consoleName,
                                                 boolean processResponse) throws ZosmfRequestException {

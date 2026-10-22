@@ -36,7 +36,6 @@ public class WorkflowStart {
      * WorkflowStart constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Eshaan Gupta
      */
     public WorkflowStart(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -53,7 +52,6 @@ public class WorkflowStart {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Eshaan Gupta
      */
     WorkflowStart(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -71,7 +69,6 @@ public class WorkflowStart {
      * @param workflowKey workflow key identifying the workflow to start
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Eshaan Gupta
      */
     public Response start(final String workflowKey) throws ZosmfRequestException {
         return startCommon(new WorkflowStartInputData.Builder(workflowKey).build());
@@ -83,7 +80,6 @@ public class WorkflowStart {
      * @param startInputData workflow start parameters
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Eshaan Gupta
      */
     public Response startCommon(final WorkflowStartInputData startInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(startInputData, "startInputData");

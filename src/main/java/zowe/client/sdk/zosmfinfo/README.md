@@ -34,7 +34,6 @@ public class ZosmfStatusExp extends TstZosConnection {
      * running z/OSMF instance on the z/OS backend.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);
@@ -85,7 +84,6 @@ public class ZosmfSystemsExp extends TstZosConnection {
      * defined z/OSMF systems running on the z/OS backend.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         ZosConnection connection = ZosConnectionFactory.createBasicConnection(hostName, zosmfPort, userName, password);

@@ -26,6 +26,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-delete-unix-file-directory">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssDelete {
@@ -37,7 +38,6 @@ public class UssDelete {
      * UssDelete Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssDelete(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -53,8 +53,6 @@ public class UssDelete {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link DeleteJsonZosmfRequest} implementation object
-     * @author James Kostrewski
-     * @author Frank Giordano
      */
     UssDelete(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -72,7 +70,6 @@ public class UssDelete {
      * @param targetPath UNIX path to the target file or directory you are going to delete
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response delete(final String targetPath) throws ZosmfRequestException {
         return delete(targetPath, false);
@@ -85,7 +82,6 @@ public class UssDelete {
      * @param recursive  the flag indicates if contents of the directory should also be deleted
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response delete(final String targetPath, final boolean recursive) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(targetPath, "targetPath");
@@ -109,7 +105,6 @@ public class UssDelete {
      * @param fileSystemName file system name
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response deleteZfs(final String fileSystemName) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(fileSystemName, "fileSystemName");

@@ -40,7 +40,6 @@ public class DsnCopy {
      * DsnCopy constructor
      *
      * @param connection is a connection, see ZosConnection object
-     * @author Leonid Baranov
      */
     public DsnCopy(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -56,7 +55,6 @@ public class DsnCopy {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Frank Giordano
      */
     DsnCopy(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -87,7 +85,6 @@ public class DsnCopy {
      * @param copyAllMembers  if true, copy all members in the source partition dataset specified
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Leonid Baranov
      */
     public Response copy(final String fromDataSetName, final String toDataSetName, final boolean replace,
                          final boolean copyAllMembers) throws ZosmfRequestException {
@@ -105,8 +102,6 @@ public class DsnCopy {
      * @param copyInputData contains copy dataset parameters
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Leonid Baranov
-     * @author Frank Giordano
      */
     public Response copyCommon(final DsnCopyInputData copyInputData) throws ZosmfRequestException {
         ValidateUtils.checkNullParameter(copyInputData, "copyInputData");
@@ -130,7 +125,6 @@ public class DsnCopy {
      *
      * @param copyInputData DsnCopyInputData object
      * @return url string value
-     * @author Frank Giordano
      */
     private String setUrl(final DsnCopyInputData copyInputData) {
         final String toDataSetNameErrMsg = "toDataSetName not specified";
@@ -156,7 +150,6 @@ public class DsnCopy {
      *
      * @param copyInputData DsnCopyInputData object
      * @return map containing key-value pairs for the from-dataset parent json value
-     * @author Frank Giordano
      */
     private Map<String, Object> setFromDataSetMapValues(final DsnCopyInputData copyInputData) {
         final String fromDataSetNameErrMsg = "fromDataSetName not specified";
@@ -189,7 +182,6 @@ public class DsnCopy {
      *
      * @param fromDataSetName string value representing a data set notation
      * @return boolean true or false
-     * @author Frank Giordano
      */
     private boolean isMemberNameIncluded(final String fromDataSetName) {
         return fromDataSetName.indexOf("(") > 0;

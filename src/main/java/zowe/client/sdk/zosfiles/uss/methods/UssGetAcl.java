@@ -36,6 +36,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssGetAcl {
@@ -47,7 +48,6 @@ public class UssGetAcl {
      * UssGetAcl Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssGetAcl(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -63,7 +63,6 @@ public class UssGetAcl {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author James Kostrewski
      */
     UssGetAcl(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -82,7 +81,6 @@ public class UssGetAcl {
      * @param useCommas  true if commas are to be used in the output
      * @return list of attribute strings
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     @SuppressWarnings("DuplicatedCode")
     public List<String> get(final String targetPath, final boolean useCommas) throws ZosmfRequestException {
@@ -106,7 +104,6 @@ public class UssGetAcl {
      * @param getAclInputData UssGetAclInputData object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response getAclCommon(final String targetPath, final UssGetAclInputData getAclInputData)
             throws ZosmfRequestException {

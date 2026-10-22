@@ -41,7 +41,6 @@ public class WorkflowCancel {
      * WorkflowCancel constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Jorge Samaniego
      */
     public WorkflowCancel(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -57,7 +56,6 @@ public class WorkflowCancel {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author Jorge Samaniego
      */
     WorkflowCancel(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -78,7 +76,6 @@ public class WorkflowCancel {
      * @param workflowKey workflow key identifying the workflow to cancel
      * @return WorkflowCancelResponse object containing the canceled workflow name
      * @throws ZosmfRequestException request error state
-     * @author Jorge Samaniego
      */
     public WorkflowCancelResponse cancel(final String workflowKey) throws ZosmfRequestException {
         ValidateUtils.checkIllegalParameter(workflowKey, "workflowKey");

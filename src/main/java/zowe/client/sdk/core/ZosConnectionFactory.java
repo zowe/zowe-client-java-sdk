@@ -43,6 +43,7 @@ import zowe.client.sdk.utility.ValidateUtils;
  * {@link AuthType#SSL} connections and therefore require a PKCS12 client certificate file.
  *
  * @author Frank Giordano
+ * @author Shabaz Kowthalam
  * @version 7.0
  */
 public class ZosConnectionFactory {
@@ -62,8 +63,6 @@ public class ZosConnectionFactory {
      * @param user     Username for authentication
      * @param password Password for authentication
      * @return ZosConnection configured for basic authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
      */
     public static ZosConnection createBasicConnection(final String host,
                                                       final int port,
@@ -81,8 +80,6 @@ public class ZosConnectionFactory {
      * @param password Password for authentication
      * @param basePath base path for z/OSMF REST endpoints
      * @return ZosConnection configured for basic authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
      */
     public static ZosConnection createBasicConnection(final String host,
                                                       final int port,
@@ -116,8 +113,6 @@ public class ZosConnectionFactory {
      * @param port  Port number of the z/OSMF server
      * @param token Authentication token cookie
      * @return ZosConnection configured for token authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
      */
     public static ZosConnection createTokenConnection(final String host,
                                                       final int port,
@@ -133,8 +128,6 @@ public class ZosConnectionFactory {
      * @param token    Authentication token cookie
      * @param basePath base path for z/OSMF REST endpoints
      * @return ZosConnection configured for token authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
      */
     public static ZosConnection createTokenConnection(final String host,
                                                       final int port,
@@ -196,8 +189,6 @@ public class ZosConnectionFactory {
      *                     the client certificate and private key
      * @param certPassword Password for the PKCS12 certificate file ({@code .p12})
      * @return ZosConnection configured for SSL/TLS client certificate authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
      */
     public static ZosConnection createSslConnection(final String host,
                                                     final int port,
@@ -220,8 +211,6 @@ public class ZosConnectionFactory {
      * @param certPassword Password for the PKCS12 certificate file ({@code .p12})
      * @param basePath     Base path for z/OSMF REST endpoints
      * @return ZosConnection configured for SSL/TLS client certificate authentication
-     * @author Frank Giordano
-     * @author Shabaz Kowthalam
      */
     public static ZosConnection createSslConnection(final String host,
                                                     final int port,

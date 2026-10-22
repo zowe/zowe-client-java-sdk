@@ -79,7 +79,6 @@ public class ZosLogInputData {
      * ZosLogInputData constructor
      *
      * @param builder Builder object
-     * @author Frank Giordano
      */
     private ZosLogInputData(final ZosLogInputData.Builder builder) {
         this.startTime = builder.startTime;

@@ -19,6 +19,7 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-data-set-member-utilities">z/OSMF REST API</a>
  *
  * @author Leonid Baranov
+ * @author Frank Giordano
  * @version 7.0
  */
 public class DsnCopyInputData {
@@ -57,7 +58,6 @@ public class DsnCopyInputData {
      * DsnCopyInputData constructor
      *
      * @param builder DsnCopyInputData.Builder object
-     * @author Leonid Baranov
      */
     private DsnCopyInputData(final DsnCopyInputData.Builder builder) {
         this.fromVolser = builder.fromVolser;

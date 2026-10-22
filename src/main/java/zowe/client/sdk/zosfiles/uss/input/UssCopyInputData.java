@@ -19,6 +19,7 @@ import java.util.Optional;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssCopyInputData {
@@ -43,7 +44,6 @@ public class UssCopyInputData {
      * UssCopyInputData constructor
      *
      * @param builder UssCopyInputData.Builder builder
-     * @author James Kostrewski
      */
     public UssCopyInputData(final UssCopyInputData.Builder builder) {
         this.from = builder.from;

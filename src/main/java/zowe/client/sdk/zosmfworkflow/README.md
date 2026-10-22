@@ -34,7 +34,7 @@ public class WorkflowExp extends TstZosConnection {
      * z/OSMF Workflow functionalities.
      *
      * @param args for main not used
-     * @author Frank Giordano
+
      */
     public static void main(String[] args) {
         ZosConnection connection = ZosConnectionFactory

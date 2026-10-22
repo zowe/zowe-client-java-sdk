@@ -34,7 +34,6 @@ public class UssCreateExp extends TstZosConnection {
      * The main method performs setup and method calls to test UssCreate
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String fileNamePath = "/xxx/xx/xx";
@@ -52,7 +51,6 @@ public class UssCreateExp extends TstZosConnection {
      *
      * @param value directory name with a path to create
      * @return Response object
-     * @author Frank Giordano
      */
     private static Response CreateDirectory(String value) {
         try {
@@ -73,7 +71,6 @@ public class UssCreateExp extends TstZosConnection {
      *
      * @param value file name with a path to create
      * @return Response object
-     * @author Frank Giordano
      */
     private static Response CreateFile(String value) {
         try {
@@ -118,7 +115,6 @@ public class UssDeleteExp extends TstZosConnection {
      * The main method performs setup and method calls to test UssDelete
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String fileNamePath = "/xxx/xx/xx";
@@ -137,7 +133,6 @@ public class UssDeleteExp extends TstZosConnection {
      *
      * @param value file name with a path to delete
      * @return Response object
-     * @author Frank Giordano
      */
     private static Response DeleteFile(String value) {
         try {
@@ -156,7 +151,6 @@ public class UssDeleteExp extends TstZosConnection {
      *
      * @param value directory name with a path to delete
      * @return Response object
-     * @author Frank Giordano
      */
     private static Response DeleteDirectory(String value) {
         try {
@@ -204,7 +198,6 @@ public class UssGetExp extends TstZosConnection {
      * The main method performs setup and method calls to test UssGet
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String fileNamePath = "/xx/xx/xxx";  // where xxx is a file name, the rest a directory path...
@@ -225,7 +218,6 @@ public class UssGetExp extends TstZosConnection {
      * For this case, no search result is returned due to case-sensitive search.
      *
      * @param fileNamePath file name with a path
-     * @author Frank Giordano
      */
     private static void getFileTextContentWithSearchFilterNoResults(String fileNamePath) {
         Response response;
@@ -254,7 +246,6 @@ public class UssGetExp extends TstZosConnection {
      * It returns data from the file from the starting point of the search value.
      *
      * @param fileNamePath file name with a path
-     * @author Frank Giordano
      */
     private static void getFileTextContentWithSearchFilter(String fileNamePath) {
         Response response;
@@ -276,7 +267,6 @@ public class UssGetExp extends TstZosConnection {
      * This method returns the entire text content of the fileNamePath value.
      *
      * @param fileNamePath file name with a path
-     * @author Frank Giordano
      */
     private static void getFileTextContent(String fileNamePath) {
         String content;
@@ -297,7 +287,6 @@ public class UssGetExp extends TstZosConnection {
      * This method returns the last two records (lines) from the file name path value.
      *
      * @param fileNamePath file name with a path
-     * @author Frank Giordano
      */
     private static void getFileTextContentWithRange(String fileNamePath) {
         Response response;
@@ -349,7 +338,6 @@ public class UssListExp extends TstZosConnection {
      * The main method performs setup and method calls to test UssList
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         String fileNamePath = "/xxx/xx/xx";
@@ -364,7 +352,6 @@ public class UssListExp extends TstZosConnection {
      * Perform a UNIX zFS list
      *
      * @param value file name with path
-     * @author Frank Giordano
      */
     private static void zfsList(String value) {
         List<UnixZfs> items;
@@ -386,7 +373,6 @@ public class UssListExp extends TstZosConnection {
      * Perform a UNIX file list
      *
      * @param value file name with a path
-     * @author Frank Giordano
      */
     private static void fileList(String value) {
         List<UnixFile> items;

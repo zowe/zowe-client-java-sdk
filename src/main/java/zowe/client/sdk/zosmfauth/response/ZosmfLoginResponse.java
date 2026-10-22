@@ -37,7 +37,6 @@ public class ZosmfLoginResponse {
      *
      * @param response Response object
      * @param tokens   Cookies object representing TOKENS
-     * @author Frank Giordano
      */
     public ZosmfLoginResponse(final Response response, final Cookies tokens) {
         this.response = response;

@@ -33,7 +33,6 @@ public final class ValidateUtils {
      *
      * @param value string value
      * @param name  name of attribute
-     * @author Frank Giordano
      */
     public static void checkIllegalParameter(String value, String name) {
         if (value == null || value.isBlank()) {
@@ -47,7 +46,6 @@ public final class ValidateUtils {
      * @param check check for true or false value
      * @param msg   message to display if the check is true
      * @throws IllegalArgumentException with message
-     * @author Frank Giordano
      */
     public static void checkIllegalParameter(final boolean check, final String msg) {
         Optional<String> message = Optional.ofNullable(msg);
@@ -62,7 +60,6 @@ public final class ValidateUtils {
      * @param value value of the input
      * @param name  name of the input
      * @throws NullPointerException - input is null
-     * @author Frank Giordano
      */
     public static void checkNullParameter(final Object value, final String name) {
         if (value == null) {
@@ -77,7 +74,6 @@ public final class ValidateUtils {
      * @param name  name of the input
      * @param msg   message to be appended in the exception
      * @throws NullPointerException input is null with message appended to exception
-     * @author Frank Giordano
      */
     public static void checkNullParameter(final Object value, final String name, final String msg) {
         if (value == null) {
@@ -90,7 +86,6 @@ public final class ValidateUtils {
      *
      * @param connection for connection information, see SshConnection object
      * @throws IllegalStateException with the message "Connection data not setup properly"
-     * @author Frank Giordano
      */
     public static void checkSshConnection(final SshConnection connection) {
         if (connection == null || connection.getHost() == null || connection.getPassword() == null ||

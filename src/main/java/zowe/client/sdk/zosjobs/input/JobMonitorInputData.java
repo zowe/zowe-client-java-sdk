@@ -70,7 +70,6 @@ public class JobMonitorInputData {
      * JobMonitorInputData constructor
      *
      * @param builder JobMonitorInputData.Builder object
-     * @author Frank Giordano
      */
     private JobMonitorInputData(final JobMonitorInputData.Builder builder) {
         this.jobId = builder.jobId;

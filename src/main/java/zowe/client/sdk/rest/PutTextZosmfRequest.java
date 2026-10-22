@@ -36,7 +36,6 @@ public class PutTextZosmfRequest extends ZosmfRequest {
      * PutTextZosmfRequest constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Frank Giordano
      */
     public PutTextZosmfRequest(final ZosConnection connection) {
         super(connection);
@@ -47,7 +46,6 @@ public class PutTextZosmfRequest extends ZosmfRequest {
      *
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     @Override
     public Response executeRequest() throws ZosmfRequestException {
@@ -67,7 +65,6 @@ public class PutTextZosmfRequest extends ZosmfRequest {
      * Set the body information for the http request
      *
      * @param body String value
-     * @author Frank Giordano
      */
     @Override
     public void setBody(final Object body) {
@@ -77,8 +74,6 @@ public class PutTextZosmfRequest extends ZosmfRequest {
 
     /**
      * Set the standard headers for the http request
-     *
-     * @author Frank Giordano
      */
     @Override
     public void setStandardHeaders() {

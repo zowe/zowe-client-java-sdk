@@ -38,7 +38,6 @@ public class WorkflowListArchivedInputData {
      * WorkflowListArchivedInputData constructor.
      *
      * @param builder builder instance
-     * @author Muhammad Imran
      */
     private WorkflowListArchivedInputData(final Builder builder) {
         this.orderBy = builder.orderBy;

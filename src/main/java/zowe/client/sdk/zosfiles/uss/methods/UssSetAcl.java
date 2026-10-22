@@ -34,6 +34,7 @@ import java.util.Map;
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=interface-zos-unix-file-utilities">z/OSMF REST API</a>
  *
  * @author James Kostrewski
+ * @author Frank Giordano
  * @version 7.0
  */
 public class UssSetAcl {
@@ -45,7 +46,6 @@ public class UssSetAcl {
      * UssSetAcl Constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author James Kostrewski
      */
     public UssSetAcl(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -61,7 +61,6 @@ public class UssSetAcl {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PutJsonZosmfRequest} implementation object
-     * @author James Kostrewski
      */
     UssSetAcl(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -80,7 +79,6 @@ public class UssSetAcl {
      * @param setValue   sets the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response set(final String targetPath, final String setValue) throws ZosmfRequestException {
         return setAclCommon(targetPath, SetAclInputFactory.createSetInput(setValue));
@@ -93,7 +91,6 @@ public class UssSetAcl {
      * @param modifyValue modifies the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response modify(final String targetPath, final String modifyValue) throws ZosmfRequestException {
         return setAclCommon(targetPath, SetAclInputFactory.createModifyInput(modifyValue));
@@ -106,7 +103,6 @@ public class UssSetAcl {
      * @param deleteValue deletes the extended ACL entries that are specified by 'entries'
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response delete(final String targetPath, final String deleteValue) throws ZosmfRequestException {
         return setAclCommon(targetPath, SetAclInputFactory.createDeleteInput(deleteValue));
@@ -119,7 +115,6 @@ public class UssSetAcl {
      * @param deleteType deletes the extended ACL entries that are specified by type
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response deleteByType(final String targetPath, final DeleteAclType deleteType)
             throws ZosmfRequestException {
@@ -135,7 +130,6 @@ public class UssSetAcl {
      * @param deleteValue deletes the extended ACL entries that are specified by 'entries' type
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author Frank Giordano
      */
     public Response modifyAndDelete(final String targetPath, final String modifyValue, final String deleteValue)
             throws ZosmfRequestException {
@@ -149,7 +143,6 @@ public class UssSetAcl {
      * @param setAclInputData UssSetAclInputData object to drive the request
      * @return Response object
      * @throws ZosmfRequestException request error state
-     * @author James Kostrewski
      */
     public Response setAclCommon(final String targetPath, final UssSetAclInputData setAclInputData)
             throws ZosmfRequestException {

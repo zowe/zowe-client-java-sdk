@@ -40,7 +40,6 @@ public class VariableCreate {
      * VariableCreate constructor.
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Muhammad Imran
      */
     public VariableCreate(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -57,7 +56,6 @@ public class VariableCreate {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PostJsonZosmfRequest} implementation object
-     * @author Muhammad Imran
      */
     VariableCreate(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -80,7 +78,6 @@ public class VariableCreate {
      * @param variables   variables to create or update
      * @return http response object
      * @throws ZosmfRequestException request error state
-     * @author Muhammad Imran
      */
     public Response create(final String sysplexName,
                            final String systemName,

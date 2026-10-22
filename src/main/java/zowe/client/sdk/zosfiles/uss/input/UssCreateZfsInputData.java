@@ -101,7 +101,6 @@ public class UssCreateZfsInputData {
      * UssCreateZfsInputData constructor
      *
      * @param builder UssCreateZfsInputData.Builder object
-     * @author Frank Giordano
      */
     private UssCreateZfsInputData(final UssCreateZfsInputData.Builder builder) {
         this.owner = builder.owner;

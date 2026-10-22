@@ -86,7 +86,6 @@ public class UssCmdExp {
      * using the UssCmd class.
      *
      * @param args for main not used
-     * @author Frank Giordano
      */
     public static void main(String[] args) {
         int portNum = 0; // replace with valid value

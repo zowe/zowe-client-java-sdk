@@ -38,7 +38,6 @@ public class ZosmfLogin {
      * ZosmfLogin constructor
      *
      * @param connection for connection information, see ZosConnection object
-     * @author Esteban Sandoval
      */
     public ZosmfLogin(final ZosConnection connection) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -54,7 +53,6 @@ public class ZosmfLogin {
      *
      * @param connection for connection information, see ZosConnection object
      * @param request    a {@link PostJsonZosmfRequest} implementation object
-     * @author Esteban Sandoval
      */
     ZosmfLogin(final ZosConnection connection, final ZosmfRequest request) {
         ValidateUtils.checkNullParameter(connection, "connection");
@@ -71,8 +69,6 @@ public class ZosmfLogin {
      *
      * @return ZosmfLoginResponse object
      * @throws ZosmfRequestException request error state
-     * @author Esteban Sandoval
-     * @author Frank Giordano
      */
     public ZosmfLoginResponse login() throws ZosmfRequestException {
         final String url = connection.getZosmfUrl() + ZosmfAuthConstants.RESOURCE;

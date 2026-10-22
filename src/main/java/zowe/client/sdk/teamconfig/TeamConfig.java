@@ -82,7 +82,6 @@ public class TeamConfig {
      * @param keyTarService     required KeyTarService dependency
      * @param teamConfigService required TeamConfigService dependency
      * @throws TeamConfigException error processing team configuration
-     * @author Frank Giordano
      */
     public TeamConfig(final KeyTarService keyTarService, final TeamConfigService teamConfigService)
             throws TeamConfigException {
@@ -95,7 +94,6 @@ public class TeamConfig {
      * Initialize dependency objects
      *
      * @throws TeamConfigException error processing team configuration
-     * @author Frank Giordano
      */
     private void config() throws TeamConfigException {
         keyTarConfig = keyTarService.getKeyTarConfig();
@@ -111,7 +109,6 @@ public class TeamConfig {
      *
      * @param profileType profile type
      * @return ProfileDao object
-     * @author Frank Giordano
      */
     public ProfileDao getDefaultProfile(final String profileType) {
         ValidateUtils.checkIllegalParameter(profileType, "profileType");
@@ -142,7 +139,6 @@ public class TeamConfig {
      * @param profileName   profile name
      * @param partitionName partition name
      * @return ProfileDao object
-     * @author Frank Giordano
      */
     public ProfileDao getDefaultProfileFromPartition(final String profileName, final String partitionName) {
         ValidateUtils.checkIllegalParameter(profileName, "profileName");
@@ -180,7 +176,6 @@ public class TeamConfig {
      * @param profileName       name of the profile to update
      * @param updatedProperties map of property key/value pairs to set on the profile
      * @throws TeamConfigException error reading or writing the team configuration file
-     * @author Frank Giordano
      */
     public void updateProfile(final String profileName, final Map<String, String> updatedProperties)
             throws TeamConfigException {
@@ -196,7 +191,6 @@ public class TeamConfig {
      * @param target Profile object
      * @param base   Profile object
      * @return target profile object
-     * @author Frank Giordano
      */
     private Profile merge(final Profile target, final Profile base) {
         Optional<Map<String, String>> targetProps = Optional.empty();

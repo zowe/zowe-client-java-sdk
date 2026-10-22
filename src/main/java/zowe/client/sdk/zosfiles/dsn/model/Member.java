@@ -97,7 +97,6 @@ public class Member {
      * @param msec   msec value
      * @param user   user of member
      * @param sclm   sclm value
-     * @author Frank Giordano
      */
     @JsonCreator
     public Member(
