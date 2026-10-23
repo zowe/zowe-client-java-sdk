@@ -145,12 +145,6 @@ public class TsoCmdTest {
      *
      * @throws Exception if a mocked service call fails unexpectedly
      */
-    /**
-     * Tests that when sendCommand returns a prompt-only payload, the command completes immediately
-     * without unnecessary GET polling.
-     *
-     * @throws Exception if a mocked service call fails unexpectedly
-     */
     @Test
     public void tstIssueCommandCompletesWhenSendCommandReturnsPromptOnlySuccess() throws Exception {
         String promptOnlyResponse = "{\"tsoData\":[{\"TSO PROMPT\":{\"VERSION\":\"0100\",\"HIDDEN\":\"FALSE\"}}]}";
