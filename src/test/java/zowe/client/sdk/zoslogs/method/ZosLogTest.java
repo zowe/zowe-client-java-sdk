@@ -286,6 +286,30 @@ public class ZosLogTest {
     }
 
     @Test
+    public void tstIssueCommandWithTimeRangeOnlySuccess() throws ZosmfRequestException {
+        String json = "{\n" +
+                "  \"nextTimestamp\": 0,\n" +
+                "  \"source\": \"OPERLOGS\",\n" +
+                "  \"totalitems\": 0,\n" +
+                "  \"items\": []\n" +
+                "}";
+
+        Mockito.when(mockJsonGetRequest.executeRequest()).thenReturn(
+                new Response(json, 200, "success"));
+
+        ZosLog zosLog = new ZosLog(connection, mockJsonGetRequest);
+        ZosLogInputData inputData = new ZosLogInputData.Builder()
+                .timeRange("10m")
+                .build();
+
+        zosLog.issueCommand(inputData);
+
+        assertEquals(
+                "https://1:443/zosmf/restconsoles/v1/log?timeRange=10m",
+                mockJsonGetRequest.getUrl());
+    }
+
+    @Test
     public void tstIssueCommandPaginatesUntilLastPageSuccess() throws ZosmfRequestException {
         String firstPage = buildLogResponseJson(111L, 10_000L);
         String secondPage = buildLogResponseJson(222L, 10_000L);

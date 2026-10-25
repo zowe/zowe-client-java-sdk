@@ -14,6 +14,7 @@ import zowe.client.sdk.zoslogs.types.DirectionType;
 import zowe.client.sdk.zoslogs.types.HardCopyType;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * The z/OSMF log API parameters. See the z/OSMF REST API documentation for full details.
@@ -24,6 +25,11 @@ import java.util.Optional;
  * @version 7.0
  */
 public class ZosLogInputData {
+
+    private static final Pattern TIME_RANGE = Pattern.compile("[1-9]\\d{0,2}[smh]");
+    private static final String TIME_RANGE_ERROR =
+            "timeRange must be a value from 1 to 999 followed by s, m or h "
+                    + "(for example 999s, 123m, 10h), but was: ";
 
     /**
      * The z/OSMF log API {@code time} query parameter. This field is optional.
@@ -63,7 +69,7 @@ public class ZosLogInputData {
      * Supported time units include s, m, and h for seconds, minutes, and hours.
      * For example, 10s, 10m, 10h.
      * The format is nnnu, where nnn is a number 1-999 and u is one of the time units "s", "m", or "h".
-     * For example, 999s of 20m.
+     * For example, 999s or 20m.
      * <p>
      * The default is 10m.
      */
@@ -125,7 +131,7 @@ public class ZosLogInputData {
     }
 
     /**
-     * Is process response specified if so, handle JSON data differently?
+     * Is the process response specified if so, handle JSON data differently?
      *
      * @return boolean true or false
      */
@@ -259,10 +265,13 @@ public class ZosLogInputData {
          * The default is 10m.
          *
          * @param timeRange range of log output to retrieve, the following are valid examples:
-         *                  1s (one second), 10m (tem minutes), 24h (24 hours), etc.
+         *                  1s (one second), 10m (ten minutes), 24h (24 hours), etc.
          * @return Builder this object
          */
         public Builder timeRange(final String timeRange) {
+            if (timeRange == null || !TIME_RANGE.matcher(timeRange).matches()) {
+                throw new IllegalArgumentException(TIME_RANGE_ERROR + timeRange);
+            }
             this.timeRange = timeRange;
             queryCount++;
             return this;
@@ -274,7 +283,7 @@ public class ZosLogInputData {
          * <p>
          * Default is false.
          *
-         * @param processResponses true of false should message item be parsed for newline characters
+         * @param processResponses true of false should the message item be parsed for newline characters
          * @return Builder this object
          */
         public Builder processResponses(final boolean processResponses) {
