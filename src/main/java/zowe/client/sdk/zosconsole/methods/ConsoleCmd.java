@@ -20,6 +20,7 @@ import zowe.client.sdk.utility.ConsoleUtils;
 import zowe.client.sdk.utility.EncodeUtils;
 import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
+import zowe.client.sdk.zosconsole.ConsoleCmdProvider;
 import zowe.client.sdk.zosconsole.ConsoleConstants;
 import zowe.client.sdk.zosconsole.input.ConsoleCmdInputData;
 import zowe.client.sdk.zosconsole.response.ConsoleCmdResponse;
@@ -50,7 +51,7 @@ import java.util.Map;
  * @author Frank Giordano
  * @version 7.0
  */
-public class ConsoleCmd {
+public class ConsoleCmd implements ConsoleCmdProvider {
 
     private static final String CMD = "cmd";
     private static final String SOL_KEY = "sol-key";
