@@ -30,8 +30,8 @@ public final class UssCmdResponse {
     /**
      * UssCmdResponse constructor.
      *
-     * @param stdout string value containing standard output from the USS command
-     * @param stderr string value containing standard error from the USS command
+     * @param stdout   string value containing standard output from the USS command
+     * @param stderr   string value containing standard error from the USS command
      * @param exitCode int value containing the remote command exit code
      */
     public UssCmdResponse(final String stdout, final String stderr, final int exitCode) {
@@ -80,7 +80,7 @@ public final class UssCmdResponse {
      * Returns a string representation of this USS command response.
      *
      * @return string representation containing standard output, standard error,
-     *         and the remote command exit code
+     * and the remote command exit code
      */
     @Override
     public String toString() {
