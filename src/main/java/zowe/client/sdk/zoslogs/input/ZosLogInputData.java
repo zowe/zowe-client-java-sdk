@@ -200,8 +200,9 @@ public class ZosLogInputData {
         private String timeRange;
 
         /**
-         * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
-         * sequences with '\n', but there may be cases where that are not preferable. Specify false to prevent processing.
+         * The z/OSMF Console API returns '\r' or '\r\n' for line breaks. By default, these sequences are replaced
+         * with '\n'. However, there may be cases where this behavior is not preferable.
+         * Specify false to prevent processing.
          */
         private boolean processResponses;
 
@@ -269,8 +270,9 @@ public class ZosLogInputData {
         }
 
         /**
-         * The z/OSMF Console API returns '\r' or '\r\n' where line-breaks. Can attempt to replace these
-         * sequences with '\n', but there may be cases where that are not preferable. Specify false to prevent processing.
+         * The z/OSMF Console API returns '\r' or '\r\n' for line breaks. By default, these sequences are replaced
+         * with '\n'. However, there may be cases where this behavior is not preferable.
+         * Specify false to prevent processing.
          * <p>
          * Default is false.
          *
