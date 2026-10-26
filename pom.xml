@@ -74,7 +74,7 @@
         <dependency>
             <groupId>com.konghq</groupId>
             <artifactId>unirest-modules-jackson-legacy</artifactId>
-            <version>4.10.2</version>
+            <version>4.10.3</version>
         </dependency>
 
         <!-- Test -->
