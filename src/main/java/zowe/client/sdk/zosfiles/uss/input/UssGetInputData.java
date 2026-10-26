@@ -170,7 +170,6 @@ public class UssGetInputData {
                 ", maxreturnsize=" + maxreturnsize +
                 ", queryCount=" + queryCount +
                 ", binary=" + binary +
-                ", queryCount=" + queryCount +
                 ", recordsRange=" + recordsRange +
                 '}';
     }

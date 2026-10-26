@@ -206,11 +206,6 @@ public class ZosLogInputData {
         private boolean processResponses;
 
         /**
-         * Internal use to count the number of query parameters specified
-         */
-        private int queryCount = 0;
-
-        /**
          * Builder constructor
          */
         public Builder() {
@@ -226,7 +221,6 @@ public class ZosLogInputData {
          */
         public Builder startTime(final String startTime) {
             this.startTime = startTime;
-            queryCount++;
             return this;
         }
 
@@ -241,7 +235,6 @@ public class ZosLogInputData {
          */
         public Builder hardCopy(final HardCopyType hardCopy) {
             this.hardCopy = hardCopy;
-            queryCount++;
             return this;
         }
 
@@ -255,7 +248,6 @@ public class ZosLogInputData {
          */
         public Builder direction(final DirectionType direction) {
             this.direction = direction;
-            queryCount++;
             return this;
         }
 
@@ -273,7 +265,6 @@ public class ZosLogInputData {
                 throw new IllegalArgumentException(TIME_RANGE_ERROR + timeRange);
             }
             this.timeRange = timeRange;
-            queryCount++;
             return this;
         }
 
@@ -288,7 +279,6 @@ public class ZosLogInputData {
          */
         public Builder processResponses(final boolean processResponses) {
             this.processResponses = processResponses;
-            queryCount++;
             return this;
         }
 
