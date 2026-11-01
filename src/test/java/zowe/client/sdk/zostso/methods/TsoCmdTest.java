@@ -17,6 +17,7 @@ import zowe.client.sdk.zostso.input.StartTsoInputData;
 import zowe.client.sdk.zostso.response.TsoStartResponse;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,6 +34,8 @@ import static org.mockito.Mockito.*;
  */
 public class TsoCmdTest {
 
+    private static final int DEFAULT_PROMPT_TIMEOUT = 30;
+    private static final int DEFAULT_IDLE_TIMEOUT = 5;
     private ZosConnection mockConnection;
     private TsoStart mockTsoStart;
     private TsoSend mockTsoSend;
@@ -87,7 +90,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -126,7 +131,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -159,7 +166,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -193,7 +202,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -230,7 +241,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -268,7 +281,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -308,7 +323,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         StartTsoInputData inputData = new StartTsoInputData();
         inputData.setAccount("ACCT456");
@@ -350,7 +367,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
         List<String> result = issueTso.issueCommand(command);
 
@@ -376,7 +395,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
 
         try {
@@ -410,7 +431,9 @@ public class TsoCmdTest {
                 mockTsoStart,
                 mockTsoStop,
                 mockTsoSend,
-                mockTsoReply
+                mockTsoReply,
+                TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT)
         );
 
         List<String> result = issueTso.issueCommandByTsoSessionId(sessionId, command);
@@ -425,6 +448,99 @@ public class TsoCmdTest {
 
         verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
         verify(mockTsoReply, times(1)).reply(sessionId);
+    }
+
+    /**
+     * Tests that an idle TSO session throws an exception when no output is
+     * received within the configured idle timeout.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandIdleTimeoutFailure() throws Exception {
+        String firstResponse =
+                "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"COMMAND STARTED\"}}]}";
+        String emptyResponse = "{\"tsoData\":[]}";
+
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, ""));
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
+        when(mockTsoReply.reply(sessionId)).thenReturn(emptyResponse);
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply,
+                TimeUnit.SECONDS.toNanos(1),
+                TimeUnit.MILLISECONDS.toNanos(10)
+        );
+
+        ZosmfRequestException ex = assertThrows(
+                ZosmfRequestException.class,
+                () -> issueTso.issueCommand(command)
+        );
+
+        assertEquals(
+                "No TSO output received for 5 minutes while waiting for TSO command to complete",
+                ex.getMessage()
+        );
+
+        verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
+        verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoReply, atLeastOnce()).reply(sessionId);
+        verify(mockTsoStop, times(1)).stop(sessionId);
+    }
+
+    /**
+     * Tests that a TSO command throws an exception when the overall prompt
+     * timeout is reached even though command output continues to be received.
+     *
+     * @throws Exception if a mocked service call fails unexpectedly
+     */
+    @Test
+    public void tstIssueCommandPromptTimeoutFailure() throws Exception {
+        String firstResponse =
+                "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"COMMAND STARTED\"}}]}";
+        String runningResponse =
+                "{\"tsoData\":[{\"TSO MESSAGE\":{\"DATA\":\"STILL RUNNING\"}}]}";
+
+        when(mockTsoStart.start(any(StartTsoInputData.class))).thenReturn(
+                new TsoStartResponse(true, sessionId, ""));
+        when(mockTsoSend.sendCommand(sessionId, command)).thenReturn(firstResponse);
+
+        when(mockTsoReply.reply(sessionId)).thenAnswer(invocation -> {
+            Thread.sleep(5);
+            return runningResponse;
+        });
+
+        TsoCmd issueTso = new TsoCmd(
+                mockConnection,
+                account,
+                mockTsoStart,
+                mockTsoStop,
+                mockTsoSend,
+                mockTsoReply,
+                TimeUnit.MILLISECONDS.toNanos(50),
+                TimeUnit.SECONDS.toNanos(1)
+        );
+
+        ZosmfRequestException ex = assertThrows(
+                ZosmfRequestException.class,
+                () -> issueTso.issueCommand(command)
+        );
+
+        assertEquals(
+                "Timeout waiting for TSO command to complete",
+                ex.getMessage()
+        );
+
+        verify(mockTsoStart, times(1)).start(any(StartTsoInputData.class));
+        verify(mockTsoSend, times(1)).sendCommand(sessionId, command);
+        verify(mockTsoReply, atLeastOnce()).reply(sessionId);
+        verify(mockTsoStop, times(1)).stop(sessionId);
     }
 
     /**
@@ -493,7 +609,9 @@ public class TsoCmdTest {
         NullPointerException ex = assertThrows(
                 NullPointerException.class,
                 () -> new TsoCmd(null, "1", null,
-                        null, null, null)
+                        null, null, null,
+                        TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT),
+                        TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT))
         );
         assertEquals("connection is null", ex.getMessage());
     }
