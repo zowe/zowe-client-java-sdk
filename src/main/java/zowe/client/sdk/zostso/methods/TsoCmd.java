@@ -38,6 +38,7 @@ public class TsoCmd {
     private static final Logger LOG = LoggerFactory.getLogger(TsoCmd.class);
 
     private static final int DEFAULT_PROMPT_TIMEOUT = 30;
+    private static final int DEFAULT_IDLE_TIMEOUT = 5;
     private static final int DEFAULT_POLL_INTERVAL = 100;
     private final List<String> msgLst = new ArrayList<>();
     private final List<String> promptLst = new ArrayList<>();
@@ -48,6 +49,8 @@ public class TsoCmd {
     private TsoSend tsoSend;
     private TsoReply tsoReply;
     private StartTsoInputData inputData;
+    private final long promptTimeoutNanos;
+    private final long idleTimeoutNanos;
 
     /**
      * TsoCmd constructor
@@ -60,27 +63,34 @@ public class TsoCmd {
         ValidateUtils.checkIllegalParameter(accountNumber, "accountNumber");
         this.connection = connection;
         this.accountNumber = accountNumber;
+        this.promptTimeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
+        this.idleTimeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_IDLE_TIMEOUT);
     }
 
     /**
-     * Alternative TsoCmd constructor with ZoweRequest object. This is mainly used for internal code unit
-     * testing with Mockito, and it is not recommended to be used by the larger community.
+     * Alternative TsoCmd constructor intended primarily for internal unit testing with Mockito.
+     * This constructor allows mocked TSO components and custom timeout values to be supplied
+     * so command and timeout behavior can be tested without waiting for the production timeout durations.
      * <p>
-     * This constructor is package-private visibility.
+     * This constructor has package-private visibility and is not intended for general SDK usage.
      *
-     * @param connection    for connection information, see ZosConnection object
-     * @param accountNumber account number for tso processing
-     * @param tsoStart      TsoStart for mocking
-     * @param tsoStop       TsoStop for mocking
-     * @param tsoSend       TsoSend for mocking
-     * @param tsoReply      TsoReply for mocking
+     * @param connection         connection information, see ZosConnection
+     * @param accountNumber      account number for TSO processing
+     * @param tsoStart           TsoStart instance for mocking
+     * @param tsoStop            TsoStop instance for mocking
+     * @param tsoSend            TsoSend instance for mocking
+     * @param tsoReply           TsoReply instance for mocking
+     * @param promptTimeoutNanos maximum time in nanoseconds to wait for the TSO command completion prompt
+     * @param idleTimeoutNanos   maximum time in nanoseconds to wait without receiving TSO output
      */
     TsoCmd(final ZosConnection connection,
            final String accountNumber,
            final TsoStart tsoStart,
            final TsoStop tsoStop,
            final TsoSend tsoSend,
-           final TsoReply tsoReply) {
+           final TsoReply tsoReply,
+           final long promptTimeoutNanos,
+           final long idleTimeoutNanos) {
         ValidateUtils.checkNullParameter(connection, "connection");
         this.connection = connection;
         this.accountNumber = accountNumber;
@@ -88,6 +98,8 @@ public class TsoCmd {
         this.tsoStop = tsoStop;
         this.tsoSend = tsoSend;
         this.tsoReply = tsoReply;
+        this.promptTimeoutNanos = promptTimeoutNanos;
+        this.idleTimeoutNanos = idleTimeoutNanos;
     }
 
     /**
@@ -186,10 +198,10 @@ public class TsoCmd {
 
         // preparation variables for reply loop
         long startTime = System.nanoTime();
-        long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
+        long idleStartTime = startTime;
         int pollCount = 0;
 
-        while (!tsoMessagesReceived && System.nanoTime() - startTime < timeoutNanos) {
+        while (!tsoMessagesReceived && System.nanoTime() - startTime < this.promptTimeoutNanos) {
             pollCount++;
             LOG.debug("Entering reply poll iteration #{} for session ID {}", pollCount, sessionId);
             // retrieve additional tso messages for the command
@@ -198,20 +210,33 @@ public class TsoCmd {
             rootNode = JsonUtils.parse(responseStr);
             JsonNode tsoDataNode = this.getTsoDataNode(rootNode);
             this.processTsoResponse(tsoDataNode);
-
-            // check for zosmf request timeout if any
-            // acts as a safeguard against future code changes or z/OSMF prompt variations
-            final boolean isTimeout = rootNode != null &&
-                    rootNode.has("timeout") && rootNode.get("timeout").asBoolean();
-            if (isTimeout) {
-                LOG.debug("z/OSMF session timeout flag detected in response #{}", pollCount);
-                this.msgLst.add("z/OSMF session timeout flag detected");
+            final boolean hasData = tsoDataNode != null && !tsoDataNode.isEmpty();
+            if (hasData) {
+                idleStartTime = System.nanoTime();
             }
 
-            if (!this.promptLst.isEmpty() || isTimeout) {
+            // a z/OSMF timeout flag only means this single reply request waited its server-side limit without
+            // receiving output; the command may still be running, so keep polling until the TSO prompt is
+            // seen, DEFAULT_IDLE_TIMEOUT passes with no output, or DEFAULT_PROMPT_TIMEOUT is reached
+            final boolean isTimeout = rootNode != null &&
+                    rootNode.has("timeout") &&
+                    rootNode.get("timeout").asBoolean();
+            if (isTimeout) {
+                LOG.debug("z/OSMF reply request timeout flag detected in response #{}, continuing to poll", pollCount);
+            }
+
+            // a reply without data (z/OSMF timeout flagged or empty) is silence, check if it has lasted too long
+            if (!hasData && this.promptLst.isEmpty() && System.nanoTime() - idleStartTime >= this.idleTimeoutNanos) {
+                LOG.error("No TSO output for {} minutes for command '{}' on session ID {}",
+                        DEFAULT_IDLE_TIMEOUT, command, sessionId);
+                throw new ZosmfRequestException("No TSO output received for " + DEFAULT_IDLE_TIMEOUT +
+                        " minutes while waiting for TSO command to complete");
+            }
+
+            if (!this.promptLst.isEmpty()) {
                 tsoMessagesReceived = true;
                 LOG.debug("Command execution completed after poll #{}", pollCount);
-            } else if (tsoDataNode == null || tsoDataNode.isEmpty()) {
+            } else if (!isTimeout && !hasData) {
                 LOG.debug("No TSO data returned after poll #{}", pollCount);
                 // Debounce only when no data was returned in this poll (matches Zowe CLI SendTso.ts)
                 WaitUtil.wait(DEFAULT_POLL_INTERVAL);
@@ -323,11 +348,10 @@ public class TsoCmd {
 
         // preparation variables for reply loop
         long startTime = System.nanoTime();
-        long timeoutNanos = TimeUnit.MINUTES.toNanos(DEFAULT_PROMPT_TIMEOUT);
         int drainCount = 0;
 
         LOG.debug("Draining startup TSO logon prompt");
-        while (this.promptLst.isEmpty() && System.nanoTime() - startTime < timeoutNanos) {
+        while (this.promptLst.isEmpty() && System.nanoTime() - startTime < this.promptTimeoutNanos) {
             drainCount++;
             LOG.debug("Drain reply poll iteration #{} for session ID {}", drainCount, startResponse.getSessionId());
             final String responseStr = this.sendTsoForReply(startResponse.getSessionId());
