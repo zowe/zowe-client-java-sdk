@@ -12,6 +12,7 @@ package zowe.client.sdk.zosfiles.uss.methods;
 import kong.unirest.core.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import zowe.client.sdk.core.ZosConnection;
 import zowe.client.sdk.core.ZosConnectionFactory;
@@ -26,8 +27,7 @@ import zowe.client.sdk.zosfiles.uss.types.CreateType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.withSettings;
+import static org.mockito.Mockito.*;
 
 /**
  * Class containing unit tests for UssCreate.
@@ -323,6 +323,154 @@ public class UssCreateTest {
                 () -> new UssCreate(connection, request)
         );
         assertEquals("POST_JSON request type required", exception.getMessage());
+    }
+    
+    // Additional coverage for USS and zFS request construction and validation.
+
+    private UssCreate mockBackedCreate() {
+        return new UssCreate(connection, mockJsonPostRequest);
+    }
+
+    private String capturedBody() {
+        ArgumentCaptor<String> bodyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(mockJsonPostRequest).setBody(bodyCaptor.capture());
+        return bodyCaptor.getValue();
+    }
+
+    @Test
+    public void tstUssCreateAlternatePathSuccess() throws ZosmfRequestException {
+        Response response = mockBackedCreate().create("/tmp/newdir",
+                new UssCreateInputData(CreateType.FILE, "rwxr-xr-x"));
+
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("https://1:443/zosmf/restfiles/fs%2Ftmp%2Fnewdir", mockJsonPostRequest.getUrl());
+        String body = capturedBody();
+        assertTrue(body.contains("\"mode\":\"rwxr-xr-x\""));
+        verify(mockJsonPostRequest).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateFileRequestBodySuccess() throws ZosmfRequestException {
+        mockBackedCreate().create("/tmp/newfile",
+                new UssCreateInputData(CreateType.FILE, "rw-r--r--"));
+
+        String body = capturedBody();
+        assertTrue(body.contains("\"mode\":\"rw-r--r--\""));
+        assertTrue(body.contains("\"type\":"));
+        verify(mockJsonPostRequest).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsDefaultSuccess() throws ZosmfRequestException {
+        Response response = mockBackedCreate().createZfs("USER.TEST.ZFS");
+
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("https://1:443/zosmf/restfiles/mfs/zfs/USER.TEST.ZFS?timeout=20",
+                mockJsonPostRequest.getUrl());
+        String body = capturedBody();
+        assertTrue(body.contains("\"cylsPri\":10"));
+        assertTrue(body.contains("\"cylsSec\":2"));
+        assertTrue(body.contains("\"JSONversion\":1"));
+        verify(mockJsonPostRequest).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsWithVolumeSuccess() throws ZosmfRequestException {
+        Response response = mockBackedCreate().createZfs("USER.TEST.ZFS", "VOL001");
+
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("https://1:443/zosmf/restfiles/mfs/zfs/USER.TEST.ZFS?timeout=20",
+                mockJsonPostRequest.getUrl());
+        String body = capturedBody();
+        assertTrue(body.contains("\"volumes\":[\"VOL001\"]"));
+        assertTrue(body.contains("\"cylsPri\":10"));
+        assertTrue(body.contains("\"cylsSec\":2"));
+        assertTrue(body.contains("\"JSONversion\":1"));
+        verify(mockJsonPostRequest).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsCommonWithoutTimeoutSuccess() throws ZosmfRequestException {
+        UssCreateZfsInputData input = new UssCreateZfsInputData.Builder(5).build();
+
+        Response response = mockBackedCreate().createZfsCommon("USER.TEST.ZFS", input);
+
+        assertEquals(200, response.getStatusCode().orElse(-1));
+        assertEquals("https://1:443/zosmf/restfiles/mfs/zfs/USER.TEST.ZFS",
+                mockJsonPostRequest.getUrl());
+        String body = capturedBody();
+        assertTrue(body.contains("\"cylsPri\":5"));
+        assertTrue(body.contains("\"JSONversion\":1"));
+        assertFalse(body.contains("\"volumes\""));
+        verify(mockJsonPostRequest).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsCommonMultipleVolumesSuccess() throws ZosmfRequestException {
+        UssCreateZfsInputData input = new UssCreateZfsInputData.Builder(8)
+                .cylsSec(3)
+                .volumes(java.util.List.of("VOL001", "VOL002"))
+                .timeout(40)
+                .build();
+
+        mockBackedCreate().createZfsCommon("USER.TEST.ZFS", input);
+
+        assertEquals("https://1:443/zosmf/restfiles/mfs/zfs/USER.TEST.ZFS?timeout=40",
+                mockJsonPostRequest.getUrl());
+        String body = capturedBody();
+        assertTrue(body.contains("\"volumes\":[\"VOL001\",\"VOL002\"]"));
+        assertTrue(body.contains("\"cylsPri\":8"));
+        assertTrue(body.contains("\"cylsSec\":3"));
+        verify(mockJsonPostRequest).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsWithNullVolumeFailure() throws ZosmfRequestException {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> mockBackedCreate().createZfs("USER.TEST.ZFS", (String) null));
+        assertEquals("volume is either null or empty", exception.getMessage());
+        verify(mockJsonPostRequest, never()).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsWithEmptyVolumeFailure() throws ZosmfRequestException {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> mockBackedCreate().createZfs("USER.TEST.ZFS", ""));
+        assertEquals("volume is either null or empty", exception.getMessage());
+        verify(mockJsonPostRequest, never()).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsWithWhitespaceVolumeFailure() throws ZosmfRequestException {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> mockBackedCreate().createZfs("USER.TEST.ZFS", "   "));
+        assertEquals("volume is either null or empty", exception.getMessage());
+        verify(mockJsonPostRequest, never()).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsWithVolumeNullFileSystemNameFailure() throws ZosmfRequestException {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> mockBackedCreate().createZfs(null, "VOL001"));
+        assertEquals("fileSystemName is either null or empty", exception.getMessage());
+        verify(mockJsonPostRequest, never()).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsWithVolumeEmptyFileSystemNameFailure() throws ZosmfRequestException {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> mockBackedCreate().createZfs("", "VOL001"));
+        assertEquals("fileSystemName is either null or empty", exception.getMessage());
+        verify(mockJsonPostRequest, never()).executeRequest();
+    }
+
+    @Test
+    public void tstUssCreateZfsCommonWhitespaceFileSystemNameFailure() throws ZosmfRequestException {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> mockBackedCreate().createZfsCommon("   ",
+                        new UssCreateZfsInputData.Builder(2).build()));
+        assertEquals("fileSystemName is either null or empty", exception.getMessage());
+        verify(mockJsonPostRequest, never()).executeRequest();
     }
 
 }
