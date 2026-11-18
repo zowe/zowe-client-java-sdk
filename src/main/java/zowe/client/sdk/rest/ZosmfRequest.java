@@ -204,6 +204,7 @@ public abstract class ZosmfRequest {
     private static UnirestInstance buildUnirestInstance(final ZosConnection connection) {
         final UnirestInstance instance = Unirest.spawnInstance();
         instance.config().enableCookieManagement(false);
+        configureTimeouts(instance);
         switch (connection.getAuthType()) {
             case BASIC:
                 LOG.debug("basic authentication type");
@@ -220,6 +221,43 @@ public abstract class ZosmfRequest {
                 throw new IllegalStateException("no authentication type found");
         }
         return instance;
+    }
+
+    /**
+     * Configure optional HTTP timeouts without changing Unirest defaults when the properties are absent.
+     *
+     * @param instance Unirest client instance to configure
+     */
+    private static void configureTimeouts(final UnirestInstance instance) {
+        final String connectTimeout = System.getProperty(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME);
+        if (connectTimeout != null) {
+            instance.config().connectTimeout(parseTimeout(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME, connectTimeout));
+        }
+
+        final String requestTimeout = System.getProperty(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME);
+        if (requestTimeout != null) {
+            instance.config().requestTimeout(parseTimeout(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME, requestTimeout));
+        }
+    }
+
+    /**
+     * Parse a positive timeout value expressed in milliseconds.
+     *
+     * @param propertyName system property name
+     * @param value system property value
+     * @return timeout in milliseconds
+     */
+    private static int parseTimeout(final String propertyName, final String value) {
+        final int timeout;
+        try {
+            timeout = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(propertyName + " must be a positive integer in milliseconds", e);
+        }
+        if (timeout <= 0) {
+            throw new IllegalArgumentException(propertyName + " must be a positive integer in milliseconds");
+        }
+        return timeout;
     }
 
     /**

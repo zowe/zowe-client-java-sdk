@@ -137,4 +137,16 @@ public final class RestConstant {
      */
     public static final String TRUSTSTORE_PASSWORD_PROPERTY_NAME = "zowe.sdk.truststore.password";
 
+    /**
+     * The system property name ("zowe.client.connectTimeout") for setting the HTTP connection timeout
+     * in milliseconds. When absent, Unirest's default connection timeout is retained.
+     */
+    public static final String CONNECT_TIMEOUT_PROPERTY_NAME = "zowe.client.connectTimeout";
+
+    /**
+     * The system property name ("zowe.client.requestTimeout") for setting the HTTP request timeout
+     * in milliseconds. When absent, requests retain the existing unlimited timeout behavior.
+     */
+    public static final String REQUEST_TIMEOUT_PROPERTY_NAME = "zowe.client.requestTimeout";
+
 }
