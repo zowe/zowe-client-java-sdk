@@ -22,6 +22,7 @@ import zowe.client.sdk.zosfiles.uss.input.UssCreateInputData;
 import zowe.client.sdk.zosfiles.uss.input.UssCreateZfsInputData;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -110,6 +111,21 @@ public class UssCreate {
     }
 
     /**
+     * Create a ZFS with a volume using default values of 755 permissions, 10 primary and 2 secondary cylinders allocated,
+     * and a timeout of 20 seconds.
+     *
+     * @param fileSystemName ZFS file system name
+     * @param volume volume name
+     * @return Response object
+     * @throws ZosmfRequestException request error state
+     */
+    public Response createZfs(final String fileSystemName, final String volume) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(volume, "volume");
+        return createZfsCommon(fileSystemName,
+                new UssCreateZfsInputData.Builder(10).cylsSec(2).volumes(List.of(volume)).timeout(20).build());
+    }
+
+    /**
      * Create a ZFS request driven by the UssCreateZfsInputData object settings.
      *
      * @param fileSystemName     ZFS file system name
@@ -138,13 +154,9 @@ public class UssCreate {
         createZfsInputData.getStorageClass().ifPresent(sc -> createZfsMap.put("storageClass", sc));
         createZfsInputData.getManagementClass().ifPresent(mc -> createZfsMap.put("managementClass", mc));
         createZfsInputData.getDataClass().ifPresent(dc -> createZfsMap.put("dataClass", dc));
-        if (createZfsInputData.getVolumes().size() == 1) {
-            createZfsMap.put("volumes", "[\"" + createZfsInputData.getVolumes().get(0) + "\"]");
-        }
-        if (createZfsInputData.getVolumes().size() > 1) {
-            final StringBuilder volumesStr = new StringBuilder();
-            createZfsInputData.getVolumes().forEach(volume -> volumesStr.append("\"").append(volume).append("\","));
-            createZfsMap.put("volumes", "[" + volumesStr.substring(0, volumesStr.length() - 1) + "]");
+        // z/OSMF requires volumes to be a JSON array, so pass the list itself and let it serialize as one
+        if (createZfsInputData.getVolumes() != null && !createZfsInputData.getVolumes().isEmpty()) {
+            createZfsMap.put("volumes", createZfsInputData.getVolumes());
         }
         createZfsMap.put("JSONversion", 1);
 
