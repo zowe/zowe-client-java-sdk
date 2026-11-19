@@ -250,6 +250,58 @@ public class ZoweRequestTest {
     }
 
     @Test
+    public void tstZoweRequestUsesDefaultTimeoutsSuccess() {
+        final ZosConnection connection = ZosConnectionFactory
+                .createBasicConnection("defaultTimeouts", 443, "user", "password");
+        final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+
+        assertEquals(10_000, request.unirest.config().getConnectionTimeout());
+        assertNull(request.unirest.config().getRequestTimeout());
+    }
+
+    @Test
+    public void tstZoweRequestUsesConfiguredTimeoutsSuccess() {
+        System.setProperty(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME, "30000");
+        System.setProperty(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME, "120000");
+        try {
+            final ZosConnection connection = ZosConnectionFactory
+                    .createBasicConnection("configuredTimeouts", 443, "user", "password");
+            final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
+
+            assertEquals(30_000, request.unirest.config().getConnectionTimeout());
+            assertEquals(120_000, request.unirest.config().getRequestTimeout());
+        } finally {
+            System.clearProperty(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME);
+            System.clearProperty(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME);
+        }
+    }
+
+    @Test
+    public void tstZoweRequestRejectsInvalidTimeoutsFailure() {
+        System.setProperty(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME, "not-a-number");
+        try {
+            final ZosConnection connection = ZosConnectionFactory
+                    .createBasicConnection("invalidConnectTimeout", 443, "user", "password");
+            final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                    () -> ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON));
+            assertTrue(exception.getMessage().contains(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME));
+        } finally {
+            System.clearProperty(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME);
+        }
+
+        System.setProperty(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME, "0");
+        try {
+            final ZosConnection connection = ZosConnectionFactory
+                    .createBasicConnection("invalidRequestTimeout", 443, "user", "password");
+            final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                    () -> ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON));
+            assertTrue(exception.getMessage().contains(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME));
+        } finally {
+            System.clearProperty(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME);
+        }
+    }
+
+    @Test
     public void tstUrlConstructionWithBasePathSuccess() {
         // Create a connection with a base path
         final ZosConnection connection = ZosConnectionFactory
