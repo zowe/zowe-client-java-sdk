@@ -178,6 +178,17 @@ SDK release version 2 uses Unirest 3.x Http functionality.
 SDK release version 3 and above uses Unirest 4.x, which removes the dependency on Apache Commons and provides token processing for Web TOKEN authentication.   
    
 Unirest's library provides the ability to retrieve an IBM z/OSMF JSON error document.  
+
+### HTTP timeouts
+
+The SDK uses Unirest's default connection timeout and unlimited request timeout unless configured otherwise. To set a timeout, provide one or both positive integer system properties in milliseconds when starting the JVM:
+
+```text
+-Dzowe.client.connectTimeout=30000
+-Dzowe.client.requestTimeout=120000
+```
+
+`zowe.client.connectTimeout` limits how long the client waits to establish a connection. `zowe.client.requestTimeout` limits the total time allowed for a request. Invalid, zero, or negative values cause request creation to fail with an `IllegalArgumentException`.
   
 For example, the following http GET request will result in an HTTP 500 error:  
   

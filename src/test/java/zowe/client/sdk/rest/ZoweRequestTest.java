@@ -250,7 +250,7 @@ public class ZoweRequestTest {
     }
 
     @Test
-    public void tstZoweRequestUsesDefaultTimeouts() {
+    public void tstZoweRequestUsesDefaultTimeoutsSuccess() {
         final ZosConnection connection = ZosConnectionFactory
                 .createBasicConnection("defaultTimeouts", 443, "user", "password");
         final ZosmfRequest request = ZosmfRequestFactory.buildRequest(connection, ZosmfRequestType.PUT_JSON);
@@ -260,7 +260,7 @@ public class ZoweRequestTest {
     }
 
     @Test
-    public void tstZoweRequestUsesConfiguredTimeouts() {
+    public void tstZoweRequestUsesConfiguredTimeoutsSuccess() {
         System.setProperty(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME, "30000");
         System.setProperty(RestConstant.REQUEST_TIMEOUT_PROPERTY_NAME, "120000");
         try {
@@ -277,7 +277,7 @@ public class ZoweRequestTest {
     }
 
     @Test
-    public void tstZoweRequestRejectsInvalidTimeouts() {
+    public void tstZoweRequestRejectsInvalidTimeoutsFailure() {
         System.setProperty(RestConstant.CONNECT_TIMEOUT_PROPERTY_NAME, "not-a-number");
         try {
             final ZosConnection connection = ZosConnectionFactory
