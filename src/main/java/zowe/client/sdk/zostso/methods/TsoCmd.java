@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Issue tso command via z/OSMF restful api
+ * Issue tso command via z/OSMF RESTful API
  * <p>
  * <a href="https://www.ibm.com/docs/en/zos/3.2.0?topic=services-issue-tsoe-command-zosmf-rest-api">z/OSMF REST API</a>
  *
@@ -103,7 +103,7 @@ public class TsoCmd {
     }
 
     /**
-     * Issue TSO command API call to process the given command via z/OSMF restful api
+     * Issue TSO command API call to process the given command via z/OSMF RESTful API
      *
      * @param command tso command string
      * @return list of all tso returned messages
