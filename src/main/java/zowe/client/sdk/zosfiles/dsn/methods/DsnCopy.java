@@ -18,6 +18,7 @@ import zowe.client.sdk.utility.JsonUtils;
 import zowe.client.sdk.utility.ValidateUtils;
 import zowe.client.sdk.zosfiles.ZosFilesConstants;
 import zowe.client.sdk.zosfiles.dsn.input.DsnCopyInputData;
+import zowe.client.sdk.zosfiles.dsn.types.FileType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -113,6 +114,114 @@ public class DsnCopy {
         copyMap.put("request", "copy");
         copyMap.put("from-dataset", fromDataSetMap);
         copyMap.put("replace", copyInputData.isReplace());
+
+        request.setUrl(url);
+        request.setBody(JsonUtils.asRequestBodyJson(copyMap));
+
+        return request.executeRequest();
+    }
+
+    /**
+     * Copy a USS file to a sequential data set.
+     * The source file type defaults to TEXT and replace defaults to false.
+     *
+     * @param fromFile      absolute path of the source USS file
+     * @param toDataSetName name of the target data set
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    public Response copyUssToDataset(final String fromFile, final String toDataSetName) throws ZosmfRequestException {
+        return copyUssToDatasetCommon(fromFile, toDataSetName, null, FileType.TEXT, false);
+    }
+
+    /**
+     * Copy a USS file to a partitioned data set member.
+     * The source file type defaults to TEXT and replace defaults to false.
+     *
+     * @param fromFile      absolute path of the source USS file
+     * @param toDataSetName name of the target partitioned data set
+     * @param toMemberName  name of the target member
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    public Response copyUssToDataset(final String fromFile,
+                                     final String toDataSetName,
+                                     final String toMemberName) throws ZosmfRequestException {
+        return copyUssToDatasetCommon(fromFile, toDataSetName, toMemberName, FileType.TEXT, false);
+    }
+
+    /**
+     * Copy a USS file to a data set or partitioned data set member
+     * using the specified source file type.
+     * The replace option defaults to false.
+     *
+     * @param fromFile      absolute path of the source USS file
+     * @param toDataSetName name of the target data set
+     * @param toMemberName  name of the target member, or null for a sequential data set
+     * @param type          source USS file type (TEXT, BINARY, or EXECUTABLE)
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    public Response copyUssToDataset(final String fromFile,
+                                     final String toDataSetName,
+                                     final String toMemberName,
+                                     final FileType type) throws ZosmfRequestException {
+        return copyUssToDatasetCommon(fromFile, toDataSetName, toMemberName, type, false);
+    }
+
+    /**
+     * Copy a USS file to a data set or partitioned data set member
+     * using the specified source file type and replace option.
+     *
+     * @param fromFile      absolute path of the source USS file
+     * @param toDataSetName name of the target data set
+     * @param toMemberName  name of the target member, or null for a sequential data set
+     * @param type          source USS file type (TEXT, BINARY, or EXECUTABLE)
+     * @param isReplace     if true, replace the existing target member when supported
+     * @return http response object
+     * @throws ZosmfRequestException request error state
+     */
+    public Response copyUssToDataset(final String fromFile,
+                                     final String toDataSetName,
+                                     final String toMemberName,
+                                     final FileType type,
+                                     final boolean isReplace) throws ZosmfRequestException {
+        return copyUssToDatasetCommon(fromFile, toDataSetName, toMemberName, type, isReplace);
+    }
+
+    private Response copyUssToDatasetCommon(final String fromFile,
+                                            final String toDataSetName,
+                                            final String toMemberName,
+                                            final FileType type,
+                                            final boolean isReplace) throws ZosmfRequestException {
+        ValidateUtils.checkIllegalParameter(fromFile, "fromFile");
+        ValidateUtils.checkIllegalParameter(toDataSetName, "toDataSetName");
+        ValidateUtils.checkNullParameter(type, "type");
+
+        if (!fromFile.startsWith("/")) {
+            throw new IllegalArgumentException("fromFile must be an absolute USS path");
+        }
+
+        String target = toDataSetName;
+        if (toMemberName != null) {
+            ValidateUtils.checkIllegalParameter(toMemberName, "toMemberName");
+            target += "(" + toMemberName + ")";
+        }
+
+        final String url = connection.getZosmfUrl()
+                + ZosFilesConstants.RESOURCE
+                + ZosFilesConstants.RES_DS_FILES
+                + UrlConstants.URL_PATH_DELIM
+                + EncodeUtils.encodeURIComponent(target);
+
+        final Map<String, Object> fromFileMap = new HashMap<>();
+        fromFileMap.put("filename", fromFile);
+        fromFileMap.put("type", type.getValue());
+
+        final Map<String, Object> copyMap = new HashMap<>();
+        copyMap.put("request", "copy");
+        copyMap.put("from-file", fromFileMap);
+        copyMap.put("replace", isReplace);
 
         request.setUrl(url);
         request.setBody(JsonUtils.asRequestBodyJson(copyMap));
